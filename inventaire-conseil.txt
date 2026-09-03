@@ -1,0 +1,82 @@
+PARTIE le-trone - tour 2, trait aux noir, trone vert
+etats 14 | verrous 6 | clefs 3 | actions 0 | pieces 15 | frappes 0
+
+=== ETATS CIBLES (14) ===
+  [noir] 49000        La reine est assise sur le Trône de Fer                    | 6 choses s'y opposent        | sert: -
+  [noir] 100          La capitale est tenue                                      | 4 choses s'y opposent        | sert: sert La reine est assise sur le Trône de Fer
+  [noir] 200          Une porte de Port-Réal est acquise : un accès que l'advers | 1 chose s'y oppose           | sert: sert La capitale est tenue
+  [noir] 23000        Le Donjon change de main avant que sa garnison soit rangée | 2 choses s'y opposent        | sert: sert La capitale est tenue
+  [noir] 8000         Un homme du Donjon sert la reine                           | 1 chose s'y oppose           | sert: sert Le Donjon change de main avant que sa garnison soit rangée en armes
+  [noir] 25000        Les points stratégiques de la ville sont tenus sans qu'on  | 1 chose s'y oppose           | sert: sert La capitale est tenue
+  [noir] 26000        Le plan de charge est établi et la traversée tient dans le | 1 chose s'y oppose           | sert: sert Les points stratégiques de la ville sont tenus sans qu'on ait combattu
+  [noir] 11000        Le jour d'entrée existe : une date arrêtée que chaque affa | rien ne s'y oppose encore    | sert: sert La capitale est tenue
+  [noir] 10000        La route du nord ne porte plus ni charrette ni cavalier    | 1 chose s'y oppose           | sert: sert La reine est assise sur le Trône de Fer
+  [noir] 22000        Les voies maritimes de Port-Réal sont coupées              | 1 chose s'y oppose           | sert: sert La reine est assise sur le Trône de Fer
+  [vert] 70000        Le Trône de Fer est contrôlé par nous                      | rien ne s'y oppose encore    | sert: -
+  [vert] 70100        La ville reste fermée et le Donjon avec elle               | rien ne s'y oppose encore    | sert: sert Le Trône de Fer est contrôlé par nous
+  [vert] 70200        L'ost de ser Criston tient la route du nord depuis Sombrev | rien ne s'y oppose encore    | sert: sert Le Trône de Fer est contrôlé par nous
+  [vert] 70300        Les bannières de l'Ouest et du Bief se déclarent pour Aego | entre au deck dans 8 j       | sert: sert Le Trône de Fer est contrôlé par nous
+
+=== FRONTS (6) ===
+  FRONT v-donjon  type=verrou  contre_nous=True  prevaut=vert
+    tete   : Tient le Donjon Rouge avec sa garnison, portes gardées jour et nuit
+    corps  : ⚔️ la garnison du Donjon Rouge · 400
+    pied   : - / -
+    barre  : Le Donjon change de main avant que sa garniso   chaine: Le Donjon change de main avant que sa garnison soit rangée en armes > La capitale est
+    verdict: rien en face
+  FRONT v-portes  type=verrou  contre_nous=True  prevaut=vert
+    tete   : Les sept portes de la ville sont fermées, le Guet dessus
+    corps  : ⚔️ le Guet de Port-Réal, les manteaux d'or · 2000
+    pied   : - / -
+    barre  : Une porte de Port-Réal est acquise : un accès   chaine: Une porte de Port-Réal est acquise : un accès que l'adversaire ne peut plus nous ferm
+    verdict: clé n-meleys-v-portes suspendue par ❓ 56
+    + clef    Meleys, montée par la princesse Rhaenys                 ruban: ❓ suspendu
+        - question Une bête dans le ciel n'ouvre pas sept portes fermée 
+        - piece    🐉 Meleys, montée par la princesse Rhaenys            posée
+  FRONT v-rade  type=verrou  contre_nous=True  prevaut=noir
+    tete   : Garde la rade et le Gosier avec Vhagar
+    corps  : 🐉 Vhagar, montée par Aemond
+    pied   : - / -
+    barre  : Les voies maritimes de Port-Réal sont coupées   chaine: Les voies maritimes de Port-Réal sont coupées > La reine est assise sur le Trône de F
+    verdict: levé par 🗝️ n-caraxes-v-rade
+    + clef    Caraxes, monté par Daemon                               ruban: ✅ tient
+        - piece    🐉 Caraxes, monté par Daemon                          posée
+  FRONT v-route  type=verrou  contre_nous=True  prevaut=noir
+    tete   : Tient la route du nord depuis Sombreval avec l'ost de ser Criston
+    corps  : ⚔️ l'ost de ser Criston Cole · 1500
+    pied   : - / -
+    barre  : La route du nord ne porte plus ni charrette n   chaine: La route du nord ne porte plus ni charrette ni cavalier > La reine est assise sur le 
+    verdict: levé par 🗝️ n-ost-noir-v-route
+    + clef    goo                                                     ruban: ✅ tient
+        - piece    ⚔️ l'ost de Peyredragon · 1200                       posée
+  FRONT v-oreilles  type=verrou  contre_nous=True  prevaut=vert
+    tete   : Personne n'entre au service du Donjon sans que Larys le sache
+    corps  : 👤 Larys Strong et ses oreilles dans la ville
+    pied   : - / -
+    barre  : Un homme du Donjon sert la reine   chaine: Un homme du Donjon sert la reine > Le Donjon change de main avant que sa garnison soi
+    verdict: rien en face
+  FRONT v-mer  type=verrou  contre_nous=True  prevaut=vert
+    tete   : Les galères royales patrouillent la baie devant la ville
+    corps  : ⛵ les galères royales · 8
+    pied   : - / -
+    barre  : Le plan de charge est établi et la traversée    chaine: Le plan de charge est établi et la traversée tient dans le jour d'entrée > Les points
+    verdict: rien en face
+
+=== NOTRE DECK ===
+  main      📦 la caisse de Peyredragon · 39998                   | Hallis Roon            | libre
+  main      ⛵ les coques du Serpent de Mer · 40                  | Corlys Velaryon, le Serpent de Mer | libre
+  main      👤 la reine elle-même                                 | -                      | libre
+  main      👤 ser Steffon Darklyn                                | -                      | libre
+  main      🐉 Syrax, montée par la reine                         | Rhaenyra Targaryen     | libre
+  posees    🐉 Caraxes, monté par Daemon                          | -                      | posée
+  posees    🐉 Meleys, montée par la princesse Rhaenys            | -                      | posée
+  posees    ⚔️ l'ost de Peyredragon · 1200                       | Ser Steffon Darklyn    | posée
+
+=== LEURS PIECES (7) ===
+  posee     ⛵ les galères royales · 8                            | posée
+  posee     ⚔️ la garnison du Donjon Rouge · 400                 | posée
+  posee     ⚔️ le Guet de Port-Réal, les manteaux d'or · 2000    | posée
+  posee     👤 Larys Strong et ses oreilles dans la ville         | posée
+  route     ⚔️ l ost de la Couronne, convoque aux maisons restee | dans 4 j
+  posee     ⚔️ l'ost de ser Criston Cole · 1500                  | posée
+  posee     🐉 Vhagar, montée par Aemond                          | posée

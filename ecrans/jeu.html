@@ -5,6 +5,7 @@
 <title>Le Conseil</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/jeu.css">
+  <link rel="stylesheet" href="/modules/partie.css">
 </head>
 <body>
 <div id="lateral" class="ferme">
@@ -76,6 +77,9 @@
       <!-- l'échiquier : la ligne de jeu, de ce qu'on a jusqu'à ce qu'on veut.
            Ouvert partout, dès qu'il y a une affaire à lire. -->
       <div id="echiquier" class="vue-off"></div>
+      <!-- le conseil de guerre : la partie en cartes — fronts, piles, deck.
+           Lecture seule en v0 ; voir modules/partie.js et docs/partie.md. -->
+      <div id="partie" class="vue-off"></div>
       <div id="gens"></div>
       <div id="desseins"></div>
       <!-- les jours : ce qui est pris, et à quelle heure — voir modules/calendrier.js -->
@@ -120,6 +124,8 @@
 <script src="/modules/bus.js"></script>
 <!-- la nav du décor : AVANT les échelles, qui s'inscrivent auprès d'elle -->
 <script src="/modules/nav.js"></script>
+<!-- le trait entre la chronique et le décor, qu'on déplace -->
+<script src="/modules/poignee.js"></script>
 <script src="/modules/attention.js"></script>
 <script src="/modules/entites.js"></script>
 <script src="/modules/renvois.js"></script>
@@ -146,6 +152,7 @@
 <script src="/modules/vue-salle.js"></script>
 <script src="/modules/terrain.js"></script>
 <script src="/modules/echiquier.js"></script>
+<script src="/modules/partie.js"></script>
 <script src="/modules/ville3d.js"></script>
 <!-- la ville en plan : le même relief, les mêmes rues et le même bâti que les
      trois hauteurs en volume, mais dessinés — et lisibles la nuit. La foule est

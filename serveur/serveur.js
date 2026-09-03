@@ -33,6 +33,7 @@ const ROUTES = [
   plan.livres,                     // /books, /notes, /nappe, /plis
   monde.terrain,                   // /terrain
   plan.echiquier,                  // /echiquier
+  plan.partie,                     // /partie — le conseil de guerre en cartes
   require("./routes/fils"),        // /fils, /depeches, /objectifs (GET et POST)
   temps.calendrier,                // /calendrier
   peinture.routeVoix,              // /voix/*

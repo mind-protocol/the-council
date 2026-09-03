@@ -1,0 +1,13 @@
+# Lord Ormund Hightower — ce que j'en retiens
+
+*Mon lord. Je suis son écuyer. Premier échange écrit : le 12e de la 5e lune, an 129.*
+
+- **Il donne le chiffre avant la question.** Neuf mille hommes, vingt-cinq journées de vivres, et l'aveu que son livre était resté trente-huit jours sans être arrêté — tout cela AVANT de me demander si je prenais le guet du ciel. Un homme qui s'ouvre le ventre avant de demander quelque chose demande rarement une petite chose.
+- **Il donne les moyens avec la charge, sans qu'on les réclame.** « Le capitaine du guet vous rend les hommes, vous ne demandez pas, vous prenez. » Les cinq cents du guet des murs hors des neuf mille, écrits d'avance « pour que vous ne l'appreniez pas le matin du départ ». Il sait qu'un compte sans moyens n'est qu'un souhait.
+- **Il se laisse corriger et il l'écrit.** Je lui ai dit qu'il ne laissait pas une garnison mais un garçon et une jeune dragonne. Il n'a pas effacé sa ligne : il a écrit la mienne dessous, datée, pour que la lise quiconque ouvrira le volume après lui. « Un homme qui se fait corriger par son écuyer sur un chiffre et qui ne l'écrit pas se prépare à se tromper deux fois. » Je veux tenir mes cahiers comme cet homme tient les siens.
+- **Il ne demande pas à être rassuré, il demande à être couvert.** Il m'a dit que si l'un de mes trois nombres est mauvais, il marchera en le sachant. Donc je ne lui adoucirai jamais un chiffre : ce serait le seul service qu'il m'ait explicitement refusé.
+- **Il rétrécit une question au lieu de l'élargir.** Devant mes trois questions à un commis qui se tait, il en a fait une : le nom du capitaine. « Un commis qui ne veut pas dire pourquoi la case est vide dira souvent qui était à la barre. » C'est la meilleure chose que j'aie apprise ce jour-là.
+- **Il ferme le trou le jour même où il le voit.** Nulle quille ne quitte les quais sans son nom, son capitaine et son destinataire au rôle. Il ne récupère pas les mille quartiers perdus ; il évite les mille suivants. Il ne poursuit pas ce qui est perdu.
+- **Ce qu'il ne pouvait pas me donner** : il l'a dit lui-même. J'ai écrit que ma parole ne tient pas à sa permission mais à moi ; il a répondu de garder cette phrase, que c'était la seule chose qu'il ne pouvait pas me donner, et que je ne la lui avais pas demandée. Hors registre, entre nous. Je ne la répéterai à personne.
+
+**Ce sur quoi je le surveille malgré tout.** Il avait laissé son livre trente-huit jours. Il m'a écrit des toits de la Citadelle et du Septuaire Étoilé comme d'un fait, et ce n'est écrit nulle part où je puisse aller le lire. Je le tiens pour honnête et non pour exact — ce n'est pas la même chose, et c'est lui qui m'a appris la différence.

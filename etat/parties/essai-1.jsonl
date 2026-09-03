@@ -1,0 +1,150 @@
+{"camp": "noir", "coup": "viser", "id": "49000", "texte": "La reine est assise sur le Trône de Fer", "n": 1, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "200", "sert": "49000", "texte": "La porte de la Rivière est acquise : un accès que l'adversaire ne peut plus nous fermer", "n": 2, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "800", "sert": "200", "texte": "Le Donjon est ouvert : un accès au château, et l'adversaire ne décide plus seul de ses entrées", "n": 3, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "23000", "sert": "800", "texte": "Le Donjon change de main avant que sa garnison soit rangée en armes", "n": 4, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "8000", "sert": "800", "texte": "Un homme du Donjon sert la reine", "n": 5, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "25000", "sert": "200", "texte": "Les points stratégiques de la ville sont tenus sans qu'on ait combattu", "n": 6, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "26000", "sert": "25000", "texte": "Le plan de charge est établi et la traversée tient dans le jour d'entrée", "n": 7, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "35000", "sert": "26000", "texte": "La fenêtre de mer est connue trois jours d'avance", "n": 8, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "10000", "sert": "49000", "texte": "La route du nord ne porte plus ni charrette ni cavalier", "n": 9, "tour": 1}
+{"camp": "noir", "coup": "viser", "id": "22000", "sert": "49000", "texte": "Les voies maritimes de Port-Réal sont coupées", "n": 10, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "garnison-donjon", "lieu": "port-real", "nombre": 300, "texte": "la garnison du Donjon Rouge", "n": 11, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "garnison-donjon", "verdict": "accorde", "motif": "affaire-tenir-le-trone, L'ÉTAT : le Donjon est à eux ; trois cents comblé d'après le canon", "n": 12, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "guet", "lieu": "port-real", "nombre": 2000, "texte": "le Guet de Port-Réal", "n": 13, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "guet", "verdict": "accorde", "motif": "personnages : Hann Bourbe et Waltyr Poix à Port-Réal ; deux mille comblé d'après le canon", "n": 14, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "vhagar", "lieu": "port-real", "tenu_par": "aemond", "texte": "Vhagar, montée par Aemond", "n": 15, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "vhagar", "verdict": "accorde", "motif": "personnages : Aemond à Port-Réal ; affaire-tenir-le-trone 70010 : où elle couche, inconnu des Noirs", "n": 16, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "ost-criston", "lieu": "sombreval", "nombre": 1500, "tenu_par": "criston", "texte": "l'ost de ser Criston", "n": 17, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "ost-criston", "verdict": "accorde", "motif": "personnages : Criston à Sombreval, Gunthor Darklyn mort, Robin prisonnier ; quinze cents comblé d'après le canon", "n": 18, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "galeres-royales", "lieu": "port-real", "nombre": 4, "texte": "les galères royales", "n": 19, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "galeres-royales", "verdict": "accorde", "arrive_tour": 2, "motif": "rien dans l'état ni les livres ; quatre coques comblé d'après le canon, un tour pour armer", "n": 20, "tour": 1}
+{"camp": "vert", "coup": "viser", "id": "v-donjon", "texte": "Le Donjon Rouge reste fermé et à nous", "n": 21, "tour": 1}
+{"camp": "vert", "coup": "viser", "id": "v-sombreval", "texte": "Sombreval est tenue et la route du nord est à Criston", "n": 22, "tour": 1}
+{"camp": "vert", "coup": "viser", "id": "v-tessarion", "arrive_tour": 5, "texte": "Tessarion et Daeron sont arrivés de Villevieille", "n": 23, "tour": 1}
+{"camp": "vert", "coup": "bloquer", "id": "b-donjon", "sur": "49000", "texte": "Tient le Donjon Rouge avec sa garnison", "engage": ["garnison-donjon"], "n": 24, "tour": 1}
+{"camp": "vert", "coup": "bloquer", "id": "b-guet", "sur": "200", "texte": "Tient la porte de la Rivière avec le Guet", "engage": ["guet"], "n": 25, "tour": 1}
+{"camp": "vert", "coup": "bloquer", "id": "b-vhagar", "sur": "22000", "texte": "Garde la rade avec Vhagar", "engage": ["vhagar"], "n": 26, "tour": 1}
+{"camp": "vert", "coup": "bloquer", "id": "b-criston", "sur": "10000", "texte": "Tient la route du nord depuis Sombreval avec l'ost", "engage": ["ost-criston"], "n": 27, "tour": 1}
+{"camp": "arbitre", "coup": "justifier", "sur": "49000", "texte": "Qui s'assied, et comment arrive-t-elle dans la salle du trône ?", "n": 28, "tour": 1}
+{"camp": "noir", "coup": "demander", "id": "meleys", "lieu": "lamarck", "tenu_par": "rhaenys", "texte": "Meleys, montée par Rhaenys", "n": 29, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "meleys", "verdict": "accorde", "arrive_tour": 2, "motif": "personnages : Rhaenys à Lamarck ; dragon dans les terres de la Couronne, délai 1", "n": 30, "tour": 1}
+{"camp": "noir", "coup": "demander", "id": "caraxes", "lieu": "peyredragon", "tenu_par": "daemon", "texte": "Caraxès, monté par Daemon", "n": 31, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "caraxes", "verdict": "accorde", "arrive_tour": 2, "motif": "personnages : Daemon à Peyredragon ; dragon dans les terres de la Couronne, délai 1", "n": 32, "tour": 1}
+{"camp": "noir", "coup": "detruire", "id": "m-vhagar", "cible": "vhagar", "engage": ["meleys", "caraxes"], "texte": "Frappe Vhagar à deux bêtes au-dessus de la rade, à l'aube", "n": 33, "tour": 1}
+{"camp": "vert", "coup": "justifier", "sur": "m-vhagar", "texte": "Par quel ciel Meleys depuis Lamarck et Caraxès depuis Peyredragon arrivent-elles ensemble sur la rade à la même aube, et qui décide de l'heure ; Vhagar ne couche pas où les Noirs le croient", "n": 34, "tour": 1}
+{"camp": "arbitre", "coup": "tour", "n": 35, "tour": 2, "arrivees": ["galeres-royales", "meleys", "caraxes"], "degeles": [], "menaces": [], "etats_arrives": [], "branches_mortes": [], "jours": 2}
+{"camp": "noir", "coup": "agir", "id": "a-ciel", "realise": "m-vhagar", "qui": "daemon", "avec": ["caraxes"], "texte": "Vole à Lamarck la veille au soir ; les deux bêtes décollent ensemble de Lamarck à l'aube et sont sur la rade au soleil levé", "etat": "a_faire", "n": 36, "tour": 2}
+{"camp": "noir", "coup": "agir", "id": "a-heure", "realise": "m-vhagar", "qui": "rhaenys", "texte": "Décide l'heure : Rhaenys donne le départ, Daemon suit", "etat": "a_faire", "n": 37, "tour": 2}
+{"camp": "noir", "coup": "demander", "id": "guetteur-pr", "lieu": "port-real", "nombre": 1, "texte": "un guetteur en ville, pour savoir où couche Vhagar", "n": 38, "tour": 2}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "guetteur-pr", "verdict": "accorde", "arrive_tour": 3, "motif": "affaire-guet-des-osts-verts : des yeux en ville existent ; un tour pour qu'un mot revienne", "n": 39, "tour": 2}
+{"camp": "vert", "coup": "passer", "texte": "Aemond tient la rade : il ne cède pas le ciel", "n": 40, "tour": 2}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "m-vhagar", "verdict": "tranche", "detruit": ["meleys"], "motif": "règle 7, bête contre bête, deux contre une : heurt mutuel à l'entrée du tour 3 ; Vhagar et Meleys sortent du grand livre, Rhaenys avec", "n": 41, "tour": 2}
+{"camp": "arbitre", "coup": "tour", "n": 42, "tour": 3, "arrivees": ["guetteur-pr"], "degeles": ["meleys", "caraxes"], "menaces": [], "etats_arrives": [], "branches_mortes": [], "jours": 2}
+{"camp": "noir", "coup": "demander", "id": "ost-noir", "lieu": "peyredragon", "nombre": 1200, "tenu_par": "steffon-darklyn", "texte": "l'ost de Peyredragon, sous ser Steffon", "n": 43, "tour": 3}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "ost-noir", "verdict": "accorde", "arrive_tour": 4, "motif": "personnages : Steffon à Peyredragon ; affaire-commandement-chaine-ordres C1 ; douze cents comblé ; une traversée, délai 1", "n": 44, "tour": 3}
+{"camp": "noir", "coup": "demander", "id": "syrax", "lieu": "peyredragon", "tenu_par": "rhaenyra", "texte": "Syrax, montée par la reine", "n": 45, "tour": 3}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "syrax", "verdict": "accorde", "arrive_tour": 4, "motif": "personnages : la reine à Peyredragon ; dragon dans la Couronne, délai 1", "n": 46, "tour": 3}
+{"camp": "noir", "coup": "demander", "id": "espadon", "lieu": "peyredragon", "nombre": 1, "tenu_par": "hallis-beaupre", "texte": "l'Espadon, Hallis Beaupré", "n": 47, "tour": 3}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "espadon", "verdict": "accorde", "arrive_tour": 4, "motif": "personnages : Hallis à terre, l'Espadon au mouillage ; une coque, délai 1", "n": 48, "tour": 3}
+{"camp": "noir", "coup": "demander", "id": "barques-selm", "lieu": "peyredragon", "nombre": 2, "tenu_par": "selm-deux-barques", "texte": "les deux barques de Selm", "n": 49, "tour": 3}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "barques-selm", "verdict": "accorde", "motif": "personnages : Selm des deux barques à Peyredragon ; déjà là, délai 0", "n": 50, "tour": 3}
+{"camp": "noir", "coup": "consigne", "pieces": ["guetteur-pr"], "texte": "Compte les galères au port et dit où elles sont", "n": 51, "tour": 3}
+{"camp": "noir", "coup": "passer", "texte": "Caraxès reste libre ; le guetteur va au port", "n": 52, "tour": 3}
+{"camp": "vert", "coup": "bloquer", "id": "b-galeres", "sur": "26000", "texte": "Les galères royales tiennent la baie de la Néra devant toute traversée", "engage": ["galeres-royales"], "n": 53, "tour": 3}
+{"camp": "arbitre", "coup": "tour", "n": 54, "tour": 4, "arrivees": ["ost-noir", "syrax", "espadon"], "degeles": [], "menaces": [], "etats_arrives": [], "branches_mortes": [], "jours": 2}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "galeres-royales", "verdict": "accorde", "lieu": "baie-de-la-nera", "nombre": 4, "motif": "vu par guetteur-pr au tour 4 : quatre galères sorties du port, en ligne devant la baie ; connu des Noirs", "n": 55, "tour": 4}
+{"camp": "noir", "coup": "detruire", "id": "m-galeres", "cible": "galeres-royales", "engage": ["caraxes"], "texte": "Brûle la ligne des galères dans la baie, en plein jour", "n": 56, "tour": 4}
+{"camp": "vert", "coup": "retirer", "id": "galeres-royales", "texte": "Rentre les galères sous les murs, à l'abri des scorpions du port", "n": 57, "tour": 4}
+{"camp": "arbitre", "coup": "tour", "n": 58, "tour": 5, "arrivees": [], "degeles": [], "menaces": [], "etats_arrives": ["v-tessarion"], "branches_mortes": ["guetteur-pr", "barques-selm"], "jours": 2}
+{"camp": "vert", "coup": "demander", "id": "tessarion", "lieu": "port-real", "tenu_par": "daeron", "texte": "Tessarion, montée par Daeron", "n": 59, "tour": 5}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "tessarion", "verdict": "accorde", "motif": "deck vert v-tessarion entré au tour 5 (canon) ; vue par guetteur-pr : une bête bleue s'est posée au Donjon ce matin — connu des Noirs", "n": 60, "tour": 5}
+{"camp": "noir", "coup": "lever", "id": "k-traversee", "texte": "Traverse la baie et débarque douze cents hommes sous la porte de la Rivière", "engage": ["ost-noir", "espadon", "barques-selm"], "n": 61, "tour": 5}
+{"camp": "vert", "coup": "detruire", "id": "m-tessarion", "cible": "ost-noir", "engage": ["tessarion"], "texte": "Tessarion sort du Donjon et fond sur la colonne débarquée sur la grève", "n": 62, "tour": 5}
+{"camp": "arbitre", "coup": "tour", "n": 63, "tour": 6, "arrivees": [], "degeles": ["galeres-royales"], "menaces": [], "etats_arrives": [], "branches_mortes": ["guetteur-pr", "syrax"], "jours": 2}
+{"camp": "arbitre", "coup": "constater", "etat": "26000", "verdict": "vrai", "motif": "k-traversee : la baie était vide, les trois coques ont fait la journée ; douze cents sur la grève au soir du tour 5", "n": 64, "tour": 6}
+{"camp": "noir", "coup": "retirer", "id": "k-traversee", "gel_tours": 0, "texte": "Clé tenue : l'état est constaté, les pièces reviennent sans gel (appliqué à la main, le greffe ne le sait pas encore)", "n": 65, "tour": 6}
+{"camp": "noir", "coup": "bloquer", "id": "b-caraxes", "sur": "m-tessarion", "texte": "Caraxès se tient entre la bête bleue et la colonne", "engage": ["caraxes"], "n": 66, "tour": 6}
+{"camp": "vert", "coup": "passer", "texte": "Daeron garde la hauteur, il n'attaque pas un dragon plus gros", "n": 67, "tour": 6}
+{"camp": "arbitre", "coup": "tour", "n": 68, "tour": 7, "arrivees": [], "degeles": [], "menaces": ["m-tessarion"], "etats_arrives": [], "branches_mortes": ["guetteur-pr", "syrax"], "jours": 2}
+{"camp": "noir", "coup": "lever", "id": "k-porte", "ouvre": "b-guet", "texte": "Force la porte de la Rivière avec Syrax pendant que Steffon pousse", "engage": ["syrax"], "n": 69, "tour": 7}
+{"camp": "vert", "coup": "justifier", "sur": "k-porte", "texte": "Un dragon ne brûle pas une porte sans brûler les douze cents massés dessous : par où entrent-ils", "n": 70, "tour": 7}
+{"camp": "arbitre", "coup": "tour", "n": 71, "tour": 8, "arrivees": [], "degeles": [], "menaces": ["m-tessarion"], "etats_arrives": [], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "noir", "coup": "agir", "id": "a-poterne", "realise": "k-porte", "qui": "guetteur-pr", "texte": "Achète le portier de la poterne de la Gadoue ; Syrax tient le Guet sur le chemin de ronde pendant qu'on passe", "etat": "a_faire", "n": 72, "tour": 8}
+{"camp": "vert", "coup": "detruire", "id": "m-espadon", "cible": "espadon", "engage": ["galeres-royales"], "texte": "Les galères ressortent sur l'Espadon au mouillage sous la grève", "n": 73, "tour": 8}
+{"camp": "arbitre", "coup": "tour", "n": 74, "tour": 9, "arrivees": [], "degeles": [], "menaces": ["m-tessarion"], "etats_arrives": [], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "arbitre", "coup": "constater", "etat": "200", "verdict": "vrai", "motif": "k-porte tenue : le Guet n'a pas quitté le chemin de ronde sous Syrax, la poterne s'est ouverte ; douze cents dans la Gadoue au matin du tour 9", "n": 75, "tour": 9}
+{"camp": "noir", "coup": "retirer", "id": "k-porte", "gel_tours": 0, "texte": "Clé tenue, état constaté : pièces rendues à la main", "n": 76, "tour": 9}
+{"camp": "noir", "coup": "retirer", "id": "espadon", "texte": "Hallis rentre l'Espadon à Peyredragon avant que les galères le touchent", "n": 77, "tour": 9}
+{"camp": "noir", "coup": "lever", "id": "k-donjon", "ouvre": "b-donjon", "texte": "Steffon monte au Donjon par les rues avec douze cents", "engage": ["ost-noir"], "n": 78, "tour": 9}
+{"camp": "vert", "coup": "justifier", "sur": "k-donjon", "texte": "Trois cents derrière les murs du Donjon contre douze cents dans les rues : par quelle porte", "n": 79, "tour": 9}
+{"camp": "arbitre", "coup": "tour", "n": 80, "tour": 10, "arrivees": [], "degeles": [], "menaces": ["m-tessarion"], "etats_arrives": [], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "k-donjon", "verdict": "refuse", "motif": "règle 7, troupe contre troupe derrière un mur : rien ne bouge ; sans un homme dedans la clé ne tient pas", "n": 81, "tour": 10}
+{"camp": "noir", "coup": "demander", "id": "homme-du-donjon", "lieu": "port-real", "nombre": 1, "texte": "un homme du Donjon qui sert la reine (état 8000)", "n": 82, "tour": 10}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "homme-du-donjon", "verdict": "accorde", "arrive_tour": 12, "motif": "acté : le mécanisme est le guetteur en ville et la bourse ; deux tours pour retourner un homme depuis rien", "n": 83, "tour": 10}
+{"camp": "vert", "coup": "viser", "id": "v-criston-marche", "arrive_tour": 13, "texte": "L'ost de Criston est sous les murs de Port-Réal", "n": 84, "tour": 10}
+{"camp": "vert", "coup": "retirer", "id": "b-criston", "texte": "Criston lève le camp de Sombreval et marche sur la ville", "n": 85, "tour": 10}
+{"camp": "arbitre", "coup": "tour", "n": 86, "tour": 11, "arrivees": [], "degeles": ["espadon"], "menaces": ["m-tessarion"], "etats_arrives": [], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "noir", "coup": "passer", "texte": "On tient la Gadoue et on attend l'homme du Donjon", "n": 87, "tour": 11}
+{"camp": "vert", "coup": "retirer", "id": "m-tessarion", "texte": "Daeron rentre au Donjon : Caraxès ne bougera pas", "n": 88, "tour": 11}
+{"camp": "arbitre", "coup": "tour", "n": 89, "tour": 12, "arrivees": ["homme-du-donjon"], "degeles": ["ost-criston"], "menaces": [], "etats_arrives": [], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "noir", "coup": "lever", "id": "k-donjon-2", "ouvre": "b-donjon", "texte": "L'homme du Donjon ouvre la porte du Roi à la troisième veille ; Steffon entre", "engage": ["ost-noir", "homme-du-donjon"], "n": 90, "tour": 12}
+{"camp": "vert", "coup": "bloquer", "id": "b-galeres-2", "sur": "k-donjon-2", "texte": "Les galères tiennent la porte du Roi", "engage": ["galeres-royales"], "n": 91, "tour": 12}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "b-galeres-2", "verdict": "refuse", "motif": "règle 6, sans portée : des coques ne tiennent pas une porte de château", "n": 92, "tour": 12}
+{"camp": "arbitre", "coup": "tour", "n": 93, "tour": 13, "arrivees": [], "degeles": ["tessarion"], "menaces": [], "etats_arrives": ["v-criston-marche"], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "vert", "coup": "bloquer", "id": "b-criston-2", "sur": "k-donjon-2", "texte": "Criston entre par la porte des Dieux et prend la colonne à revers dans les rues", "engage": ["ost-criston"], "n": 94, "tour": 13}
+{"camp": "noir", "coup": "detruire", "id": "m-criston", "cible": "ost-criston", "engage": ["syrax"], "texte": "Syrax sur la colonne de Criston dans la rue des Sœurs", "n": 95, "tour": 13}
+{"camp": "arbitre", "coup": "tour", "n": 96, "tour": 14, "arrivees": [], "degeles": [], "menaces": [], "etats_arrives": [], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "vert", "coup": "passer", "texte": "Criston serre les rangs sous les auvents", "n": 97, "tour": 14}
+{"camp": "noir", "coup": "passer", "texte": "On tient", "n": 98, "tour": 14}
+{"camp": "arbitre", "coup": "tour", "n": 99, "tour": 15, "arrivees": [], "degeles": [], "menaces": ["m-criston"], "etats_arrives": [], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "m-criston", "verdict": "tranche", "nombre": 400, "motif": "règle 7, troupe contre bête posée : partielle par centaines ; Syrax gelée un tour", "n": 100, "tour": 15}
+{"camp": "arbitre", "coup": "tour", "n": 101, "tour": 16, "arrivees": [], "degeles": ["syrax"], "menaces": [], "etats_arrives": [], "branches_mortes": ["guetteur-pr"], "jours": 2}
+{"camp": "noir", "coup": "agir", "id": "a-salle", "realise": "k-donjon-2", "qui": "steffon-darklyn", "avec": ["ost-noir"], "texte": "La porte du Roi ouverte, Steffon monte la grande vis et prend la salle du trône avant que la garnison soit rangée", "etat": "faite", "n": 102, "tour": 16}
+{"camp": "vert", "coup": "detruire", "id": "m-syrax", "cible": "syrax", "engage": ["tessarion"], "texte": "Tessarion monte sur Syrax au-dessus de la ville", "n": 103, "tour": 16}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "m-syrax", "verdict": "refuse", "motif": "règle 7, bête contre bête : Syrax est la plus grosse, Tessarion ne l'emporte pas ; Daeron n'a pas la portée", "n": 104, "tour": 16}
+{"camp": "arbitre", "coup": "constater", "etat": "23000", "verdict": "vrai", "motif": "a-salle : la porte du Roi ouverte à la troisième veille, la salle prise avant que les trois cents soient en armes", "n": 105, "tour": 16}
+{"camp": "arbitre", "coup": "constater", "etat": "800", "verdict": "vrai", "motif": "b-donjon levé par k-donjon-2, 23000 constaté : le Donjon est ouvert", "n": 106, "tour": 16}
+{"camp": "arbitre", "coup": "tour", "n": 107, "tour": 17, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": [], "jours": 2}
+{"camp": "noir", "coup": "lever", "id": "k-reine", "sert": "49000", "texte": "La reine vole de Peyredragon et se pose dans la cour du Donjon ; Steffon tient la salle", "engage": ["syrax"], "n": 108, "tour": 17}
+{"camp": "vert", "coup": "justifier", "sur": "k-reine", "texte": "Une reine ne s'assied pas parce qu'elle entre dans une salle : qui la couronne, et devant qui", "n": 109, "tour": 17}
+{"camp": "arbitre", "coup": "tour", "n": 110, "tour": 18, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": [], "jours": 2}
+{"camp": "noir", "coup": "demander", "id": "septon-de-la-ville", "lieu": "port-real", "nombre": 1, "texte": "un septon de la ville pour l'onction", "n": 111, "tour": 18}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "septon-de-la-ville", "verdict": "accorde", "arrive_tour": 19, "motif": "acté : la Foi est à Port-Réal, le mécanisme est le guetteur et la bourse ; un tour pour en trouver un qui accepte", "n": 112, "tour": 18}
+{"camp": "noir", "coup": "demander", "id": "couronne", "lieu": "port-real", "nombre": 1, "texte": "la couronne de Jaehaerys, au Donjon", "n": 113, "tour": 18}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "couronne", "verdict": "accorde", "motif": "la salle est prise, le trésor du Donjon avec : déjà là", "n": 114, "tour": 18}
+{"camp": "arbitre", "coup": "tour", "n": 115, "tour": 19, "arrivees": ["septon-de-la-ville"], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": [], "jours": 2}
+{"camp": "vert", "coup": "passer", "texte": "La garnison se rend par petits paquets", "n": 116, "tour": 19}
+{"camp": "arbitre", "coup": "tour", "n": 117, "tour": 20, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["couronne"], "jours": 2}
+{"camp": "noir", "coup": "agir", "id": "a-septon", "realise": "k-reine", "qui": "septon-de-la-ville", "avec": ["couronne"], "texte": "Le septon de la Gadoue oint la reine dans la salle, la couronne de Jaehaerys sur la tête, devant l'ost et ce qui reste de la cour", "etat": "a_faire", "n": 118, "tour": 20}
+{"camp": "vert", "coup": "bloquer", "id": "b-guet-2", "sur": "a-septon", "texte": "Le Guet ferme les rues autour du Donjon : personne de la ville ne viendra voir", "engage": ["guet"], "n": 119, "tour": 20}
+{"camp": "arbitre", "coup": "tour", "n": 120, "tour": 21, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "noir", "coup": "detruire", "id": "m-guet", "cible": "guet", "engage": ["caraxes"], "texte": "Caraxès descend sur les barricades du Guet rue de l'Acier", "n": 121, "tour": 21}
+{"camp": "vert", "coup": "retirer", "id": "guet", "texte": "Bourbe et Poix retirent le Guet des rues plutôt que de brûler", "n": 122, "tour": 21}
+{"camp": "arbitre", "coup": "tour", "n": 123, "tour": 22, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "noir", "coup": "agir", "id": "a-septon", "etat": "faite", "texte": "Réalisée : la couronne posée, le septon a dit les mots, douze cents l'ont vue", "n": 124, "tour": 22}
+{"camp": "vert", "coup": "viser", "id": "v-aegon-vivant", "texte": "Aegon II est vivant et couronné, hors de la ville", "n": 125, "tour": 22}
+{"camp": "arbitre", "coup": "tour", "n": 126, "tour": 23, "arrivees": [], "degeles": ["guet"], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "vert", "coup": "bloquer", "id": "b-aegon", "sur": "49000", "texte": "Il y a déjà un roi couronné : Aegon a fui avec Tessarion et le sceau", "engage": ["tessarion"], "n": 127, "tour": 23}
+{"camp": "arbitre", "coup": "tour", "n": 128, "tour": 24, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "vert", "coup": "passer", "texte": "Aegon continue à pied vers Rosby", "n": 129, "tour": 24}
+{"camp": "arbitre", "coup": "tour", "n": 130, "tour": 25, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "noir", "coup": "demander", "id": "cavaliers-rosby", "lieu": "port-real", "nombre": 200, "texte": "deux cents cavaliers sur la route de Rosby", "n": 131, "tour": 25}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "cavaliers-rosby", "verdict": "accorde", "arrive_tour": 24, "motif": "l'ost tient la ville, deux cents montés s'en détachent ; un tour pour seller et sortir", "n": 132, "tour": 25}
+{"camp": "vert", "coup": "passer", "texte": "Aegon se cache chez un fermier", "n": 133, "tour": 25}
+{"camp": "arbitre", "coup": "tour", "n": 134, "tour": 26, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville", "cavaliers-rosby"], "jours": 2}
+{"camp": "noir", "coup": "lever", "id": "k-poursuite", "ouvre": "b-aegon", "texte": "Les cavaliers battent la route de Rosby ferme par ferme", "engage": ["cavaliers-rosby"], "n": 135, "tour": 26}
+{"camp": "vert", "coup": "justifier", "sur": "k-poursuite", "texte": "Deux cents cavaliers sur trente lieues de fermes : par quoi savez-vous où chercher", "n": 136, "tour": 26}
+{"camp": "arbitre", "coup": "tour", "n": 137, "tour": 27, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "noir", "coup": "agir", "id": "a-guetteur-2", "realise": "k-poursuite", "qui": "guetteur-pr", "avec": ["homme-du-donjon"], "texte": "L'homme du Donjon nomme les trois fermes où la maison royale a des dettes ; le guetteur y mène les cavaliers", "etat": "a_faire", "n": 138, "tour": 27}
+{"camp": "vert", "coup": "passer", "texte": "Aegon change de ferme la nuit", "n": 139, "tour": 27}
+{"camp": "arbitre", "coup": "tour", "n": 140, "tour": 28, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "noir", "coup": "agir", "id": "a-guetteur-2", "etat": "faite", "texte": "Réalisée : Aegon pris à la deuxième ferme, au matin, sans un mort", "n": 141, "tour": 28}
+{"camp": "vert", "coup": "passer", "texte": "Il n'y a plus personne pour jouer un coup vert dans la ville", "n": 142, "tour": 28}
+{"camp": "arbitre", "coup": "tour", "n": 143, "tour": 29, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "b-aegon", "verdict": "refuse", "motif": "a-guetteur-2 : Aegon est pris, la pièce qui portait le blocage est tombée avec Tessarion ; il n'y a plus de roi couronné en liberté", "n": 144, "tour": 29}
+{"camp": "arbitre", "coup": "constater", "etat": "8000", "verdict": "vrai", "motif": "homme-du-donjon : il a ouvert la porte du Roi puis nommé les fermes ; il sert la reine", "n": 145, "tour": 29}
+{"camp": "arbitre", "coup": "tour", "n": 146, "tour": 30, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "arbitre", "coup": "constater", "etat": "25000", "verdict": "vrai", "motif": "le Guet retiré des rues, la garnison rendue, l'ost dans la ville : les points sont tenus sans bataille rangée", "n": 147, "tour": 30}
+{"camp": "arbitre", "coup": "tour", "n": 148, "tour": 31, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}
+{"camp": "arbitre", "coup": "constater", "etat": "49000", "verdict": "vrai", "motif": "k-reine tenue, a-septon réalisé, b-donjon levé, b-aegon tombé : la reine est assise sur le Trône de Fer, ointe, couronnée, devant témoins, et nul autre roi n'est en liberté", "n": 149, "tour": 31}
+{"camp": "arbitre", "coup": "tour", "n": 150, "tour": 32, "arrivees": [], "degeles": [], "menaces": [], "parees": [], "etats_arrives": [], "branches_mortes": ["septon-de-la-ville"], "jours": 2}

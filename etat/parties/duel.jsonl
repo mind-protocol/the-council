@@ -1,0 +1,23 @@
+{"camp": "noir", "coup": "viser", "id": "49000", "texte": "La reine est assise sur le Trône de Fer", "n": 1, "tour": 1}
+{"camp": "vert", "coup": "viser", "id": "70000", "texte": "Le Trône de Fer est contrôlé par nous", "n": 2, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "garnison-donjon", "lieu": "donjon-rouge", "nombre": 400, "tenu_par": "aegon-ii", "n": 3, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "garnison-donjon", "verdict": "accorde", "motif": "lieux.controle_id : le Donjon est aux Verts ; quatre cents comblés d'après le canon", "n": 4, "tour": 1}
+{"camp": "vert", "coup": "bloquer", "id": "49001", "sur": "49000", "texte": "Tient le Donjon Rouge avec sa garnison", "engage": ["garnison-donjon"], "n": 5, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "guet-ville", "lieu": "port-real", "nombre": 2000, "tenu_par": "conteste", "n": 6, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "guet-ville", "verdict": "accorde", "motif": "23005 et 23015 : deux bourses le paient au même taux ; tenu par qui paie le dernier avant J, et J n'est pas posé", "n": 7, "tour": 1}
+{"camp": "vert", "coup": "bloquer", "id": "49002", "sur": "49000", "texte": "Les sept portes de la ville sont fermées, le Guet dessus", "engage": ["guet-ville"], "n": 8, "tour": 1}
+{"camp": "noir", "coup": "demander", "id": "ost-noir", "lieu": "peyredragon", "nombre": 1200, "tenu_par": "steffon-darklyn", "n": 9, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "ost-noir", "verdict": "accorde", "arrive_tour": 4, "motif": "26013, 26202 : douze cents de levée ; traversée et marche, trois tours", "n": 10, "tour": 1}
+{"camp": "noir", "coup": "demander", "id": "coques-est", "lieu": "banc-de-l-est", "nombre": 10, "tenu_par": "rulf-corne", "n": 11, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "coques-est", "verdict": "accorde", "arrive_tour": 2, "motif": "26023 : affrètement et caution, un tour", "n": 12, "tour": 1}
+{"camp": "noir", "coup": "demander", "id": "caraxes", "lieu": "peyredragon", "tenu_par": "daemon", "n": 13, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "caraxes", "verdict": "accorde", "arrive_tour": 2, "motif": "table : dragon dans les terres de la Couronne, un tour", "n": 14, "tour": 1}
+{"camp": "noir", "coup": "demander", "id": "steffon-darklyn", "lieu": "peyredragon", "tenu_par": "steffon-darklyn", "n": 15, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "steffon-darklyn", "verdict": "accorde", "motif": "personne du monde ; commandement de l'ost et de la marche", "n": 16, "tour": 1}
+{"camp": "noir", "coup": "lever", "id": "49010", "ouvre": "49002", "texte": "L'ost débarque sur la grève au nord de la ville et marche sur la porte de la Rivière", "engage": ["ost-noir", "steffon-darklyn"], "n": 17, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "ost-criston", "lieu": "conflans", "nombre": 3000, "tenu_par": "criston-cole", "n": 18, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "ost-criston", "verdict": "accorde", "arrive_tour": 9, "motif": "canon : depuis le Conflans, huit jours de route", "n": 19, "tour": 1}
+{"camp": "vert", "coup": "demander", "id": "vhagar", "lieu": "fossedragon", "tenu_par": "aemond", "n": 20, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "vhagar", "verdict": "accorde", "motif": "rien dans l'état ni dans la tête d'Aemond ; comblé au Fossedragon, canon", "n": 21, "tour": 1}
+{"camp": "vert", "coup": "justifier", "sur": "49010", "texte": "Douze cents hommes sur une grève ouverte, à un jour des murs : qui les couvre pendant qu'ils descendent, et qui ouvre la porte quand ils y sont", "n": 22, "tour": 1}
+{"camp": "arbitre", "coup": "tour", "n": 23, "tour": 2, "arrivees": ["coques-est", "caraxes"], "degeles": [], "menaces": [], "branches_mortes": [], "jours": 2}

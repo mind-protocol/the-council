@@ -1,0 +1,88 @@
+{
+ "id": "gallipoli-1305",
+ "source": "etat/villes/gallipoli.json",
+ "nx": 2000,
+ "ny": 1400,
+ "pas": 1.0,
+ "inverserY": false,
+ "metres_par_unite": 5.0,
+ "epaisseur_mur": 4.0,
+ "cases_bloquees": 1363302,
+ "cuit": [
+  {
+   "genre": "eau",
+   "nom": "Le détroit"
+  },
+  {
+   "genre": "eau",
+   "nom": "Le port extérieur"
+  },
+  {
+   "genre": "eau",
+   "nom": "Le port intérieur"
+  },
+  {
+   "genre": "mur",
+   "nom": "Le château intérieur"
+  },
+  {
+   "genre": "mur",
+   "nom": "Le château extérieur"
+  },
+  {
+   "genre": "mur",
+   "nom": "La barbacane"
+  },
+  {
+   "genre": "mur",
+   "nom": "La tour du port"
+  }
+ ],
+ "perces": [
+  {
+   "nom": "Barrière de Thrace",
+   "ou": [
+    48.0,
+    140.0
+   ],
+   "rayon": 3.0,
+   "fiabilite": "compose"
+  },
+  {
+   "nom": "Porte de Thrace",
+   "ou": [
+    63.0,
+    140.0
+   ],
+   "rayon": 3.0,
+   "fiabilite": "compose"
+  },
+  {
+   "nom": "La Porte de fer",
+   "ou": [
+    167.0,
+    120.0
+   ],
+   "rayon": 3.0,
+   "fiabilite": "compose"
+  },
+  {
+   "nom": "Poterne nord",
+   "ou": [
+    150.0,
+    50.0
+   ],
+   "rayon": 2.0,
+   "fiabilite": "compose"
+  },
+  {
+   "nom": "Poterne sud",
+   "ou": [
+    92.0,
+    227.0
+   ],
+   "rayon": 2.0,
+   "fiabilite": "compose"
+  }
+ ]
+}

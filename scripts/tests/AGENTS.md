@@ -9,8 +9,6 @@ python -m unittest discover -s scripts/tests -p "test_*.py"
 | `test_bibliotheque.py` | le stockage des livres : le repli sur le monolithe, le manifeste, l'écriture concurrente |
 | `test_plan_modele.py` | le plan visible d'un siège : étagères, mesures, brouillons |
 | `test_mesures.py` | les adresses de mesure : ce qu'un cahier cite vs ce que l'état tient |
-| `test_tisser_affaires_mj.py` | la projection namespacée de toutes les affaires actives du MJ : pièces, structure, liens entre affaires, moments et causalités événementielles |
-| `test_graphe_causal.py` | l'extraction amont par événement : sens des dépendances, cycles, conditions non adressées et trous typés |
 | `test_corriger_plan.py` | la correction par fragment : unique, ambigu, idempotent |
 | `test_salle.py` | le fil de salle et les relations : ce que la pièce entend, ce que le chuchotement ne laisse pas fuiter, le filtre « chambre existante » |
 | `test_routeur_message.py` | la première couche directe : présence physique, exclusion des sièges joueurs et des marcheurs, parole par billet-réveil sans MJ, gestes et jump au MJ, reçu durable et consommation étroite de la ref ; retour de parloir vers canal + web + flux MJ append-only |
@@ -20,7 +18,8 @@ python -m unittest discover -s scripts/tests -p "test_*.py"
 | `test_depeche_contextes.py` | les appels hommes : session stable et fil de chambre distincts par item d'affaire, transmission CLI et sûreté du chemin |
 | `test_copier_claude_vers_agents.py` | le miroir récursif `CLAUDE.md` → `AGENTS.md`, l'écrasement et le mode de vérification sans écriture |
 | `test_comptoir_moyens.py` | le contrat de comparaison M110 : conformité, dérive, sources des deux valeurs et registre incomplet |
-| `test_relire_reveil.py` | la relecture factuelle des reçus : cause, artefact, parole, aucune sortie visible et refus des contradictions |
+| `test_partie_cartes.py` | la vue joueur d'une partie : le brouillard sur l'ennemi, les apparences des cartes, le compte des obstacles en descendant, aucun id nu — sur `donnees/partie-duel.jsonl`, noms posés à la main |
+| `test_partie_gestes.py` | les gestes du joueur : ce qu'une carte posée sur une carte devient au grand livre, le renfort au lieu du doublon, la reprise qui gèle, les refus en clair — sur une COPIE jetable du même duel, parce que ce module écrit |
 | `essai_occupation.py` | 30 cas d'occupation et d'invariants, sur un `etat/` jetable |
 
 **Rien ne touche le vrai dépôt.** `essai_occupation.py` détourne `occupation.ETAT`

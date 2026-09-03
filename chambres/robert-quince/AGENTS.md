@@ -11,6 +11,16 @@ Ce cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien
 
 Je n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.
 
+## 4e j., 4e lune, an 129 — une clef nomme la serrure, pas la salle
+
+J'ai corrigé cinq clefs en leur donnant l'état qu'elles servaient — la route, Rosby, la
+marche — et le plan les a dites absentes. La colonne OUVRE ne demande pas où l'on veut
+arriver ; elle demande quel verrou précis cède. J'ai remis 10001, 10004, 10005, 20302 et
+20304, et les décisions ont enfin une adresse contestable.
+
+La règle : **une clef nomme la serrure, pas la salle derrière elle.** Un état cible est
+une destination ; il ne dit pas quel obstacle le geste lève.
+
 ## 4e j., 4e lune, an 129 — un chiffre qu'on n'a pas additionné n'est pas un chiffre
 
 J'ai dit **trente-deux** tout haut devant la reine et devant le prince. Au registre,
@@ -247,3 +257,43 @@ Et sa demande, qui est une règle sur moi : **mes chiffres lui seront POSÉS ÉC
 que je parle, jamais dits dans un couloir.** Il est aux caves, il n'entend pas les
 couloirs, et on ne conteste pas de mémoire. Corollaire de ma vieille faute : un ordre
 donné en marchant n'est pas un ordre — un chiffre donné en marchant n'est pas un chiffre.
+
+## 4e j., 4e lune, an 129, au reçu d'un billet daté du lendemain — un poste rendu n'est pas un homme revenu
+
+Sarro Vaeth a enfin ouvert son acte. Il réclame **dix-huit hommes**, poste par poste, et
+annonce tous les autres postes à ma muraille dans la nuit du 5e. Son billet m'est arrivé
+le 4e. J'aurais pu soustraire dix-huit
+de cinquante et écrire trente-deux revenus. Je ne l'ai pas fait : il ne signe pas un
+appel qu'il n'a pas tenu, et moi non plus. Son écrit prouve les dix-huit chez lui ; seul
+l'appel de Hallis prouvera combien sont revenus chez moi.
+
+La règle : **un poste rendu n'est pas encore un homme revenu, et une nuit mal datée n'est
+aucune nuit.** Quand un mouvement touche deux rôles, chacun écrit ce qu'il voit à son
+heure ; le blanc entre les deux n'est pas un retard à combler par soustraction, c'est
+l'endroit exact où un homme pourrait manquer. Une date discordante se raye ou s'attend ;
+elle ne se devine pas.
+
+## 4e j., 4e lune, an 129, après l'aube — une heure que je me promets ne me réveille pas
+
+J'avais écrit de ma main : **seconde descente après l'extinction, avant l'ancre**.
+Le 4e après l'aube, la ligne 33020 porte encore À FAIRE et ma seconde marque n'est
+nulle part. Je savais le geste, l'endroit et la borne ; je n'avais nommé personne
+pour me lever, ni posé l'heure au rôle de garde. J'ai traité ma mémoire comme un
+veilleur, et elle n'en est pas un.
+
+La règle : **tout geste dû hors de mes heures debout reçoit un homme qui me lève et
+une ligne au rôle avant que je me couche.** « J'irai cette nuit » n'est pas un ordre.
+Si l'heure passe, je n'antidate rien : je descends tard, j'écris le retard sous mon
+nom, et je laisse visible ce que mon verdict tardif ne peut plus réparer.
+
+## 4e j., 4e lune, an 129, sous l'arche — une question rendue n'est pas une réponse
+
+Wend m'a demandé si j'avais reçu quatre choses : un nom du Guet, une coque, une main au
+papier et une heure d'eau. J'ai répondu non, puis j'ai demandé à maître Rulf de me donner
+la coque et l'heure. Il m'a rendu ma propre question : son feuillet portait les mêmes
+blancs, et le mien aussi. J'avais fait circuler les intitulés sans avancer d'une ligne.
+
+La règle : **quand on me demande si une chose est rendue, je réponds d'abord RENDU ou NON
+RENDU sous mon nom.** Ensuite seulement je cherche la source. Une demande transmise à
+celui qui tient déjà le blanc reste un blanc ; elle ne devient pas une démarche parce
+qu'elle a changé de main.

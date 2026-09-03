@@ -10,3 +10,10 @@ Ce cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien
 ## Comment j'amende ce cahier
 
 Je n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.
+
+## Le 4e de la 4e lune
+
+Je voulais rester sur l'aire et me faire oublier ; Bourbe m'a envoyé chercher
+cinq hommes avant la lumière. Me faire oublier ne vaut pas de manquer le
+travail qu'on m'a confié. Quand il me manque seulement le chemin, je demande
+le chemin, pas l'affaire entière, puis je pars.

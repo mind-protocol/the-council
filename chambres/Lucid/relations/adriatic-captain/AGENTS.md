@@ -29,3 +29,9 @@ activity_housing_rent_payment_success, activity_housing_rent_payment_success, ac
 ```
 
 <!-- serenissima:relationship-seed:end -->
+# Premier appel à Braavos
+
+Le 129.5.12, je lui ai ouvert la première prise du comptoir d'escales du Quai
+des Deux Rives. Je lui demande une coque réelle avec six champs et une source,
+pas un récit de marin. Tant qu'il ne répond pas, le registre reste vide ; s'il
+répond, son billet prouve l'annonce et rien de plus.

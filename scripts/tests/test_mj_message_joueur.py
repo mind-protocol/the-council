@@ -161,19 +161,34 @@ class MessageJoueurTests(unittest.TestCase):
             "gestes": ["command_execution python scripts/parloir.py --dire"]}))
         self.assertFalse(mj._a_interroge_un_pnj({"gestes": []}))
 
-    def test_le_mj_principal_recoit_le_claude_racine_en_premier(self):
-        contenus = {
-            mj.MANUEL_MJ_RACINE: "CONSTITUTION RACINE",
-            mj.MJ_SPECTACLE_MD: "MANUEL SPECTACLE",
-        }
+    def _manuel_avec(self, contenus):
         with mock.patch.object(mj, "lire",
                                side_effect=lambda p: contenus.get(p)), \
                 mock.patch.object(mj.chambre, "chemin",
                                   return_value="C:\\chambre-mj"):
-            manuel = mj._manuel()
+            return mj._manuel()
 
+    def test_le_mj_principal_recoit_le_claude_racine_en_premier(self):
+        manuel = self._manuel_avec({
+            mj.MANUEL_MJ_RACINE: "CONSTITUTION RACINE",
+            mj.MJ_SPECTACLE_MD: "MANUEL SPECTACLE",
+            mj.MJ_PARTIE_MD: "REGLES DE LA PARTIE",
+        })
         self.assertLess(manuel.index("CONSTITUTION RACINE"),
                         manuel.index("MANUEL SPECTACLE"))
+        self.assertLess(manuel.index("MANUEL SPECTACLE"),
+                        manuel.index("REGLES DE LA PARTIE"))
+
+    def test_le_mj_a_toujours_les_regles_de_la_partie(self):
+        """Le 3.9, le MJ etait reveille sur un coup du conseil de guerre sans
+        avoir jamais lu mj-partie.md, et il repartait faire autre chose. Un
+        arbitre a qui l'on ne donne pas les regles n'arbitre pas : le manuel
+        REFUSE desormais de se monter sans elles."""
+        with self.assertRaises(SystemExit):
+            self._manuel_avec({
+                mj.MANUEL_MJ_RACINE: "CONSTITUTION RACINE",
+                mj.MJ_SPECTACLE_MD: "MANUEL SPECTACLE",
+            })
 
 
 if __name__ == "__main__":

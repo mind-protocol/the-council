@@ -35,6 +35,14 @@ elles aussi par la porte.
 - `metier.md` — le manuel d'une personne dans le monde (servi par `depeche/manuel.py`).
 - `mj-spectacle.md` — la couche de scène du seul MJ, servie avec le manuel
   racine. Seul le front joueur peut l'appeler en CALL.
+- `mj-partie.md` — la partie : le conseil de guerre joué contre quelqu'un
+  (états, blocages, clés, maillons, ressources, deck), ses coups, son temps en
+  tours, ses écritures en `etat/parties/<id>.jsonl`, et la méthode pour
+  l'appliquer au monde. Le greffier est `scripts/partie.py` ; les règles vivent
+  dans `scripts/noyau/partie_greffe.py` (application) et
+  `scripts/noyau/partie_validite.py` (recevabilité). Banc d'essai à ce jour :
+  `etat/parties/premiere.jsonl`, une ouverture — le deck noir posé, rien en
+  face, aucune ressource au grand livre.
 - `skills/jump/SKILL.md` — processus complet du Jump, injecté dans le système
   du MJ uniquement quand le brief courant contient une action `jump`.
 - `copier_claude_vers_agents.py` — la matière du miroir d'instructions pour

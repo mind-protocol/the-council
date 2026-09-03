@@ -3,6 +3,11 @@
 import os
 import sys
 
+# Console Windows en cp1252 : sans ça, le garde CRASHE sur la flèche de son
+# propre message d'erreur et l'on ne lit jamais ce qu'il avait trouvé.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 SCRIPTS = os.path.dirname(os.path.abspath(__file__))
 NOYAU = os.path.join(SCRIPTS, "noyau")
 for p in (SCRIPTS, NOYAU):

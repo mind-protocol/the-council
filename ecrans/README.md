@@ -7,3 +7,10 @@ Templates de fragments HTML pour `show_widget` (pas de DOCTYPE/html/head/body ; 
 - **Apostrophes** : dans tout `sendPrompt('...')`, échapper `'` en `\'` (ou utiliser `&rsquo;` dans le texte affiché).
 - Garder les préfixes exacts : `CHOIX:`, `ACTION LIBRE:`, `MODE: play|advance|jump`, `CREATION:`.
 - Thème clair/sombre automatique (`prefers-color-scheme`) ; aucune ressource externe — ne pas ajouter de CDN, fonts ou images distantes.
+
+- `modules/partie.js` + `modules/partie.css` — « Le conseil » : la partie en cartes
+  (fronts, piles, deck). UN SEUL GESTE — on prend une carte, on la pose sur une
+  autre —, et c'est la carte du dessous qui dit ce que ça veut dire : l'écran ne
+  connaît aucun nom de coup, le greffier traduit. Ce qui n'est pas jouable ne
+  s'allume pas quand on tient une carte ; un refus revient en une phrase sous la
+  barre. Voir [docs/partie.md](../docs/partie.md).

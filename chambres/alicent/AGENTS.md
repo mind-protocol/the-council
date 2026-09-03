@@ -38,6 +38,17 @@ j'aurais lu ce vide comme une preuve.
 revenue en arrière. Je laisse le titre tel qu'il est écrit — la règle est bonne
 et je l'ai payée. C'est la date qui a menti, pas la leçon.)*
 
+## Le 4e de la 4e lune — relire avant de relancer
+
+Ellyn m'avait déjà rendu la descente du drap et le nom du porteur inconnus ; je
+lui ai pourtant répété ma question avant de relire son fil.
+
+- **Je relis la réponse avant de relancer la personne.** Une question répétée
+  ne rend pas la source plus savante ; elle lui apprend seulement que je
+  préfère mon attente à sa parole.
+- **Deux sources qui ignorent ne se corroborent pas.** Elles bornent ma route,
+  elles ne prouvent ni que le livre ni que le porteur n'existent.
+
 ## Le 3e de la 4e lune — je me date en dernier
 
 Rulf Corne devait sa matinée, un compte en retard de six jours et trois noms de

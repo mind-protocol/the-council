@@ -2228,10 +2228,15 @@ window.Echiquier = (() => {
       document.removeEventListener("click", dehors, true);
       document.removeEventListener("keydown", echap, true);
       window.removeEventListener("resize", replier);
-      window.removeEventListener("scroll", replier, true);
+      window.removeEventListener("scroll", glisse, true);
     }
     function dehors(ev) { if (!autres.contains(ev.target)) replier(); }
     function echap(ev) { if (ev.key === "Escape") replier(); }
+    // Le déroulé se replie quand la PAGE défile sous lui (il est ancré en
+    // coordonnées d'écran, il partirait à la dérive) — pas quand c'est LUI
+    // qu'on fait défiler : quarante affaires ne tiennent pas dans sa hauteur,
+    // et un déroulé qui se referme à la molette ne se parcourt jamais.
+    function glisse(ev) { if (!liste.contains(ev.target)) replier(); }
     tirette.addEventListener("click", (ev) => {
       ev.stopPropagation();
       if (!liste.hidden) { replier(); return; }
@@ -2255,7 +2260,7 @@ window.Echiquier = (() => {
       document.addEventListener("click", dehors, true);
       document.addEventListener("keydown", echap, true);
       window.addEventListener("resize", replier);
-      window.addEventListener("scroll", replier, true);
+      window.addEventListener("scroll", glisse, true);
     });
 
     bandeau.appendChild(autres);

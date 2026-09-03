@@ -1,0 +1,6043 @@
+{
+  "racine": "src",
+  "containers": [
+    {
+      "id": "orchestration",
+      "nom": "Orchestration",
+      "emoji": "⏱️",
+      "dossier": "src/orchestration",
+      "intention": "Possède le temps et l'ordre d'exécution des phases",
+      "implemente": true,
+      "modules": [
+        {
+          "id": "orchestration_expose",
+          "fichier": "src/orchestration/expose.js",
+          "chemin": "expose.js",
+          "estExpose": true,
+          "lignes": 39
+        },
+        {
+          "id": "orchestration_horloge",
+          "fichier": "src/orchestration/horloge.js",
+          "chemin": "horloge.js",
+          "estExpose": false,
+          "lignes": 62
+        },
+        {
+          "id": "orchestration_pipeline",
+          "fichier": "src/orchestration/pipeline.js",
+          "chemin": "pipeline.js",
+          "estExpose": false,
+          "lignes": 19
+        }
+      ],
+      "internes": [
+        {
+          "de": "orchestration_expose",
+          "vers": "orchestration_horloge",
+          "noms": [
+            "creerHorloge"
+          ]
+        },
+        {
+          "de": "orchestration_expose",
+          "vers": "orchestration_pipeline",
+          "noms": [
+            "creerPipeline"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monde",
+      "nom": "Monde",
+      "emoji": "🌍",
+      "dossier": "src/monde",
+      "intention": "La vérité objective : terrain, positions réelles des corps",
+      "implemente": true,
+      "modules": [
+        {
+          "id": "monde_chaleur",
+          "fichier": "src/monde/chaleur.js",
+          "chemin": "chaleur.js",
+          "estExpose": false,
+          "lignes": 68
+        },
+        {
+          "id": "monde_expose",
+          "fichier": "src/monde/expose.js",
+          "chemin": "expose.js",
+          "estExpose": true,
+          "lignes": 198
+        },
+        {
+          "id": "monde_index_spatial",
+          "fichier": "src/monde/index-spatial.js",
+          "chemin": "index-spatial.js",
+          "estExpose": false,
+          "lignes": 102
+        },
+        {
+          "id": "monde_navgrid",
+          "fichier": "src/monde/navgrid.js",
+          "chemin": "navgrid.js",
+          "estExpose": false,
+          "lignes": 137
+        },
+        {
+          "id": "monde_registre",
+          "fichier": "src/monde/registre.js",
+          "chemin": "registre.js",
+          "estExpose": false,
+          "lignes": 112
+        },
+        {
+          "id": "monde_terrain_masque",
+          "fichier": "src/monde/terrain-masque.js",
+          "chemin": "terrain-masque.js",
+          "estExpose": false,
+          "lignes": 79
+        },
+        {
+          "id": "monde_terrain",
+          "fichier": "src/monde/terrain.js",
+          "chemin": "terrain.js",
+          "estExpose": false,
+          "lignes": 86
+        }
+      ],
+      "internes": [
+        {
+          "de": "monde_expose",
+          "vers": "monde_registre",
+          "noms": [
+            "creerRegistre"
+          ]
+        },
+        {
+          "de": "monde_expose",
+          "vers": "monde_terrain",
+          "noms": [
+            "creerTerrain"
+          ]
+        },
+        {
+          "de": "monde_expose",
+          "vers": "monde_terrain_masque",
+          "noms": [
+            "creerTerrainMasque"
+          ]
+        },
+        {
+          "de": "monde_expose",
+          "vers": "monde_navgrid",
+          "noms": [
+            "creerNavgrid"
+          ]
+        },
+        {
+          "de": "monde_expose",
+          "vers": "monde_index_spatial",
+          "noms": [
+            "creerIndexSpatial"
+          ]
+        },
+        {
+          "de": "monde_expose",
+          "vers": "monde_chaleur",
+          "noms": [
+            "creerChaleur"
+          ]
+        },
+        {
+          "de": "monde_terrain_masque",
+          "vers": "monde_terrain",
+          "noms": [
+            "distanceCarreeAuRect"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cognition",
+      "nom": "Cognition",
+      "emoji": "🧠",
+      "dossier": "src/cognition",
+      "intention": "Le cerveau de chaque homme : perception → représentation → décision → intentions",
+      "implemente": true,
+      "modules": [
+        {
+          "id": "cognition_brains_cadence",
+          "fichier": "src/cognition/brains/cadence.js",
+          "chemin": "brains/cadence.js",
+          "estExpose": false,
+          "lignes": 33
+        },
+        {
+          "id": "cognition_brains_commandant_arbitre",
+          "fichier": "src/cognition/brains/commandant/arbitre.js",
+          "chemin": "brains/commandant/arbitre.js",
+          "estExpose": false,
+          "lignes": 224
+        },
+        {
+          "id": "cognition_brains_commandant_brain",
+          "fichier": "src/cognition/brains/commandant/brain.js",
+          "chemin": "brains/commandant/brain.js",
+          "estExpose": false,
+          "lignes": 76
+        },
+        {
+          "id": "cognition_brains_commandant_estimation",
+          "fichier": "src/cognition/brains/commandant/estimation.js",
+          "chemin": "brains/commandant/estimation.js",
+          "estExpose": false,
+          "lignes": 219
+        },
+        {
+          "id": "cognition_brains_commandant_projection",
+          "fichier": "src/cognition/brains/commandant/projection.js",
+          "chemin": "brains/commandant/projection.js",
+          "estExpose": false,
+          "lignes": 63
+        },
+        {
+          "id": "cognition_brains_dragon_brain",
+          "fichier": "src/cognition/brains/dragon/brain.js",
+          "chemin": "brains/dragon/brain.js",
+          "estExpose": false,
+          "lignes": 78
+        },
+        {
+          "id": "cognition_brains_dragon_couloirs",
+          "fichier": "src/cognition/brains/dragon/couloirs.js",
+          "chemin": "brains/dragon/couloirs.js",
+          "estExpose": false,
+          "lignes": 39
+        },
+        {
+          "id": "cognition_brains_dragon_machine",
+          "fichier": "src/cognition/brains/dragon/machine.js",
+          "chemin": "brains/dragon/machine.js",
+          "estExpose": false,
+          "lignes": 250
+        },
+        {
+          "id": "cognition_brains_gregaire_brain",
+          "fichier": "src/cognition/brains/gregaire/brain.js",
+          "chemin": "brains/gregaire/brain.js",
+          "estExpose": false,
+          "lignes": 90
+        },
+        {
+          "id": "cognition_brains_gregaire_machine",
+          "fichier": "src/cognition/brains/gregaire/machine.js",
+          "chemin": "brains/gregaire/machine.js",
+          "estExpose": false,
+          "lignes": 91
+        },
+        {
+          "id": "cognition_brains_machine",
+          "fichier": "src/cognition/brains/machine.js",
+          "chemin": "brains/machine.js",
+          "estExpose": false,
+          "lignes": 163
+        },
+        {
+          "id": "cognition_brains_random_walk",
+          "fichier": "src/cognition/brains/random-walk.js",
+          "chemin": "brains/random-walk.js",
+          "estExpose": false,
+          "lignes": 45
+        },
+        {
+          "id": "cognition_brains_soldat_brain",
+          "fichier": "src/cognition/brains/soldat/brain.js",
+          "chemin": "brains/soldat/brain.js",
+          "estExpose": false,
+          "lignes": 159
+        },
+        {
+          "id": "cognition_brains_soldat_machine",
+          "fichier": "src/cognition/brains/soldat/machine.js",
+          "chemin": "brains/soldat/machine.js",
+          "estExpose": false,
+          "lignes": 259
+        },
+        {
+          "id": "cognition_competences_charger",
+          "fichier": "src/cognition/competences/charger.js",
+          "chemin": "competences/charger.js",
+          "estExpose": false,
+          "lignes": 34
+        },
+        {
+          "id": "cognition_competences_chercher",
+          "fichier": "src/cognition/competences/chercher.js",
+          "chemin": "competences/chercher.js",
+          "estExpose": false,
+          "lignes": 117
+        },
+        {
+          "id": "cognition_competences_combattre",
+          "fichier": "src/cognition/competences/combattre.js",
+          "chemin": "competences/combattre.js",
+          "estExpose": false,
+          "lignes": 210
+        },
+        {
+          "id": "cognition_competences_flaner",
+          "fichier": "src/cognition/competences/flaner.js",
+          "chemin": "competences/flaner.js",
+          "estExpose": false,
+          "lignes": 17
+        },
+        {
+          "id": "cognition_competences_monter",
+          "fichier": "src/cognition/competences/monter.js",
+          "chemin": "competences/monter.js",
+          "estExpose": false,
+          "lignes": 57
+        },
+        {
+          "id": "cognition_competences_moral",
+          "fichier": "src/cognition/competences/moral.js",
+          "chemin": "competences/moral.js",
+          "estExpose": false,
+          "lignes": 111
+        },
+        {
+          "id": "cognition_competences_se_mettre_en_formation",
+          "fichier": "src/cognition/competences/se-mettre-en-formation.js",
+          "chemin": "competences/se-mettre-en-formation.js",
+          "estExpose": false,
+          "lignes": 161
+        },
+        {
+          "id": "cognition_competences_se_regrouper",
+          "fichier": "src/cognition/competences/se-regrouper.js",
+          "chemin": "competences/se-regrouper.js",
+          "estExpose": false,
+          "lignes": 74
+        },
+        {
+          "id": "cognition_competences_tirer",
+          "fichier": "src/cognition/competences/tirer.js",
+          "chemin": "competences/tirer.js",
+          "estExpose": false,
+          "lignes": 50
+        },
+        {
+          "id": "cognition_couverture",
+          "fichier": "src/cognition/couverture.js",
+          "chemin": "couverture.js",
+          "estExpose": false,
+          "lignes": 140
+        },
+        {
+          "id": "cognition_doctrine_formes_rangs",
+          "fichier": "src/cognition/doctrine/formes/rangs.js",
+          "chemin": "doctrine/formes/rangs.js",
+          "estExpose": false,
+          "lignes": 53
+        },
+        {
+          "id": "cognition_doctrine_manoeuvres_charger",
+          "fichier": "src/cognition/doctrine/manoeuvres/charger.js",
+          "chemin": "doctrine/manoeuvres/charger.js",
+          "estExpose": false,
+          "lignes": 68
+        },
+        {
+          "id": "cognition_doctrine_manoeuvres_harceler",
+          "fichier": "src/cognition/doctrine/manoeuvres/harceler.js",
+          "chemin": "doctrine/manoeuvres/harceler.js",
+          "estExpose": false,
+          "lignes": 37
+        },
+        {
+          "id": "cognition_doctrine_manoeuvres_livre",
+          "fichier": "src/cognition/doctrine/manoeuvres/livre.js",
+          "chemin": "doctrine/manoeuvres/livre.js",
+          "estExpose": false,
+          "lignes": 14
+        },
+        {
+          "id": "cognition_doctrine_manoeuvres_ratisser",
+          "fichier": "src/cognition/doctrine/manoeuvres/ratisser.js",
+          "chemin": "doctrine/manoeuvres/ratisser.js",
+          "estExpose": false,
+          "lignes": 37
+        },
+        {
+          "id": "cognition_doctrine_manoeuvres_se_reformer",
+          "fichier": "src/cognition/doctrine/manoeuvres/se-reformer.js",
+          "chemin": "doctrine/manoeuvres/se-reformer.js",
+          "estExpose": false,
+          "lignes": 31
+        },
+        {
+          "id": "cognition_doctrine_manoeuvres_tenir",
+          "fichier": "src/cognition/doctrine/manoeuvres/tenir.js",
+          "chemin": "doctrine/manoeuvres/tenir.js",
+          "estExpose": false,
+          "lignes": 40
+        },
+        {
+          "id": "cognition_expose",
+          "fichier": "src/cognition/expose.js",
+          "chemin": "expose.js",
+          "estExpose": true,
+          "lignes": 299
+        },
+        {
+          "id": "cognition_intentions",
+          "fichier": "src/cognition/intentions.js",
+          "chemin": "intentions.js",
+          "estExpose": false,
+          "lignes": 62
+        },
+        {
+          "id": "cognition_langage_decrire",
+          "fichier": "src/cognition/langage/decrire.js",
+          "chemin": "langage/decrire.js",
+          "estExpose": false,
+          "lignes": 68
+        },
+        {
+          "id": "cognition_langage_repliques",
+          "fichier": "src/cognition/langage/repliques.js",
+          "chemin": "langage/repliques.js",
+          "estExpose": false,
+          "lignes": 110
+        },
+        {
+          "id": "cognition_langage_resoudre_lieu",
+          "fichier": "src/cognition/langage/resoudre-lieu.js",
+          "chemin": "langage/resoudre-lieu.js",
+          "estExpose": false,
+          "lignes": 114
+        },
+        {
+          "id": "cognition_orientation",
+          "fichier": "src/cognition/orientation.js",
+          "chemin": "orientation.js",
+          "estExpose": false,
+          "lignes": 142
+        },
+        {
+          "id": "cognition_paroles",
+          "fichier": "src/cognition/paroles.js",
+          "chemin": "paroles.js",
+          "estExpose": false,
+          "lignes": 137
+        },
+        {
+          "id": "cognition_perception_attention",
+          "fichier": "src/cognition/perception/attention.js",
+          "chemin": "perception/attention.js",
+          "estExpose": false,
+          "lignes": 30
+        },
+        {
+          "id": "cognition_perception_clusters",
+          "fichier": "src/cognition/perception/clusters.js",
+          "chemin": "perception/clusters.js",
+          "estExpose": false,
+          "lignes": 48
+        },
+        {
+          "id": "cognition_perception_forme_tas",
+          "fichier": "src/cognition/perception/forme-tas.js",
+          "chemin": "perception/forme-tas.js",
+          "estExpose": false,
+          "lignes": 76
+        },
+        {
+          "id": "cognition_perception_percevoir",
+          "fichier": "src/cognition/perception/percevoir.js",
+          "chemin": "perception/percevoir.js",
+          "estExpose": false,
+          "lignes": 233
+        },
+        {
+          "id": "cognition_representation",
+          "fichier": "src/cognition/representation.js",
+          "chemin": "representation.js",
+          "estExpose": false,
+          "lignes": 330
+        }
+      ],
+      "internes": [
+        {
+          "de": "cognition_brains_commandant_arbitre",
+          "vers": "cognition_brains_commandant_estimation",
+          "noms": [
+            "estimerSituation",
+            "CRITERES"
+          ]
+        },
+        {
+          "de": "cognition_brains_commandant_arbitre",
+          "vers": "cognition_brains_commandant_projection",
+          "noms": [
+            "projeterAxes"
+          ]
+        },
+        {
+          "de": "cognition_brains_commandant_arbitre",
+          "vers": "cognition_langage_decrire",
+          "noms": [
+            "motDirection"
+          ]
+        },
+        {
+          "de": "cognition_brains_commandant_brain",
+          "vers": "cognition_brains_soldat_brain",
+          "noms": [
+            "creerSoldat"
+          ]
+        },
+        {
+          "de": "cognition_brains_commandant_brain",
+          "vers": "cognition_brains_cadence",
+          "noms": [
+            "creerCadence"
+          ]
+        },
+        {
+          "de": "cognition_brains_commandant_brain",
+          "vers": "cognition_brains_commandant_arbitre",
+          "noms": [
+            "creerArbitre"
+          ]
+        },
+        {
+          "de": "cognition_brains_commandant_estimation",
+          "vers": "cognition_langage_resoudre_lieu",
+          "noms": [
+            "capDeDirection"
+          ]
+        },
+        {
+          "de": "cognition_brains_dragon_brain",
+          "vers": "cognition_brains_cadence",
+          "noms": [
+            "creerCadence"
+          ]
+        },
+        {
+          "de": "cognition_brains_dragon_brain",
+          "vers": "cognition_brains_machine",
+          "noms": [
+            "creerMachine"
+          ]
+        },
+        {
+          "de": "cognition_brains_dragon_brain",
+          "vers": "cognition_brains_dragon_machine",
+          "noms": [
+            "MACHINE_DRAGON",
+            "gardes",
+            "actions"
+          ]
+        },
+        {
+          "de": "cognition_brains_dragon_machine",
+          "vers": "cognition_intentions",
+          "noms": [
+            "voler",
+            "souffler"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_brain",
+          "vers": "cognition_brains_cadence",
+          "noms": [
+            "creerCadence"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_brain",
+          "vers": "cognition_brains_machine",
+          "noms": [
+            "creerMachine"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_brain",
+          "vers": "cognition_langage_decrire",
+          "noms": [
+            "decrireTas"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_brain",
+          "vers": "cognition_competences_chercher",
+          "noms": [
+            "creerChercher",
+            "PRIORITES_TROUPIER"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_brain",
+          "vers": "cognition_paroles",
+          "noms": [
+            "creerParoles"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_brain",
+          "vers": "cognition_brains_gregaire_machine",
+          "noms": [
+            "MACHINE_GREGAIRE",
+            "gardesCercle",
+            "actionsCercle"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_machine",
+          "vers": "cognition_competences_flaner",
+          "noms": [
+            "flaner"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_machine",
+          "vers": "cognition_competences_se_regrouper",
+          "noms": [
+            "geometrieCercle",
+            "rejoindre",
+            "ecarter",
+            "discuter"
+          ]
+        },
+        {
+          "de": "cognition_brains_gregaire_machine",
+          "vers": "cognition_competences_chercher",
+          "noms": [
+            "connaitQuelquun"
+          ]
+        },
+        {
+          "de": "cognition_brains_random_walk",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA"
+          ]
+        },
+        {
+          "de": "cognition_brains_random_walk",
+          "vers": "cognition_brains_cadence",
+          "noms": [
+            "creerCadence"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_brain",
+          "vers": "cognition_brains_cadence",
+          "noms": [
+            "creerCadence"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_brain",
+          "vers": "cognition_brains_machine",
+          "noms": [
+            "creerMachine"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_brain",
+          "vers": "cognition_competences_se_mettre_en_formation",
+          "noms": [
+            "creerSeMettreEnFormation"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_brain",
+          "vers": "cognition_competences_chercher",
+          "noms": [
+            "creerChercher",
+            "PRIORITES_TROUPIER",
+            "PRIORITES_COMMANDANT"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_brain",
+          "vers": "cognition_langage_decrire",
+          "noms": [
+            "decrireTas"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_brain",
+          "vers": "cognition_competences_moral",
+          "noms": [
+            "pressionDePeur"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_brain",
+          "vers": "cognition_paroles",
+          "noms": [
+            "creerParoles"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_brain",
+          "vers": "cognition_brains_soldat_machine",
+          "noms": [
+            "MACHINE_SOLDAT",
+            "gardes",
+            "actions"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_machine",
+          "vers": "cognition_brains_gregaire_machine",
+          "noms": [
+            "gardesCercle",
+            "actionsCercle",
+            "menacePercue"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_machine",
+          "vers": "cognition_competences_combattre",
+          "noms": [
+            "ennemiAuContact",
+            "derriereLaLigne",
+            "rapportDeForce",
+            "cureeOuverte",
+            "sePreparer",
+            "engager",
+            "poursuivre",
+            "pousserDerriere",
+            "rompre"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_machine",
+          "vers": "cognition_competences_se_regrouper",
+          "noms": [
+            "geometrieCercle"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_machine",
+          "vers": "cognition_competences_moral",
+          "noms": [
+            "pressionDePeur",
+            "fuir",
+            "espritsRepris"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_machine",
+          "vers": "cognition_competences_tirer",
+          "noms": [
+            "voleePossible",
+            "tirer as tirerVolee"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_machine",
+          "vers": "cognition_competences_charger",
+          "noms": [
+            "charger"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_machine",
+          "vers": "cognition_competences_monter",
+          "noms": [
+            "enSelle",
+            "elanSuffisant",
+            "seDegager"
+          ]
+        },
+        {
+          "de": "cognition_brains_soldat_machine",
+          "vers": "cognition_langage_resoudre_lieu",
+          "noms": [
+            "resoudreEnFormation"
+          ]
+        },
+        {
+          "de": "cognition_competences_charger",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA",
+            "attendre"
+          ]
+        },
+        {
+          "de": "cognition_competences_charger",
+          "vers": "cognition_langage_resoudre_lieu",
+          "noms": [
+            "capDeDirection"
+          ]
+        },
+        {
+          "de": "cognition_competences_chercher",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA"
+          ]
+        },
+        {
+          "de": "cognition_competences_combattre",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA",
+            "attendre",
+            "frapper"
+          ]
+        },
+        {
+          "de": "cognition_competences_flaner",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA"
+          ]
+        },
+        {
+          "de": "cognition_competences_monter",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA",
+            "attendre"
+          ]
+        },
+        {
+          "de": "cognition_competences_moral",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA"
+          ]
+        },
+        {
+          "de": "cognition_competences_moral",
+          "vers": "cognition_competences_combattre",
+          "noms": [
+            "contactsAdverses",
+            "adverseLePlusProche",
+            "rapportDeForce"
+          ]
+        },
+        {
+          "de": "cognition_competences_se_mettre_en_formation",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA",
+            "attendre"
+          ]
+        },
+        {
+          "de": "cognition_competences_se_mettre_en_formation",
+          "vers": "cognition_doctrine_formes_rangs",
+          "noms": [
+            "ancrageRangs"
+          ]
+        },
+        {
+          "de": "cognition_competences_se_mettre_en_formation",
+          "vers": "cognition_langage_resoudre_lieu",
+          "noms": [
+            "resoudreEnFormation",
+            "capDeDirection"
+          ]
+        },
+        {
+          "de": "cognition_competences_se_regrouper",
+          "vers": "cognition_intentions",
+          "noms": [
+            "allerA",
+            "attendre"
+          ]
+        },
+        {
+          "de": "cognition_competences_tirer",
+          "vers": "cognition_intentions",
+          "noms": [
+            "attendre",
+            "tirer as intentionTirer"
+          ]
+        },
+        {
+          "de": "cognition_competences_tirer",
+          "vers": "cognition_competences_combattre",
+          "noms": [
+            "ennemiAuContact"
+          ]
+        },
+        {
+          "de": "cognition_doctrine_manoeuvres_livre",
+          "vers": "cognition_doctrine_manoeuvres_ratisser",
+          "noms": [
+            "RATISSER"
+          ]
+        },
+        {
+          "de": "cognition_doctrine_manoeuvres_livre",
+          "vers": "cognition_doctrine_manoeuvres_charger",
+          "noms": [
+            "CHARGER"
+          ]
+        },
+        {
+          "de": "cognition_doctrine_manoeuvres_livre",
+          "vers": "cognition_doctrine_manoeuvres_tenir",
+          "noms": [
+            "TENIR"
+          ]
+        },
+        {
+          "de": "cognition_doctrine_manoeuvres_livre",
+          "vers": "cognition_doctrine_manoeuvres_harceler",
+          "noms": [
+            "HARCELER"
+          ]
+        },
+        {
+          "de": "cognition_doctrine_manoeuvres_livre",
+          "vers": "cognition_doctrine_manoeuvres_se_reformer",
+          "noms": [
+            "SE_REFORMER"
+          ]
+        },
+        {
+          "de": "cognition_expose",
+          "vers": "cognition_representation",
+          "noms": [
+            "creerRepresentation"
+          ]
+        },
+        {
+          "de": "cognition_expose",
+          "vers": "cognition_couverture",
+          "noms": [
+            "creerCouverture"
+          ]
+        },
+        {
+          "de": "cognition_expose",
+          "vers": "cognition_perception_percevoir",
+          "noms": [
+            "creerPercevoir"
+          ]
+        },
+        {
+          "de": "cognition_expose",
+          "vers": "cognition_orientation",
+          "noms": [
+            "arbitrerOrientation"
+          ]
+        },
+        {
+          "de": "cognition_expose",
+          "vers": "cognition_langage_decrire",
+          "noms": [
+            "decrireTas"
+          ]
+        },
+        {
+          "de": "cognition_paroles",
+          "vers": "cognition__infra_rng",
+          "noms": [
+            "creerRng"
+          ]
+        },
+        {
+          "de": "cognition_paroles",
+          "vers": "cognition_langage_repliques",
+          "noms": [
+            "choisir"
+          ]
+        },
+        {
+          "de": "cognition_perception_percevoir",
+          "vers": "cognition_perception_clusters",
+          "noms": [
+            "regrouperEnTas"
+          ]
+        },
+        {
+          "de": "cognition_perception_percevoir",
+          "vers": "cognition_perception_attention",
+          "noms": [
+            "retenir"
+          ]
+        },
+        {
+          "de": "cognition_perception_percevoir",
+          "vers": "cognition_perception_forme_tas",
+          "noms": [
+            "analyserFormeTas"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "social",
+      "nom": "Social",
+      "emoji": "📯",
+      "dossier": "src/social",
+      "intention": "La cognition-à-cognition médiée par le physique : hiérarchie, ordres, transmission",
+      "implemente": true,
+      "modules": [
+        {
+          "id": "social_expose",
+          "fichier": "src/social/expose.js",
+          "chemin": "expose.js",
+          "estExpose": true,
+          "lignes": 23
+        },
+        {
+          "id": "social_ordres",
+          "fichier": "src/social/ordres.js",
+          "chemin": "ordres.js",
+          "estExpose": false,
+          "lignes": 76
+        },
+        {
+          "id": "social_unites",
+          "fichier": "src/social/unites.js",
+          "chemin": "unites.js",
+          "estExpose": false,
+          "lignes": 49
+        }
+      ],
+      "internes": [
+        {
+          "de": "social_expose",
+          "vers": "social_unites",
+          "noms": [
+            "creerUnites"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "corps",
+      "nom": "Corps",
+      "emoji": "❤️",
+      "dossier": "src/corps",
+      "intention": "L'état physiologique interne : stamina, blessures, traits",
+      "implemente": true,
+      "modules": [
+        {
+          "id": "corps_armes",
+          "fichier": "src/corps/armes.js",
+          "chemin": "armes.js",
+          "estExpose": false,
+          "lignes": 57
+        },
+        {
+          "id": "corps_blessures",
+          "fichier": "src/corps/blessures.js",
+          "chemin": "blessures.js",
+          "estExpose": false,
+          "lignes": 59
+        },
+        {
+          "id": "corps_carquois",
+          "fichier": "src/corps/carquois.js",
+          "chemin": "carquois.js",
+          "estExpose": false,
+          "lignes": 44
+        },
+        {
+          "id": "corps_dragons",
+          "fichier": "src/corps/dragons.js",
+          "chemin": "dragons.js",
+          "estExpose": false,
+          "lignes": 79
+        },
+        {
+          "id": "corps_equipement",
+          "fichier": "src/corps/equipement.js",
+          "chemin": "equipement.js",
+          "estExpose": false,
+          "lignes": 74
+        },
+        {
+          "id": "corps_expose",
+          "fichier": "src/corps/expose.js",
+          "chemin": "expose.js",
+          "estExpose": true,
+          "lignes": 172
+        },
+        {
+          "id": "corps_souffle",
+          "fichier": "src/corps/souffle.js",
+          "chemin": "souffle.js",
+          "estExpose": false,
+          "lignes": 71
+        }
+      ],
+      "internes": [
+        {
+          "de": "corps_equipement",
+          "vers": "corps_armes",
+          "noms": [
+            "ARMES",
+            "BOUCLIER",
+            "ARC_DE_TIR"
+          ]
+        },
+        {
+          "de": "corps_expose",
+          "vers": "corps_equipement",
+          "noms": [
+            "creerEquipement"
+          ]
+        },
+        {
+          "de": "corps_expose",
+          "vers": "corps_souffle",
+          "noms": [
+            "creerSouffle"
+          ]
+        },
+        {
+          "de": "corps_expose",
+          "vers": "corps_blessures",
+          "noms": [
+            "creerBlessures"
+          ]
+        },
+        {
+          "de": "corps_expose",
+          "vers": "corps_carquois",
+          "noms": [
+            "creerCarquois"
+          ]
+        },
+        {
+          "de": "corps_expose",
+          "vers": "corps_dragons",
+          "noms": [
+            "DRAGONS"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "action",
+      "nom": "Action",
+      "emoji": "🏃",
+      "dossier": "src/action",
+      "intention": "Le traducteur : intentions abstraites → vitesses désirées concrètes",
+      "implemente": true,
+      "modules": [
+        {
+          "id": "action_actes_souffler",
+          "fichier": "src/action/actes/souffler.js",
+          "chemin": "actes/souffler.js",
+          "estExpose": false,
+          "lignes": 134
+        },
+        {
+          "id": "action_expose",
+          "fichier": "src/action/expose.js",
+          "chemin": "expose.js",
+          "estExpose": true,
+          "lignes": 432
+        },
+        {
+          "id": "action_pathfinding_astar",
+          "fichier": "src/action/pathfinding/astar.js",
+          "chemin": "pathfinding/astar.js",
+          "estExpose": false,
+          "lignes": 164
+        },
+        {
+          "id": "action_pathfinding_lissage",
+          "fichier": "src/action/pathfinding/lissage.js",
+          "chemin": "pathfinding/lissage.js",
+          "estExpose": false,
+          "lignes": 55
+        },
+        {
+          "id": "action_steering_refus_monture",
+          "fichier": "src/action/steering/refus-monture.js",
+          "chemin": "steering/refus-monture.js",
+          "estExpose": false,
+          "lignes": 62
+        },
+        {
+          "id": "action_steering_suivi_chemin",
+          "fichier": "src/action/steering/suivi-chemin.js",
+          "chemin": "steering/suivi-chemin.js",
+          "estExpose": false,
+          "lignes": 43
+        },
+        {
+          "id": "action_steering_vol",
+          "fichier": "src/action/steering/vol.js",
+          "chemin": "steering/vol.js",
+          "estExpose": false,
+          "lignes": 124
+        }
+      ],
+      "internes": [
+        {
+          "de": "action_expose",
+          "vers": "action_pathfinding_astar",
+          "noms": [
+            "trouverChemin"
+          ]
+        },
+        {
+          "de": "action_expose",
+          "vers": "action_pathfinding_lissage",
+          "noms": [
+            "lisserChemin"
+          ]
+        },
+        {
+          "de": "action_expose",
+          "vers": "action_steering_suivi_chemin",
+          "noms": [
+            "creerSuivi"
+          ]
+        },
+        {
+          "de": "action_expose",
+          "vers": "action_steering_vol",
+          "noms": [
+            "consigneVol"
+          ]
+        },
+        {
+          "de": "action_expose",
+          "vers": "action_actes_souffler",
+          "noms": [
+            "ticSouffle"
+          ]
+        },
+        {
+          "de": "action_expose",
+          "vers": "action_steering_refus_monture",
+          "noms": [
+            "refusDeLaMonture"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "physique",
+      "nom": "Physique",
+      "emoji": "⚙️",
+      "dossier": "src/physique",
+      "intention": "Bête et incorruptible : forces, collisions, intégration — seul écrivain régulier des positions",
+      "implemente": true,
+      "modules": [
+        {
+          "id": "physique_acoustique_portee_voix",
+          "fichier": "src/physique/acoustique/portee-voix.js",
+          "chemin": "acoustique/portee-voix.js",
+          "estExpose": false,
+          "lignes": 41
+        },
+        {
+          "id": "physique_collisions_choc",
+          "fichier": "src/physique/collisions/choc.js",
+          "chemin": "collisions/choc.js",
+          "estExpose": false,
+          "lignes": 79
+        },
+        {
+          "id": "physique_collisions_resolution",
+          "fichier": "src/physique/collisions/resolution.js",
+          "chemin": "collisions/resolution.js",
+          "estExpose": false,
+          "lignes": 84
+        },
+        {
+          "id": "physique_expose",
+          "fichier": "src/physique/expose.js",
+          "chemin": "expose.js",
+          "estExpose": true,
+          "lignes": 218
+        },
+        {
+          "id": "physique_forces_coude_a_coude",
+          "fichier": "src/physique/forces/coude-a-coude.js",
+          "chemin": "forces/coude-a-coude.js",
+          "estExpose": false,
+          "lignes": 58
+        },
+        {
+          "id": "physique_forces_garde",
+          "fichier": "src/physique/forces/garde.js",
+          "chemin": "forces/garde.js",
+          "estExpose": false,
+          "lignes": 65
+        },
+        {
+          "id": "physique_forces_paires",
+          "fichier": "src/physique/forces/paires.js",
+          "chemin": "forces/paires.js",
+          "estExpose": false,
+          "lignes": 48
+        },
+        {
+          "id": "physique_forces_repulsions",
+          "fichier": "src/physique/forces/repulsions.js",
+          "chemin": "forces/repulsions.js",
+          "estExpose": false,
+          "lignes": 101
+        },
+        {
+          "id": "physique_integration",
+          "fichier": "src/physique/integration.js",
+          "chemin": "integration.js",
+          "estExpose": false,
+          "lignes": 72
+        }
+      ],
+      "internes": [
+        {
+          "de": "physique_expose",
+          "vers": "physique_forces_repulsions",
+          "noms": [
+            "calculerRepulsions",
+            "ajouterRepulsionGisants"
+          ]
+        },
+        {
+          "de": "physique_expose",
+          "vers": "physique_forces_coude_a_coude",
+          "noms": [
+            "ajouterCoudeACoude"
+          ]
+        },
+        {
+          "de": "physique_expose",
+          "vers": "physique_forces_paires",
+          "noms": [
+            "pairesProches"
+          ]
+        },
+        {
+          "de": "physique_expose",
+          "vers": "physique_forces_garde",
+          "noms": [
+            "ajouterGarde"
+          ]
+        },
+        {
+          "de": "physique_expose",
+          "vers": "physique_collisions_resolution",
+          "noms": [
+            "resoudreCollisions"
+          ]
+        },
+        {
+          "de": "physique_expose",
+          "vers": "physique_collisions_choc",
+          "noms": [
+            "resoudreChocs"
+          ]
+        },
+        {
+          "de": "physique_expose",
+          "vers": "physique_integration",
+          "noms": [
+            "integrer"
+          ]
+        },
+        {
+          "de": "physique_expose",
+          "vers": "physique_acoustique_portee_voix",
+          "noms": [
+            "quiEntend as quiEntendAPortee"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "presentation",
+      "nom": "Présentation",
+      "emoji": "🖥️",
+      "dossier": "src/presentation",
+      "intention": "Fenêtre et télécommande : rendu, UI, inspecteur — la sim tourne headless sans elle",
+      "implemente": true,
+      "modules": [
+        {
+          "id": "presentation_bulles",
+          "fichier": "src/presentation/bulles.js",
+          "chemin": "bulles.js",
+          "estExpose": false,
+          "lignes": 41
+        },
+        {
+          "id": "presentation_calques_bulles",
+          "fichier": "src/presentation/calques/bulles.js",
+          "chemin": "calques/bulles.js",
+          "estExpose": false,
+          "lignes": 45
+        },
+        {
+          "id": "presentation_calques_chemins",
+          "fichier": "src/presentation/calques/chemins.js",
+          "chemin": "calques/chemins.js",
+          "estExpose": false,
+          "lignes": 35
+        },
+        {
+          "id": "presentation_calques_coups",
+          "fichier": "src/presentation/calques/coups.js",
+          "chemin": "calques/coups.js",
+          "estExpose": false,
+          "lignes": 79
+        },
+        {
+          "id": "presentation_calques_couverture",
+          "fichier": "src/presentation/calques/couverture.js",
+          "chemin": "calques/couverture.js",
+          "estExpose": false,
+          "lignes": 27
+        },
+        {
+          "id": "presentation_calques_dragon",
+          "fichier": "src/presentation/calques/dragon.js",
+          "chemin": "calques/dragon.js",
+          "estExpose": false,
+          "lignes": 220
+        },
+        {
+          "id": "presentation_calques_etat_major",
+          "fichier": "src/presentation/calques/etat-major.js",
+          "chemin": "calques/etat-major.js",
+          "estExpose": false,
+          "lignes": 133
+        },
+        {
+          "id": "presentation_calques_forces",
+          "fichier": "src/presentation/calques/forces.js",
+          "chemin": "calques/forces.js",
+          "estExpose": false,
+          "lignes": 197
+        },
+        {
+          "id": "presentation_calques_formation",
+          "fichier": "src/presentation/calques/formation.js",
+          "chemin": "calques/formation.js",
+          "estExpose": false,
+          "lignes": 78
+        },
+        {
+          "id": "presentation_calques_hommes",
+          "fichier": "src/presentation/calques/hommes.js",
+          "chemin": "calques/hommes.js",
+          "estExpose": false,
+          "lignes": 441
+        },
+        {
+          "id": "presentation_calques_index",
+          "fichier": "src/presentation/calques/index.js",
+          "chemin": "calques/index.js",
+          "estExpose": false,
+          "lignes": 53
+        },
+        {
+          "id": "presentation_calques_lignes",
+          "fichier": "src/presentation/calques/lignes.js",
+          "chemin": "calques/lignes.js",
+          "estExpose": false,
+          "lignes": 188
+        },
+        {
+          "id": "presentation_calques_navgrid",
+          "fichier": "src/presentation/calques/navgrid.js",
+          "chemin": "calques/navgrid.js",
+          "estExpose": false,
+          "lignes": 43
+        },
+        {
+          "id": "presentation_calques_ordres_donnes",
+          "fichier": "src/presentation/calques/ordres-donnes.js",
+          "chemin": "calques/ordres-donnes.js",
+          "estExpose": false,
+          "lignes": 45
+        },
+        {
+          "id": "presentation_calques_orientation",
+          "fichier": "src/presentation/calques/orientation.js",
+          "chemin": "calques/orientation.js",
+          "estExpose": false,
+          "lignes": 54
+        },
+        {
+          "id": "presentation_calques_perception",
+          "fichier": "src/presentation/calques/perception.js",
+          "chemin": "calques/perception.js",
+          "estExpose": false,
+          "lignes": 135
+        },
+        {
+          "id": "presentation_calques_selection",
+          "fichier": "src/presentation/calques/selection.js",
+          "chemin": "calques/selection.js",
+          "estExpose": false,
+          "lignes": 22
+        },
+        {
+          "id": "presentation_calques_terrain",
+          "fichier": "src/presentation/calques/terrain.js",
+          "chemin": "calques/terrain.js",
+          "estExpose": false,
+          "lignes": 330
+        },
+        {
+          "id": "presentation_camera",
+          "fichier": "src/presentation/camera.js",
+          "chemin": "camera.js",
+          "estExpose": false,
+          "lignes": 50
+        },
+        {
+          "id": "presentation_expose",
+          "fichier": "src/presentation/expose.js",
+          "chemin": "expose.js",
+          "estExpose": true,
+          "lignes": 336
+        },
+        {
+          "id": "presentation_interactions_depot",
+          "fichier": "src/presentation/interactions/depot.js",
+          "chemin": "interactions/depot.js",
+          "estExpose": false,
+          "lignes": 24
+        },
+        {
+          "id": "presentation_interactions_navigation",
+          "fichier": "src/presentation/interactions/navigation.js",
+          "chemin": "interactions/navigation.js",
+          "estExpose": false,
+          "lignes": 38
+        },
+        {
+          "id": "presentation_interactions_pilotage",
+          "fichier": "src/presentation/interactions/pilotage.js",
+          "chemin": "interactions/pilotage.js",
+          "estExpose": false,
+          "lignes": 26
+        },
+        {
+          "id": "presentation_interactions_redimension",
+          "fichier": "src/presentation/interactions/redimension.js",
+          "chemin": "interactions/redimension.js",
+          "estExpose": false,
+          "lignes": 37
+        },
+        {
+          "id": "presentation_interactions_selection",
+          "fichier": "src/presentation/interactions/selection.js",
+          "chemin": "interactions/selection.js",
+          "estExpose": false,
+          "lignes": 30
+        },
+        {
+          "id": "presentation_renderer",
+          "fichier": "src/presentation/renderer.js",
+          "chemin": "renderer.js",
+          "estExpose": false,
+          "lignes": 38
+        },
+        {
+          "id": "presentation_ui_etat_major",
+          "fichier": "src/presentation/ui/etat-major.js",
+          "chemin": "ui/etat-major.js",
+          "estExpose": false,
+          "lignes": 97
+        },
+        {
+          "id": "presentation_ui_inspecteur",
+          "fichier": "src/presentation/ui/inspecteur.js",
+          "chemin": "ui/inspecteur.js",
+          "estExpose": false,
+          "lignes": 221
+        },
+        {
+          "id": "presentation_ui_layout",
+          "fichier": "src/presentation/ui/layout.js",
+          "chemin": "ui/layout.js",
+          "estExpose": false,
+          "lignes": 36
+        },
+        {
+          "id": "presentation_ui_machine_graphe",
+          "fichier": "src/presentation/ui/machine-graphe.js",
+          "chemin": "ui/machine-graphe.js",
+          "estExpose": false,
+          "lignes": 130
+        },
+        {
+          "id": "presentation_ui_menu_gauche",
+          "fichier": "src/presentation/ui/menu-gauche.js",
+          "chemin": "ui/menu-gauche.js",
+          "estExpose": false,
+          "lignes": 96
+        },
+        {
+          "id": "presentation_ui_ordres",
+          "fichier": "src/presentation/ui/ordres.js",
+          "chemin": "ui/ordres.js",
+          "estExpose": false,
+          "lignes": 40
+        },
+        {
+          "id": "presentation_ui_scenarios",
+          "fichier": "src/presentation/ui/scenarios.js",
+          "chemin": "ui/scenarios.js",
+          "estExpose": false,
+          "lignes": 28
+        },
+        {
+          "id": "presentation_ui_transport",
+          "fichier": "src/presentation/ui/transport.js",
+          "chemin": "ui/transport.js",
+          "estExpose": false,
+          "lignes": 33
+        },
+        {
+          "id": "presentation_vignettes",
+          "fichier": "src/presentation/vignettes.js",
+          "chemin": "vignettes.js",
+          "estExpose": false,
+          "lignes": 474
+        }
+      ],
+      "internes": [
+        {
+          "de": "presentation_calques_hommes",
+          "vers": "presentation_vignettes",
+          "noms": [
+            "vignetteHomme",
+            "vignetteCheval",
+            "couleurLivree",
+            "robeDe",
+            "varianteDe",
+            "COULEUR_PEAU",
+            "assombrir"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_camera",
+          "noms": [
+            "creerCamera"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_renderer",
+          "noms": [
+            "creerRenderer"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_terrain",
+          "noms": [
+            "dessinerTerrain"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_navgrid",
+          "noms": [
+            "dessinerNavgrid"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_index",
+          "noms": [
+            "dessinerIndex"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_forces",
+          "noms": [
+            "dessinerForces"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_hommes",
+          "noms": [
+            "dessinerHommes"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_chemins",
+          "noms": [
+            "dessinerChemins"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_coups",
+          "noms": [
+            "dessinerCoups"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_dragon",
+          "noms": [
+            "dessinerDragon"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_perception",
+          "noms": [
+            "dessinerPerception"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_formation",
+          "noms": [
+            "dessinerFormation"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_couverture",
+          "noms": [
+            "dessinerCouverture"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_etat_major",
+          "noms": [
+            "dessinerEtatMajor"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_lignes",
+          "noms": [
+            "dessinerLignes"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_orientation",
+          "noms": [
+            "dessinerOrientation"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_bulles",
+          "noms": [
+            "dessinerBulles"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_selection",
+          "noms": [
+            "dessinerSelection"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_calques_ordres_donnes",
+          "noms": [
+            "dessinerOrdresDonnes"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_bulles",
+          "noms": [
+            "creerBulles"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_ui_layout",
+          "noms": [
+            "monterLayout"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_ui_menu_gauche",
+          "noms": [
+            "creerMenuGauche"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_ui_transport",
+          "noms": [
+            "creerTransport"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_ui_ordres",
+          "noms": [
+            "creerOrdres"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_ui_scenarios",
+          "noms": [
+            "creerScenarios"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_ui_inspecteur",
+          "noms": [
+            "creerInspecteur"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_interactions_navigation",
+          "noms": [
+            "brancherNavigation"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_interactions_selection",
+          "noms": [
+            "brancherSelection"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_interactions_depot",
+          "noms": [
+            "brancherDepot"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_interactions_redimension",
+          "noms": [
+            "brancherRedimension"
+          ]
+        },
+        {
+          "de": "presentation_expose",
+          "vers": "presentation_interactions_pilotage",
+          "noms": [
+            "brancherPilotage"
+          ]
+        },
+        {
+          "de": "presentation_ui_inspecteur",
+          "vers": "presentation_ui_machine_graphe",
+          "noms": [
+            "dessinerMachine"
+          ]
+        },
+        {
+          "de": "presentation_ui_inspecteur",
+          "vers": "presentation_ui_etat_major",
+          "noms": [
+            "rendreEtatMajor"
+          ]
+        }
+      ]
+    }
+  ],
+  "declarations": [
+    {
+      "fournisseur": "presentation",
+      "consommateur": "orchestration",
+      "canal": null,
+      "charge": "commandes pause / vitesse (transport)",
+      "verbe": "reçoit",
+      "declarePar": "orchestration",
+      "source": "src/orchestration/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "orchestration",
+      "consommateur": null,
+      "canal": null,
+      "charge": "la cadence (tick, dt)",
+      "verbe": "fournit",
+      "declarePar": "orchestration",
+      "source": "src/orchestration/CLAUDE.md",
+      "diffus": true
+    },
+    {
+      "fournisseur": "physique",
+      "consommateur": "monde",
+      "canal": null,
+      "charge": "les nouvelles positions (Intégration)",
+      "verbe": "reçoit",
+      "declarePar": "monde",
+      "source": "src/monde/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "presentation",
+      "consommateur": "monde",
+      "canal": null,
+      "charge": "les spawns (drag & drop)",
+      "verbe": "reçoit",
+      "declarePar": "monde",
+      "source": "src/monde/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "cognition",
+      "canal": "Perception",
+      "charge": "lectures filtrées et bornées",
+      "verbe": "fournit",
+      "declarePar": "monde",
+      "source": "src/monde/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "cognition",
+      "canal": "Perception",
+      "charge": "voisinages (Index spatial, snapshot du tick)",
+      "verbe": "fournit",
+      "declarePar": "monde",
+      "source": "src/monde/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "social",
+      "canal": "Transmission",
+      "charge": "portées, positions (Index spatial) — à venir",
+      "verbe": "fournit",
+      "declarePar": "monde",
+      "source": "src/monde/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "action",
+      "canal": "Pathfinding",
+      "charge": "la NavGrid",
+      "verbe": "fournit",
+      "declarePar": "monde",
+      "source": "src/monde/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "physique",
+      "canal": "Forces",
+      "charge": "géométrie des murs, voisinages",
+      "verbe": "fournit",
+      "declarePar": "monde",
+      "source": "src/monde/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "presentation",
+      "canal": "Rendu",
+      "charge": "tout l'état, en lecture",
+      "verbe": "fournit",
+      "declarePar": "monde",
+      "source": "src/monde/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "cognition",
+      "canal": "via Perception, filtré",
+      "charge": "percepts",
+      "verbe": "reçoit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "social",
+      "consommateur": "cognition",
+      "canal": "via Perception",
+      "charge": "ordres et messages délivrés",
+      "verbe": "reçoit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "cognition",
+      "canal": null,
+      "charge": "fatigue, état ressenti — la Décision en dépend",
+      "verbe": "reçoit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "action",
+      "consommateur": "cognition",
+      "canal": null,
+      "charge": "signalement des intentions irréalisables",
+      "verbe": "reçoit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "presentation",
+      "consommateur": "cognition",
+      "canal": null,
+      "charge": "l'attache d'un brain à chaque spawn (composée au bootstrap)",
+      "verbe": "reçoit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "cognition",
+      "consommateur": "action",
+      "canal": null,
+      "charge": "intentions",
+      "verbe": "fournit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "cognition",
+      "consommateur": "social",
+      "canal": null,
+      "charge": "émission d'ordres (si chef)",
+      "verbe": "fournit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "cognition",
+      "consommateur": "presentation",
+      "canal": "Inspecteur",
+      "charge": "introspection",
+      "verbe": "fournit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "cognition",
+      "consommateur": "presentation",
+      "canal": null,
+      "charge": "paroles émises (bulles — la surcouche de flavor ; demain la Transmission 📯, la voix qui porte)",
+      "verbe": "fournit",
+      "declarePar": "cognition",
+      "source": "src/cognition/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "cognition",
+      "consommateur": "social",
+      "canal": "Décision d'un chef",
+      "charge": "ordres à émettre",
+      "verbe": "reçoit",
+      "declarePar": "social",
+      "source": "src/social/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "social",
+      "canal": "Index spatial",
+      "charge": "portées, positions, obstacles au son",
+      "verbe": "reçoit",
+      "declarePar": "social",
+      "source": "src/social/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "social",
+      "consommateur": "cognition",
+      "canal": "Perception du destinataire",
+      "charge": "messages délivrés comme percepts",
+      "verbe": "fournit",
+      "declarePar": "social",
+      "source": "src/social/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "action",
+      "consommateur": "corps",
+      "canal": "Actes, locomotion",
+      "charge": "coûts (dépense de stamina, blessures)",
+      "verbe": "reçoit",
+      "declarePar": "corps",
+      "source": "src/corps/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "presentation",
+      "consommateur": "corps",
+      "canal": null,
+      "charge": "l'enregistrement de chaque spawn (composé au bootstrap)",
+      "verbe": "reçoit",
+      "declarePar": "corps",
+      "source": "src/corps/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "cognition",
+      "canal": "Décision",
+      "charge": "fatigue, état ressenti",
+      "verbe": "fournit",
+      "declarePar": "corps",
+      "source": "src/corps/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "presentation",
+      "canal": "Rendu",
+      "charge": "l'équipement porté",
+      "verbe": "fournit",
+      "declarePar": "corps",
+      "source": "src/corps/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "action",
+      "canal": "Steering",
+      "charge": "vitesse max effective, capacités réduites",
+      "verbe": "fournit",
+      "declarePar": "corps",
+      "source": "src/corps/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "physique",
+      "canal": "Forces",
+      "charge": "l'arme portée (`armeDe`) — la garde est asymétrique par arme (allonge, coût)",
+      "verbe": "fournit",
+      "declarePar": "corps",
+      "source": "src/corps/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "cognition",
+      "consommateur": "action",
+      "canal": null,
+      "charge": "intentions",
+      "verbe": "reçoit",
+      "declarePar": "action",
+      "source": "src/action/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "action",
+      "canal": "NavGrid",
+      "charge": "réponses aux requêtes de chemin",
+      "verbe": "reçoit",
+      "declarePar": "action",
+      "source": "src/action/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "action",
+      "canal": null,
+      "charge": "vitesse max effective",
+      "verbe": "reçoit",
+      "declarePar": "action",
+      "source": "src/action/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "action",
+      "consommateur": "physique",
+      "canal": null,
+      "charge": "vitesses désirées, impulsions, états de vol réalisables (`volsDesires`)",
+      "verbe": "fournit",
+      "declarePar": "action",
+      "source": "src/action/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "action",
+      "canal": null,
+      "charge": "le profil de dragon porté (`dragonDe`) — l'actuateur de vol s'y borne",
+      "verbe": "reçoit",
+      "declarePar": "action",
+      "source": "src/action/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "action",
+      "consommateur": "corps",
+      "canal": null,
+      "charge": "coûts des actes",
+      "verbe": "fournit",
+      "declarePar": "action",
+      "source": "src/action/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "action",
+      "consommateur": "cognition",
+      "canal": null,
+      "charge": "signalement des intentions irréalisables",
+      "verbe": "fournit",
+      "declarePar": "action",
+      "source": "src/action/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "action",
+      "consommateur": "presentation",
+      "canal": "calque debug",
+      "charge": "chemins et cibles courants",
+      "verbe": "fournit",
+      "declarePar": "action",
+      "source": "src/action/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "action",
+      "consommateur": "physique",
+      "canal": null,
+      "charge": "vitesses désirées, impulsions",
+      "verbe": "reçoit",
+      "declarePar": "physique",
+      "source": "src/physique/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "physique",
+      "canal": null,
+      "charge": "géométrie des murs (Terrain), voisinages (Index spatial)",
+      "verbe": "reçoit",
+      "declarePar": "physique",
+      "source": "src/physique/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "physique",
+      "canal": null,
+      "charge": "l'arme portée (`armeDe`) — la garde est asymétrique par arme (allonge, coût)",
+      "verbe": "reçoit",
+      "declarePar": "physique",
+      "source": "src/physique/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "physique",
+      "consommateur": "monde",
+      "canal": null,
+      "charge": "positions et vitesses écrites (Registre des corps) — avec le spawn du container 🖥️ Présentation, l'un des deux seuls points d'écriture",
+      "verbe": "fournit",
+      "declarePar": "physique",
+      "source": "src/physique/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "physique",
+      "consommateur": "presentation",
+      "canal": "calque forces",
+      "charge": "vue debug du dernier tick — vitesses désirées, corrections de collision, portées des champs",
+      "verbe": "fournit",
+      "declarePar": "physique",
+      "source": "src/physique/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "physique",
+      "consommateur": "social",
+      "canal": "Transmission",
+      "charge": "les lois acoustiques (`acoustique/portee-voix.js`, première passe : `quiEntend` = les corps à portée, sans atténuation) — la propagation d'une parole est un fait physique. Reçoit pour cela le voisinage du container 🌍 Monde (`voisinsDans`). Premier consommateur réel : la boîte de parole de la page — ce qu'un homme dit depuis la carte est entendu de tous ceux à portée, et d'eux seuls",
+      "verbe": "fournit",
+      "declarePar": "physique",
+      "source": "src/physique/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "monde",
+      "consommateur": "presentation",
+      "canal": null,
+      "charge": "tout l'état, en lecture (Rendu)",
+      "verbe": "reçoit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "cognition",
+      "consommateur": "presentation",
+      "canal": null,
+      "charge": "introspection (Inspecteur)",
+      "verbe": "reçoit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "cognition",
+      "consommateur": "presentation",
+      "canal": null,
+      "charge": "paroles émises (bulles — la surcouche de flavor ; demain la Transmission 📯, la voix qui porte)",
+      "verbe": "reçoit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "action",
+      "consommateur": "presentation",
+      "canal": "calque debug",
+      "charge": "chemins et cibles courants",
+      "verbe": "reçoit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "physique",
+      "consommateur": "presentation",
+      "canal": "calque forces",
+      "charge": "vue debug du dernier tick",
+      "verbe": "reçoit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "corps",
+      "consommateur": "presentation",
+      "canal": null,
+      "charge": "l'équipement porté (rendu de la lance)",
+      "verbe": "reçoit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "presentation",
+      "consommateur": "orchestration",
+      "canal": null,
+      "charge": "pause, vitesse (transport)",
+      "verbe": "fournit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "presentation",
+      "consommateur": "monde",
+      "canal": null,
+      "charge": "spawns (drag & drop)",
+      "verbe": "fournit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "presentation",
+      "consommateur": "cognition",
+      "canal": null,
+      "charge": "l'attache d'un brain à chaque spawn (composée au bootstrap)",
+      "verbe": "fournit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    },
+    {
+      "fournisseur": "presentation",
+      "consommateur": "corps",
+      "canal": null,
+      "charge": "l'enregistrement de chaque spawn (composé au bootstrap)",
+      "verbe": "fournit",
+      "declarePar": "presentation",
+      "source": "src/presentation/CLAUDE.md",
+      "diffus": false
+    }
+  ],
+  "liens": [
+    {
+      "appelant": "action",
+      "dep": "arcTirDe",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue ❤️ (l'arc de tir porté)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.arcTirDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "armeDe",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.armeDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "bouclierDe",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.bouclierDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "coutEffort",
+      "nature": "puits",
+      "natureSource": "annotation",
+      "annotation": "puits ❤️ (coûts des actes)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.coutEffort"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "action",
+      "dep": "dragonDe",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.dragonDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "estVivant",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.estVivant"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "facteurVitesseDe",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.facteurVitesseDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "puiserFleche",
+      "nature": "commande",
+      "natureSource": "annotation",
+      "annotation": "commande ❤️ (le carquois se compte)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.puiserFleche"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "action",
+      "dep": "subirBrulure",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.subirBrulure"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "subirCoup",
+      "nature": "puits",
+      "natureSource": "annotation",
+      "annotation": "puits ❤️ (l'acte a touché)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.subirCoup"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "action",
+      "dep": "corpsParId",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🌍 (positions)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.corpsParId"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "deposerChaleur",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.deposerChaleur"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "montureDe",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.montureDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "navgrid",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🌍",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.navgrid"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "vitesseMaxDe",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.montureDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "action",
+      "dep": "voisinsDans",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🌍 (snapshot : qui est devant ma lance)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.voisinsDans"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "cognition",
+      "dep": "attacher",
+      "membres": [
+        "cognition.attacher"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "cognition",
+      "dep": "injecterOrdre",
+      "membres": [
+        "cognition.injecterOrdre"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "cognition",
+      "dep": "perceptionDebug",
+      "membres": [
+        "cognition.perceptionDebug"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "cognition",
+      "dep": "piloter",
+      "membres": [
+        "cognition.piloter"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "corps",
+      "dep": "arcTirDe",
+      "membres": [
+        "corpsContainer.arcTirDe"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "corps",
+      "dep": "armeDe",
+      "membres": [
+        "corpsContainer.armeDe"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "corps",
+      "dep": "blessuresDe",
+      "membres": [
+        "corpsContainer.blessuresDe"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "corps",
+      "dep": "enregistrer",
+      "membres": [
+        "corpsContainer.enregistrer"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "corps",
+      "dep": "estVivant",
+      "membres": [
+        "corpsContainer.estVivant"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "corps",
+      "dep": "flechesDe",
+      "membres": [
+        "corpsContainer.flechesDe"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "corps",
+      "dep": "souffleDe",
+      "membres": [
+        "corpsContainer.souffleDe"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "atteler",
+      "membres": [
+        "monde.atteler"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "corps",
+      "membres": [
+        "monde.corps"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "corpsParId",
+      "membres": [
+        "monde.corpsParId"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "etat",
+      "membres": [
+        "monde.etat"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "montureDe",
+      "membres": [
+        "monde.montureDe"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "poserMasque",
+      "membres": [
+        "monde.poserMasque"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "poserObstacle",
+      "membres": [
+        "monde.poserObstacle"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "reconstruireIndex",
+      "membres": [
+        "monde.reconstruireIndex"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "monde",
+      "dep": "spawn",
+      "membres": [
+        "monde.spawn"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "orchestration",
+      "dep": "avancer",
+      "membres": [
+        "orchestration.avancer"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "orchestration"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "physique",
+      "dep": "quiEntend",
+      "membres": [
+        "physique.quiEntend"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "presentation",
+      "dep": "dire",
+      "membres": [
+        "presentation.dire"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "presentation",
+      "dep": "monter",
+      "membres": [
+        "presentation.monter"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "presentation",
+      "dep": "rendre",
+      "membres": [
+        "presentation.rendre"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "social",
+      "dep": "unites.creer",
+      "membres": [
+        "social.unites.creer"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "social"
+    },
+    {
+      "appelant": "bootstrap",
+      "appele": "social",
+      "dep": "unites.obtenir",
+      "membres": [
+        "social.unites.obtenir"
+      ],
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "etat": "cable",
+      "note": null,
+      "source": "src/main.js",
+      "fournisseur": "bootstrap",
+      "consommateur": "social"
+    },
+    {
+      "appelant": "cognition",
+      "dep": "emettreIntention",
+      "nature": "puits",
+      "natureSource": "annotation",
+      "annotation": "puits vers 🏃",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.assigner"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "cognition",
+      "dep": "emettreOrientation",
+      "nature": "puits",
+      "natureSource": "annotation",
+      "annotation": "puits vers 🏃 : le cap désiré du CORPS (la lance) + la durée du tour, tirée ~N par consigne (pas robotique)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.orienter"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "cognition",
+      "dep": "emettrePosture",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.poserPosture"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "cognition",
+      "dep": "estVivant",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.estVivant"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "cognition",
+      "dep": "vuePerception",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🌍 (snapshot + proprioception), bootstrap",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.corpsParId",
+        "monde.voisinsDans"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "cognition",
+      "dep": "emettreParole",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "presentation",
+      "membres": [
+        "presentation.dire"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "presentation",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "orchestration",
+      "dep": "phases",
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.phaseAction"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "orchestration",
+      "consommateur": "action"
+    },
+    {
+      "appelant": "orchestration",
+      "dep": "phases",
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.phasePerception",
+        "cognition.phaseDecision"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "orchestration",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "orchestration",
+      "dep": "phases",
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.phasePhysiologie"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "orchestration",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "orchestration",
+      "dep": "phases",
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.reconstruireIndex",
+        "monde.vieillirChaleur"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "orchestration",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "orchestration",
+      "dep": "phases",
+      "nature": "cadence",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "physique",
+      "membres": [
+        "physique.phasePhysique"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "orchestration",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "orientationsDesirees",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🏃",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.orientationsDesirees"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "posturesDesirees",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🏃 (geste, écrit tel quel)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.posturesDesirees"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "vitessesDesirees",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🏃",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.vitessesDesirees"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "volsDesires",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.volsDesires"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "armeDe",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.armeDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "subirChoc",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.subirChoc"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "appliquerIntegration",
+      "nature": "commande",
+      "natureSource": "annotation",
+      "annotation": "commande 🌍 (écrivain 1/2)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.appliquerIntegration"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "physique",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "physique",
+      "dep": "corps",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🌍",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.corps"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "desatteler",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.desatteler"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "montureDe",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.montureDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "obstaclesPres",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🌍",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.terrain.obstaclesPres"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "physique",
+      "dep": "voisinsDans",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.voisinsDans"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "physique"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "cheminsDebug",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🏃 (calque debug)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.cheminsPourDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "coupsDebug",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.coupsPourDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "feuDebug",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.feuPourDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "refusDebug",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "action",
+      "membres": [
+        "action.refusPourDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "action",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "couvertureDebug",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.couvertureDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "etatMajorDebug",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🧠 (calque état-major)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.etatMajorDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "formationDebug",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🧠 (calque formation)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.formationDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "introspecter",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🧠 (inspecteur)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.introspecter"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "orientationDebug",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🧠 (calque orientation)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.orientationDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "perceptionDebug",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue 🧠 (calque perception/mémoire)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.perceptionDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "pj",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.piloter"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "cognition",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "spawn",
+      "nature": "commande",
+      "natureSource": "annotation",
+      "annotation": "écrivain 2/2 (composé au bootstrap)",
+      "via": "spawnHomme",
+      "source": "src/main.js",
+      "appele": "cognition",
+      "membres": [
+        "cognition.attacher"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "presentation",
+      "consommateur": "cognition"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "spawn",
+      "nature": "commande",
+      "natureSource": "annotation",
+      "annotation": "écrivain 2/2 (composé au bootstrap)",
+      "via": "spawnHomme",
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.enregistrer"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "presentation",
+      "consommateur": "corps"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "vuesCorps",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vue ❤️ (la lance rendue)",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "corps",
+      "membres": [
+        "corpsContainer.equipementDe",
+        "corpsContainer.blessuresDe",
+        "corpsContainer.souffleDe",
+        "corpsContainer.dragonDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "corps",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "spawn",
+      "nature": "commande",
+      "natureSource": "annotation",
+      "annotation": "écrivain 2/2 (composé au bootstrap)",
+      "via": "spawnHomme",
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.spawn"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "presentation",
+      "consommateur": "monde"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "vuesMonde",
+      "nature": "vue",
+      "natureSource": "annotation",
+      "annotation": "vues 🌍",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "monde",
+      "membres": [
+        "monde.corps",
+        "monde.corpsParId",
+        "monde.terrain",
+        "monde.navgridDebug",
+        "monde.indexDebug",
+        "monde.chaleurDebug",
+        "monde.montureDe"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "monde",
+      "consommateur": "presentation"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "transport",
+      "nature": "commande",
+      "natureSource": "annotation",
+      "annotation": "commandes ⏱️",
+      "via": null,
+      "source": "src/main.js",
+      "appele": "orchestration",
+      "membres": [
+        "orchestration.transport"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "presentation",
+      "consommateur": "orchestration"
+    },
+    {
+      "appelant": "presentation",
+      "dep": "forcesDebug",
+      "nature": "vue",
+      "natureSource": "defaut",
+      "annotation": null,
+      "via": null,
+      "source": "src/main.js",
+      "appele": "physique",
+      "membres": [
+        "physique.forcesDebug"
+      ],
+      "etat": "cable",
+      "note": null,
+      "fournisseur": "physique",
+      "consommateur": "presentation"
+    }
+  ],
+  "boucle": [
+    {
+      "nom": "perception",
+      "container": "cognition",
+      "appel": "cognition.phasePerception"
+    },
+    {
+      "nom": "decision",
+      "container": "cognition",
+      "appel": "cognition.phaseDecision"
+    },
+    {
+      "nom": "action",
+      "container": "action",
+      "appel": "action.phaseAction"
+    },
+    {
+      "nom": "physique",
+      "container": "physique",
+      "appel": "physique.phasePhysique"
+    },
+    {
+      "nom": "physiologie",
+      "container": "corps",
+      "appel": "corpsContainer.phasePhysiologie"
+    },
+    {
+      "nom": "index",
+      "container": "monde",
+      "appel": "monde.reconstruireIndex"
+    }
+  ],
+  "features": [
+    {
+      "slug": "pause",
+      "container": "orchestration",
+      "mecanique": "arrêt du temps simulé",
+      "viz": [
+        {
+          "type": "ui",
+          "id": "transport"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/orchestration/CLAUDE.md"
+    },
+    {
+      "slug": "multiplicateur-vitesse",
+      "container": "orchestration",
+      "mecanique": "x1/x2/x5 — nombre de pas par frame",
+      "viz": [
+        {
+          "type": "ui",
+          "id": "transport"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/orchestration/CLAUDE.md"
+    },
+    {
+      "slug": "dt-fixe",
+      "container": "orchestration",
+      "mecanique": "la taille du pas ne change jamais, seul leur nombre varie",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/orchestration/CLAUDE.md"
+    },
+    {
+      "slug": "ordre-des-phases",
+      "container": "orchestration",
+      "mecanique": "les 6 phases du tick, dans l'ordre décidé",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/orchestration/CLAUDE.md"
+    },
+    {
+      "slug": "registre-corps",
+      "container": "monde",
+      "mecanique": "positions et vitesses réelles des corps",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "livree-physique",
+      "container": "monde",
+      "mecanique": "l'appartenance se VOIT — couleur = livrée",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "cap",
+      "container": "monde",
+      "mecanique": "l'orientation du corps, écrite par l'Intégration (⚙️)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "nom-panache",
+      "container": "monde",
+      "mecanique": "on reconnaît les gens ; le chef se voit de loin",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        },
+        {
+          "type": "calque",
+          "id": "perception"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "terrain-obstacles",
+      "container": "monde",
+      "mecanique": "maisons immobiles qui bloquent",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "terrain"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "terrain-masque",
+      "container": "monde",
+      "mecanique": "la ville cuite bloque (1 bit/m²) : spawn refusé, murs répulsifs, navgrid — la porte laisse passer",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "terrain"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "navgrid",
+      "container": "monde",
+      "mecanique": "cases libres/bloquées, cache matérialisé à la demande",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "navgrid"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "index-spatial-snapshot",
+      "container": "monde",
+      "mecanique": "grille de hachage, photo figée par tick",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "index"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "chaleur-sol",
+      "container": "monde",
+      "mecanique": "la trace thermique : braise qui s'éteint (2 constantes), carbonisation qui reste (dose)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "dragon"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/monde/CLAUDE.md"
+    },
+    {
+      "slug": "perception-bornee",
+      "container": "cognition",
+      "mecanique": "cercle 360°, portée, budget d'attention",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "perception-masse",
+      "container": "cognition",
+      "mecanique": "l'horizon de masse : un groupe se voit à POIDS × 20 m (le gabarit, pas l'effectif), effectif à la poignée, ni postures ni forme",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "poids-de-gabarit",
+      "container": "cognition",
+      "mecanique": "un corps pèse sa taille (rayon) : visibilité des masses et surnombre perçu en POIDS — cheval ~1,7, dragon ~21",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        },
+        {
+          "type": "inspecteur",
+          "id": "objectif"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "menace-en-secondes",
+      "container": "cognition",
+      "mecanique": "tau = distance 3D / allure crue : ce qui vient VITE menace de LOIN — contagion sous le galop et sous le vol",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "jauges"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "memoire-datee",
+      "container": "cognition",
+      "mecanique": "croyances vieillissantes, fantômes aux positions crues",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        },
+        {
+          "type": "inspecteur",
+          "id": "amisFrais"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "amis-seedes",
+      "container": "cognition",
+      "mecanique": "on connaît ses camarades avant la bataille",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "amisConnus"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "decision-brain",
+      "container": "cognition",
+      "mecanique": "brains interchangeables, `decide()` + `introspect()`",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "brain"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "machine-etats",
+      "container": "cognition",
+      "mecanique": "la FSM déclarative : états, transitions justifiées, journal",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "machine"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "machine-vecu",
+      "container": "cognition",
+      "mecanique": "le vécu cumulé : secondes par état, bascules par transition",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "chercher",
+      "container": "cognition",
+      "mecanique": "seul ou repère irrésoluble : remonter ses croyances périmées (pistes vérifiées mémorisées, exploration en dernier échelon) — le défaut de l'homme seul",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "machine"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "menace-regroupement",
+      "container": "cognition",
+      "mecanique": "tas cru de livrée adverse, frais et proche → se regrouper (rejoint) ou rallier (cherche) — se regrouper n'est PAS fuir",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "machine"
+        },
+        {
+          "type": "calque",
+          "id": "perception"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "perception-contact",
+      "container": "cognition",
+      "mecanique": "à portée d'armes (~6 m) on voit des HOMMES, plus une masse — saillance de la menace : l'adverse capte l'attention avant le camarade",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "etat-tuer",
+      "container": "cognition",
+      "mecanique": "la rencontre (ennemi au contact, pas seul) : pret / engage / pousse / recupere",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "machine"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "passe-montee",
+      "container": "cognition",
+      "mecanique": "monté, pas d'arrêt au fer : contact → `tuer.repasse` (traverser, reprendre du champ au trot) → l'ordre CHARGER debout re-tire avec l'élan retrouvé (≥ 22 m de la masse crue) — le cycle charge-dégagement-charge émerge de la machine",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "machine"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "etat-tire",
+      "container": "cognition",
+      "mecanique": "l'archer : sa rencontre commence à portée de trait — la volée tant qu'il a cible crue + flèches + personne au contact ; à vide ou au corps, le couteau",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "machine"
+        },
+        {
+          "type": "calque",
+          "id": "coups"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "readiness-regard",
+      "container": "cognition",
+      "mecanique": "prêt = posture LEVÉE (fait physique) ; la readiness de ma ligne se lit sur le TAS (lances comptées)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        },
+        {
+          "type": "inspecteur",
+          "id": "objectif"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "rapport-de-force",
+      "container": "cognition",
+      "mecanique": "prêts crus / adverses au contact — ≥ 1 : l'assaut ; on n'attaque JAMAIS seul",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "objectif"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "alerte-contact",
+      "container": "cognition",
+      "mecanique": "un adverse au contact accélère mon re-scan (~3×) — tempo par saillance",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "prochaineDecisionDansS"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "moral-peur",
+      "container": "cognition",
+      "mecanique": "pics de récence (morts des miens vus), rapport perçu, contagion des fuyards",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "jauges"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "etat-fuir",
+      "container": "cognition",
+      "mecanique": "la rupture : dos tourné, plein pas, loin de l'ennemi cru — rallie une fois hors de danger",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "etat-poursuite",
+      "container": "cognition",
+      "mecanique": "la curée : le combat local fini (tous en fuite), courir sus au fuyard — un dos ne tient plus la mesure (garde ⚙️) et prend TRIPLE",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "coups"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "cadence-decision",
+      "container": "cognition",
+      "mecanique": "période ~N(0.5 Hz) propre à chaque homme",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "prochaineDecisionDansS"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "cadence-perception",
+      "container": "cognition",
+      "mecanique": "~N(2 Hz) échelonnée — levier de scale n°1",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "intentions",
+      "container": "cognition",
+      "mecanique": "vocabulaire fermé vers 🏃",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "cible"
+        },
+        {
+          "type": "calque",
+          "id": "chemins"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "cercle-discussion",
+      "container": "cognition",
+      "mecanique": "cercle autour du barycentre cru, anti-hug",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "etat"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "groupe-reduit",
+      "container": "cognition",
+      "mecanique": "le tas cru sous la moitié de l'attendu connu → pas regroupé, on part retrouver le gros",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "machine"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "perception-tas",
+      "container": "cognition",
+      "mecanique": "groupes physiques perçus comme UN objet (barycentre, effectif)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "attention-dirigee",
+      "container": "cognition",
+      "mecanique": "on cherche son chef / son ancre du regard",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "soldat-fsm",
+      "container": "cognition",
+      "mecanique": "objectif obeir / desoeuvre (tuer/proteger/fuir réservés)",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "etat"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "ancrage-relationnel",
+      "container": "cognition",
+      "mecanique": "doctrine rangs : « derrière X, à droite de Y »",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "formation"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "objectif-humain",
+      "container": "cognition",
+      "mecanique": "l'objectif en français, jamais en coordonnées",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "objectif"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "ordre-formation",
+      "container": "cognition",
+      "mecanique": "échafaudage : toggle En formation / Repos",
+      "viz": [
+        {
+          "type": "ui",
+          "id": "ordres"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "orientation-arbitrage",
+      "container": "cognition",
+      "mecanique": "où vais-je / vers les gens / comme les gens, pondérés",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "orientation"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "etat-major",
+      "container": "cognition",
+      "mecanique": "la délibération du commandant : faits, candidates × scores, engagée + phase, justification — et sa CARTE (axe de menace, ligne de barrage, destination, poste)",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "etat-major"
+        },
+        {
+          "type": "calque",
+          "id": "etat-major"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "manoeuvres",
+      "container": "cognition",
+      "mecanique": "le livre en donnée : applicabilité (faits), géométrie, phases à critères nommés (relance/repete/conclusion)",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "etat-major"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "couverture",
+      "container": "cognition",
+      "mecanique": "le brouillard de guerre personnel : où j'ai regardé, quand",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "couverture"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "ratissage-bonds",
+      "container": "cognition",
+      "mecanique": "chaque cri RATISSER = un bond de secteur figé à l'écoute ; le serpentin = la succession des cris",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "formation"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "rumeur-directionnelle",
+      "container": "cognition",
+      "mecanique": "la croyance seedée porte une direction (mot) → biais continu du choix des secteurs",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "etat-major"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "manoeuvre-charger",
+      "container": "cognition",
+      "mecanique": "ennemi localisé → « Chargez ! » : chacun court sur SA croyance d'ennemi (la direction criée sinon) ; la mêlée vue conclut",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "machine"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "orientation-facer",
+      "container": "cognition",
+      "mecanique": "flag qui inverse les pondérations : on FACE (locuteur, interlocuteurs, ennemis à venir)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "orientation"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "forme-tas",
+      "container": "cognition",
+      "mecanique": "la forme SE PERÇOIT : cap par les lances, netteté, largeur/profondeur, première ligne",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "langage-resolution",
+      "container": "cognition",
+      "mecanique": "parole → math : le repère d'un ordre résolu contre MES croyances (sur moi / première ligne auto-référente / amorçage)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "formation"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "langage-description",
+      "container": "cognition",
+      "mecanique": "math → parole : les croyances décrites en français",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "perception"
+        },
+        {
+          "type": "inspecteur",
+          "id": "escouadeCrue"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "competences",
+      "container": "cognition",
+      "mecanique": "le COMMENT rangé — contrat commun, objectifHumain obligatoire",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "objectif"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "paroles-flavor",
+      "container": "cognition",
+      "mecanique": "la surcouche de parole : cris aux bascules, seuils de jauges avec hystérésis, bavardage et défis à cadence ~N — sans mécanique (personne n'écoute encore)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "bulles"
+        },
+        {
+          "type": "inspecteur",
+          "id": "dernieresParoles"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/cognition/CLAUDE.md"
+    },
+    {
+      "slug": "unite-drill",
+      "container": "social",
+      "mecanique": "ordreDrill = les habitudes avant/arrière rendues mécaniques",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "formation"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/social/CLAUDE.md"
+    },
+    {
+      "slug": "forme-ouverte",
+      "container": "social",
+      "mecanique": "la forme cible, donnée au niveau unité",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "formation"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/social/CLAUDE.md"
+    },
+    {
+      "slug": "equipement-lance",
+      "container": "corps",
+      "mecanique": "lance par défaut = l'orientation se voit",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/corps/CLAUDE.md"
+    },
+    {
+      "slug": "armes-differenciees",
+      "container": "corps",
+      "mecanique": "pique 4,5 m / épée : allonge, arc, réarmement, coût de garde PAR ARME — la garde ⚙️ est asymétrique (chacun craint la pointe ADVERSE)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        },
+        {
+          "type": "calque",
+          "id": "forces"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/corps/CLAUDE.md"
+    },
+    {
+      "slug": "bouclier-parade",
+      "container": "corps",
+      "mecanique": "coup frontal dans l'arc couvert → CLANG, pas de blessure",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        },
+        {
+          "type": "calque",
+          "id": "coups"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/corps/CLAUDE.md"
+    },
+    {
+      "slug": "souffle-sigmoide",
+      "container": "corps",
+      "mecanique": "réserve linéaire, ressenti en S — ~45 s d'engagement, bascule à ~35 %",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "souffle"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/corps/CLAUDE.md"
+    },
+    {
+      "slug": "blessures",
+      "container": "corps",
+      "mecanique": "coups reçus comptés ; la vitesse baisse à chaque coup (plancher — on boite)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        },
+        {
+          "type": "inspecteur",
+          "id": "blessures"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/corps/CLAUDE.md"
+    },
+    {
+      "slug": "mort-gisant",
+      "container": "corps",
+      "mecanique": "au seuil de coups : constat ❤️, geste `gisant`, cadavre figé sur le champ",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/corps/CLAUDE.md"
+    },
+    {
+      "slug": "arc-et-carquois",
+      "container": "corps",
+      "mecanique": "l'arc = un projecteur de ZONE (pas d'arme de mêlée) ; les flèches COMPTÉES par carquois — puiser refuse à vide",
+      "viz": [
+        {
+          "type": "inspecteur",
+          "id": "fleches"
+        },
+        {
+          "type": "calque",
+          "id": "coups"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/corps/CLAUDE.md"
+    },
+    {
+      "slug": "acte-frapper",
+      "container": "action",
+      "mecanique": "la cible est nommée, l'allonge et l'arc décident — ami compris ; la FENTE porte le corps en avant le temps du geste",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "coups"
+        },
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "refus-monture",
+      "container": "action",
+      "mecanique": "le RÉFLEXE du cheval : pointes levées adverses dans la fenêtre de regard (pique plein, épée peu) → freinage continu + dérobade vers le côté le moins hérissé — les murs de piques TIENNENT sans une règle de plus",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "train-de-monture",
+      "container": "action",
+      "mecanique": "l'intention porte un `train` ('pas'/'trot'/'galop') : le cavalier parle à sa monture — la vitesse max est PAR CORPS ; à pied le mot est ignoré",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "acte-tirer",
+      "container": "action",
+      "mecanique": "la volée sur une ZONE crue : cadence par arc, flèche puisée (refus à vide), dispersion en cône, la flèche touche QUI est là — ami compris",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "coups"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "pathfinding-astar",
+      "container": "action",
+      "mecanique": "chemin trouvé sur la navgrid",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "chemins"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "suivi-chemin",
+      "container": "action",
+      "mecanique": "waypoint courant, vitesse désirée",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "chemins"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "lissage-chemin",
+      "container": "action",
+      "mecanique": "string-pulling : crans 45° → vrais coins",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "echec-intention",
+      "container": "action",
+      "mecanique": "signalement d'une intention irréalisable",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "vol-banque",
+      "container": "action",
+      "mecanique": "l'intention de vol bornée par le profil : virage coordonné banqué, vol lent battu, altitude et vitesse filtrées, piqué énergétique (interception du plan de tir, la hauteur devient vitesse) — l'état réalisable écrit par ⚙️",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "dragon"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "dracarys",
+      "container": "action",
+      "mecanique": "le cône-sol exact juge qui brûle : doses vers ❤️ (le noyau met hors de combat, le bord marque), trace vers 🌍 — les passes ratées ressourcent sans brûler le vide",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "dragon"
+        },
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/action/CLAUDE.md"
+    },
+    {
+      "slug": "repulsion-douce",
+      "container": "physique",
+      "mecanique": "murs et hommes repoussent, profil linéaire",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "forces"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "collision-dure",
+      "container": "physique",
+      "mecanique": "personne ne se traverse, relaxation itérative",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "forces"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "inertie",
+      "container": "physique",
+      "mecanique": "vitesse qui converge sous `accelMax` — demi-tour en arc",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "forces"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "cap-integre",
+      "container": "physique",
+      "mecanique": "rotation BORNÉE (`rotationMax`) vers le cap désiré (🧠 via 🏃) ; sans désir : sens de marche, conservé à l'arrêt",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "marche-arriere-lente",
+      "container": "physique",
+      "mecanique": "vitesse bornée quand elle s'oppose au cap — fuir vite exige de tourner le dos",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "repousse-gisants",
+      "container": "physique",
+      "mecanique": "les morts repoussent doucement les vivants — on enjambe, on ne piétine pas (unidirectionnel)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "forces"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "choc-renverse",
+      "container": "physique",
+      "mecanique": "quantité de mouvement conservée au choc de charge — le léger est renversé (posture `renverse`), pas le lourd",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "charge-montee",
+      "container": "physique",
+      "mecanique": "le galop percute : Δv échangé au choc → renversés en chaîne, TRAUMA poussé vers ❤️ (la physiologie juge la gravité) ; le mort tombe de selle",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "forces"
+        },
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "attelage",
+      "container": "physique",
+      "mecanique": "le cavalier est PORTÉ : hors forces/collisions, position/vitesse/cap = sa monture ; il VEUT, elle PORTE (sa vitesse désirée passe au corps qui la réalise) ; monture morte → à pied, monture renversée → cavalier à terre",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "hommes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "curee-rattrapable",
+      "container": "physique",
+      "mecanique": "un dos en fuite n'émet plus de garde (sa pointe ne menace personne) — le fuyard se rattrape, et la pointe adverse le pousse",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "garde-de-lance",
+      "container": "physique",
+      "mecanique": "livrées adverses repoussées à allonge + 20 cm (centre à centre) — la MESURE d'escrime ; la fente (🏃) la perce",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "forces"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "coude-a-coude",
+      "container": "physique",
+      "mecanique": "côte à côte + caps parallèles → attraction latérale vers l'épaulement — FAITS géométriques, aucun flag « formation », aucune livrée ; les lignes ennemies (caps opposés) s'ignorent",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "forces"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "acoustique",
+      "container": "physique",
+      "mecanique": "portée de voix (murmure 2 m / parole 8 m / cri 25 m) : `quiEntend(pos, {intensite})` rend les corps à portée ; atténuation par les murs et bruit de mêlée à venir",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "bulles"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/physique/CLAUDE.md"
+    },
+    {
+      "slug": "selection",
+      "container": "presentation",
+      "mecanique": "anneau autour de l'homme cliqué",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "selection"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "camera",
+      "container": "presentation",
+      "mecanique": "zoom molette, pan drag, mètres↔pixels",
+      "viz": [],
+      "intrinseque": true,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "spawn-refuse",
+      "container": "presentation",
+      "mecanique": "un spawn sur un obstacle est refusé",
+      "viz": [],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "calques-activables",
+      "container": "presentation",
+      "mecanique": "chaque calque peut s'allumer/s'éteindre",
+      "viz": [
+        {
+          "type": "ui",
+          "id": "calques"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "bulles-paroles",
+      "container": "presentation",
+      "mecanique": "paroles éphémères au-dessus des corps, vieillies au temps sim — viz de la comm 📯 à venir",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "bulles"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "terrain-ville",
+      "container": "presentation",
+      "mecanique": "le plan cuit d'une ville (le-conseil2) rendu en raster caché à deux niveaux (ville entière au loin, fenêtre fine sous la caméra) — du DESSIN ; la vérité reste le masque (🌍)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "terrain"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "scenario-selecteur",
+      "container": "presentation",
+      "mecanique": "le catalogue des scénarios ; choisir = recomposer un monde NEUF (jamais de reset in place)",
+      "viz": [
+        {
+          "type": "ui",
+          "id": "scenarios"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "lignes-de-front",
+      "container": "presentation",
+      "mecanique": "debug vérité-terrain : le contour du front par camp (courbe), envergure (m), % de trous, perpendiculaire centrale (axe de menace, distance)",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "lignes"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "inspecteur-redimensionnable",
+      "container": "presentation",
+      "mecanique": "panneau droit élargissable à la poignée (bord gauche)",
+      "viz": [
+        {
+          "type": "ui",
+          "id": "inspecteur"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    },
+    {
+      "slug": "calque-dragon",
+      "container": "presentation",
+      "mecanique": "✅ passes vol + feu : silhouette battante (robe ❤️), ombre portée par z + pointillé, étiquette d'altitude, altimètre, path coloré par altitude, flamme (fuseau chaud), empreinte cône-sol (les cordes exactes), chaleur 🌍 (braise/carbonisation). ⏸️ à venir : couloirs de la délibération",
+      "viz": [
+        {
+          "type": "calque",
+          "id": "dragon"
+        }
+      ],
+      "intrinseque": false,
+      "source": "src/presentation/CLAUDE.md"
+    }
+  ],
+  "calques": {
+    "calques": [
+      {
+        "id": "bulles",
+        "fichier": "src/presentation/calques/bulles.js",
+        "revendique": [
+          "bulles-paroles",
+          "paroles-flavor",
+          "acoustique"
+        ]
+      },
+      {
+        "id": "chemins",
+        "fichier": "src/presentation/calques/chemins.js",
+        "revendique": [
+          "pathfinding-astar",
+          "suivi-chemin",
+          "intentions"
+        ]
+      },
+      {
+        "id": "coups",
+        "fichier": "src/presentation/calques/coups.js",
+        "revendique": [
+          "acte-frapper",
+          "acte-tirer",
+          "bouclier-parade",
+          "etat-tire",
+          "etat-poursuite",
+          "arc-et-carquois"
+        ]
+      },
+      {
+        "id": "couverture",
+        "fichier": "src/presentation/calques/couverture.js",
+        "revendique": [
+          "couverture"
+        ]
+      },
+      {
+        "id": "dragon",
+        "fichier": "src/presentation/calques/dragon.js",
+        "revendique": [
+          "vol-banque",
+          "calque-dragon",
+          "dracarys",
+          "chaleur-sol"
+        ]
+      },
+      {
+        "id": "etat-major",
+        "fichier": "src/presentation/calques/etat-major.js",
+        "revendique": [
+          "etat-major"
+        ]
+      },
+      {
+        "id": "forces",
+        "fichier": "src/presentation/calques/forces.js",
+        "revendique": [
+          "repulsion-douce",
+          "collision-dure",
+          "inertie",
+          "coude-a-coude",
+          "garde-de-lance",
+          "armes-differenciees",
+          "repousse-gisants"
+        ]
+      },
+      {
+        "id": "formation",
+        "fichier": "src/presentation/calques/formation.js",
+        "revendique": [
+          "ancrage-relationnel",
+          "objectif-humain",
+          "unite-drill",
+          "forme-ouverte",
+          "langage-resolution",
+          "ratissage-bonds"
+        ]
+      },
+      {
+        "id": "hommes",
+        "fichier": "src/presentation/calques/hommes.js",
+        "revendique": [
+          "registre-corps",
+          "bras",
+          "renes",
+          "livree-physique",
+          "cap",
+          "cap-integre",
+          "nom-panache",
+          "equipement-lance",
+          "armes-differenciees",
+          "bouclier-parade",
+          "readiness-regard",
+          "blessures",
+          "acte-frapper",
+          "marche-arriere-lente",
+          "mort-gisant",
+          "etat-fuir",
+          "choc-renverse",
+          "dracarys",
+          "attelage",
+          "refus-monture",
+          "robe-cheval",
+          "pennon",
+          "usure-visible",
+          "arbalete"
+        ]
+      },
+      {
+        "id": "index",
+        "fichier": "src/presentation/calques/index.js",
+        "revendique": [
+          "index-spatial-snapshot"
+        ]
+      },
+      {
+        "id": "lignes",
+        "fichier": "src/presentation/calques/lignes.js",
+        "revendique": [
+          "lignes-de-front"
+        ]
+      },
+      {
+        "id": "navgrid",
+        "fichier": "src/presentation/calques/navgrid.js",
+        "revendique": [
+          "navgrid"
+        ]
+      },
+      {
+        "id": "ordres-donnes",
+        "fichier": "src/presentation/calques/ordres-donnes.js",
+        "revendique": [
+          "ordres-donnes"
+        ]
+      },
+      {
+        "id": "orientation",
+        "fichier": "src/presentation/calques/orientation.js",
+        "revendique": [
+          "orientation-arbitrage",
+          "orientation-facer"
+        ]
+      },
+      {
+        "id": "perception",
+        "fichier": "src/presentation/calques/perception.js",
+        "revendique": [
+          "perception-bornee",
+          "memoire-datee",
+          "perception-tas",
+          "attention-dirigee",
+          "nom-panache",
+          "forme-tas",
+          "langage-description",
+          "perception-contact",
+          "perception-masse",
+          "menace-regroupement",
+          "poids-de-gabarit"
+        ]
+      },
+      {
+        "id": "selection",
+        "fichier": "src/presentation/calques/selection.js",
+        "revendique": [
+          "selection"
+        ]
+      },
+      {
+        "id": "terrain",
+        "fichier": "src/presentation/calques/terrain.js",
+        "revendique": [
+          "terrain-obstacles",
+          "terrain-ville",
+          "terrain-sol",
+          "terrain-masque"
+        ]
+      }
+    ],
+    "branches": [
+      "terrain",
+      "navgrid",
+      "index",
+      "forces",
+      "hommes",
+      "chemins",
+      "coups",
+      "dragon",
+      "perception",
+      "couverture",
+      "etat-major",
+      "lignes",
+      "formation",
+      "orientation",
+      "bulles",
+      "ordres-donnes",
+      "selection"
+    ]
+  },
+  "divergences": [
+    {
+      "type": "declare-non-cable",
+      "containers": [
+        "monde",
+        "social"
+      ],
+      "message": "Monde → Social : déclaré (portées, positions (Index spatial) — à venir) mais absent du câblage."
+    },
+    {
+      "type": "declare-non-cable",
+      "containers": [
+        "social",
+        "cognition"
+      ],
+      "message": "Social → Cognition : déclaré (ordres et messages délivrés) mais absent du câblage."
+    },
+    {
+      "type": "declare-non-cable",
+      "containers": [
+        "cognition",
+        "social"
+      ],
+      "message": "Cognition → Social : déclaré (émission d'ordres (si chef)) mais absent du câblage."
+    },
+    {
+      "type": "declare-non-cable",
+      "containers": [
+        "physique",
+        "social"
+      ],
+      "message": "Physique → Social : déclaré (les lois acoustiques (`acoustique/portee-voix.js`, première passe : `quiEntend` = les corps à portée, sans atténuation) — la propagation d'une parole est un fait physique. Reçoit pour cela le voisinage du container 🌍 Monde (`voisinsDans`). Premier consommateur réel : la boîte de parole de la page — ce qu'un homme dit depuis la carte est entendu de tous ceux à portée, et d'eux seuls) mais absent du câblage."
+    },
+    {
+      "type": "declaration-unilaterale",
+      "containers": [
+        "physique",
+        "social"
+      ],
+      "message": "Physique → Social : déclaré seulement par Physique, le pair ne le mentionne pas."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "orchestration"
+      ],
+      "message": "`dt-fixe` (la taille du pas ne change jamais, seul leur nombre varie) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "orchestration"
+      ],
+      "message": "`ordre-des-phases` (les 6 phases du tick, dans l'ordre décidé) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "cognition"
+      ],
+      "message": "`machine-vecu` (le vécu cumulé : secondes par état, bascules par transition) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "cognition"
+      ],
+      "message": "`cadence-perception` (~N(2 Hz) échelonnée — levier de scale n°1) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "action"
+      ],
+      "message": "`train-de-monture` (l'intention porte un `train` ('pas'/'trot'/'galop') : le cavalier parle à sa monture — la vitesse max est PAR CORPS ; à pied le mot est ignoré) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "action"
+      ],
+      "message": "`lissage-chemin` (string-pulling : crans 45° → vrais coins) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "action"
+      ],
+      "message": "`echec-intention` (signalement d'une intention irréalisable) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "viz-non-revendiquee",
+      "containers": [
+        "physique",
+        "presentation"
+      ],
+      "message": "`charge-montee` dit être montré par le calque `forces`, mais son @viz ne le revendique pas."
+    },
+    {
+      "type": "viz-non-revendiquee",
+      "containers": [
+        "physique",
+        "presentation"
+      ],
+      "message": "`charge-montee` dit être montré par le calque `hommes`, mais son @viz ne le revendique pas."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "physique"
+      ],
+      "message": "`curee-rattrapable` (un dos en fuite n'émet plus de garde (sa pointe ne menace personne) — le fuyard se rattrape, et la pointe adverse le pousse) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "feature-sans-viz",
+      "containers": [
+        "presentation"
+      ],
+      "message": "`spawn-refuse` (un spawn sur un obstacle est refusé) n'a aucune représentation visuelle."
+    },
+    {
+      "type": "viz-orpheline",
+      "containers": [
+        "presentation"
+      ],
+      "message": "Le calque `hommes` revendique `bras`, absent de tout tableau Observables."
+    },
+    {
+      "type": "viz-orpheline",
+      "containers": [
+        "presentation"
+      ],
+      "message": "Le calque `hommes` revendique `renes`, absent de tout tableau Observables."
+    },
+    {
+      "type": "viz-orpheline",
+      "containers": [
+        "presentation"
+      ],
+      "message": "Le calque `hommes` revendique `robe-cheval`, absent de tout tableau Observables."
+    },
+    {
+      "type": "viz-orpheline",
+      "containers": [
+        "presentation"
+      ],
+      "message": "Le calque `hommes` revendique `pennon`, absent de tout tableau Observables."
+    },
+    {
+      "type": "viz-orpheline",
+      "containers": [
+        "presentation"
+      ],
+      "message": "Le calque `hommes` revendique `usure-visible`, absent de tout tableau Observables."
+    },
+    {
+      "type": "viz-orpheline",
+      "containers": [
+        "presentation"
+      ],
+      "message": "Le calque `hommes` revendique `arbalete`, absent de tout tableau Observables."
+    },
+    {
+      "type": "viz-orpheline",
+      "containers": [
+        "presentation"
+      ],
+      "message": "Le calque `ordres-donnes` revendique `ordres-donnes`, absent de tout tableau Observables."
+    },
+    {
+      "type": "viz-orpheline",
+      "containers": [
+        "presentation"
+      ],
+      "message": "Le calque `terrain` revendique `terrain-sol`, absent de tout tableau Observables."
+    }
+  ],
+  "resume": {
+    "containers": 8,
+    "implementes": 8,
+    "modules": 114,
+    "liensCables": 84,
+    "contratsDeclares": 52,
+    "features": 100,
+    "featuresAvecViz": 91,
+    "divergences": 24
+  },
+  "machines": [
+    {
+      "brain": "dragon",
+      "definition": {
+        "brain": "dragon",
+        "initial": "rallie",
+        "etats": {
+          "rallie": {
+            "agir": "rallier"
+          },
+          "tientAuxAiles": {
+            "agir": "tenirAuxAiles"
+          },
+          "pique": {
+            "agir": "piquer"
+          },
+          "souffle": {
+            "agir": "souffler"
+          },
+          "ressource": {
+            "agir": "ressourcer"
+          }
+        },
+        "transitions": [
+          {
+            "de": "rallie",
+            "vers": "pique",
+            "quand": "alignementNormal",
+            "libelle": "l'entrée est prise — j'abats le nez"
+          },
+          {
+            "de": "rallie",
+            "vers": "tientAuxAiles",
+            "quand": "fenetreProche",
+            "libelle": "je casse ma vitesse et me tiens aux ailes"
+          },
+          {
+            "de": "rallie",
+            "vers": "pique",
+            "quand": "patienceRalliement",
+            "libelle": "la ligne reste imparfaite — je verrouille mon cap et convertis en passe"
+          },
+          {
+            "de": "tientAuxAiles",
+            "vers": "pique",
+            "quand": "alignementNormal",
+            "libelle": "le cap est fermé — j'abats le nez"
+          },
+          {
+            "de": "tientAuxAiles",
+            "vers": "pique",
+            "quand": "attenteLenteEpuisee",
+            "libelle": "la tenue sur place coûte trop — je verrouille et j'abats le nez"
+          },
+          {
+            "de": "tientAuxAiles",
+            "vers": "rallie",
+            "quand": "cibleDisparue",
+            "libelle": "la cible s'est dispersée — je reprends de l'allure vers une autre entrée"
+          },
+          {
+            "de": "pique",
+            "vers": "souffle",
+            "quand": "occasionDansLAxe",
+            "libelle": "des corps dans l'axe, assez bas — Dracarys"
+          },
+          {
+            "de": "pique",
+            "vers": "ressource",
+            "quand": "ligneDepassee",
+            "libelle": "rien de rentable n'est entré dans l'axe — je ressource sans souffler au hasard"
+          },
+          {
+            "de": "souffle",
+            "vers": "ressource",
+            "quand": "souffleVide",
+            "libelle": "le souffle se coupe — la braise refroidit, la carbonisation demeure"
+          },
+          {
+            "de": "ressource",
+            "vers": "rallie",
+            "quand": "ressourceAchevee",
+            "libelle": "je reprends hauteur et relis le champ — prochaine ligne"
+          }
+        ]
+      },
+      "source": "src/cognition/brains/dragon/machine.js"
+    },
+    {
+      "brain": "gregaire",
+      "definition": {
+        "brain": "gregaire",
+        "initial": "cherche",
+        "etats": {
+          "cherche": {
+            "agir": "chercher"
+          },
+          "flane": {
+            "agir": "flaner"
+          },
+          "rejoint": {
+            "agir": "rejoindre"
+          },
+          "secarte": {
+            "agir": "ecarter"
+          },
+          "discute": {
+            "agir": "discuter"
+          }
+        },
+        "transitions": [
+          {
+            "de": "*",
+            "vers": "rejoint",
+            "quand": "menaceEtEscouadeLoin",
+            "libelle": "une unité ennemie approche — je me regroupe"
+          },
+          {
+            "de": "*",
+            "vers": "cherche",
+            "quand": "menaceEtSeul",
+            "libelle": "une unité ennemie approche, seul — je rallie les miens"
+          },
+          {
+            "de": "*",
+            "vers": "cherche",
+            "quand": "groupeReduit",
+            "libelle": "nous ne sommes qu'une poignée — je pars retrouver le gros"
+          },
+          {
+            "de": "*",
+            "vers": "discute",
+            "quand": "surLeCercle",
+            "libelle": "me voilà sur le cercle de discussion"
+          },
+          {
+            "de": "*",
+            "vers": "rejoint",
+            "quand": "escouadeLoin",
+            "libelle": "mon escouade est loin — je la rejoins"
+          },
+          {
+            "de": "*",
+            "vers": "secarte",
+            "quand": "escouadeTropPres",
+            "libelle": "trop au centre du groupe — je m'écarte"
+          },
+          {
+            "de": "*",
+            "vers": "cherche",
+            "quand": "seulAvecAttaches",
+            "libelle": "je suis seul — je pars chercher les miens"
+          },
+          {
+            "de": "*",
+            "vers": "flane",
+            "quand": "seulSansAttaches",
+            "libelle": "personne à retrouver — je flâne"
+          }
+        ]
+      },
+      "source": "src/cognition/brains/gregaire/machine.js"
+    },
+    {
+      "brain": "soldat",
+      "definition": {
+        "brain": "soldat",
+        "initial": "desoeuvre.cherche",
+        "etats": {
+          "obeir": {
+            "initial": "enFormation",
+            "sousEtats": {
+              "enFormation": {
+                "agir": "suivreFormation"
+              },
+              "ratisse": {
+                "agir": "suivreFormation"
+              },
+              "recule": {
+                "agir": "suivreFormation"
+              },
+              "charge": {
+                "agir": "charger"
+              },
+              "cherche": {
+                "agir": "chercher"
+              }
+            }
+          },
+          "desoeuvre": {
+            "initial": "cherche",
+            "sousEtats": {
+              "cherche": {
+                "agir": "chercher"
+              },
+              "flane": {
+                "agir": "flaner"
+              },
+              "rejoint": {
+                "agir": "rejoindre"
+              },
+              "secarte": {
+                "agir": "ecarter"
+              },
+              "discute": {
+                "agir": "discuter"
+              }
+            }
+          },
+          "tuer": {
+            "initial": "pret",
+            "sousEtats": {
+              "pret": {
+                "agir": "sePreparer"
+              },
+              "engage": {
+                "agir": "engager"
+              },
+              "poursuit": {
+                "agir": "poursuivre"
+              },
+              "tire": {
+                "agir": "tirer"
+              },
+              "repasse": {
+                "agir": "seDegager"
+              },
+              "pousse": {
+                "agir": "pousserDerriere"
+              },
+              "recupere": {
+                "agir": "rompre"
+              }
+            }
+          },
+          "proteger": {},
+          "fuir": {
+            "agir": "fuir"
+          }
+        },
+        "transitions": [
+          {
+            "de": "fuir",
+            "vers": "desoeuvre.cherche",
+            "quand": "espritsRepris",
+            "libelle": "hors de portée — je reprends mes esprits"
+          },
+          {
+            "de": "tuer.pret",
+            "vers": "fuir",
+            "quand": "moralRompu",
+            "libelle": "trop des nôtres tombés — je romps !"
+          },
+          {
+            "de": "tuer.pousse",
+            "vers": "fuir",
+            "quand": "moralRompu",
+            "libelle": "trop des nôtres tombés — je romps !"
+          },
+          {
+            "de": "tuer.recupere",
+            "vers": "fuir",
+            "quand": "moralRompu",
+            "libelle": "trop des nôtres tombés — je romps !"
+          },
+          {
+            "de": "obeir",
+            "vers": "fuir",
+            "quand": "moralRompu",
+            "libelle": "trop des nôtres tombés — je romps !"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "fuir",
+            "quand": "moralRompu",
+            "libelle": "trop des nôtres tombés — je romps !"
+          },
+          {
+            "de": "*",
+            "vers": "tuer",
+            "quand": "rencontre",
+            "libelle": "l'ennemi est au contact — je me tiens prêt"
+          },
+          {
+            "de": "*",
+            "vers": "tuer",
+            "quand": "voleePossible",
+            "libelle": "une unité à découvert, à portée de trait — halte"
+          },
+          {
+            "de": "tuer",
+            "vers": "obeir",
+            "quand": "ordreActifSansEnnemi",
+            "libelle": "plus d'ennemi au contact — je reprends ma place"
+          },
+          {
+            "de": "tuer",
+            "vers": "desoeuvre",
+            "quand": "sansOrdreNiEnnemi",
+            "libelle": "plus d'ennemi devant — je souffle"
+          },
+          {
+            "de": "tuer",
+            "vers": "tuer.recupere",
+            "quand": "souffleBas",
+            "libelle": "plus de souffle — je romps d'un pas"
+          },
+          {
+            "de": "tuer.recupere",
+            "vers": "tuer.pret",
+            "quand": "souffleRevenu",
+            "libelle": "le souffle revient — je me tiens prêt"
+          },
+          {
+            "de": "tuer.pret",
+            "vers": "tuer.repasse",
+            "quand": "passeADegager",
+            "libelle": "pas d'arrêt au fer — je traverse et reprends du champ"
+          },
+          {
+            "de": "tuer.repasse",
+            "vers": "tuer.pret",
+            "quand": "passeFinie",
+            "libelle": "assez de champ — je me reforme pour repasser"
+          },
+          {
+            "de": "tuer.pret",
+            "vers": "tuer.pousse",
+            "quand": "derriere",
+            "libelle": "un des nôtres devant moi — je pousse"
+          },
+          {
+            "de": "tuer.pousse",
+            "vers": "tuer.pret",
+            "quand": "enPremiereLigne",
+            "libelle": "me voilà en première ligne"
+          },
+          {
+            "de": "tuer.pret",
+            "vers": "tuer.tire",
+            "quand": "voleePossible",
+            "libelle": "ils traversent à découvert — nockez !"
+          },
+          {
+            "de": "tuer.tire",
+            "vers": "tuer.pret",
+            "quand": "voleeFinie",
+            "libelle": "plus une flèche ou ils sont sur nous — au couteau !"
+          },
+          {
+            "de": "tuer.pret",
+            "vers": "tuer.engage",
+            "quand": "rapportFavorable",
+            "libelle": "assez de prêts autour — à l'assaut !"
+          },
+          {
+            "de": "tuer.engage",
+            "vers": "tuer.poursuit",
+            "quand": "cureeOuverte",
+            "libelle": "ils rompent tous — sus ! la curée"
+          },
+          {
+            "de": "tuer.pret",
+            "vers": "tuer.poursuit",
+            "quand": "cureeOuverte",
+            "libelle": "ils rompent tous — sus ! la curée"
+          },
+          {
+            "de": "tuer.poursuit",
+            "vers": "tuer.pret",
+            "quand": "cureeFermee",
+            "libelle": "plus de fuyard à portée — je reforme"
+          },
+          {
+            "de": "*",
+            "vers": "obeir.charge",
+            "quand": "ordreCharger",
+            "libelle": "la charge est sonnée — sus à l'ennemi"
+          },
+          {
+            "de": "*",
+            "vers": "obeir.recule",
+            "quand": "ordreReculer",
+            "libelle": "on décroche — je recule sans tourner le dos"
+          },
+          {
+            "de": "*",
+            "vers": "obeir.ratisse",
+            "quand": "ordreRatisser",
+            "libelle": "ratissage ordonné — je tiens mon rang en marche"
+          },
+          {
+            "de": "*",
+            "vers": "obeir",
+            "quand": "ordreActif",
+            "libelle": "ordre reçu de mon chef"
+          },
+          {
+            "de": "obeir",
+            "vers": "desoeuvre",
+            "quand": "ordreLeve",
+            "libelle": "l'ordre est levé — repos"
+          },
+          {
+            "de": "obeir",
+            "vers": "obeir.cherche",
+            "quand": "repereIrresolubleEtSeul",
+            "libelle": "seul et sans repère — je pars chercher"
+          },
+          {
+            "de": "obeir.cherche",
+            "vers": "obeir.enFormation",
+            "quand": "repereResolu",
+            "libelle": "repère retrouvé — je reprends ma place"
+          },
+          {
+            "de": "obeir.cherche",
+            "vers": "obeir.enFormation",
+            "quand": "entoure",
+            "libelle": "du monde autour — je reprends ma place"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "desoeuvre.rejoint",
+            "quand": "menaceEtEscouadeLoin",
+            "libelle": "une unité ennemie approche — je me regroupe"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "desoeuvre.cherche",
+            "quand": "menaceEtSeul",
+            "libelle": "une unité ennemie approche, seul — je rallie les miens"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "desoeuvre.cherche",
+            "quand": "groupeReduit",
+            "libelle": "nous ne sommes qu'une poignée — je pars retrouver le gros"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "desoeuvre.discute",
+            "quand": "surLeCercle",
+            "libelle": "me voilà sur le cercle de discussion"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "desoeuvre.rejoint",
+            "quand": "escouadeLoin",
+            "libelle": "mon escouade est loin — je la rejoins"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "desoeuvre.secarte",
+            "quand": "escouadeTropPres",
+            "libelle": "trop au centre du groupe — je m'écarte"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "desoeuvre.cherche",
+            "quand": "seulAvecAttaches",
+            "libelle": "je suis seul — je pars chercher les miens"
+          },
+          {
+            "de": "desoeuvre",
+            "vers": "desoeuvre.flane",
+            "quand": "seulSansAttaches",
+            "libelle": "personne à retrouver — je flâne"
+          }
+        ]
+      },
+      "source": "src/cognition/brains/soldat/machine.js"
+    }
+  ]
+}

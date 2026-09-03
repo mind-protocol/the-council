@@ -53,6 +53,10 @@ Une institution commence par la règle qu'elle rend exécutable. Mes comptes ne
 qualifieront pas eux-mêmes une affaire de vertueuse : ils forceront plutôt
 chaque partie à exposer l'objet, le risque et l'effet civique de l'opération,
 puis empêcheront que l'équilibre ou les mots soient corrigés en silence.
+Une garde utile doit aussi distinguer la répétition de la substitution sans
+publier à nouveau les termes qu'elle protège.
+Vérifier et consulter sont deux offices distincts : l'un répond de la chaîne,
+l'autre rend les clauses lisibles, et aucun ne juge leur justice.
 
 <!-- serenissima:braavos:start -->
 ## Notre situation à Braavos

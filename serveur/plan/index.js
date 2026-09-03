@@ -9,5 +9,6 @@
 module.exports.bibliotheque = require("./bibliotheque"); // les books cote serveur : charger, ouvrir
 module.exports.livres = require("../routes/livres");     // /books, /notes, /nappe, /plis
 module.exports.echiquier = require("../routes/echiquier"); // /echiquier
+module.exports.partie = require("../routes/partie");       // /partie — la vue en cartes
 module.exports.agenda = require("../routes/agenda");     // POST /agenda, /notes, /nappe
 module.exports.atelier = require("../routes/atelier");   // pages d'atelier, /admin, /regie

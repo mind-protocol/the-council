@@ -1,0 +1,12 @@
+{
+  "name": "bataille",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Le moteur de bataille — sim autonome, servie par outils/serveur.mjs.",
+  "type": "module",
+  "scripts": {
+    "serveur": "node outils/serveur.mjs 4174",
+    "fumee": "node coding/fumee.mjs",
+    "banc": "node coding/banc-sauvegarde.mjs"
+  }
+}

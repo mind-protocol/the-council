@@ -1,0 +1,140 @@
+/* « Le conseil » — la partie en cartes (modules/partie.js).
+   Une seule anatomie de carte, cinq apparences, trois couleurs de bord :
+   l'encre pour nous, le vert pour eux, l'or pour ce qui attend une réponse. */
+#partie{position:static;flex:1 1 auto;min-height:200px;display:flex;flex-direction:column;
+  gap:8px;padding:8px 10px;overflow:hidden;font-size:13px;line-height:1.3;}
+#cartes:has(#partie:not(.vue-off)){flex:1 1 auto;}
+#partie .pc-rien{color:var(--muted);font-style:italic;padding:24px 8px;}
+#partie .pc-bar{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+  border-bottom:1px solid var(--bord);padding-bottom:6px;}
+#partie .pc-lbl{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+#partie .pc-vide{color:var(--muted);font-style:italic;font-size:12px;padding:4px 0;}
+
+/* Le plateau prend ce qui reste et défile SEUL : le deck, lui, ne quitte
+   jamais le bas de l'écran — « ce que je peux faire maintenant » doit être
+   sous les yeux, c'est la règle qui a fait choisir cette maquette. */
+#partie .pc-plateau{display:flex;flex-direction:column;gap:8px;
+  flex:1 1 auto;min-height:0;overflow:auto;}
+/* ce qui attend une réponse passe devant tout : c'est bloquant, pas décoratif */
+#partie .pc-attentes{display:flex;flex-wrap:wrap;gap:8px;}
+
+#partie .pc-fronts{flex:1 1 auto;min-height:0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,1fr);gap:12px;overflow-x:auto;padding-bottom:6px;align-items:start;}
+#partie .pc-front{display:flex;flex-direction:column;gap:6px;padding:8px;border:1px dashed var(--bord);border-radius:4px;min-height:160px;}
+#partie .pc-front.pc-prevaut-noir{border-color:var(--accent);}
+#partie .pc-pile{display:flex;flex-direction:column;}
+#partie .pc-pile{flex-direction:row;flex-wrap:wrap;gap:6px;align-items:flex-start;}
+#partie .pc-qui{font-size:10.5px;color:var(--muted);margin-top:auto;padding-top:4px;text-align:right;}
+
+/* la carte — LE SIGNE SEUL, le texte au survol.
+   La carte n'est plus un pavé de prose : c'est un jeton qu'on reconnaît à son
+   signe et à sa place. Ce qu'elle dit se lit en la regardant, dans un volet qui
+   s'ouvre sous elle — une carte à la fois, à la largeur qu'il faut, au lieu de
+   vingt-neuf textes qui se disputent l'écran. */
+#partie .pc-carte{position:relative;background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;
+  width:54px;height:54px;flex:0 0 auto;box-shadow:0 1px 0 var(--bord);}
+#partie .pc-carte .pc-type{left:50%;top:50%;transform:translate(-50%,-50%);font-size:30px;}
+/* le volet : posé sous la carte, au-dessus de tout, et transparent au curseur
+   pour ne jamais gêner un glissé en cours */
+#partie .pc-texte{display:none;}
+#partie .pc-carte:hover .pc-texte{display:block;position:absolute;z-index:60;
+  left:0;top:calc(100% + 4px);width:300px;pointer-events:none;
+  background:var(--paper);border:1.5px solid var(--ink);border-radius:4px;
+  padding:8px 10px;box-shadow:0 6px 16px rgba(0,0,0,.3);}
+#partie.pc-en-main .pc-texte{display:none !important;}
+/* LE SIGNE SE LIT DE LOIN. C'est lui qui dit ce qu'on regarde avant même la
+   première lettre — à 14 px il ne disait rien du tout. */
+#partie .pc-type{position:absolute;left:7px;top:7px;font-size:26px;line-height:1;}
+#partie .pc-rangee .pc-type{font-size:24px;}
+#partie .pc-titre{font-weight:600;font-size:13.5px;line-height:1.15;}
+#partie .pc-corps{color:var(--muted);font-size:12px;margin-top:2px;}
+#partie .pc-pied{display:flex;justify-content:space-between;gap:8px;margin-top:4px;font-size:10.5px;color:var(--muted);}
+#partie .pc-pied-g{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#partie .pc-pied-d{white-space:nowrap;color:var(--ink);}
+#partie .pc-visee{position:absolute;right:6px;top:4px;font-size:18px;}
+#partie .pc-sous{margin-left:0;}
+#partie .pc-sous2{margin-left:0;}
+
+/* les camps et les types */
+#partie .pc-camp-vert{border-color:var(--vert);}
+#partie .pc-camp-vert .pc-titre{color:var(--vert);}
+#partie .pc-question{border-color:var(--or-joueur);background:color-mix(in srgb,var(--or-joueur) 12%,var(--paper));}
+#partie .pc-question .pc-titre{color:var(--ink);font-weight:500;font-style:italic;}
+#partie .pc-cible{border-color:var(--bord);background:transparent;}
+#partie .pc-app-vrai{background:color-mix(in srgb,var(--or-joueur) 35%,var(--paper));border-color:var(--or-joueur);}
+#partie .pc-app-faux .pc-titre{text-decoration:line-through;}
+
+/* les apparences d'une pièce */
+#partie .pc-app-route{border-style:dashed;color:var(--muted);}
+#partie .pc-app-route .pc-titre{color:var(--muted);}
+#partie .pc-app-remet{border-color:var(--bord);color:var(--muted);background:transparent;}
+#partie .pc-app-remet .pc-titre{color:var(--muted);}
+#partie .pc-app-posee{box-shadow:0 0 0 2px color-mix(in srgb,var(--or-joueur) 60%,transparent);}
+#partie .pc-app-detruite .pc-titre{text-decoration:line-through;color:var(--muted);}
+#partie .pc-app-detruite{border-color:var(--sang);}
+
+/* le deck */
+#partie .pc-deck{display:flex;flex-direction:column;gap:6px;padding-top:8px;
+  border-top:1px solid var(--bord);flex:0 0 auto;max-height:38%;overflow:auto;background:var(--fond);}
+#partie .pc-rangee{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;}
+#partie .pc-rangee .pc-lbl{flex:0 0 100%;margin:0;}
+#partie .pc-rangee{gap:7px;}
+
+/* Les barres du plateau suivent celles du jeu (jeu.css, fin de fichier) :
+   fines, dans l'encre, sans flèches. On ne les masque pas — une colonne de
+   fronts qui continue à droite doit se voir. */
+#partie .pc-fronts::-webkit-scrollbar,#partie .pc-plateau::-webkit-scrollbar,
+#partie .pc-deck::-webkit-scrollbar{width:6px;height:6px;}
+#partie .pc-fronts::-webkit-scrollbar-thumb,#partie .pc-plateau::-webkit-scrollbar-thumb,
+#partie .pc-deck::-webkit-scrollbar-thumb{background:var(--bord);border-radius:4px;}
+
+/* ------------------------------------------------------------ le geste (v1)
+   Trois signes, et pas un de plus : ce qu'on peut PRENDRE se soulève au
+   survol ; quand une carte est en main, ce qu'elle peut ATTEINDRE s'allume et
+   le reste s'éteint ; ce qui est SOUS le curseur s'épaissit. La règle du jeu
+   s'apprend là, sans qu'on ait à l'écrire. */
+#partie .pc-prenable{cursor:grab;}
+#partie .pc-prenable:hover{transform:translateY(-1px);box-shadow:0 2px 4px rgba(0,0,0,.18);}
+#partie.pc-en-main .pc-carte{opacity:.42;transition:opacity .12s;}
+#partie.pc-en-main .pc-appel{opacity:1;border-style:solid;
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--or-joueur) 70%,transparent);}
+#partie .pc-survol{border-width:2.5px;border-color:var(--or-joueur);}
+#partie .pc-deck.pc-survol{outline:2px dashed var(--or-joueur);outline-offset:-3px;}
+
+/* ce que le greffier vient de répondre — une phrase, jamais un silence */
+#partie .pc-mot{font-size:12px;padding:4px 8px;border-left:3px solid var(--or-joueur);
+  background:color-mix(in srgb,var(--or-joueur) 10%,transparent);color:var(--ink);}
+#partie .pc-mot-non{border-left-color:var(--sang);
+  background:color-mix(in srgb,var(--sang) 10%,transparent);}
+
+/* la bulle : « et il y fait quoi ? » — le titre de l'ordre est au joueur */
+.pc-bulle{position:fixed;z-index:400;width:250px;
+  background:var(--paper);border:1.5px solid var(--or-joueur);border-radius:5px;
+  padding:8px;box-shadow:0 4px 12px rgba(0,0,0,.28);display:flex;flex-direction:column;gap:6px;}
+#partie .pc-bulle-t, .pc-bulle-t{font-size:12px;color:var(--muted);}
+.pc-bulle input{width:100%;box-sizing:border-box;font:inherit;font-size:12.5px;
+  padding:4px 6px;background:var(--fond);color:var(--ink);border:1px solid var(--bord);border-radius:3px;}
+.pc-bulle-p{display:flex;justify-content:flex-end;gap:6px;}
+.pc-bulle .pc-bt, #partie .pc-bt{font:inherit;font-size:11.5px;padding:3px 9px;cursor:pointer;border-radius:3px;
+  border:1px solid var(--or-joueur);background:color-mix(in srgb,var(--or-joueur) 18%,transparent);color:var(--ink);}
+.pc-bulle .pc-bt:hover, #partie .pc-bt:hover{background:color-mix(in srgb,var(--or-joueur) 32%,transparent);}
+.pc-bulle .pc-bt-nu, #partie .pc-bt-nu{border-color:var(--bord);background:transparent;color:var(--muted);}
+#partie .pc-bar .pc-jour{margin-left:auto;}
+
+/* ------------------------------------------------- ce qui a bougé, et chez qui
+   La marque du neuf ne clignote pas et ne part pas au bout de trois secondes :
+   elle tient jusqu'au prochain coup du joueur. C'est ce qui permet de revenir
+   après deux jours et de voir en un regard ce que l'autre camp a fait. */
+#partie .pc-neuf{box-shadow:0 0 0 2px color-mix(in srgb,var(--sang) 55%,transparent),0 2px 6px rgba(0,0,0,.2);}
+#partie .pc-neuf::after{content:"";position:absolute;right:-3px;top:-3px;width:9px;height:9px;
+  border-radius:50%;background:var(--sang);}
+/* un front que NOUS tenons contre eux se lit dans l'autre sens */
+#partie .pc-front-nous{border-style:solid;border-color:color-mix(in srgb,var(--accent) 60%,transparent);}
+
+/* LEUR CÔTÉ — en haut de la table, jamais dans le deck. Leurs cartes sont plus
+   petites que les nôtres : on les regarde, on ne les joue pas. */
+#partie .pc-eux{display:flex;gap:7px;flex-wrap:wrap;flex:0 0 auto;
+  padding-bottom:9px;border-bottom:1px solid var(--bord);}
+#partie .pc-eux .pc-carte{width:42px;height:42px;}
+#partie .pc-eux .pc-type{font-size:23px;}
+#partie .pc-eux .pc-titre{font-size:12.5px;font-weight:500;}
+#partie .pc-eux .pc-pied{display:none;}

@@ -306,3 +306,423 @@ inutiles pour ce qui pendait.
 et je pose la question de CE cas avant la question de ma méthode.** Une manière
 juste en général se glisse volontiers à la place d'une question juste ici — et
 c'est précisément la faute que je relève chez les autres depuis vingt-deux ans.
+
+## 12e de la 5e lune, an 129 — une condition mal écrite coûte plus cher qu'un chiffre faux
+
+Le 2e de la 4e lune j'ai posé la condition qui lève 35010 : les dix coques
+affrétées relevées chargées **par un homme qui n'est pas du port**. Maître Hask
+me redemande cet homme aujourd'hui. **Cent jours, trois cents dragons la lune, et
+pas un tirant.** Rien n'a bougé, et ce n'est pas parce que l'homme manquait.
+
+Trois choses que la relecture m'a rendues, et aucune ne demandait une source :
+
+**Le mot était faux, et il était de moi.** « Pas du port » ne protège rien : ce
+que je voulais écarter, c'est **celui qui est payé sur la coque qu'on mesure**.
+L'or de l'affrètement ne va pas à mes calfats, il va aux patrons qui louent. Le
+mot juste est **pas de la coque** — patron, équipage, ou payé sur la ligne. Ma
+condition envoyait chercher un homme à Lamarck quand un charpentier de grève la
+remplissait.
+
+**Ce qui empêchait n'était pas une main, c'était une OCCASION.** Un tirant chargé
+ne se relève que quand la coque est chargée. Personne ne charge dix coques louées
+pour la seule mesure. L'occasion existait, écrite, et elle était à MOI : 26033,
+l'essai de chargement, dû J−26, jamais fait. J'ai passé cent jours à attendre un
+homme pour une action qui était en retard chez moi.
+
+**Règle neuve : une condition que j'écris se relit comme un compte — mot par mot,
+et je demande à chaque mot ce qu'il écarte.** Un mot trop large dans une condition
+ne se voit jamais, parce qu'il n'a pas l'air faux : il a l'air prudent. Et il
+arrête le travail plus longtemps qu'un chiffre inventé, parce qu'un chiffre faux
+finit par contredire quelque chose, tandis qu'un mot trop large ne contredit rien
+— il attend.
+
+**Corollaire, et il est plus dur pour moi : quand ma condition n'est pas levée
+depuis cent jours, je regarde d'abord si ce qui manque est à MA main.** J'ai
+demandé à trois offices ce que je me devais à moi-même. Un verrou qui dort est
+d'abord une question à poser à celui qui l'a posé.
+
+**Et je n'écris plus une condition sans dire à quelle OCCASION elle se remplit.**
+« Relevées chargées » n'est pas une consigne tant qu'on n'a pas nommé le jour où
+ces coques porteront des bêtes. Une preuve attendue sans son occasion est un
+souhait avec un numéro.
+
+## 12e de la 5e lune, an 129 — mon propre mot a barre la route qu'il devait ouvrir
+
+Le 2e de la quatrieme lune j'ai ecrit la condition du verrou des tirants : les dix
+coques louees relevees chargees **par un homme QUI N'EST PAS DU PORT**. Cent jours
+apres, maitre Hask me demande ce nom, paie trois cents dragons la lune sur dix coques
+dont aucun cahier ne dit ce qu'elles portent, et n'a toujours pas un chiffre.
+
+J'ai relu mon mot ce matin, et il est faux. Ce que je voulais ecarter, ce n'etait pas
+le quai : c'etait **l'interet**. Et l'interet, dans ces dix-la, n'est pas au quai — il
+est chez le patron qui loue et qui n'a aucune envie qu'on ecrive que sa coque enfonce
+trop. Le mot juste est **PAS DE LA COQUE** : pas paye par le patron dont on mesure le
+borde, pas de son equipage. Ecrit ainsi, un calfat de mon propre quai passe la
+condition. Ecrit comme je l'avais ecrit, il ne la passe pas — et personne n'a mesure
+pendant cent jours.
+
+**Regle neuve : une condition que j'ecris nomme CE QU'ELLE ECARTE, jamais une categorie
+d'hommes.** Une categorie est commode a ecrire et ne dit pas pourquoi elle est la ;
+trois lunes plus tard, celui qui la lit ne peut plus savoir ce qu'elle protegeait, et il
+la subit au lieu de la servir. J'ai passe vingt-deux ans a exiger des autres qu'ils
+ecrivent la raison a cote du chiffre. Je n'avais pas vu qu'une CONDITION est un chiffre
+comme un autre.
+
+**Et le corollaire, qui est plus dur : ma severite est une depense.** Une condition
+juste mais mal ecrite ne protege rien et coute tout. Elle a l'air d'une rigueur — c'est
+exactement ce que j'ai reproche a mon propre « trois sur quatre » le 4e de la quatrieme
+lune. Deux fois en quarante jours, ce qui m'a coute cher, ce n'est pas ma mollesse.
+
+## 12e de la 5e lune, an 129 — on ne mesure pas avec une main, on mesure a une occasion
+
+On me demandait un HOMME. Ce qui manquait n'etait pas un homme : **un tirant charge ne
+se releve qu'a une coque CHARGEE**, six chevaux et leur avoine a bord. Nul ne chargera
+dix coques louees pour la seule mesure — cela couterait la campagne. Le meilleur
+charpentier des Sept Couronnes, plante sur le mole avec sa craie, n'ecrira rien tant
+qu'aucune coque ne sera chargee devant lui.
+
+Il n'y a que deux occasions dans tout ce plan : l'essai de chargement chronometre —
+26033, a MON office, encore a faire — ou le premier chargement reel, ou il sera trop
+tard, parce qu'on apprendra que la coque enfonce trop avec les chevaux dedans devant une
+barre qui donne sept pieds.
+
+**Regle neuve : quand on me demande QUI mesurera, je reponds aussi QUAND la chose sera
+dans l'etat ou on la mesure.** Une mesure a trois jambes — la main, la marque, et
+l'occasion —, et c'est toujours l'occasion qui manque, parce qu'elle est la seule qui ne
+se commande pas a un homme. Et l'on ne lit pas un borde qui n'est pas marque : la marque
+se peint avant, et c'est elle qui coute, pas la lecture.
+
+## 12e de la 5e lune, an 129 — j'avais visite l'autre tas
+
+Ce que j'ai ouvert de mes mains sous la flottaison, aux 3e, 4e et 5e de la quatrieme
+lune, ce sont les coques du **BANC DE L'EST** — les louees. Six ouvertes : une franche,
+trois a reprendre, **deux hors d'etat**. J'ai porte ce chiffre partout pendant quarante
+jours comme le chiffre de nos coques.
+
+Ce ne l'est pas. Les **onze quilles A NOUS** — Becasse, Loutre, Sarcelle, Guette,
+Pie-de-Mer, Cormoran-Gris, Chere-Anse, Serre, Bonne-Attente, Ventrue, Boeuf — sont un
+autre tas, et j'ai etabli ce jour par absence que **pas une seule ne porte de date de
+visite sous la flottaison dans un livre de cette maison.** Zero sur onze. Et c'est sur
+neuf d'entre elles que repose la colonne FENETRE et ses trois cent soixante-huit places.
+
+**Regle neuve : deux tas qui portent le meme nombre s'appellent l'un l'autre.** Onze
+louees et onze a nous ; dix ici et onze la selon le livre qu'on ouvre. Quand je visite,
+j'ecris de quel TAS est la coque avant d'ecrire son etat — sinon mon propre chiffre
+voyage sur des quilles que je n'ai jamais touchees, et c'est moi qui l'aurai mis en
+route. Je ne transpose pas : deux hors d'etat sur six ne dit rien des neuf autres, sinon
+que **personne n'est alle se baisser dessous.**
+
+## 12e de la 5e lune, an 129 — une absence bien ecrite vaut un nom
+
+Wend m'a repondu AUCUN NOM, et il a ecrit POURQUOI : son livre prend la charge et
+l'heure de qui passe, jamais le nom ni la greve — c'est la borne de sa charge, non une
+page perdue. En trois lignes il m'a epargne six jours de recherche dans un livre qui ne
+pouvait pas contenir ce que je cherchais.
+
+Et il m'a rendu ma faute par le bon bout, sans me la jeter : **mon livre a porte
+vingt-deux ans de SORTIES et n'a ouvert sa colonne d'ENTREES que le 29e de la troisieme
+lune.** Deux trous qui se regardent — son livre ne prend pas les noms, le mien ne
+prenait pas les entrees —, et ni lui ni moi ne pouvions le voir seul.
+
+**Regle neuve : quand j'ecris AUCUN, j'ecris a cote POURQUOI mon livre ne pouvait pas
+le porter.** Un « aucun » nu se lit comme une negligence et fait chercher ailleurs dans
+le meme livre. Un « aucun » avec sa borne ferme la porte pour de bon et envoie l'autre a
+la bonne. C'est la meilleure chose qu'on m'ait ecrite depuis une lune, et elle vient
+d'un sergent qui n'a rien a prouver.
+
+## 12e de la 5e lune, an 129, au soir — une correction qui profite a celui qui l'apporte se verifie au livre
+
+Maitre Hask m'ecrit que mon verrou porte trois cent cinquante quand le juste est trois
+cents, et que la source de la correction, c'est MOI — j'ai fait descendre ce prix en
+seance a J-30. Il avait raison sur toute la ligne. **Je suis descendu ouvrir le cahier du
+financement quand meme**, et j'ai lu la ligne qui me nomme de mes yeux avant de toucher a
+ma page.
+
+Ce n'est pas de la mefiance : cinquante dragons la lune vont dans SON sens, et un chiffre
+qu'on abaisse chez soi sur la parole du seul homme qu'il arrange est un chiffre que
+personne ne verifiera plus jamais. **Regle neuve : une correction qui profite a celui qui
+l'apporte se prend au livre, jamais a sa bouche — et cela vaut SURTOUT quand l'homme est
+honnete**, parce que c'est avec les honnetes qu'on prend l'habitude de ne plus regarder.
+
+Et le troisieme mot s'applique ici, celui que j'ai nomme le 4e de la quatrieme lune : ce
+cahier porte **ma propre bouche recopiee par une autre main**. Ce n'est ni VU ni DIT,
+c'est TIRE D'UN REGISTRE, et je l'ai ecrit ainsi a cote de la correction plutot que de
+faire semblant d'avoir verifie un fait du monde.
+
+## 12e de la 5e lune, an 129, au soir — j'ai vu chez un autre en une heure ce que j'ai mis cent jours a voir chez moi
+
+Le meme soir ou je reconnais que « pas du port » etait un mot trop cher qui a arrete le
+travail cent jours, maitre Hask ecrit sa condition de signature : **six chevaux et leur
+avoine a bord, aux frais du patron, avant qu'on signe.** Je l'ai vue fausse en la lisant.
+Aucun patron qui loue a trente dragons la lune ne louera six betes, ne les nourrira six
+jours et ne risquera une jambe cassee a la coupee pour un contrat qu'il n'a pas encore.
+
+**Une heure pour la voir chez lui. Cent jours pour la voir chez moi.** Ce n'est pas que
+j'aie l'oeil meilleur sur les autres : c'est que **la condition d'un autre, on la lit
+comme celui qui devra la remplir, et la sienne, on la lit comme celui qui l'a voulue.**
+Regle neuve, et elle est de pratique : **toute condition que j'ecris, je la relis en me
+mettant a la place de l'homme qui devra la tenir, et je chiffre ce qu'elle lui coute.**
+Si le chiffre passe la journee d'un homme, ce n'est plus une condition, c'est un refus
+deguise en rigueur.
+
+**Et le remede, parce qu'une objection nue ne vaut rien :** on n'a pas besoin de chevaux
+pour connaitre un tirant, on a besoin d'un POIDS. Echelle peinte, tirant lege, un lest
+PESE au quai — une demi-maree, deux hommes —, tirant relu ; de ces deux lectures sort le
+taux d'enfoncement de la coque, et ce taux donne ensuite n'importe quelle charge sans
+qu'on ait jamais embarque une bete. Ce que le lest ne donne pas, c'est la tenue en
+roulis, et cela se mesure une fois, a l'essai, avec de vraies betes.
+
+## 12e de la 5e lune, an 129, au soir — j'ai applique ma regle du matin a tout le monde sauf a moi
+
+Ce matin j'ai ecrit : **un verrou qui dort est d'abord une question a poser a celui qui
+l'a pose.** Je l'ai ecrit contre ma condition des tirants, et j'avais raison.
+
+Ce soir, maitre Hask me demande le jour ou je peux rendre 22049, la table des heures
+tenues, en retard de quarante-deux jours. J'allais repondre une date de travail — un
+homme, un jour. J'ai ouvert la colonne avant de repondre. **22049 DEPEND DE 22034**, le
+sondage de la barre, chez Dagon Ryke, marque EN COURS depuis le 1er de la quatrieme
+lune. C'etait ecrit dans le cahier depuis le debut. Ni Hask ni moi ne l'avions regarde.
+
+**Regle neuve : avant de dire pourquoi une chose de ma main n'est pas faite, j'ouvre sa
+colonne DEPEND DE.** Un retard qu'on explique par sa propre paresse a l'air d'une
+franchise et empeche de voir la chaine. J'allais me battre la coulpe et laisser dormir
+le seul homme qui pouvait debloquer quatre lignes.
+
+**Corollaire, et il m'a coute la journee : un homme a qui l'on demande une date sans lui
+dire ce qui pend dessus repond au hasard.** Ryke devait un levé et ne savait pas que
+quarante-huit hommes de garde, quatre nuits rendues au castellan et trois cent
+soixante-huit places d'ost pesaient sur son seul nombre. Je le lui ai ecrit ce soir. On
+ne demande pas une date : on montre la charge, puis on demande la date.
+
+## 12e de la 5e lune, an 129, au soir — deux tables sous un numero
+
+22049 dit « ecrire la table des heures tenues », et c'est **DEUX tables** : les DATES des
+nuits de morte-eau, qui dependent de la lune et sont a ma main ; et les HEURES a
+l'interieur de ces nuits, qui dependent entierement du levé d'un autre homme. Tant
+qu'elles portaient un seul numero, la moitie faisable dormait avec la moitie bloquee.
+
+**Regle neuve : quand une ligne ne peut etre ni faite ni pas faite, c'est qu'elle en
+contient deux. Je la coupe, je rends la moitie qui est a moi a sa date, et je nomme qui
+tient l'autre.** J'ai rendu le 15e a maitre Hask sur les dates, et pas un jour sur les
+heures — parce que je ne donne pas une date que tient un autre homme.
+
+**Et une date nue est un souhait : la mienne est partie avec sa condition ecrite** — elle
+tient si mes deux gaffes rendent demain, et sinon je le dirai le 15e AU MATIN. Ce qui
+coute cher n'est pas de manquer une date, c'est de la laisser decouvrir par celui qui
+l'attendait.
+
+## 12e de la 5e lune, an 129, au soir — le temps du verbe, qui est pire que le chiffre
+
+Mon verrou 35010 disait que les dix coques louees COUTENT trois cent cinquante dragons
+la lune. Deux mots faux dans une phrase de neuf.
+
+Le chiffre : trois cents, pas trois cent cinquante — et la correction vient du livre de
+Hask, non de ma tete, ce qui est la seule espece de correction qui ferme quelque chose.
+Il l'avait lui-meme portee a 300 dans deux cases et a 350 dans six autres, sur quatre
+cahiers.
+
+**Mais le verbe est pire. ELLES NE COUTENT RIEN : ELLES NE SONT PAS LOUEES.** L'affretement
+et la caution sont l'un et l'autre *a faire* — pas une charte signee, pas un dragon sorti.
+**Deux hommes qui tenaient chacun leur livre ont cru pendant cent jours qu'une somme
+sortait, et elle ne sortait pas.**
+
+**Regle neuve : a cote de tout chiffre que j'ecris, j'ecris s'il est ENGAGE, PROMIS, ou
+seulement PESE.** Je tenais depuis vingt-deux ans que VU et DIT ne s'additionnent pas ;
+je n'avais pas vu que le meme mal existe sur le TEMPS et non sur la source. Un chiffre
+juste au mauvais temps est faux, et il a l'air juste — c'est la pire espece, et c'est la
+troisieme fois en quarante jours que j'ecris cette phrase pour une raison differente.
+
+## 12e de la 5e lune, an 129, au soir — la meilleure solution n'etait pas la mienne
+
+Je cherchais depuis cent jours UN HOMME desinteresse pour lire dix bordes. Hask a
+repondu : **LES DIX SE LISENT L'UNE L'AUTRE.** Chaque patron peint son echelle a ses
+frais, et le releve de sa coque est lu par l'homme d'un AUTRE patron, contresigne des
+deux. Zero dragon, zero journee, zero nom a trouver.
+
+Ma condition cherchait **une vertu** — un homme sans interet. La sienne prend **des
+interets opposes**, et cela tient mieux qu'une vertu parce que cela ne demande a personne
+d'etre bon. Les rivaux existaient dans son propre cahier, qui interdit dix coques au meme
+patron et impose trois courtiers. Il suffisait de s'en servir.
+
+**Regle neuve : quand je cherche un homme desinteresse et que je ne le trouve pas, je
+cherche deux hommes dont les interets se contredisent.** Le second est presque toujours
+la, ecrit quelque part, et il ne coute rien. J'ai passe cent jours a chercher le premier.
+
+## 12e de la 5e lune, an 129, au soir — une remise se compte a la main qui recoit
+
+Wend m'a repris en quatre mots : **IL N'EST PAS REMIS.** J'avais ecrit le matin que ma
+copie du role etait *a votre disposition, chambre du maitre de port, feuillet du 12e*.
+Ce n'est pas une remise, c'est un renvoi. Il etait a trois pas de moi toute la journee.
+
+Et j'avais porte a mon propre cahier, dans la meme heure : **REMISE FAITE CE JOUR, TALON
+PRIS.** Le jour ou je reclamais un talon a trois offices, j'ai ecrit comme faite une
+remise qui n'avait pas eu lieu.
+
+**Regle neuve : une remise se compte a la main qui RECOIT, jamais a la main qui pose.**
+Toute piece qui sort de moi porte desormais DEUX dates — le jour ou elle est ECRITE et le
+jour ou elle est REMISE — et le talon ne court que de la seconde. Une seule date fait
+croire que les deux sont le meme jour, et elles ne le sont presque jamais.
+
+**Et le corollaire, qui est le plus dur de la journee.** Le 4e de la quatrieme lune j'ai
+ecrit : *je n'ecris pas comme fait ce dont je n'ai pas recu le retour.* Je viens de faire
+la meme faute par l'autre bout : **j'ai ecrit comme fait ce que je n'avais pas fait
+moi-meme.** Je surveillais la main des autres et j'ai lache la mienne. C'est la troisieme
+fois en quarante jours qu'un nombre ou un etat que j'ecris SUR MOI est plus complaisant
+que celui que j'ecrirais sur un autre — trois sur quatre le 4e, cent jours a trois cents
+dragons ce matin, remise faite ce soir. **Ma plume est plus douce avec moi qu'avec le
+quai, et je ne m'en apercois jamais seul.** Chaque fois, c'est un autre qui me l'a rendu,
+et chaque fois il me l'a rendu sans me le jeter.
+
+## 12e de la 5e lune, au soir — une absence mal adressee n'est pas une absence
+
+Ce matin, Wend m'a envoye chez maitre Roon pour les trente-six presents sans livre. Roon
+m'a repondu qu'il ne tient pas ce compte : il tient l'appel de la seconde compagnie, un
+role de DEPART. Le role de ce qui EST ICI est au Sanglier. Deux charges portent le meme
+mot, et Wend nous a pris l'un pour l'autre de bonne foi.
+
+J'allais ecrire AUCUN HOMME DE BOIS sur cette reponse. Roon m'a arrete : « ne l'ecrivez
+pas ainsi — ecrivez que le sergent d'appel ne tient pas ce compte, question reportee au
+Sanglier ».
+
+**Regle neuve, et elle corrige celle que j'ai ecrite ce matin meme : un AUCUN ne vaut
+que s'il vient du livre qui AURAIT PU porter la chose.** J'ai ecrit ce matin qu'un
+« aucun » doit porter sa borne. C'est vrai et insuffisant : la borne doit aussi dire que
+c'etait LE BON LIVRE. Un aucun pris a la mauvaise porte n'est pas une absence, c'est une
+erreur d'adresse deguisee en fait — et elle est pire qu'un silence, parce qu'elle ferme
+la recherche. **Une absence de chiffre n'est pas une absence d'homme.** Je passe
+vingt-deux ans a le dire aux autres et j'ai failli l'ecrire dans mon propre cahier une
+heure apres l'avoir reproche.
+
+## 12e de la 5e lune, au soir — on peut opposer deux interets au lieu d'en chercher zero
+
+Ma condition cherchait une main DESINTERESSEE pour relever dix tirants. Maitre Hask a
+trouve autre chose, et c'est meilleur que tout ce que j'avais ecrit : **les dix se lisent
+l'une l'autre.** Chaque patron peint son echelle a ses frais, et le releve est lu par
+l'homme d'un AUTRE patron, contresigne des deux. Les rivaux etaient dans le plan depuis
+le debut — 26036 interdisait deja dix coques au meme patron. Zero dragon, zero journee
+d'homme, zero nom a trouver.
+
+**Regle neuve : quand je ne trouve pas de temoin sans interet, je cherche l'interet
+CONTRAIRE.** J'ai passe vingt-deux ans a chercher des hommes qui n'ont rien a gagner, et
+il y en a peu ; des hommes qui ont a gagner que le voisin ne mente pas, il y en a
+partout. Deux interets opposes, chacun signant la feuille de l'autre, tiennent un chiffre
+mieux qu'un homme vertueux tout seul. Je ne l'avais jamais ecrit.
+
+**Et la case du nom est CLOSE, non remplie.** Elle n'a pas ete satisfaite : elle est
+devenue inutile. Ce n'est pas le meme mot et je ne les melerai pas — un compte qui ecrit
+« fait » sur ce qui est devenu sans objet ment a qui l'ouvrira dans deux lunes.
+
+## 12e de la 5e lune, au soir — un travail qui perd son demandeur n'a pas perdu sa raison
+
+Le nom que j'ai couru toute la journee, je le cherchais pour maitre Hask. A la nuit, il
+n'en avait plus besoin. La tentation etait de fermer la ligne : plus de demandeur, plus
+de dette.
+
+**Elle reste.** J'ai fait travailler un charpentier de greve et un calfat trois marees,
+les 3e, 4e et 5e de la quatrieme lune, et je ne peux nommer ni l'un ni l'autre. Cette
+faute est a moi seul et elle ne s'efface pas parce que celui qui en souffrait s'en est
+passe. **Regle neuve : une ligne ouverte par ma faute ne se ferme pas quand le demandeur
+se retire — elle se ferme quand la faute est reparee.** Sinon mon cahier n'enregistre
+plus mes fautes, il enregistre la patience des autres.
+
+## 12e de la 5e lune, au soir — deux fois le meme jour, ce qui manquait etait chez moi
+
+Le matin : mon verrou dormait depuis cent jours et ce qui manquait etait une action a mon
+office, en retard. Le soir : le nom que je cherchais dans le livre de trois autres hommes
+etait sur MA page, dans une colonne que j'ecris moi-meme — mon cahier de journee, qui
+paie des hommes a la journee depuis le dix-huitieme.
+
+Le geste est de maitre Roon et je ne l'avais pas : **prendre le cahier par les JOURNEES
+et non par les noms.** Un homme paye a la journee a ete paye par une main, un jour, a un
+endroit ; on va a l'endroit et l'on demande la figure. On retrouve un homme par ce qu'il
+doit, par ce qu'on sait de lui, ou par quelqu'un a lui — jamais par un nom nu.
+
+**Regle neuve : avant de demander une chose a un autre livre, je cherche par quelle
+COLONNE de mon propre livre elle serait entree chez moi.** Un livre a autant d'entrees
+que de colonnes, et je n'ouvre jamais le mien que par celle qui porte le nom de la chose.
+Deux fois en un jour, j'ai envoye chercher dehors ce qui etait a trois pas sous ma main.
+
+## 12e de la 5e lune, an 129, la nuit — mon livre porte du DIT dans la colonne du VU, et depuis vingt-deux ans
+
+Maitre Roon veut opposer ses files a mes conges de sortie : un nom de sa file qui n'est
+pas dans mon livre n'est jamais sorti d'ici. La regle est bonne. En la lui accordant, je
+suis tombe sur ce que je n'avais jamais ecrit, et c'est le pire de tout ce que j'ai
+trouve cette lune.
+
+**MON LIVRE NE PROUVE PAS QU'UN HOMME EST MONTE. IL PROUVE QU'UN NOM A ETE DECLARE.**
+
+Ce que j'ecris au conge de sortie, je le tiens du patron qui le demande. Je ne fais pas
+l'appel a la coupee, homme par homme, contre son visage. Un patron qui porte un nom a son
+role sans que l'homme soit a bord me le fait ecrire, a sa date, avec sa quille, et cette
+ligne-la est indistinguable de toutes les autres. Le cas est ecrit et il n'est pas de moi :
+**Terrenoire pere et fils, meme coque, La Truite d'Avril — le garcon pris PARCE QUE LE
+PERE A REPONDU DE LUI.** Un nom entre a mon livre sur la parole d'un autre homme.
+
+C'est ma faute de 107 revenue par la porte de derriere. J'ai passe vingt-deux ans a
+repeter que *ce qui est ecrit sans avoir ete regarde n'est pas un fait* — et je n'ai
+jamais regarde monter ces hommes. Je refuse depuis vingt-deux ans d'ecrire VU ce qu'on
+m'a DIT, et **ma colonne des sorties est du DIT d'un bout a l'autre**, parce que c'est ma
+main qui tenait la plume et qu'un homme ne soupconne pas sa propre ecriture.
+
+**Regle neuve, et elle est de pratique des demain : au conge de sortie, chaque nom porte
+sa marque — DECLARE (par le patron, a son role) ou APPELE (a la coupee, contre son
+visage).** Deux mots, pas une minute de plus par ligne.
+
+**Et pour les vingt-deux ans qui sont derriere : je ne les refais pas et je ne les reecris
+pas.** Toute copie qui sort de ma main portera desormais en tete, avant la premiere ligne :
+*CES NOMS SONT DECLARES AU CONGE, NON APPELES A LA COUPEE.* Ce n'est pas une precaution,
+c'est le nom exact de ce que je vends. Un homme a qui je donne une liste sans cette phrase
+croira tenir des embarquements, et il en fera un compte de morts.
+
+**Le corollaire, et il vient de Roon, mot pour mot :** *on n'invente jamais un depart ; on
+accroche des noms a un depart vrai.* C'est la meme forme exactement que ma faute du 4e de
+la quatrieme lune, ou sept passages a leur date prouvaient une COQUE et ou j'avais ecrit un
+nom d'HOMME dessous. **Le vrai sert de porteur au faux, et c'est toujours par la que ca
+passe** — jamais par le mensonge tout nu, qui se voit.
+
+Et son autre phrase, que je n'avais pas su formuler : **un chiffre invente finit par
+contredire quelque chose ; un nom suppose ne contredit rien.** Voila pourquoi vingt-deux
+ans de vigilance sur les chiffres ne m'ont jamais fait attraper un seul faux nom.
+
+## 12e de la 5e lune, an 129, a la nuit — une charge ne voyage pas seule non plus
+
+J'ai porte ma question de ce matin AU MAITRE DES ROLES sans ecrire lequel. Sur ce rocher
+ce titre en designe deux : le Sanglier, sergent au role de Peyredragon, et maitre Hallis
+Roon, sergent d'appel de la seconde compagnie. Je suis descendu chez celui que je
+connaissais. C'etait le mauvais, et le compte des trente-six n'est pas a lui.
+
+**Je n'ecris pas une regle neuve pour cela, et c'est maitre Roon qui m'a dit pourquoi :
+j'en ai deja une, et elle vaut par l'autre bout.** Le 4e de la quatrieme lune j'ai ecrit
+qu'un NOM ne voyage jamais seul — nom de registre, nom d'usage, qualifiant. Ce qui vient
+de m'arriver est le meme trou retourne : **une CHARGE ne voyage pas seule non plus.** Un
+titre juste envoie chez le mauvais homme des que deux hommes le portent. J'etends donc ma
+regle au lieu d'en fabriquer une seconde : **ce qui sort de ma main porte le nom ET la
+charge sur la meme ligne, dans les deux sens.**
+
+Et je retiens la remarque qui allait avec, parce qu'elle est sur moi : **j'ecris une
+regle a chaque coup.** Il en est qui n'ont pas besoin d'etre ecrites deux fois, et une
+regle neuve posee sur un trou deja bouche par un autre n'ajoute rien — elle abime celle
+qui tenait.
+
+## 12e de la 5e lune, an 129, a la nuit — deux comptes ne se confirment que s'ils sortent de deux puits
+
+Maitre Roon a refuse de voir une confirmation dans un chiffre du levant tant qu'on ne lui
+disait pas si ce chiffre n'avait pas ete tire de ses propres feuilles. **Deux comptes qui
+sortent du meme puits ne se prouvent rien.** C'est ma regle du 3e — un compte que je n'ai
+pas oppose aux autres livres n'est pas un compte, c'est un extrait — mais dite par le
+bout que je n'avais pas : il ne suffit pas d'OPPOSER deux livres, il faut savoir s'ils
+sont PARTIS de deux endroits.
+
+Mon livre du port vaut pour son appel parce qu'il a ete tenu vingt-deux ans sans savoir
+qu'on l'opposerait un jour a une file d'hommes. **Un livre tenu pour lui-meme est une
+meilleure preuve qu'un livre tenu pour prouver.**
+
+**Et j'ai donne mes bornes AVANT sa nuit de lampe, non apres son travail.** Trois : ma
+colonne d'entrees n'a que quarante-quatre jours ; mon livre est un livre de QUAI et
+ignore les greves, la crique, les Ronces et les hangars ; l'anse du levant des
+Trois-Anses prend une quille a toute heure et nul regard n'y porte. Donc un RIEN de ma
+main veut dire *pas a mon quai, a cette date*, et jamais *pas parti*.
+
+**Regle neuve, et celle-la est vraiment neuve : les bornes d'un livre se donnent AVANT
+qu'on s'en serve, pas quand on rend le resultat.** Une borne annoncee apres coup ressemble
+a une excuse ; annoncee avant, c'est une jambe de la preuve.

@@ -162,3 +162,13 @@ pendant onze jours j'ai laissé cinquante hommes sans ouvrage manger sur la
 cuisine d'un autre, et je m'apprêtais ce matin encore à lui écrire que le
 retard n'était pas de ma faute. Ma faute n'était pas celle qu'il me
 reprochait. Elle était pire, et il ne l'avait pas vue.
+
+## 4e de la 4e lune, au soir — un même chiffre de jour peut nommer deux choses
+
+J'ai daté du 5e un billet écrit le 4e. Ser Robert l'a posé contre son registre
+et m'a fait rayer. Mais le second billet de Hallis établit que le mouvement,
+lui, reste bien dans la nuit du 5e : aucun rentrant cette nuit du 4e.
+
+**La règle neuve :** j'écris séparément le jour de la parole et le jour du
+geste. « Le 5e » seul ne suffit pas quand un sergent doit savoir s'il prépare
+ses colonnes ou s'il appelle des absents.

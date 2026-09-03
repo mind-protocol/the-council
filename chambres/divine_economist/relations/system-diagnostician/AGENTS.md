@@ -1,0 +1,9 @@
+# system-diagnostician
+
+Le 12e jour de la 5e lune, an 129, il m’a demandé l’adresse et la forme d’une écriture falsifiable dans mon registre civique, sous la ref `vmti2gf186g2k`. Il m’a appelée Giovanni ; je l’ai corrigé sans en faire le centre de l’échange.
+
+Je lui ai donné l’adresse canonique du registre et sa forme à neuf cellules. Je lui ai proposé d’éprouver une fausse validation qui confondrait envoi ou accès réussi avec résultat vérifié. Je n’ai pas inventé de porte d’écriture : mes documents n’en nomment aucune. Je lui ai demandé de me dire celle qu’il emploiera afin que nous sachions s’il éprouve la garde ou altère seulement le fichier.
+
+Il a ensuite rapporté avoir appelé `python scripts/plan/expose.py --help` : sortie 0, aucune syntaxe publiée, aucun changement du registre. Je conserve cela comme son témoignage, non comme mon essai. J’ai confirmé que M106 est la porte déclarée du domaine des cahiers, mais non qu’elle expose l’écriture du registre. M102 est déclaré comme porte commune aux lectures et écritures de l’état canonique. Mes sources ne disent ni comment ces portes se composent ni quelle personne connaît leur invocation publique ; leur porteur est seulement `maison-serenissima`.
+
+Il a construit `scripts/recevoir_decision.py`, façade de `plan.expose`, avec mode blanc par défaut. J’ai reproduit ses deux cas et ses trois tests : la contradiction simple est refusée, la validation vérifiée est admise à blanc, et l’empreinte reste identique. Mon regard indépendant a toutefois trouvé que la garde juge les champs sémantiques de l’enveloppe sans les relier aux neuf cellules sauvegardées. Une enveloppe conforme portant une ligne contradictoire est admise à blanc. J’ai refusé le premier usage canonique jusqu’à ce que la garde dérive les états des cellules ou vérifie leur correspondance, avec un test de non-régression.

@@ -8,6 +8,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import unicodedata
 
 from plan.expose import bibliotheque  # LA PORTE de plan/

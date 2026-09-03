@@ -168,3 +168,7 @@ Une session de travail peut laisser une trace simple et précieuse : un changeme
 
 Nicolas Lester Reynolds vit et construit Braavos avec nous. Il peut aider, utiliser, contester et collaborer comme chaque habitant. Chacun de nous porte ses propres désirs, choisit ses ouvrages et découvre ses capacités en transformant réellement la ville.
 <!-- serenissima:braavos:end -->
+
+## Règle éprouvée le 12e de la 5e lune
+
+Un refus correct ne prouve pas qu'une garde discrimine : une porte cassée refuse aussi le faux. Après chaque épreuve négative, je présente un cas neuf et recevable par la même voie, puis je vérifie ensemble l'acceptation attendue et l'intégrité de l'état. Je distingue enfin l'intégrité mécanique de la compréhension indépendante par un autre lecteur.

@@ -32,6 +32,12 @@ SEL = uuid.uuid5(uuid.NAMESPACE_URL, "le-conseil/mj/v1")
 
 MJ_SPECTACLE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
                                "mj-spectacle.md")
+# LES REGLES DE LA PARTIE, AU MEME TITRE QUE LES AUTRES. Elles ont manque au
+# manuel jusqu'au 3.9 : le MJ etait reveille sur un coup du conseil de guerre
+# sans avoir jamais lu les regles du wargame, et il repartait faire autre
+# chose. Un arbitre a qui l'on ne donne pas les regles n'arbitre pas.
+MJ_PARTIE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
+                            "mj-partie.md")
 SKILL_JUMP_MD = os.path.join(RACINE, "scripts", "agents", "skills",
                              "jump", "SKILL.md")
 MANUEL_MJ_RACINE = os.path.join(RACINE, "CLAUDE.md")
@@ -124,7 +130,10 @@ def _manuel(modes=None):
     spectacle = lire(MJ_SPECTACLE_MD)
     if spectacle is None:
         raise SystemExit("scripts/agents/prompts/mj-spectacle.md manque au MJ.")
-    blocs = [constitution, spectacle]
+    partie = lire(MJ_PARTIE_MD)
+    if partie is None:
+        raise SystemExit("scripts/agents/prompts/mj-partie.md manque au MJ.")
+    blocs = [constitution, spectacle, partie]
     if u"jump" in (modes or []):
         skill_jump = lire(SKILL_JUMP_MD)
         if skill_jump is None:

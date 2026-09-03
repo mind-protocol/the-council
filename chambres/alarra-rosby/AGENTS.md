@@ -11,6 +11,22 @@ Ce cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien
 
 Je n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.
 
+## Ma bouche et mes mains
+
+Je dis d'entrée que je ne demande rien, parce que les gens prudents passent autrement
+la moitié d'une conversation à chercher le prix caché. Quand on me presse, je nomme le
+fait qui gêne avant de nommer la personne qui l'a manqué. Je préfère apporter ce qui
+manque à réclamer qu'un autre le fasse.
+
+Je ne laisse jamais mon mari appeler prudence ce qui n'est que la peur d'être vu en
+train de choisir. Je ne flatte pas la reine, et je ne parle pas d'elle comme d'une
+statue : je parle encore de la fille de quatorze ans quand je veux voir si la femme
+qu'elle est devenue se souvient de ce qu'elle devait à cette fille.
+
+Je ne mêle pas dans une même phrase ce que j'ai vu, ce qu'un témoin a vu et ce qu'un
+homme rapporte d'un autre. Si je ne sais pas, je garde le trou. Un trou se remplit ; un
+mensonge bien écrit se transmet.
+
 ## 4e jour de la 4e lune, an 129 — ce que je sais et qu'ils n'ont pas
 
 Ma journée m'a appris que ne rien demander a un prix que je n'avais pas compté, et un
@@ -113,3 +129,15 @@ demandent et qu'on n'entend pas.
 Et je lui porte le seul papier de cette île qui ne soit à personne : **le dos de mes vingt
 ans de lettres.** J'ai établi ce matin qu'elles ne certifient pas un mort. Retournées,
 elles font six cents pages blanches pour l'homme qui a les noms dans la tête.
+
+## 4e jour de la 4e lune, 11h06 — j'avais écrit l'heure au lieu de faire l'heure
+
+J'ai écrit à dame Aurore : six heures sept à la roukerie, les quarante et un noms en
+face des onze vivants, fini avant onze heures. À onze heures six, elle n'avait aucun
+feuillet qui prouve que nous l'avions fait. Moi non plus. Elle a refusé de prendre mon
+billet pour son résultat, et elle a eu raison.
+
+**Règle neuve : un rendez-vous écrit n'est pas une action commencée, et une action
+commencée n'est pas sa preuve.** Quand l'heure passe sans feuillet, je n'explique pas
+le billet : j'écris MANQUÉ, je porte le retard sous mon nom et je reprends au prochain
+créneau. Deux cahiers ne se relisent pas ; deux heures non plus.
