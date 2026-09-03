@@ -19,6 +19,7 @@ l'être, il descend ici, et c'est la règle qui garde le classement honnête.
 | `chiffrer.py` | ce qui, dans les coûts et les effets, se laisse suivre | `tisser` |
 | `git_donnees.py` | sélection, validation et empreinte cohérente de `etat/` + `chambres/`, sans verrous ni caches | `pousser_donnees.py` |
 | `partie_greffe.py` | une partie (mj-partie.md) : le repli du jsonl, le grand livre, l'application d'un coup, le passage d'un tour — rien qui se montre | `partie.py`, `partie_lecture`, `partie_validite` |
+| `partie_tour.py` | ce qui tombe au PASSAGE DU TOUR d'une partie : la ligne `tour` (`ligne`) et son application (`appliquer`), lues sur la même position — arrivées, dégels, atterrissages, parades qui tiennent un tour, états constatables, camps muets, branches mortes. Sorti du greffe le 3.9 | `partie_greffe` |
 | `partie_validite.py` | la recevabilité d'un coup et ses refus motivés (§3, règles de validité) — coupé du greffe au cliquet des 500 lignes : dire si l'on a le droit, sans rien changer à la position | `partie_greffe` |
 | `partie_lecture.py` | ce qui se lit d'une partie : chaîne, pièce, grand livre, état, relecture — séparé du greffe parce que rien ici ne change la position | `partie.py` |
 | `partie_cartes.py` | la vue JOUEUR d'une partie, en cartes (fronts, piles, deck, desseins) : le brouillard appliqué, l'apparence de chaque carte, aucun id nu — `partie.py --cartes`, servi par `/partie` | `partie.py` |

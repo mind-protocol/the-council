@@ -32,7 +32,8 @@ import io
 import json
 import os
 
-from partie_greffe import RACINE, JOURS_PAR_TOUR, adverse, liste
+import partie_lecture
+from partie_greffe import RACINE, JOURS_PAR_TOUR, liste
 
 TYPES = {"cible": "🎯", "verrou": "🔒", "clef": "🗝️", "action": "⚔️",
          "piece": "📦", "question": "❓", "frappe": "💥"}
@@ -258,7 +259,7 @@ def _front_verrou(p, bid, camp):
             "corps": ", ".join(carte_piece(p, pc)["titre"] for pc in b["engage"] if pc in p.ressources),
             "pied": {"gauche": "", "droite": droite},
             "apparence": "verrou"}
-    contre = adverse(b["camp"])     # qui répond à ce blocage, quel que soit le camp qui l'a posé
+    contre = p.camp_de(b["sur"])    # qui répond à ce blocage : le camp de ce qu'il vise
     pile = [_pile_clef(p, kid, contre, tete["titre"])
             for kid, k in sorted(p.cles.items(), key=lambda kv: kv[1].get("n") or 0)
             if bid in k["ouvre"] and k["camp"] == contre and not k["retiree"]]
@@ -307,8 +308,8 @@ def _marquer_neuf(objet, tou, vu):
     return objet
 
 
-def vue(p, camp="noir", vu=0):
-    ennemi = adverse(camp)
+def vue(p, camp=None, vu=0):
+    camp = camp or (p.camps() or ["noir"])[0]
 
     # LES DEUX CAMPS. Un front est un blocage ou une frappe encore debout, d'où
     # qu'il vienne : ce qu'ils tiennent contre nous ET ce que nous tenons contre
@@ -316,15 +317,15 @@ def vue(p, camp="noir", vu=0):
     fronts = []
     for bid, b in sorted(p.blocages.items(), key=lambda kv: kv[1].get("n") or 0):
         if not b["tombe"]:
-            f = _front_verrou(p, bid, adverse(b["camp"]))
+            f = _front_verrou(p, bid, p.camp_de(b["sur"]))
             f["camp"] = b["camp"]
-            f["contre_nous"] = (b["camp"] == ennemi)
+            f["contre_nous"] = (p.camp_de(b["sur"]) == camp)
             fronts.append(f)
     for mid, m in sorted(p.menaces.items(), key=lambda kv: kv[1].get("n") or 0):
         if not m["realisee"] and not m["tombee"]:
-            f = _front_frappe(p, mid, adverse(m["camp"]))
+            f = _front_frappe(p, mid, p.camp_de(m["cible"]))
             f["camp"] = m["camp"]
-            f["contre_nous"] = (m["camp"] == ennemi)
+            f["contre_nous"] = (p.camp_de(m["cible"]) == camp)
             fronts.append(f)
 
     # Ce qui s'oppose à un dessein s'oppose aussi à celui qu'il SERT : un
@@ -371,8 +372,7 @@ def vue(p, camp="noir", vu=0):
         c = carte_piece(p, rid)
         (deck[ou[c["apparence"]]] if r["camp"] == camp else eux).append(c)
 
-    dernier_camp = p.lignes[-1]["camp"] if p.lignes else ennemi
-    trait = camp if dernier_camp in (ennemi, "arbitre") else ennemi
+    trait = partie_lecture.trait(p)
     dernier = int(p.lignes[-1].get("n") or 0) if p.lignes else 0
     return _marquer_neuf(
         {"partie": os.path.splitext(os.path.basename(p.chemin))[0], "camp": camp,

@@ -23,8 +23,11 @@ def id_pris(p, i):
             or i in p.menaces or i in p.etats)
 
 
-def pieces_libres(p, camp, pieces, par):
+def pieces_libres(p, camp, pieces, par, vide=None):
+    """`vide` : le refus si aucune pièce n'est donnée (« pas de ressource, pas de coup »)."""
     g = _c()
+    if vide and not g.liste(pieces):
+        return [vide]
     refus = []
     for pc in g.liste(pieces):
         r = p.ressources.get(pc)
@@ -50,8 +53,10 @@ def verifier(p, l):
     liste = g.liste
     refus = []
     camp, coup = l.get("camp"), l.get("coup")
-    if camp not in g.CAMPS:
-        refus.append("camp inconnu : %r" % camp)
+    if not camp or not isinstance(camp, str):
+        refus.append("camp manquant : %r" % camp)
+    elif camp == g.ARBITRE and coup not in ("arbitrer", "constater", "tour", "justifier"):
+        refus.append("l'arbitre ne joue pas : il arbitre, constate, justifie et passe le tour")
     if coup not in g.COUPS:
         refus.append("coup inconnu : %r" % coup)
     if refus:
@@ -61,7 +66,9 @@ def verifier(p, l):
     if coup in ("bloquer", "lever", "detruire", "retourner") and id_pris(p, l.get("id")):
         return ["%s : l'id %s est déjà pris ; une correction est un coup de plus, jamais une réécriture" % (coup, l["id"])]
     if coup == "viser":
-        deck = [e for e in p.etats.values() if e["camp"] == camp and g.au_deck(e, p.tour, reserve=True)]
+        # un état constaté vrai a fait son office : il ne tient plus de place (règle 9)
+        deck = [e for e in p.etats.values() if e["camp"] == camp and not e.get("vrai")
+                and g.au_deck(e, p.tour, reserve=True)]
         if len(deck) >= g.DECK_MAX:
             refus.append("deck %s plein (%d) : sortir un état d'abord" % (camp, g.DECK_MAX))
         if id_pris(p, l["id"]):
@@ -93,7 +100,7 @@ def verifier(p, l):
             refus.append("arbitrer : arrive_tour %s est déjà passé (tour %d) ; "
                          "une arrivée se date au tour courant ou plus tard" % (l["arrive_tour"], p.tour))
         for src in p._lignes_visees(l.get("sur")):
-            if src.get("coup") != "detruire":
+            if src.get("coup") not in ("detruire", "retourner"):
                 continue
             m = p.menaces.get(src["id"])
             if m and (m["realisee"] or m["tombee"]):
@@ -112,7 +119,8 @@ def verifier(p, l):
             refus.append("bloquer : %s n'est ni un état, ni un maillon, ni une clé, ni une destruction" % sur)
         elif cible["camp"] == camp:
             refus.append("un blocage se pose sur l'autre camp, jamais sur soi")
-        refus += pieces_libres(p, camp, l.get("engage"), l.get("id"))
+        refus += pieces_libres(p, camp, l.get("engage"), l.get("id"),
+                               "pas de ressource, pas de coup : un blocage engage la pièce qui le produit")
     elif coup == "lever":
         for b in liste(l.get("ouvre")):
             if b not in p.blocages:
@@ -121,9 +129,8 @@ def verifier(p, l):
                 refus.append("lever : %s est un blocage à soi" % b)
             elif p.blocages[b]["tombe"]:
                 refus.append("lever : le blocage %s est déjà tombé" % b)
-        if not liste(l.get("engage")):
-            refus.append("pas de ressource, pas de coup : une clé engage au moins une pièce")
-        refus += pieces_libres(p, camp, l.get("engage"), l.get("id"))
+        refus += pieces_libres(p, camp, l.get("engage"), l.get("id"),
+                               "pas de ressource, pas de coup : une clé engage au moins une pièce")
     elif coup == "agir":
         if l.get("id") in p.maillons and l.get("etat") and not l.get("realise"):
             if p.maillons[l["id"]]["camp"] != camp:
@@ -164,9 +171,7 @@ def verifier(p, l):
             refus.append("réarmer : %s n'est pas à %s" % (i, camp))
         elif cible.get("retiree") or cible.get("tombe") or cible.get("tenue"):
             refus.append("réarmer : %s est retiré, tombé ou tenu ; reposer" % i)
-        if not liste(l.get("engage")):
-            refus.append("réarmer : il faut la pièce qu'on ajoute")
-        refus += pieces_libres(p, camp, l.get("engage"), i)
+        refus += pieces_libres(p, camp, l.get("engage"), i, "réarmer : il faut la pièce qu'on ajoute")
     elif coup in ("detruire", "retourner"):
         verbe = "détruire" if coup == "detruire" else "retourner"
         prix = "la pièce qui frappe" if coup == "detruire" else "ce qu'on y met"
@@ -175,9 +180,7 @@ def verifier(p, l):
             refus.append("%s : %s n'est pas une ressource posée" % (verbe, l.get("cible")))
         elif r["camp"] == camp:
             refus.append("%s : %s est une pièce à soi" % (verbe, l["cible"]))
-        if not liste(l.get("engage")):
-            refus.append("%s : il faut %s" % (verbe, prix))
-        refus += pieces_libres(p, camp, l.get("engage"), l.get("id"))
+        refus += pieces_libres(p, camp, l.get("engage"), l.get("id"), "%s : il faut %s" % (verbe, prix))
     elif coup == "retirer":
         i = l.get("id")
         reg = next((r for r in (p.cles, p.blocages, p.menaces, p.ressources) if i in r), None)
@@ -213,11 +216,12 @@ def verifier(p, l):
     elif coup == "tour":
         if camp != "arbitre":
             refus.append("seul l'arbitre passe le tour")
-    if not refus and coup in g.COUPS_COMPTES and camp != "arbitre":
+    if not refus and coup in g.COUPS_COMPTES and camp != g.ARBITRE and not l.get("repond"):
         # « un camp ne joue qu'un coup par tour » (§3) : contrôle gradué, signalé
         # sans bloquer — l'ouverture pose dix états et leurs ressources d'un coup.
+        # Un maillon qui répond à un ❓ (`repond`) ne compte pas.
         deja = [x for x in p.lignes if x.get("camp") == camp and x.get("coup") in g.COUPS_COMPTES
-                and int(x.get("tour") or 0) == p.tour]
+                and not x.get("repond") and int(x.get("tour") or 0) == p.tour]
         if deja:
             p.avertissements.append("%s joue un %de coup au tour %d (%s) : un coup par camp et par tour"
                                     % (camp, len(deja) + 1, p.tour, coup))

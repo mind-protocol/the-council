@@ -126,6 +126,12 @@ def presenter(p, depuis_tour=1):
                 details.append("atterrit : " + noms(p, l["menaces"]))
             if l.get("parees"):
                 details.append("parée, n'atterrit pas : " + noms(p, l["parees"]))
+            if l.get("parades_tenues"):
+                details.append("parade tenue, la frappe tombe : " + noms(p, l["parades_tenues"]))
+            if l.get("constatables"):
+                details.append("à constater : " + noms(p, l["constatables"]))
+            if l.get("inactifs"):
+                details.append("muet depuis trois tours : " + ", ".join(EMOJI_CAMP[c] for c in l["inactifs"]))
             if l.get("etats_arrives"):
                 details.append("entre au deck : " + noms(p, l["etats_arrives"]))
             neuves = [x for x in (l.get("branches_mortes") or []) if x not in vues_mortes]
@@ -269,7 +275,7 @@ def main():
     ap.add_argument("--ecritures", action="store_true", help="le récap de ce qu'il faut écrire dans l'état")
     ap.add_argument("--depuis-tour", dest="depuis_tour", type=int, default=1)
     ap.add_argument("--cartes", action="store_true", help="la vue joueur en cartes, JSON (l'onglet « Le conseil »)")
-    ap.add_argument("--camp", default="noir", choices=("noir", "vert"))
+    ap.add_argument("--camp", default=None, help="le camp du siège qui regarde ou qui joue (premier camp de la partie sinon)")
     ap.add_argument("--vu", type=int, default=0, metavar="N",
                     help="le dernier numero de ligne deja vu : ce qui suit est marque neuf")
     ap.add_argument("--geste", metavar="JSON",

@@ -13,6 +13,7 @@ import io
 import json
 import os
 
+import partie_tour      # ce qui tombe au passage du tour (annonce et application)
 import partie_validite  # la recevabilité d'un coup, séparée pour rester lisible
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -22,15 +23,27 @@ DECK_MAX = 10
 GEL_RETRAIT = 2
 GEL_FRAPPE = 1
 TOURS_RECONSTRUCTION = 2
-CAMPS = ("noir", "vert", "arbitre")
+ARBITRE = "arbitre"   # le seul nom réservé : les camps sont ceux que la partie nomme, autant qu'elle veut
 COUPS = ("viser", "sortir", "demander", "arbitrer", "bloquer", "lever", "agir",
          "justifier", "detruire", "retourner", "retirer", "reconstruire",
          "rearmer", "passer", "consigne", "constater", "tour")
 # Ceux qui comptent pour « un coup par camp et par tour » : ni l'arbitre, ni ce
-# qui ne coûte rien (viser à l'ouverture, demander, justifier, consigne).
-COUPS_COMPTES = ("sortir", "bloquer", "lever", "agir", "detruire", "retourner",
+# qui ne coûte rien (demander, justifier, consigne). `viser` compte depuis le
+# 3.9 : un état cible se pose un par un, comme les autres pièces, pour lisser
+# la charge — dix états d'un bloc à l'ouverture, personne ne les lit.
+COUPS_COMPTES = ("viser", "sortir", "bloquer", "lever", "agir", "detruire", "retourner",
                  "retirer", "reconstruire", "rearmer", "passer")
-EMOJI_CAMP = {"noir": "⚫", "vert": "🟢", "arbitre": "🟠"}
+class _Emojis(dict):
+    PALETTE = ("🔵", "🔴", "🟡", "🟣", "🟤", "⚪")
+
+    def __missing__(self, camp):
+        # un camp sans emoji attitré en reçoit un, distinct, dans l'ordre d'arrivée
+        pris = set(self.values())
+        self[camp] = next((e for e in self.PALETTE if e not in pris), "🔸")
+        return self[camp]
+
+
+EMOJI_CAMP = _Emojis({"noir": "⚫", "vert": "🟢", "arbitre": "🟠"})
 EMOJI_COUP = {"viser": "🎯", "sortir": "🃏", "demander": "📦", "arbitrer": "⚖️",
               "bloquer": "🔒", "lever": "🗝️", "agir": "⚔️", "justifier": "❓",
               "detruire": "💥", "retourner": "🔄", "retirer": "🗑️",
@@ -39,6 +52,8 @@ EMOJI_COUP = {"viser": "🎯", "sortir": "🃏", "demander": "📦", "arbitrer":
 
 
 def adverse(camp):
+    """Compatibilité pour la partie à deux camps de la Danse. Le greffe ne s'en
+    sert plus : ce qui s'oppose à une pièce, c'est le camp de sa CIBLE (`camp_de`)."""
     return "vert" if camp == "noir" else "noir"
 
 
@@ -94,13 +109,30 @@ class Partie(object):
     def _pieces_libres(self, camp, pieces, par):
         return partie_validite.pieces_libres(self, camp, pieces, par)
 
+    def camps(self):
+        """Les camps de la partie, dans l'ordre où ils sont entrés ; jamais l'arbitre."""
+        out = []
+        for x in self.lignes:
+            c = x.get("camp")
+            if c and c != ARBITRE and c not in out:
+                out.append(c)
+        return out
+
+    def camp_de(self, cible):
+        """Le camp d'un objet, quel qu'il soit — c'est lui que contrarie ce qui
+        se pose sur cet objet."""
+        for reg in (self.etats, self.blocages, self.cles, self.maillons, self.menaces, self.ressources):
+            if cible in reg:
+                return reg[cible]["camp"]
+        return None
+
     def _lignes_visees(self, sur):
         """Un arbitrage vise une ligne par son numéro, ou la dernière ligne qui porte cet id."""
         out = []
         for s in liste(sur):
             # l'id d'abord (un id de pièce est souvent tout en chiffres), le numéro de ligne sinon
             trouve = [x for x in self.lignes if str(x.get("id")) == str(s)
-                      and x.get("coup") in ("demander", "detruire", "lever", "bloquer")]
+                      and x.get("coup") in ("demander", "detruire", "retourner", "lever", "bloquer")]
             if trouve:
                 out.append(trouve[-1])
             elif isinstance(s, int) or (isinstance(s, str) and s.isdigit()):
@@ -189,7 +221,7 @@ class Partie(object):
                                 r[k] = l[k]
                         r["arrive_tour"] = int(l.get("arrive_tour") or self.tour)
                         r["source"] = l.get("motif")
-                elif src.get("coup") == "detruire":
+                elif src.get("coup") in ("detruire", "retourner"):
                     m = self.menaces.get(src["id"])
                     if m:
                         if l.get("verdict") == "refuse":
@@ -329,18 +361,7 @@ class Partie(object):
                             k["tenue"] = True
                             self._liberer(kid, 0)
         elif coup == "tour":
-            self.tour = int(l.get("tour") or self.tour + 1)
-            for e in self.etats.values():
-                if e.get("arrive_tour") and not e.get("sorti") and int(e["arrive_tour"]) <= self.tour:
-                    e["deck"] = True       # l'état daté entre au deck à son tour
-            for mid, m in self.menaces.items():
-                protegee = self._protegee(mid)
-                # Une destruction atterrit au passage du tour SUIVANT son tour
-                # d'arrivée : le camp visé a toujours un tour pour bloquer,
-                # justifier ou retirer (mj-partie.md §4, « une menace datée »).
-                if not m["realisee"] and not m["tombee"] and m["arrive_tour"] < self.tour \
-                        and not m.get("suspendue_par") and not protegee:
-                    self._realiser_menace(mid, None)
+            partie_tour.appliquer(self, l)
 
     def _realiser_menace(self, mid, nombre):
         m = self.menaces[mid]
@@ -365,9 +386,8 @@ class Partie(object):
                     self._tomber(par)
             cible["engagee_par"] = []
             cible["camp"] = m["camp"]
-            cible["retourne_par"] = m["n"]
-            return
-        if cible:
+            cible["retourne_par"] = m["n"]   # puis le sort d'une frappe : pièce rendue, gelée un tour
+        elif cible:
             if nombre is not None and cible.get("nombre"):
                 cible["nombre"] = max(0, int(cible["nombre"]) - int(nombre))
                 if cible["nombre"] > 0:
@@ -392,32 +412,22 @@ class Partie(object):
 
     # ---- écrire ----------------------------------------------------------
     def ecrire(self, l):
+        l = dict(l)
+        if l.get("coup") == "agir" and l.get("realise"):
+            # Un maillon qui répond à un ❓ ne compte pas pour le tour : la
+            # question est gratuite, la réponse l'est aussi (règle 5).
+            cible = (self.cles.get(l["realise"]) or self.menaces.get(l["realise"])
+                     or self.blocages.get(l["realise"]) or {})
+            if cible.get("suspendue_par"):
+                l["repond"] = cible["suspendue_par"]
         refus = self.verifier(l)
         if refus:
             return refus
-        l = dict(l)
         l["n"] = (self.lignes[-1]["n"] + 1) if self.lignes else 1
         l.setdefault("tour", self.tour if l["coup"] != "tour" else self.tour + 1)
         if l["coup"] == "tour":
             l["tour"] = self.tour + 1
-            l["arrivees"] = [rid for rid, r in self.ressources.items()
-                             if r.get("arrive_tour") == l["tour"] and not r.get("en_attente")]
-            l["degeles"] = [rid for rid, r in self.ressources.items() if r.get("gel_jusqu") == l["tour"]]
-            l["menaces"] = [mid for mid, m in self.menaces.items()
-                            if not m["realisee"] and not m["tombee"] and m["arrive_tour"] < l["tour"]
-                            and not m.get("suspendue_par") and not self._protegee(mid)]
-            l["parees"] = [mid for mid, m in self.menaces.items()
-                           if not m["realisee"] and not m["tombee"] and m["arrive_tour"] < l["tour"]
-                           and (m.get("suspendue_par") or self._protegee(mid))]
-            l["etats_arrives"] = [eid for eid, e in self.etats.items()
-                                  if e.get("arrive_tour") == l["tour"] and not e.get("sorti")]
-            frappees = set(self.menaces[m]["cible"] for m in l["menaces"])
-            l["branches_mortes"] = [rid for rid, r in self.ressources.items()
-                                    if not r["engagee_par"] and not r.get("detruite")
-                                    and not r.get("en_attente") and rid not in frappees
-                                    and r.get("arrive_tour", 0) + 2 <= l["tour"]
-                                    and rid not in self._jamais_engagees_tolerees()]
-            l["jours"] = JOURS_PAR_TOUR
+            l.update(partie_tour.ligne(self, l["tour"]))
         if os.path.dirname(self.chemin):
             os.makedirs(os.path.dirname(self.chemin), exist_ok=True)
         with io.open(self.chemin, "a", encoding="utf-8") as f:
@@ -426,30 +436,19 @@ class Partie(object):
         self._appliquer(l)
         return []
 
-    def _jamais_engagees_tolerees(self):
-        # Une pièce déjà engagée une fois dans la partie n'est pas une branche
-        # morte. `qui` compte autant que `avec` : le guetteur et le septon
-        # d'essai-1 n'ont jamais figuré que là, et se voyaient signalés morts
-        # le tour même où ils réalisaient un maillon.
-        vues = set()
-        for x in self.lignes:
-            for p in (liste(x.get("engage")) + liste(x.get("avec"))
-                      + liste(x.get("pieces")) + liste(x.get("qui"))):
-                vues.add(p)
-        return vues
-
     # ---- lectures --------------------------------------------------------
     def prevaut(self, bid):
         """Qui prévaut sur un blocage : le camp d'une clé valide qui l'ouvre, sinon le camp du blocage."""
         b = self.blocages[bid]
+        contre = self.camp_de(b["sur"]) or b["camp"]    # le camp que ce blocage contrarie
         if b["tombe"]:
-            return adverse(b["camp"]), "tombé"
+            return contre, "tombé"
         if b.get("suspendue_par"):
             # Symetrique de la cle suspendue : tant que le defenseur n'a pas
             # ecrit son maillon, son blocage ne tient pas la position.
-            return adverse(b["camp"]), "blocage suspendu par ❓ %s" % b["suspendue_par"]
+            return contre, "blocage suspendu par ❓ %s" % b["suspendue_par"]
         if b.get("prete_tour", 0) > self.tour:
-            return adverse(b["camp"]), "blocage prêt au tour %d" % b["prete_tour"]
+            return contre, "blocage prêt au tour %d" % b["prete_tour"]
         for kid, k in self.cles.items():
             if bid in k["ouvre"] and not k["retiree"] and not k.get("tenue"):
                 if k["suspendue_par"]:
@@ -462,15 +461,24 @@ class Partie(object):
                 return k["camp"], "levé par 🗝️ %s" % kid
         return b["camp"], "rien en face"
 
-    def racine(self):
-        r = [eid for eid, e in self.etats.items() if not e.get("sert") and e["camp"] == "noir"]
-        return r[0] if r else (list(self.etats)[0] if self.etats else None)
+    def racine(self, camp=None):
+        """La racine d'un camp : son état qui ne sert aucun autre — le trône vu de
+        son côté (§2). Sans camp, celle du premier camp entré."""
+        camp = camp or (self.camps() or [None])[0]
+        r = [eid for eid, e in self.etats.items() if not e.get("sert") and e["camp"] == camp]
+        return r[0] if r else None
 
     def tenu_par(self):
-        """Le trône est à qui l'arbitre a constaté en dernier, sur la racine seule ; au Vert sinon."""
-        racine = self.racine()
-        for x in reversed(self.lignes):
-            if x.get("coup") == "constater" and x.get("etat") == racine:
-                camp = self.etats[racine]["camp"]
-                return camp if x.get("verdict") == "vrai" else adverse(camp)
-        return "vert"
+        """Le trône est au camp dont la racine a été constatée vraie en dernier ;
+        un constat faux sur cette racine le lui retire. À personne (None) tant que
+        rien n'est constaté — c'est à l'arbitre de constater qui est assis."""
+        racines = set(self.racine(c) for c in self.camps())
+        tenant = None
+        for x in self.lignes:
+            if x.get("coup") == "constater" and x.get("etat") in racines:
+                camp = self.etats[x["etat"]]["camp"]
+                if x.get("verdict") == "vrai":
+                    tenant = camp
+                elif tenant == camp:
+                    tenant = None
+        return tenant

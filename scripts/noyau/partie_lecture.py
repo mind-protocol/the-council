@@ -8,7 +8,7 @@ fonctions ne change la position : elles la parcourent et la rendent en texte.
 Une règle du jeu se change dans partie_greffe ; une façon de la montrer, ici.
 Chaque fonction prend la partie repliée (`p`) en premier argument.
 """
-from partie_greffe import DECK_MAX, EMOJI_CAMP, EMOJI_COUP, JOURS_PAR_TOUR, adverse, liste
+from partie_greffe import DECK_MAX, EMOJI_CAMP, EMOJI_COUP, JOURS_PAR_TOUR, liste
 
 
 def chaine(p, cible):
@@ -90,7 +90,7 @@ def piece(p, rid):
 
 def grand_livre(p):
     out = []
-    for camp in ("noir", "vert"):
+    for camp in p.camps():
         out.append("%s %s" % (EMOJI_CAMP[camp], camp))
         for rid, r in sorted(p.ressources.items()):
             if r["camp"] == camp:
@@ -123,19 +123,24 @@ def _sous(p, eid, prof, out):
 
 def etat(p):
     out = []
-    racine = p.racine()
     tenu = p.tenu_par()
     out.append("Tour %d · jour du monde +%d" % (p.tour, (p.tour - 1) * JOURS_PAR_TOUR))
-    out.append("👑 Trône — tenu par %s" % EMOJI_CAMP[tenu])
-    if racine:
-        _sous(p, racine, 0, out)
-        for kid, k in sorted(p.cles.items(), key=lambda kv: -(kv[1].get("n") or 0)):
-            if k["retiree"] or k.get("tenue") or k["ouvre"]:
-                continue   # une clé sans blocage : une affirmation nue, on la montre à part
-            qui = k["camp"] if not k["suspendue_par"] else adverse(k["camp"])
-            out.append("← %s 🗝️ %s %s — n'ouvre rien%s" % (
-                EMOJI_CAMP[qui], kid, k["texte"],
-                " · suspendue par ❓ %s" % k["suspendue_par"] if k["suspendue_par"] else ""))
+    out.append("👑 Trône — tenu par %s" % (EMOJI_CAMP[tenu] if tenu else "personne encore"))
+    for i, camp in enumerate(p.camps()):
+        r = p.racine(camp)
+        if not r:
+            continue
+        if i:   # la première racine est le trône lui-même ; les autres se nomment
+            e = p.etats[r]
+            feu = " · VRAI" if e.get("vrai") else (" · faux" if e.get("vrai") is False else "")
+            out.append("🎯 %s %s — %s%s" % (EMOJI_CAMP[camp], r, e["texte"], feu))
+        _sous(p, r, 1 if i else 0, out)
+    for kid, k in sorted(p.cles.items(), key=lambda kv: -(kv[1].get("n") or 0)):
+        if k["retiree"] or k.get("tenue") or k["ouvre"]:
+            continue   # une clé sans blocage : une affirmation nue, on la montre à part, une fois
+        out.append("🗝️ %s %s — sert %s%s" % (
+            EMOJI_CAMP[k["camp"]], kid, k.get("sert") or "rien",
+            " · suspendue par ❓ %s" % k["suspendue_par"] if k["suspendue_par"] else ""))
     tenues = [kid for kid, k in p.cles.items() if k.get("tenue")]
     if tenues:
         out.append("Tenues (leur blocage est tombé, pièces rendues) : " + " · ".join(tenues))
@@ -143,7 +148,8 @@ def etat(p):
                if e.get("arrive_tour") and not e.get("deck") and not e.get("sorti")]
     if a_venir:
         out.append("États datés à venir : " + " · ".join(a_venir))
-    menaces = ["💥 %s → %s au tour %d" % (mid, m["cible"], m["arrive_tour"])
+    menaces = ["%s %s → %s au tour %d%s" % (EMOJI_COUP[m.get("genre") or "detruire"], mid, m["cible"], m["arrive_tour"],
+                                           " · parée, tombe au tour %d" % (m["paree_tour"] + 1) if m.get("paree_tour") else "")
                for mid, m in p.menaces.items() if not m["realisee"] and not m["tombee"]]
     if menaces:
         out.append("Menaces : " + " · ".join(menaces))
@@ -158,12 +164,22 @@ def etat(p):
     att = [rid for rid, r in p.ressources.items() if r.get("en_attente")]
     if att:
         out.append("À arbitrer : " + " · ".join(att))
-    deck = {c: [e for e, x in p.etats.items() if x["camp"] == c and x.get("deck")] for c in ("noir", "vert")}
-    out.append("Deck : ⚫ %d/%d · 🟢 %d/%d" % (len(deck["noir"]), DECK_MAX, len(deck["vert"]), DECK_MAX))
-    dernier = p.lignes[-1]["camp"] if p.lignes else "vert"
-    trait = "noir" if dernier in ("vert", "arbitre") else "vert"
-    out.append("Trait aux %ss." % ("Noir" if trait == "noir" else "Vert"))
+    out.append("Deck : " + " · ".join(
+        "%s %d/%d" % (EMOJI_CAMP[c], len([1 for x in p.etats.values()
+                                          if x["camp"] == c and x.get("deck") and not x.get("vrai")]), DECK_MAX)
+        for c in p.camps()))
+    out.append("Trait à %s." % EMOJI_CAMP[trait(p)])
     return out
+
+def trait(p):
+    """À qui de jouer : le camp qui suit, dans l'ordre d'entrée, le dernier camp
+    qui a écrit une ligne ; le premier camp si personne n'a encore joué."""
+    camps = p.camps()
+    if not camps:
+        return None
+    dernier = next((x["camp"] for x in reversed(p.lignes) if x.get("camp") in camps), None)
+    return camps[(camps.index(dernier) + 1) % len(camps)] if dernier else camps[0]
+
 
 def relire(p, depuis=1):
     out = []

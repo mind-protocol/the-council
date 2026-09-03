@@ -45,7 +45,7 @@ class PartieCartesTest(unittest.TestCase):
         self.assertEqual(self.v["tour"], 2)
         self.assertEqual(self.v["jours"], 2)
         self.assertEqual(self.v["trait"], "noir")
-        self.assertEqual(self.v["trone"], "vert")
+        self.assertIsNone(self.v["trone"])      # rien n'a été constaté sur une racine
 
     def test_deux_fronts_verts_sur_le_trone(self):
         fronts = self.v["fronts"]

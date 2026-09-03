@@ -2,7 +2,8 @@
 
 Note de conception de l'onglet « Le conseil » (`ecrans/modules/partie.js`). Les
 règles du jeu, elles, vivent dans [`scripts/agents/prompts/mj-partie.md`](../scripts/agents/prompts/mj-partie.md)
-et ne se changent pas ici.
+et ne se changent pas ici. Le livre de règles complet, aligné sur le greffe,
+est [`regles-partie.md`](regles-partie.md).
 
 ## Pourquoi des cartes, et pas une carte
 
@@ -88,7 +89,7 @@ Deux règles de tenue, chacune payée par un défaut constaté :
 |---|---|
 | `scripts/noyau/partie_cartes.py` | la vue : fronts, piles, deck, desseins, apparences, brouillard |
 | `scripts/noyau/partie_gestes.py` | le geste traduit en coup : la CIBLE dit lequel, les refus rhabillés en clair |
-| `scripts/partie.py --cartes [--camp noir\|vert]` | la même vue en JSON, au terminal |
+| `scripts/partie.py --cartes [--camp <camp>]` | la même vue en JSON, au terminal (le premier camp de la partie sinon) |
 | `serveur/domaine/partie.js` | quelle partie pour cette requête (`?id=`, sinon la plus récente) |
 | `serveur/routes/partie.js` | `GET /partie`, `POST /partie/geste`, `POST /partie/jour` |
 | `ecrans/modules/partie.js` `.css` | l'échelle « Le conseil » du décor |
@@ -123,8 +124,7 @@ la seule sortie est la ligne de coup en réponse, le MJ l'écrivant au greffe.
 C'est le seul levier de l'ordre de grandeur, et il coûte à l'homme de ne plus
 appeler le script lui-même.
 
-D'ici là, **le camp vert est joué par le MJ**, comme la section 6.2 du manuel
-le prévoit : il tient par défaut sans appel, et l'on ne dépêche une tête verte
+D'ici là, **le camp vert est joué par le MJ** : il tient par défaut sans appel, et l'on ne dépêche une tête verte
 que pour un coup qui n'est pas « tenir ».
 
 ## Le geste (v1)

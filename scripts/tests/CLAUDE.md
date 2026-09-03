@@ -20,6 +20,8 @@ python -m unittest discover -s scripts/tests -p "test_*.py"
 | `test_comptoir_moyens.py` | le contrat de comparaison M110 : conformité, dérive, sources des deux valeurs et registre incomplet |
 | `test_partie_cartes.py` | la vue joueur d'une partie : le brouillard sur l'ennemi, les apparences des cartes, le compte des obstacles en descendant, aucun id nu — sur `donnees/partie-duel.jsonl`, noms posés à la main |
 | `test_partie_gestes.py` | les gestes du joueur : ce qu'une carte posée sur une carte devient au grand livre, le renfort au lieu du doublon, la reprise qui gèle, les refus en clair — sur une COPIE jetable du même duel, parce que ce module écrit |
+| `test_partie_blocage_retourner.py` | deux règles alignées le 3.9 : un blocage sans pièce est refusé ; un retournement change le camp de la pièce visée et rend ce qu'on y a mis, gelé un tour |
+| `test_partie_tour.py` | le passage du tour et les cinq règles du 3.9 : la réponse à un ❓ ne compte pas, la parade tient un tour puis la frappe tombe (sauf `tranche` avant), les états constatables sont listés, un état vrai libère sa place au deck, chaque camp a sa racine et le trône se lit sur les deux, un camp muet trois tours est signalé |
 | `essai_occupation.py` | 30 cas d'occupation et d'invariants, sur un `etat/` jetable |
 
 **Rien ne touche le vrai dépôt.** `essai_occupation.py` détourne `occupation.ETAT`

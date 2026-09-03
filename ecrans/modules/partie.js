@@ -261,7 +261,8 @@ window.PartieVue = (() => {
     }
     const bar = el("div", "pc-bar");
     bar.appendChild(el("span", "", "jour " + (vue.jours + 1) + " de la partie"));
-    bar.appendChild(el("span", "", vue.trone === vue.camp ? "👑 le trône est à nous" : "👑 le trône est à eux"));
+    bar.appendChild(el("span", "", !vue.trone ? "👑 le trône n'est constaté à personne"
+                                  : vue.trone === vue.camp ? "👑 le trône est à nous" : "👑 le trône est à eux"));
     bar.appendChild(el("span", "", vue.trait === vue.camp ? "à vous de jouer" : "on attend leur coup"));
     h.appendChild(bar);
     if (mot) {

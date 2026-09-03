@@ -29,7 +29,7 @@ import re
 
 import partie_cartes
 import partie_validite
-from partie_greffe import GEL_RETRAIT, JOURS_PAR_TOUR, adverse, liste
+from partie_greffe import GEL_RETRAIT, JOURS_PAR_TOUR, liste
 
 
 def _id_libre(p, camp, base):
@@ -87,10 +87,8 @@ def poser(p, camp, pieces, sur, texte=""):
             return _refus(p, ["%s n'est pas au grand livre : le mestre doit l'y porter d'abord" % pc])
     sur = str(sur or "")
     texte = (texte or "").strip()
-    ennemi = adverse(camp)
-
     b = p.blocages.get(sur)
-    if b is not None and b["camp"] == ennemi:
+    if b is not None and b["camp"] != camp:
         if b["tombe"]:
             return _refus(p, ["ce verrou est déjà tombé"])
         # Une clef existe-t-elle déjà contre lui ? On renforce, plutôt que d'en
@@ -160,9 +158,9 @@ def jouer(p, geste):
     """L'entrée unique : `{quoi, camp, pieces|piece, sur, texte}`."""
     geste = geste or {}
     quoi = geste.get("quoi")
-    camp = geste.get("camp") or "noir"
-    if camp not in ("noir", "vert"):
-        return _refus(p, ["camp inconnu"])
+    camp = geste.get("camp") or (p.camps() or ["noir"])[0]
+    if camp == "arbitre":
+        return _refus(p, ["l'arbitre ne joue pas"])
     if quoi == "poser":
         return poser(p, camp, geste.get("pieces") or geste.get("piece"),
                      geste.get("sur"), geste.get("texte"))
