@@ -1,4 +1,4 @@
-// partie-grille.js — la position en cases, et l'aire où l'on range à sa guise.
+// partie-grille.js — la position en cases : ce qu'on voit, et ce qu'on peut poser.
 //
 // Sorti de `partie.js`, qui tenait déjà le plateau entier : ce fichier ne
 // connaît ni le serveur, ni les coups, ni la vue. On lui passe un OUTILLAGE
@@ -6,16 +6,18 @@
 // cases. C'est ce qui permet de changer la forme du plateau sans toucher au
 // greffe, et de le tester sans navigateur.
 //
-// Deux choses vivent ici :
-//   — LA LIGNE : un objet du plateau, les pièces qu'il engage rangées dedans,
-//     et une case vide au bout quand on peut y lâcher quelque chose ;
-//   — L'AIRE : des cases libres, sans aucune règle, où le joueur pose ce qu'il
-//     veut pour réfléchir. Rien n'en part vers le greffe — c'est un brouillon,
-//     et il vit dans le navigateur, pas dans `etat/`.
+// Une seule chose vit ici : LA LIGNE — un objet du plateau, les pièces qu'il
+// engage rangées dedans, et une case vide au bout quand on peut y lâcher
+// quelque chose. Toute case de l'écran est donc une case du JEU : ce qu'on y
+// pose part au greffe, et là où il n'y a pas de case, on ne pose pas.
+//
+// L'AIRE A ÉTÉ RETIRÉE (6.9). C'étaient douze cases sans règle sous le
+// plateau, un brouillon qui vivait dans le navigateur et ne partait nulle
+// part. Elle prenait la place du deck et brouillait la seule chose que les
+// cases doivent dire — où l'on a le droit de poser.
 window.PartieGrille = (function () {
   "use strict";
 
-  const CASES = 12;                 // l'aire : deux rangs de six, ça suffit à trier
   let outil = null;
   // CE QU'UNE CASE DE L'ÉCRAN PORTE, retrouvé depuis le nœud : c'est ce qui
   // permet de dire, pendant un glissé, quel coup CETTE case-là produirait avec
@@ -63,10 +65,16 @@ window.PartieGrille = (function () {
     const t = el("div", "pc-texte");
     t.appendChild(el("div", "pc-titre", c.titre || ""));
     if (c.corps) t.appendChild(el("div", "pc-corps", c.corps));
-    if (c.pied && (c.pied.gauche || c.pied.droite)) {
+    // LE PIED PASSE PAR LA MÊME RÈGLE QUE LE BANDEAU (`court`) : « libre » et
+    // « posée » ne s'écrivent nulle part, ce qui attend est une horloge et un
+    // nombre de jours. Sans cela on retirait le mot du bandeau pour le laisser
+    // deux lignes plus bas, et l'écran disait deux choses différentes de la
+    // même carte.
+    const bas = court((c.pied || {}).droite, c.jours);
+    if (c.pied && (c.pied.gauche || bas)) {
       const p = el("div", "pc-pied");
       p.appendChild(el("span", "pc-pied-g", c.pied.gauche || ""));
-      p.appendChild(el("span", "pc-pied-d", c.pied.droite || ""));
+      p.appendChild(el("span", "pc-pied-d", bas));
       t.appendChild(p);
     }
     // LA CROIX DU VOLET — elle ne sert qu'une fois épinglé, et elle est là
@@ -86,6 +94,13 @@ window.PartieGrille = (function () {
     d.addEventListener("click", (e) => {
       if (e.target && e.target.closest && e.target.closest(".pc-quest, .pc-rep, .pc-croix")) return;
       if (d.classList.contains("pc-cliquable")) return;
+      // L'ARBITRE CONSTATE D'UN CLIC sur un état : le motif, puis Vrai ou Faux.
+      // Le seul coup de l'arbitre qui ait un geste — le reste est à la ligne.
+      if (arbitre() && c.type === "cible") {
+        return bulle(d, "Constater « " + (c.titre || c.id) + " »", "le motif, et sa source",
+          "Vrai", (m) => outil.jouer({ quoi: "constater", sur: c.id, verdict: "vrai", texte: m }),
+          "Faux", (m) => outil.jouer({ quoi: "constater", sur: c.id, verdict: "faux", texte: m }));
+      }
       const deja = d.classList.contains("pc-epingle");
       const h = plateau();
       if (h) h.querySelectorAll(".pc-epingle").forEach((x) => x.classList.remove("pc-epingle"));
@@ -94,17 +109,17 @@ window.PartieGrille = (function () {
     // LE STATUT SE LIT SUR LA CARTE, pas seulement au survol. Il n'etait ecrit
     // que dans le volet et dans le nom des rangees du deck : sur le plateau il
     // ne restait qu'un style de bordure a interpreter — pointillee pour ce qui
-    // arrive, pale pour ce qui se remet —, et une piece posee sous une clef
-    // n'avait plus de rangee pour la nommer. Le mot vient du greffe
-    // (`pied.droite`) : libre, posee, dans 4 j, se remet, attend l'arbitre,
-    // detruite. « tient » ne s'ecrit pas : une clef qui tient est l'etat
-    // normal, et un bandeau sur chaque bonne nouvelle est du bruit.
+    // arrive, pale pour ce qui se remet. Le mot vient du greffe
+    // (`pied.droite`), passe par `court` : ce qui attend devient une horloge et
+    // un nombre de jours, ce qui est ordinaire — libre, posée, une clef qui
+    // tient — ne s'ecrit pas du tout.
     // UNE QUESTION QU'ON PEUT RELEVER LE DIT DANS SON BANDEAU. La poignee ⚔️
     // ne parait qu'au survol, sur une carte de 65 px au fond d'une colonne qui
     // defile : personne ne la trouve. Le bandeau, lui, est toujours la.
     if (c.type === "question" && c.repondre) c.pied = { gauche: "", droite: "⚔️ à répondre" };
-    const statut = (c.pied || {}).droite;
-    if (statut && statut !== "✅ tient") d.appendChild(el("span", "pc-etat", court(statut)));
+    const dit = (c.pied || {}).droite;
+    const statut = dit && dit !== "✅ tient" ? court(dit, c.jours) : "";
+    if (statut) d.appendChild(el("span", "pc-etat", statut));
     // LE FILET DU SURVOL. Tant que le plateau se croit « en main », la CSS
     // masque tous les volets de texte (`pc-en-main .pc-texte`) — c'est voulu
     // pendant un glissé, et c'est un écran mort si l'état reste collé. Il le
@@ -227,7 +242,7 @@ window.PartieGrille = (function () {
     puce("#" + (c.id || ""), "pc-puce-id");
     puce(rond(c.camp) + " " + (c.camp || ""), "pc-puce-camp");
     puce((TYPES[c.type] || c.emoji || "") + " " + (LIB[c.type] || c.type));
-    const st = (c.pied || {}).droite;
+    const st = court((c.pied || {}).droite, c.jours);
     if (st) puce(st, "pc-puce-statut");
     if (c.engagee_par && c.engagee_par.length) puce("📍 " + c.engagee_par.join(", "), "pc-puce-pris");
     const q = (c.sous || []).filter((x) => x.type === "question");
@@ -259,11 +274,25 @@ window.PartieGrille = (function () {
     return b;
   }
 
-  // Le bandeau fait 65 px de large : « attend l'arbitre » y tombe a « attend
-  // l'a… », ce qui ne dit plus rien. On raccourcit CES DEUX MOTS-LA, et eux
-  // seuls — la phrase entiere du greffe reste dans le volet, a un survol.
-  const COURT = { "attend l'arbitre": "arbitre ?" };
-  const court = (m) => COURT[m] || String(m).replace("se remet · ", "remet ");
+  // LE BANDEAU NE DIT QUE CE QUI N'EST PAS L'ORDINAIRE. « libre » et « posée »
+  // sont les deux états normaux d'une pièce, et la carte les dit déjà sans un
+  // mot : pleine et prenable pour l'une, rangée sous ce qui l'engage pour
+  // l'autre. Un bandeau sur chaque carte du plateau couvrait le signe pour
+  // n'apprendre rien — c'est le fond du bruit, pas de l'information.
+  const MUET = { "libre": 1, "posée": 1, "posee": 1 };
+  // CE QUI ATTEND SE COMPTE EN JOURS, DONC EN HORLOGE. « dans 4 j » tombait à
+  // la ligne sur 65 px ; ⏳4 se lit d'un coup. Le nombre est celui du greffe :
+  // les jours qui restent pour ce qui arrive, les jours DÉJÀ PASSÉS pour ce qui
+  // attend un arbitrage ou une réponse (`jours`, posé par partie_cartes) — une
+  // question qui traîne depuis six jours se voyait nulle part. La phrase
+  // entière reste dans le volet, à un survol.
+  const court = (m, jours) => {
+    if (!m || MUET[m]) return "";
+    const j = /dans (\d+) j/.exec(m);
+    if (j) return "⏳" + j[1];
+    if (/attente|attend l'arbitre/.test(m)) return "⏳" + (jours || "");
+    return String(m).replace("se remet · ", "remet ");
+  };
 
   // ---- LE MAILLON : REPONDRE A UN ❓ POSE SUR NOTRE PIECE ------------------
   // Le pendant de la poignee ❓, et il manquait : on pouvait suspendre la piece
@@ -315,6 +344,7 @@ window.PartieGrille = (function () {
 
   // ---- le geste : on prend une carte, on la pose sur une autre -------------
   const aNous = (c) => c.camp === (outil.vue() && outil.vue().camp);
+  const arbitre = () => !!outil.vue() && outil.vue().camp === "arbitre";
   // Ce qu'une pièce en main peut atteindre. La règle est ici, en trois lignes,
   // et elle est la même que celle du greffier : un obstacle ou une frappe d'en
   // face, une de nos clefs. Le reste ne s'allume pas.
@@ -338,12 +368,14 @@ window.PartieGrille = (function () {
   // sauf sur nos pièces ; une pièce d'en face SEULEMENT sur nos pièces
   const accepte = (c, t) => !!t && t.type === "piece"
                     && (c.type === "piece" ? !aNous(t) : aNous(t));
-  // TOUTE PIÈCE À NOUS SE PREND, libre ou non : l'aire de rangement accepte ce
-  // que le plateau refuse, et une pièce qu'on ne peut pas soulever ne peut pas
-  // non plus être mise de côté pour y penser. Ce qui est illégal se refuse au
-  // greffe, avec sa phrase — pas en rendant la carte inerte.
+  // TOUTE PIÈCE À NOUS SE PREND, libre ou non. Une pièce engagée qu'on soulève
+  // ne trouvera aucune case allumée, et si on la lâche quand même, c'est le
+  // greffe qui refuse — avec sa phrase, qui apprend la règle. Éteindre la
+  // carte, à l'inverse, ne dit jamais pourquoi.
   const prenable = (c) => (c.type === "piece" && aNous(c))
                        || ((c.type === "clef" || c.type === "verrou") && aNous(c))
+                       // mon état au deck (→ sortir), ma pièce perdue (→ reconstruire) : vers la main
+                       || (c.type === "cible" && aNous(c) && c.apparence !== "vrai")
                        // la leur, libre : on peut la tirer à soi (achat, frappe)
                        || (c.type === "piece" && !aNous(c) && c.apparence === "libre");
 
@@ -565,9 +597,8 @@ window.PartieGrille = (function () {
                    (texte) => outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: texte }));
     }
     const contre = sur.type === "cible" && aNous(sur) ? " pour « " : " contre « ";
-    const prep = noteDe(outil.vue(), piece.id);
-    bulle(ancre, "Et " + piece.titre + " y fait quoi ?", prep || (piece.titre + contre + sur.titre + " »"),
-          "Poser", (texte) => outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: texte || prep }));
+    bulle(ancre, "Et " + piece.titre + " y fait quoi ?", piece.titre + contre + sur.titre + " »",
+          "Poser", (texte) => outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: texte }));
   }
 
   const dejaUneClef = (bid) => ((outil.vue() || {}).fronts || []).some(
@@ -576,7 +607,7 @@ window.PartieGrille = (function () {
   // La bulle est posée sur le CORPS, en repère fixe, et non dans la carte : la
   // colonne des fronts défile en `overflow:auto`, et une bulle qui y vivrait
   // serait coupée au bord dès que le front est près de la marge.
-  function bulle(ancre, titre, placeholder, verbe, valider) {
+  function bulle(ancre, titre, placeholder, verbe, valider, verbe2, valider2) {
     document.querySelectorAll(".pc-bulle").forEach((x) => x.remove());
     const b = el("div", "pc-bulle");
     const r = ancre.getBoundingClientRect();
@@ -592,7 +623,13 @@ window.PartieGrille = (function () {
     const pied = el("div", "pc-bulle-p");
     const ok = el("button", "pc-bt", verbe);
     const non = el("button", "pc-bt pc-bt-nu", "Laisser");
-    pied.appendChild(non); pied.appendChild(ok);
+    pied.appendChild(non);
+    if (verbe2) {   // deux verbes : constater VRAI ou FAUX, du même motif
+      const ok2 = el("button", "pc-bt pc-bt-second", verbe2);
+      ok2.addEventListener("click", () => { const t = champ.value.trim(); b.remove(); valider2(t); });
+      pied.appendChild(ok2);
+    }
+    pied.appendChild(ok);
     b.appendChild(pied);
     document.body.appendChild(b);
     champ.focus();
@@ -787,89 +824,11 @@ window.PartieGrille = (function () {
     logVu = Math.max(logVu, vue.dernier || 0);
   }
 
-  // ---- l'aire : des cases sans règle ---------------------------------------
-  // Le plateau ne dit que ce qui est ENGAGÉ. Avant d'engager, on veut pouvoir
-  // rapprocher trois pièces et les regarder ensemble — c'est ce que fait la
-  // main d'un joueur au-dessus d'un vrai plateau, et rien à l'écran ne le
-  // permettait. Ce rangement n'est pas un coup : il ne part nulle part.
-  const cle = (vue) => "pc-aire:" + ((vue && vue.partie) || "") + ":" + ((vue && vue.camp) || "");
-
-  function lire(vue) {
-    try { return JSON.parse(localStorage.getItem(cle(vue)) || "{}"); } catch (e) { return {}; }
-  }
-  function ecrire(vue, rangement) {
-    try { localStorage.setItem(cle(vue), JSON.stringify(rangement)); } catch (e) { /* privé */ }
-  }
-
-  function aire(vue, redessiner) {
-    const rangement = lire(vue);
-    const d = (vue && vue.deck) || {};
-    const parId = {};
-    [].concat(d.main || [], d.route || [], d.remet || [], (vue && vue.eux) || [])
-      .forEach((c) => { parId[c.id] = c; });
-
-    // une pièce qui n'est plus libre a quitté l'aire toute seule : elle est sur
-    // le plateau, et l'y laisser en double serait un mensonge
-    Object.keys(rangement).forEach((id) => {
-      const piece = id[0] === "~" ? id.slice(1) : id;   // une note suit sa pièce
-      if (!parId[piece]) delete rangement[id];
-    });
-
-    const g = el("div", "pc-aire");
-    for (let i = 0; i < CASES; i++) {
-      const v = receveuse("pc-case pc-case-libre",
-        (t) => t && t.type === "piece",
-        (t) => { rangement[t.id] = i; ecrire(vue, rangement); redessiner(); });
-      const qui = Object.keys(rangement).filter((id) => rangement[id] === i && id[0] !== "~");
-      qui.forEach((id) => { if (parId[id]) v.appendChild(preparee(vue, rangement, parId[id], redessiner)); });
-      g.appendChild(v);
-    }
-    return g;
-  }
-
-  // ---- PRÉPARER UN COUP SANS CIBLE ----------------------------------------
-  // Une pièce rangée dans l'aire porte une NOTE : ce qu'on compte en faire —
-  // « le chapelain : embaumer ce soir, pour le rite ». C'est le brouillon d'un
-  // verrou ou d'une clef avant qu'il y ait quoi que ce soit à viser. Elle vit
-  // avec le rangement, dans le navigateur ; rien n'en part au greffe. Quand on
-  // pose enfin la pièce, la note est proposée comme titre — on ne réécrit pas.
-  const cleNote = (id) => "~" + id;
-
-  function preparee(vue, rangement, c, redessiner) {
-    const d = carte(c);
-    const note = rangement[cleNote(c.id)];
-    if (note) {
-      d.classList.add("pc-preparee");
-      d.appendChild(el("div", "pc-note", note));
-      d.title = note;
-    }
-    const b = el("span", "pc-note-bt", "✎");
-    b.title = note ? "Modifier ce qu'on prépare" : "Écrire ce qu'on prépare avec cette pièce";
-    b.addEventListener("click", (e) => {
-      e.stopPropagation();
-      bulle(d, "Ce que vous préparez avec " + (c.titre || c.id), note || "un verrou, une clef, un achat… en une phrase",
-            "Garder", (t) => { if (t) rangement[cleNote(c.id)] = t; else delete rangement[cleNote(c.id)];
-                              ecrire(vue, rangement); redessiner(); });
-    });
-    d.appendChild(b);
-    return d;
-  }
-
-  const noteDe = (vue, id) => lire(vue)[cleNote(id)] || "";
-
-  const range = (vue, id) => typeof lire(vue)[id] === "number";
-
-  function vider(vue, redessiner) {
-    ecrire(vue, {});
-    redessiner();
-  }
-
   return {
     armer: (o) => { outil = o; },
     geste: geste,
     carte: carte, cible: cible, prenable: prenable, aNous: (c) => aNous(c),
-    engagees: engagees, ligne: ligne, aire: aire, range: range, vider: vider, desseins: desseins,
+    engagees: engagees, ligne: ligne, desseins: desseins,
     demandeur: demandeur, bandeau: bandeau, legende: legende, loguer: loguer, teinte: teinte,
-    CASES: CASES,
   };
 })();

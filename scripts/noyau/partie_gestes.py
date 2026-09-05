@@ -279,14 +279,57 @@ def reprendre(p, camp, sur):
     """Une carte à nous ramenée au deck : ce qui la tenait est libéré, et la
     pièce se remet — deux tours (mj-partie.md, la règle du retrait)."""
     sur = str(sur or "")
+    # UN ÉTAT ramené dans la main SORT du deck ; UNE PIÈCE PERDUE ramenée dans la
+    # main se RECONSTRUIT. Même geste que reprendre une clef — on tire à soi ce
+    # qui est à soi —, et c'est la carte qui dit lequel des trois coups.
+    e = p.etats.get(sur)
+    if e is not None:
+        if e["camp"] != camp:
+            return _refus(p, ["cet état n'est pas le vôtre"])
+        if not e.get("deck"):
+            return _refus(p, ["cet état n'est pas au deck"])
+        return _ecrire(p, {"camp": camp, "coup": "sortir", "id": sur},
+                       "« %s » sorti du deck — ses pièces restent où elles sont" % partie_cartes.titre(p, sur))
+    r = p.ressources.get(sur)
+    if r is not None:
+        if r["camp"] != camp:
+            return _refus(p, ["cette pièce n'est pas la vôtre"])
+        if not r.get("detruite"):
+            return _refus(p, ["cette pièce n'est pas perdue : rien à reconstruire"])
+        return _ecrire(p, {"camp": camp, "coup": "reconstruire", "id": sur},
+                       "« %s » se reconstruit — revient dans %d jours, si la chose se reconstruit"
+                       % (partie_cartes.titre(p, sur), 2 * JOURS_PAR_TOUR))
     reg = next((r for r in (p.cles, p.blocages, p.menaces) if sur in r), None)
     if reg is None:
-        return _refus(p, ["on ne reprend qu'une clef, une garde ou une frappe à soi"])
+        return _refus(p, ["on ne reprend qu'une clef, une garde, une frappe, un état ou une pièce perdue à soi"])
     if reg[sur]["camp"] != camp:
         return _refus(p, ["ce n'est pas le vôtre"])
     return _ecrire(p, {"camp": camp, "coup": "retirer", "id": sur},
                    "« %s » repris — les pièces se remettent %d jours"
                    % (partie_cartes.titre(p, sur), GEL_RETRAIT * JOURS_PAR_TOUR))
+
+
+# ------------------------------------------------------------------- passer
+def passer(p, camp):
+    """Ne rien jouer : c'est un coup, et c'en est un bon quand il garde des
+    pièces libres pour la suite."""
+    return _ecrire(p, {"camp": camp, "coup": "passer", "texte": "passe"}, "vous passez ce jour")
+
+
+# ---------------------------------------------------------------- constater
+def constater(p, etat, verdict, motif):
+    """L'arbitre constate un état vrai ou faux, avec son motif — le seul coup
+    de l'arbitre qui ait un geste : un clic sur l'état, et deux verbes."""
+    etat = str(etat or "")
+    if etat not in p.etats:
+        return _refus(p, ["%s n'est pas un état" % etat])
+    if verdict not in ("vrai", "faux"):
+        return _refus(p, ["un constat est vrai ou faux"])
+    if not (motif or "").strip():
+        return _refus(p, ["un constat porte toujours son motif"])
+    return _ecrire(p, {"camp": "arbitre", "coup": "constater", "etat": etat, "verdict": verdict,
+                       "motif": motif.strip()},
+                   "constaté %s : « %s »" % (verdict, partie_cartes.titre(p, etat)))
 
 
 # --------------------------------------------------------------------- jour
@@ -303,7 +346,14 @@ def jouer(p, geste):
     quoi = geste.get("quoi")
     camp = geste.get("camp") or (p.camps() or ["noir"])[0]
     if camp == "arbitre":
-        return _refus(p, ["l'arbitre ne joue pas"])
+        # l'arbitre ne joue pas — il constate et passe le jour, et c'est tout
+        if quoi == "jour":
+            return jour(p)
+        if quoi == "constater":
+            return constater(p, geste.get("sur"), geste.get("verdict"), geste.get("texte"))
+        return _refus(p, ["l'arbitre ne joue pas : il constate, et il passe le jour"])
+    if quoi == "passer":
+        return passer(p, camp)
     if quoi == "poser":
         return poser(p, camp, geste.get("pieces") or geste.get("piece"),
                      geste.get("sur"), geste.get("texte"))

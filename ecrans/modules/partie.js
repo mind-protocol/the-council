@@ -246,7 +246,7 @@ window.PartieVue = (() => {
     // rien en main — un plateau qui n'a pas de sens. On le dit, avec les camps
     // qui existent et l'adresse qui les choisit, au lieu de laisser deviner.
     const camps = Object.keys(vue.decks || {});
-    if (camps.length && camps.indexOf(vue.camp) < 0) {
+    if (camps.length && camps.indexOf(vue.camp) < 0 && vue.camp !== "arbitre") {   // l'arbitre n'a pas de deck, et c'est normal
       h.appendChild(el("div", "pc-rien", "Vous regardez « " + vue.partie + " » sans y avoir de camp. Ses camps : "
         + camps.join(", ") + ". Ajoutez ?id=" + vue.partie + "&camp=<le vôtre> à l'adresse."));
       return;
@@ -258,8 +258,18 @@ window.PartieVue = (() => {
     bar.appendChild(el("span", "", vue.trait === vue.camp ? "à vous de jouer" : "on attend leur coup"));
     // LE COUP DU JOUR — la règle que tout le monde casse, enfin affichée
     const n = ((vue.coups_du_jour || {})[vue.camp]) || 0;
-    bar.appendChild(el("span", "pc-coup-jour" + (n ? (n > 1 ? " pc-coup-trop" : " pc-coup-fait") : ""),
-      n === 0 ? "● coup du jour : à jouer" : n === 1 ? "✓ coup du jour : joué" : "⚠ " + n + " coups ce jour — un seul compte"));
+    const cj = el("span", "pc-coup-jour" + (n ? (n > 1 ? " pc-coup-trop" : " pc-coup-fait") : " pc-coup-passer"),
+      n === 0 ? "● coup du jour : à jouer — ou passer" : n === 1 ? "✓ coup du jour : joué" : "⚠ " + n + " coups ce jour — un seul compte");
+    if (n === 0 && vue.camp !== "arbitre") {   // PASSER est un coup : un clic, une confirmation
+      cj.title = "Passer ce jour sans rien poser";
+      cj.addEventListener("click", () => { if (confirm("Passer ce jour sans rien poser ?")) jouer({ quoi: "passer" }); });
+    }
+    bar.appendChild(cj);
+    if (vue.camp === "arbitre") {   // LE JOUR PASSE — l'arbitre seul, et ça se voit
+      const j = el("button", "pc-bt pc-jour", "⏭️ le jour passe");
+      j.addEventListener("click", () => { if (confirm("Passer le jour ? Les frappes atterrissent, les arrivées entrent.")) jouer({ quoi: "jour" }); });
+      bar.appendChild(j);
+    }
     h.appendChild(bar);
     if (envoi) h.appendChild(el("div", "pc-bat", "le mestre inscrit le coup…"));
     else if (leurCoup) h.appendChild(el("div", "pc-bat pc-bat-eux",
@@ -323,7 +333,7 @@ window.PartieVue = (() => {
     // celui qui les a posées, à l'envers — rien de neuf à apprendre.
     const deck = el("div", "pc-deck");
     deck.addEventListener("dragover", (e) => {
-      if (!tenue || tenue.type === "piece") return;
+      if (!tenue || (tenue.type === "piece" && tenue.apparence !== "detruite")) return;
       e.preventDefault();
       deck.classList.add("pc-survol");
     });
@@ -331,15 +341,11 @@ window.PartieVue = (() => {
     deck.addEventListener("drop", (e) => {
       e.preventDefault();
       deck.classList.remove("pc-survol");
-      if (!tenue || tenue.type === "piece") return;
-      jouer({ quoi: "reprendre", sur: tenue.id });
+      if (!tenue || (tenue.type === "piece" && tenue.apparence !== "detruite")) return;
+      jouer({ quoi: "reprendre", sur: tenue.id });   // clef, verrou → retirer · état → sortir · perdue → reconstruire
     });
-    // L'AIRE : des cases sans règle, où l'on rapproche ce qu'on veut regarder
-    // ensemble avant d'engager quoi que ce soit. Ce rangement n'est pas un coup.
-    deck.appendChild(PartieGrille.aire(vue, relire));
     const d = vue.deck || {};
-    const enAire = (c) => !PartieGrille.range(vue, c.id) && horsGrille(c);
-    const main = rangee("En main", (d.main || []).filter(enAire), "rien de libre");
+    const main = rangee("En main", (d.main || []).filter(horsGrille), "rien de libre");
     main.appendChild(PartieGrille.demandeur());   // la case 📦 vide : demander une pièce
     deck.appendChild(main);
     const ailleurs = (d.route || []).concat(d.remet || []).filter(horsGrille);

@@ -96,17 +96,16 @@
 /* LE BANDEAU DE STATUT — en haut de la carte, sur toute sa largeur. En haut
    parce que le bas appartient a la pastille du type, et sur toute la largeur
    parce qu'un mot tronque au tiers ne se lit pas. La couleur suit l'apparence :
-   l'or pour ce qui est engage, le sang pour ce qui est perdu, le gris pale pour
-   ce qui n'est pas encore la. Le texte entier reste dans le volet au survol. */
+   le sang pour ce qui est perdu, le gris pale pour ce qui n'est pas encore la.
+   UNE PIÈCE POSÉE N'A PLUS DE BANDEAU (6.9) : son liseré or le dit déjà, et le
+   mot couvrait le signe. Ce qui attend s'écrit ⏳ et un nombre de jours ; le
+   texte entier reste dans le volet, au survol. */
 #partie .pc-etat{position:absolute;left:0;right:0;top:0;z-index:2;
   font-size:9.5px;line-height:1.35;text-align:center;padding:1px 2px;
   border-radius:4px 4px 0 0;pointer-events:none;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   color:var(--muted);background:color-mix(in srgb,var(--fond) 78%,transparent);
   border-bottom:1px solid color-mix(in srgb,var(--bord) 60%,transparent);}
-#partie .pc-app-posee > .pc-etat{color:var(--ink);
-  background:color-mix(in srgb,var(--or-joueur) 26%,var(--fond));
-  border-bottom-color:color-mix(in srgb,var(--or-joueur) 55%,transparent);}
 #partie .pc-app-detruite > .pc-etat{color:var(--sang);
   background:color-mix(in srgb,var(--sang) 16%,var(--fond));}
 #partie .pc-app-route > .pc-etat, #partie .pc-app-remet > .pc-etat{
@@ -365,13 +364,6 @@
 #partie .pc-case.pc-survol{border-style:solid;border-width:2.5px;border-color:var(--or-joueur);
   background:color-mix(in srgb,var(--or-joueur) 12%,transparent);}
 
-/* L'AIRE : le brouillon du joueur. Rien de ce qu'on y range ne part au greffe. */
-#partie .pc-aire{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));
-  gap:5px;padding:5px 0 7px;border-bottom:1px dashed var(--bord);margin-bottom:5px;}
-#partie .pc-aire .pc-case{width:auto;height:65px;border-color:color-mix(in srgb,var(--bord) 35%,transparent);}
-#partie.pc-en-main .pc-aire .pc-case{border-color:var(--or-joueur);}
-#partie .pc-aire .pc-carte{width:100%;height:100%;border-style:solid;}
-
 /* ---- les états cibles : une rangée par racine, en tête du plateau ---------
    La colonne « mes desseins » avait été retirée à raison ; la rangée, elle, ne
    coûte qu'une ligne de cases et dit sur QUOI un verrou se pose. */
@@ -452,15 +444,6 @@
 #partie .pc-leg b{font-weight:normal;font-size:12px;}
 #partie .pc-leg-formes{flex:0 0 100%;font-style:italic;}
 
-/* ---- préparer un coup sans cible : la note sur une pièce de l'aire ------ */
-#partie .pc-aire .pc-note-bt{position:absolute;right:3px;top:2px;font-size:12px;line-height:1;cursor:pointer;
-  opacity:.35;transition:opacity .12s;}
-#partie .pc-aire .pc-carte:hover .pc-note-bt{opacity:1;}
-#partie .pc-aire .pc-preparee{border-style:solid;border-color:var(--or-joueur);}
-#partie .pc-aire .pc-note{position:absolute;left:3px;right:3px;bottom:2px;font-size:9.5px;line-height:1.1;
-  color:var(--ink);background:color-mix(in srgb,var(--or-joueur) 22%,var(--fond));border-radius:2px;padding:1px 3px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
 /* ==== LE STATUT EN FORME (partie-grille.js, `visuel`) ==========================
    Un canal, une chose. Le fond dit à qui ; le BORD dit le verdict ; le HALO dit
    ce qui réclame un geste — trois seulement ; l'OPACITÉ dit pris ou libre.
@@ -513,7 +496,6 @@
    mot. Il garde un minimum, et c'est le deck qui se comprime et défile. */
 #partie .pc-plateau{min-height:170px;}
 #partie .pc-deck{flex:0 1 auto;min-height:110px;}
-#partie .pc-aire{max-height:126px;overflow:auto;}
 
 /* UN ÉTAT CONSTATÉ SE VOIT AU HALO, pas seulement au fond. Vrai : un halo or
    plein, fixe — c'est acquis. Faux : un halo rouge sombre, fixe — c'est
@@ -531,14 +513,13 @@
 
 /* ==== LA PAGE DÉFILE SI ÇA NE RENTRE PAS (5.9, à la demande du joueur) ======
    Avant : trois zones à hauteur bornée qui défilaient chacune de leur côté
-   (le plateau, le deck, l'aire), et le reste écrasé. Maintenant : le panneau
+   (le plateau et le deck), et le reste écrasé. Maintenant : le panneau
    entier défile comme une page, chaque bloc prend sa hauteur naturelle. Le
    deck n'est plus « toujours au bas de l'écran » — il est au bas de la page,
    et on y va d'un coup de molette. Rien ne se coupe, rien ne s'écrase. */
 #partie{overflow:auto;min-height:0;}
 #partie .pc-plateau{flex:0 0 auto;min-height:0;overflow:visible;}
 #partie .pc-deck{flex:0 0 auto;max-height:none;min-height:0;overflow:visible;}
-#partie .pc-aire{max-height:none;overflow:visible;}
 #partie .pc-fronts{overflow-x:auto;overflow-y:visible;}
 #partie::-webkit-scrollbar{width:6px;}
 #partie::-webkit-scrollbar-thumb{background:var(--bord);border-radius:4px;}
@@ -553,3 +534,6 @@
    se confond avec rien (le bleu se lisait comme le camp bleu). */
 #partie .pc-carte.pc-v-derniere{box-shadow:0 0 0 3px #ffffff,0 0 18px 5px rgba(255,255,255,.85),0 0 30px 8px rgba(255,255,255,.4);z-index:2;}
 #partie .pc-carte.pc-v-derniere.pc-v-amoi{animation:none;}
+#partie .pc-coup-passer{cursor:pointer;text-decoration:underline dotted;}
+#partie .pc-jour{margin-left:auto;font-size:12px;padding:2px 9px;}
+.pc-bulle .pc-bt-second{background:color-mix(in srgb,var(--sang) 18%,transparent);}
