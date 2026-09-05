@@ -191,6 +191,26 @@ window.PartieGrille = (function () {
     if ((/suspendu/.test(st) || ouverte) && moi && c.type !== "question") d.classList.add("pc-v-amoi");
     if (((v.signale || {}).constatables || []).map(String).indexOf(String(c.id)) >= 0) d.classList.add("pc-v-mur");
     if (c.visee && moi) d.classList.add("pc-v-vise");
+    if (c.type === "piece" && dernieres(v).has(String(c.id))) d.classList.add("pc-v-derniere");
+  }
+
+  // LA DERNIÈRE PIÈCE POSÉE DE CHAQUE CAMP glow en bleu : c'est là que le
+  // plateau a bougé en dernier, et c'est la première chose qu'un joueur qui
+  // revient veut voir. Une par camp — la pièce ENGAGÉE touchée par la ligne
+  // la plus récente (`touche`, posé par le greffe). Calculé une fois par vue.
+  let dernieresCache = { n: -1, ids: new Set() };
+  function dernieres(v) {
+    if (dernieresCache.n === (v.dernier || 0)) return dernieresCache.ids;
+    const d = v.deck || {};
+    const toutes = [].concat(d.main || [], d.route || [], d.remet || [], d.posees || [], v.eux || []);
+    const parCamp = {};
+    toutes.forEach((c) => {
+      if (!c.engagee_par || !c.engagee_par.length) return;
+      const t = c.touche || 0;
+      if (!parCamp[c.camp] || t > parCamp[c.camp].t) parCamp[c.camp] = { t: t, id: String(c.id) };
+    });
+    dernieresCache = { n: v.dernier || 0, ids: new Set(Object.values(parCamp).map((x) => x.id)) };
+    return dernieresCache.ids;
   }
 
   // ---- LA FICHE : tout ce que la carte est, en une ligne de signes ---------
