@@ -547,8 +547,9 @@
 #partie .pc-coup-fait{color:var(--muted);font-weight:normal;}
 #partie .pc-coup-trop{color:var(--sang);}
 
-/* LA DERNIÈRE PIÈCE POSÉE de chaque camp glow en bleu — là où le plateau a
+/* LA DERNIÈRE PIÈCE POSÉE de chaque camp glow en BLANC — là où le plateau a
    bougé en dernier. Fixe, pas de pulsation : ce n'est pas une attente, c'est un
-   repère. Un halo bleu vif, distinct de la teinte bleue de fond d'un camp. */
-#partie .pc-carte.pc-v-derniere{box-shadow:0 0 0 3px #3aa0ff,0 0 18px 4px color-mix(in srgb,#3aa0ff 70%,transparent);z-index:2;}
+   repère. Blanc, parce qu'aucun camp ni aucun statut n'a cette couleur : il ne
+   se confond avec rien (le bleu se lisait comme le camp bleu). */
+#partie .pc-carte.pc-v-derniere{box-shadow:0 0 0 3px #ffffff,0 0 18px 5px rgba(255,255,255,.85),0 0 30px 8px rgba(255,255,255,.4);z-index:2;}
 #partie .pc-carte.pc-v-derniere.pc-v-amoi{animation:none;}
