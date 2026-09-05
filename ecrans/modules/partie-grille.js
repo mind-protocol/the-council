@@ -326,15 +326,26 @@ window.PartieGrille = (function () {
   // (partie_gestes, branche `lever`) ; un verrou sur un état d'en face reste
   // recevable, constaté ou non. On s'allume donc sur exactement ce que le greffe
   // accepte — une lumière qui promet un coup refusé est pire que pas de lumière.
+  // LEUR PIÈCE SE TIRE À SOI : lâchée sur une de MES pièces libres, c'est un
+  // achat si c'est la bourse, une frappe sinon — le greffier décide
+  // (partie_gestes, branche « sur une ressource »). Ma pièce libre est donc
+  // une cible, mais seulement pour une pièce d'en face : `accepte` le vérifie.
   const cible = (c) => (c.type === "verrou") || (c.type === "frappe" && !aNous(c))
                     || (c.type === "clef" && aNous(c))
-                    || (c.type === "cible" && !(aNous(c) && c.apparence === "vrai"));
+                    || (c.type === "cible" && !(aNous(c) && c.apparence === "vrai"))
+                    || (c.type === "piece" && aNous(c) && c.apparence === "libre");
+  // ce que la cible accepte selon ce qu'on tient : une pièce à nous partout
+  // sauf sur nos pièces ; une pièce d'en face SEULEMENT sur nos pièces
+  const accepte = (c, t) => !!t && t.type === "piece"
+                    && (c.type === "piece" ? !aNous(t) : aNous(t));
   // TOUTE PIÈCE À NOUS SE PREND, libre ou non : l'aire de rangement accepte ce
   // que le plateau refuse, et une pièce qu'on ne peut pas soulever ne peut pas
   // non plus être mise de côté pour y penser. Ce qui est illégal se refuse au
   // greffe, avec sa phrase — pas en rendant la carte inerte.
   const prenable = (c) => (c.type === "piece" && aNous(c))
-                       || ((c.type === "clef" || c.type === "verrou") && aNous(c));
+                       || ((c.type === "clef" || c.type === "verrou") && aNous(c))
+                       // la leur, libre : on peut la tirer à soi (achat, frappe)
+                       || (c.type === "piece" && !aNous(c) && c.apparence === "libre");
 
   // ---- CE QUE LE GESTE FERAIT, DIT SUR LA CIBLE ELLE-MÊME -----------------
   // Le glissé n'allumait qu'une chose : « ici, oui ». Il ne disait pas CE QUE
@@ -348,6 +359,10 @@ window.PartieGrille = (function () {
   // elle se relit contre le module python, jamais contre le souvenir qu'on en a.
   function geste(piece, sur) {
     if (!piece || piece.type !== "piece" || !sur || !cible(sur)) return null;
+    if (!accepte(sur, piece)) return null;   // la leur ne va que sur les miennes, et réciproquement
+    if (sur.type === "piece")
+      return /💰/.test(sur.signe || sur.emoji || "") ? { signe: "🔄", mot: "achat" }
+                                                    : { signe: "💥", mot: "frappe" };
     if (sur.type === "verrou")
       return (aNous(sur) || dejaUneClef(sur.id)) ? { signe: "\u2795", mot: "renfort" }
                                                  : { signe: "\ud83d\udddd\ufe0f", mot: "clef" };
@@ -519,7 +534,7 @@ window.PartieGrille = (function () {
       d.dataset.jouable = "1";
       d.addEventListener("dragover", (e) => {
         const t = outil.tenue();
-        if (!t || t.type !== "piece") return;
+        if (!accepte(c, t)) return;
         e.preventDefault();
         d.classList.add("pc-survol");
       });
@@ -528,7 +543,7 @@ window.PartieGrille = (function () {
         e.preventDefault();
         d.classList.remove("pc-survol");
         const t = outil.tenue();
-        if (!t || t.type !== "piece") return;
+        if (!accepte(c, t)) return;
         poser(t, c, d);
       });
     }
@@ -540,8 +555,15 @@ window.PartieGrille = (function () {
   // garde) il n'y a rien à nommer : le coup part sans rien demander.
   function poser(piece, sur, ancre) {
     const neuf = (sur.type === "verrou" && !aNous(sur) && !dejaUneClef(sur.id))
-              || sur.type === "cible";
+              || sur.type === "cible" || sur.type === "piece";
     if (!neuf) return outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id });
+    if (sur.type === "piece") {
+      const achat = /💰/.test(sur.signe || sur.emoji || "");
+      return bulle(ancre, (achat ? "Acheter " : "Frapper ") + piece.titre + " avec " + sur.titre,
+                   achat ? "à qui l'argent est remis, quand, pour quoi" : "de nuit, par où, qui tient l'arme",
+                   achat ? "Acheter" : "Frapper",
+                   (texte) => outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: texte }));
+    }
     const contre = sur.type === "cible" && aNous(sur) ? " pour « " : " contre « ";
     const prep = noteDe(outil.vue(), piece.id);
     bulle(ancre, "Et " + piece.titre + " y fait quoi ?", prep || (piece.titre + contre + sur.titre + " »"),

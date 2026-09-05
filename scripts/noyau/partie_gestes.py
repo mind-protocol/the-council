@@ -11,6 +11,8 @@ il s'agit, ET C'EST LA CIBLE QUI LE DIT :
     une pièce 📦 sur une frappe 💥 adverse    → `bloquer`  (on protège)
     une pièce 📦 sur un état 🎯 adverse       → `bloquer`  (un verrou neuf)
     une pièce 📦 sur un état 🎯 à nous        → `lever`    (une clef qui le SERT)
+    LEUR pièce 📦 sur une bourse 💰 à nous    → `retourner` (on l'achète)
+    LEUR pièce 📦 sur une autre pièce à nous  → `detruire`  (on la frappe avec)
     une phrase écrite sous un état à nous     → `viser`    (un état neuf)
     une phrase écrite dans la case 📦 vide    → `demander` (une pièce, à l'arbitre)
     une question ❓ posée sur une carte d'en face → `justifier` (on exige la chaîne)
@@ -157,7 +159,28 @@ def poser(p, camp, pieces, sur, texte=""):
                            "engage": pieces, "texte": texte or _defaut(p, pieces, sur)},
                        "clef posée pour « %s »" % partie_cartes.titre(p, sur))
     if sur in p.ressources:
-        return _refus(p, ["on n'engage pas une pièce sur une autre pièce"])
+        # LEUR PIÈCE SUR MA PIÈCE : on la tire à soi. Celle que j'engage dit le
+        # coup — une bourse achète (`retourner`), tout le reste frappe
+        # (`detruire`). Le geste est le même dans les deux sens : ce qu'on
+        # glisse est la cible, ce sur quoi on lâche est ce qu'on y met.
+        cible = pieces[0]
+        rc, rs = p.ressources[cible], p.ressources[sur]
+        if rc["camp"] == camp and rs["camp"] == camp:
+            return _refus(p, ["on n'engage pas une pièce sur une autre des siennes"])
+        if rc["camp"] == camp and rs["camp"] != camp:
+            return _refus(p, ["c'est la pièce d'en face qu'on tire à soi : glissez la leur sur la vôtre"])
+        if rs["camp"] != camp:
+            return _refus(p, ["ce qu'on y met doit être à nous"])
+        if rc.get("detruite"):
+            return _refus(p, ["cette pièce n'est plus au grand livre"])
+        bourse = partie_cartes.genre_piece(rs, sur) == "💰"
+        coup = "retourner" if bourse else "detruire"
+        i = _id_libre(p, camp, "%s-%s" % (sur, cible))
+        return _ecrire(p, {"camp": camp, "coup": coup, "id": i, "cible": cible, "engage": [sur],
+                           "texte": texte or ("%s pour %s" % (partie_cartes.titre(p, sur),
+                                                              partie_cartes.titre(p, cible)))},
+                       ("achat lancé : « %s », avec %s" if bourse else "frappe lancée sur « %s », avec %s")
+                       % (partie_cartes.titre(p, cible), partie_cartes.titre(p, sur)))
     return _refus(p, ["cette carte ne se joue pas"])
 
 
