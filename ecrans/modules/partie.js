@@ -256,6 +256,10 @@ window.PartieVue = (() => {
     bar.appendChild(el("span", "", !vue.trone ? "👑 le trône n'est constaté à personne"
                                   : vue.trone === vue.camp ? "👑 le trône est à nous" : "👑 le trône est à eux"));
     bar.appendChild(el("span", "", vue.trait === vue.camp ? "à vous de jouer" : "on attend leur coup"));
+    // LE COUP DU JOUR — la règle que tout le monde casse, enfin affichée
+    const n = ((vue.coups_du_jour || {})[vue.camp]) || 0;
+    bar.appendChild(el("span", "pc-coup-jour" + (n ? (n > 1 ? " pc-coup-trop" : " pc-coup-fait") : ""),
+      n === 0 ? "● coup du jour : à jouer" : n === 1 ? "✓ coup du jour : joué" : "⚠ " + n + " coups ce jour — un seul compte"));
     h.appendChild(bar);
     if (envoi) h.appendChild(el("div", "pc-bat", "le mestre inscrit le coup…"));
     else if (leurCoup) h.appendChild(el("div", "pc-bat pc-bat-eux",

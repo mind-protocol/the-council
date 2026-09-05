@@ -34,7 +34,7 @@ import os
 import re
 
 import partie_lecture
-from partie_greffe import RACINE, JOURS_PAR_TOUR, DECK_MAX, liste
+from partie_greffe import RACINE, JOURS_PAR_TOUR, DECK_MAX, COUPS_COMPTES, liste
 
 TYPES = {"cible": "🎯", "verrou": "🔒", "clef": "🗝️", "action": "⚔️",
          "piece": "📦", "question": "❓", "frappe": "💥"}
@@ -555,6 +555,13 @@ def vue(p, camp=None, vu=0):
          # coup, mais c'est là que se lisent les états mûrs, les camps muets et
          # les pièces qu'on a demandées puis oubliées
          "signale": _signale(p),
+         # LE COUP DU JOUR, camp par camp : combien de coups COMPTÉS ce tour. La
+         # règle « un par tour » est celle que tout le monde casse, et rien ne
+         # l'affichait. Une réponse à un ❓ (`repond`) ne compte pas.
+         "coups_du_jour": dict((c, len([1 for x in p.lignes
+                                        if x.get("camp") == c and int(x.get("tour") or 0) == p.tour
+                                        and x.get("coup") in COUPS_COMPTES and not x.get("repond")]))
+                               for c in p.camps()),
          # LE JOURNAL : les lignes depuis le dernier regard, en clair, pour que
          # l'écran les dise dans le fil — sans rien écrire nulle part. Le jsonl
          # est déjà l'histoire ; on en sert la queue.
