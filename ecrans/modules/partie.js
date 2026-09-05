@@ -55,6 +55,10 @@ window.PartieVue = (() => {
   let dernier = "";
   let tenue = null;      // la carte qu'on a en main pendant le glissé
   let mot = "";          // ce que le greffier vient de dire, ou son refus
+  let envoi = false;     // un coup à nous est en route vers le greffier
+  let vuDernier = null;  // le n de la dernière ligne au dernier regard
+  let leurCoup = 0;      // combien de lignes ils ont écrites depuis
+  let animerDepuis = null; // le n d'avant leur coup : ce qui est au-dessus s'anime au prochain dessin
   let motMauvais = false;
 
   const hote = () => document.getElementById("partie");
@@ -65,139 +69,83 @@ window.PartieVue = (() => {
     return e;
   };
 
-  // ---- une carte : le signe seul, et le texte AU SURVOL --------------------
-  // Le plateau était un mur de prose : vingt-neuf pavés de trois lignes, dont
-  // une question de deux cents caractères qui tombait à trois mots par ligne
-  // dans une colonne de 210 px. Le texte n'a pas disparu — il est là où on va
-  // le chercher : sur la carte qu'on regarde, et une seule à la fois.
-  function carte(c) {
-    const d = el("div", "pc-carte pc-" + c.type + " pc-app-" + (c.apparence || "libre")
-                        + " pc-camp-" + (c.camp || "noir"));
-    d.dataset.id = c.id;
-    d.appendChild(el("span", "pc-type", c.emoji));
-    const t = el("div", "pc-texte");
-    t.appendChild(el("div", "pc-titre", c.titre || ""));
-    if (c.corps) t.appendChild(el("div", "pc-corps", c.corps));
-    if (c.pied && (c.pied.gauche || c.pied.droite)) {
-      const p = el("div", "pc-pied");
-      p.appendChild(el("span", "pc-pied-g", c.pied.gauche || ""));
-      p.appendChild(el("span", "pc-pied-d", c.pied.droite || ""));
-      t.appendChild(p);
-    }
-    d.appendChild(t);
-    if (c.neuf) d.classList.add("pc-neuf");
-    if (c.visee) d.appendChild(el("span", "pc-visee", "💥"));
-    if (c.type === "piece" && c.source) d.dataset.source = c.source;
-    armer(d, c);
-    return d;
-  }
+  // LA CARTE, LE GESTE ET LA GRILLE VIVENT DANS `partie-grille.js`. Ils y sont
+  // ensemble parce que c'est une seule chose : ce qu'on voit d'une carte et ce
+  // qu'on peut en faire. Ici restent le serveur, la vue et le plateau.
+  // Le module joue par `jouer` et porte la bulle : ce qu'on demande au joueur
+  // avant d'écrire (un titre de clef, la phrase d'un état) est un geste, pas
+  // du transport.
+  PartieGrille.armer({ vue: () => vue, tenue: (c) => (c === undefined ? tenue : (tenue = c)),
+                       jouer: (g) => jouer(g),
+                       // DIRE SANS JOUER : une phrase sous la barre, sans ligne au
+                       // livre et sans minute. C'est par la que l'ecran explique un
+                       // geste impossible au lieu d'avaler le clic en silence.
+                       dire: (t) => { mot = t; motMauvais = false; dernier = ""; dessiner(); } });
+  const carte = (c) => PartieGrille.carte(c);
+  const cible = (c) => PartieGrille.cible(c);
+  const prenable = (c) => PartieGrille.prenable(c);
 
-  // ---- le geste : on prend une carte, on la pose sur une autre ------------
-  const aNous = (c) => c.camp === (vue && vue.camp);
-  // Ce qu'une pièce en main peut atteindre. La règle est ici, en trois lignes,
-  // et elle est la même que celle du greffier : un obstacle ou une frappe d'en
-  // face, une de nos clefs. Le reste ne s'allume pas.
-  const cible = (c) => (c.type === "verrou" && !aNous(c))
-                    || (c.type === "frappe" && !aNous(c))
-                    || (c.type === "clef" && aNous(c))
-                    || (c.type === "verrou" && aNous(c));
-  const prenable = (c) => (c.type === "piece" && aNous(c) && c.apparence === "libre")
-                       || ((c.type === "clef" || c.type === "verrou") && aNous(c));
 
-  function armer(d, c) {
-    if (prenable(c)) {
-      d.draggable = true;
-      d.classList.add("pc-prenable");
-      d.addEventListener("dragstart", (e) => {
-        tenue = c;
-        e.dataTransfer.setData("text/plain", c.id);
-        e.dataTransfer.effectAllowed = "move";
-        document.getElementById("partie").classList.add("pc-en-main");
-        // Les cibles possibles s'allument SEULEMENT pour ce qu'on tient.
-        document.querySelectorAll("#partie .pc-carte").forEach((x) => {
-          if (x.dataset.jouable === "1" && c.type === "piece") x.classList.add("pc-appel");
-        });
-      });
-      d.addEventListener("dragend", () => {
-        tenue = null;
-        document.getElementById("partie").classList.remove("pc-en-main");
-        document.querySelectorAll("#partie .pc-appel").forEach((x) => x.classList.remove("pc-appel"));
-      });
-    }
-    if (cible(c)) {
-      d.dataset.jouable = "1";
-      d.addEventListener("dragover", (e) => {
-        if (!tenue || tenue.type !== "piece") return;
-        e.preventDefault();
-        d.classList.add("pc-survol");
-      });
-      d.addEventListener("dragleave", () => d.classList.remove("pc-survol"));
-      d.addEventListener("drop", (e) => {
-        e.preventDefault();
-        d.classList.remove("pc-survol");
-        if (!tenue || tenue.type !== "piece") return;
-        demanderPuisJouer(tenue, c, d);
-      });
-    }
-  }
-
-  // Sur un verrou qu'aucune de nos clefs ne touche encore, on pose une clef
-  // NEUVE : elle porte un titre, et ce titre est au joueur. Ailleurs (renfort,
-  // garde) il n'y a rien à nommer, le coup part sans rien demander.
-  function demanderPuisJouer(piece, sur, ancre) {
-    if (sur.type !== "verrou" || aNous(sur) || dejaUneClef(sur.id))
-      return jouer({ quoi: "poser", piece: piece.id, sur: sur.id });
-    bulle(ancre, piece, sur);
-  }
-
-  const dejaUneClef = (bid) => (vue.fronts || []).some(
-    (f) => f.id === bid && (f.pile || []).some((o) => o.type === "clef" && aNous(o)));
-
-  // La bulle est posée sur le CORPS, en repère fixe, et non dans la carte : la
-  // colonne des fronts défile en `overflow:auto`, et une bulle qui y vivrait
-  // serait coupée au bord dès que le front est près de la marge.
-  function bulle(ancre, piece, sur) {
-    document.querySelectorAll(".pc-bulle").forEach((x) => x.remove());
-    const b = el("div", "pc-bulle");
-    const r = ancre.getBoundingClientRect();
-    b.style.left = Math.max(8, Math.min(r.left, window.innerWidth - 266)) + "px";
-    b.style.top = Math.min(r.bottom + 4, window.innerHeight - 130) + "px";
-    b.appendChild(el("div", "pc-bulle-t", "Et " + piece.titre + " y fait quoi ?"));
-    const champ = document.createElement("input");
-    champ.type = "text";
-    champ.placeholder = piece.titre + " contre « " + sur.titre + " »";
-    b.appendChild(champ);
-    const pied = el("div", "pc-bulle-p");
-    const ok = el("button", "pc-bt", "Poser");
-    const non = el("button", "pc-bt pc-bt-nu", "Laisser");
-    pied.appendChild(non); pied.appendChild(ok);
-    b.appendChild(pied);
-    document.body.appendChild(b);
-    champ.focus();
-    const partir = () => b.remove();
-    const valider = () => { partir(); jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: champ.value.trim() }); };
-    ok.addEventListener("click", valider);
-    non.addEventListener("click", partir);
-    champ.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") valider();
-      if (e.key === "Escape") partir();
+  // ---- CE QUI EST JOUABLE, ÉCRIT EN TOUTES LETTRES ------------------------
+  // Le geste est un glissé, et un glissé ne s'annonce pas : les cibles ne
+  // s'allument QUE pendant qu'on tient déjà une carte. Il fallait donc savoir
+  // qu'un coup existe pour découvrir qu'il en existe. Pire, sur une position
+  // sans front — le cas le plus fréquent — il n'y a AUCUNE cible, et le joueur
+  // essayait indéfiniment un geste qui ne pouvait pas aboutir. Cette ligne dit
+  // le compte, avec les mêmes prédicats que `prenable` et `cible` : elle ne
+  // peut donc pas mentir sur ce que le greffe acceptera.
+  function jouable() {
+    const dans = [];
+    (vue.fronts || []).forEach((f) => {
+      dans.push(f.tete);
+      (f.pile || []).forEach((x) => dans.push(x));
     });
+    (vue.cibles || []).forEach((c) => dans.push(c));   // un état se tient, ou se sert
+    const mains = ((vue.deck || {}).main || []).filter(prenable);
+    const buts = dans.filter(cible);
+    const reprises = dans.filter(prenable);
+    if (vue.trait !== vue.camp) return "Le trait est à eux : leur coup s'écrit à la ligne, par le mestre.";
+    if (!mains.length && !reprises.length) return "Aucune pièce libre en main : rien à poser d'ici.";
+    if (!buts.length)
+      return mains.length + " pièce" + (mains.length > 1 ? "s" : "") + " libre" + (mains.length > 1 ? "s" : "")
+           + ", et rien à atteindre. Demander et détruire s'écrivent à la ligne, par le mestre.";
+    return "Glissez une de vos " + mains.length + " pièces libres sur l'une des " + buts.length
+         + " cartes qui s'allumeront : sur un état d'en face, c'est un verrou ; sur un des vôtres, une clef. "
+         + "La case 🎯 vide sous vos états reçoit un état neuf."
+         + (reprises.length ? " Ramenez une des vôtres dans la main pour la reprendre." : "");
+  }
+
+  // ---- L'ÉCRAN SUIT L'ADRESSE ---------------------------------------------
+  // `?id=<partie>` et `?camp=<camp>` sont lus par le serveur, mais sur l'URL de
+  // SA requête — et la page les portait sans jamais les transmettre. Deux
+  // joueurs sur la même machine tombaient donc tous les deux sur le camp de
+  // `_courante.json`, chacun regardant la main de l'autre, et « ce qu'il vient
+  // de jouer » n'avait aucun sens puisque c'était le même siège. On repasse ces
+  // deux clefs, et rien d'autre : le reste de l'adresse ne regarde pas le
+  // greffe.
+  function adresse(chemin) {
+    const q = new URLSearchParams(location.search);
+    const p = new URLSearchParams();
+    ["id", "camp"].forEach((k) => { if (q.get(k)) p.set(k, q.get(k)); });
+    const s = p.toString();
+    return s ? chemin + "?" + s : chemin;
   }
 
   // ---- envoyer le geste ---------------------------------------------------
   function jouer(geste) {
-    mot = "…"; motMauvais = false; dernier = ""; dessiner();
-    fetch("/partie/geste", { method: "POST", headers: { "Content-Type": "application/json" },
+    mot = "le mestre inscrit le coup…"; motMauvais = false; envoi = true; dernier = ""; dessiner();
+    fetch(adresse("/partie/geste"), { method: "POST", headers: { "Content-Type": "application/json" },
                              body: JSON.stringify(geste) })
       .then((r) => r.json())
       .then((r) => {
         mot = r.ok ? ((r.dit || "") + ((r.avertissements || []).length ? " — " + r.avertissements[0] : ""))
                    : (r.refus || ["refusé"]).join(" · ");
         motMauvais = !r.ok;
-        if (r.vue) vue = r.vue;
-        dernier = ""; dessiner();
+        if (r.vue) { vue = r.vue; if (r.vue.dernier != null) vuDernier = r.vue.dernier; PartieGrille.loguer(r.vue); }
+        if (r.ok) vuLeurs();
+        envoi = false; dernier = ""; dessiner();
       })
-      .catch(() => { mot = "le mestre n'a pas répondu"; motMauvais = true; dernier = ""; dessiner(); });
+      .catch(() => { mot = "le mestre n'a pas répondu"; motMauvais = true; envoi = false; dernier = ""; dessiner(); });
   }
 
   // PAS DE BOUTON POUR FAIRE PASSER LE JOUR, et c'est délibéré. Le temps ne
@@ -224,12 +172,30 @@ window.PartieVue = (() => {
     // titres au-dessus de chaque colonne — la colonne des états cibles revenue par
     // la fenêtre. La chaîne reste dans l'infobulle de la colonne, et dans la
     // vue servie par `/partie` pour qui en a besoin.
+    // UNE LIGNE PAR OBJET, ET SES PIÈCES POSÉES DEDANS. La pile empilait des
+    // cartes sans dire laquelle tenait laquelle, et les pièces engagées
+    // n'étaient nulle part : la vue les retire des cartes filles parce qu'elles
+    // y répétaient le titre de la clef. On les remet ici, à leur place — ce
+    // qu'on a mis là est ce avec quoi on tient, et ça doit se voir.
+    // QUI PRÉVAUT, ÉCRIT EN TÊTE. C'est LA chose que ce plateau a à dire — un
+    // front est une dispute, et son verdict décide de la partie — et elle ne
+    // vivait que dans l'infobulle de la colonne. L'ancien en-tête avait été
+    // retiré parce qu'il recopiait le dessein ; celui-ci ne recopie rien : il
+    // dit qui tient, et par quoi. Le motif vient du greffe (`pourquoi`), qui
+    // sait dire « levé par 🗝️ … », « suspendu par ❓ … », « rien en face ».
+    const nous = f.prevaut && vue.camp && f.prevaut === vue.camp;
+    const verdict = el("div", "pc-verdict" + (nous ? " pc-verdict-nous" : ""));
+    verdict.appendChild(el("span", "pc-verdict-q", (nous ? "à vous" : "à eux")));
+    verdict.appendChild(el("span", "pc-verdict-p", f.pourquoi || ""));
+    d.appendChild(verdict);
     const pile = el("div", "pc-pile");
-    pile.appendChild(carte(f.tete));
+    pile.dataset.prevaut = PartieGrille.teinte(f.prevaut);   // le bord double va au camp qui prévaut
+    const eng = engagees();
+    pile.appendChild(ligne(f.tete, eng));
     (f.pile || []).forEach((o) => {
-      const co = carte(o); co.classList.add("pc-sous");
-      pile.appendChild(co);
+      pile.appendChild(ligne(o, eng, "pc-sous"));
       (o.sous || []).forEach((s) => {
+        if (s.type === "piece") return;         // déjà servie par `engagees`
         const cs = carte(s); cs.classList.add("pc-sous2");
         pile.appendChild(cs);
       });
@@ -237,6 +203,9 @@ window.PartieVue = (() => {
     d.appendChild(pile);
     return d;
   }
+
+  const engagees = () => PartieGrille.engagees(vue);
+  const ligne = PartieGrille.ligne;
 
   function rangee(nom, cartes, vide) {
     const r = el("div", "pc-rangee");
@@ -254,9 +223,32 @@ window.PartieVue = (() => {
     if (sig === dernier) return;
     dernier = sig;
     h.innerHTML = "";
+    // LE HOVER REVENAIT PLUS. `pc-en-main` masque les volets pendant qu'on
+    // tient une carte (`display:none !important`), et il ne se retirait qu'au
+    // `dragend` de la carte tirée — or un coup joué redessine le plateau, la
+    // carte quitte le DOM avant son dragend, et l'événement ne vient jamais :
+    // le plateau restait « en main » à vide, sans un seul texte au survol,
+    // jusqu'au rechargement. Un redessin efface la main : il n'y a plus rien
+    // de tenu quand toutes les cartes viennent d'être refaites.
+    h.classList.remove("pc-en-main");
+    tenue = null;
+    // LA MOITIÉ QUI A LA MAIN SE COLORE : le trait en mots dans la barre ne
+    // suffisait pas, on cherchait qui doit jouer. Le fond de leur côté ou du
+    // nôtre le dit (partie.css, « la moitié qui a la main »).
+    h.classList.remove("pc-trait-nous", "pc-trait-eux");
+    if (vue && vue.partie && vue.trait) h.classList.add(vue.trait === vue.camp ? "pc-trait-nous" : "pc-trait-eux");
     if (!vue || !vue.partie) {
       h.appendChild(el("div", "pc-rien", charge ? "Aucune partie ouverte. Le conseil de guerre s'ouvrira quand le mestre en aura une à tenir."
                                                  : "Le mestre rassemble les cartes…"));
+      return;
+    }
+    // UN SIÈGE QUI N'EST DANS AUCUN CAMP de cette partie voit tout en face et
+    // rien en main — un plateau qui n'a pas de sens. On le dit, avec les camps
+    // qui existent et l'adresse qui les choisit, au lieu de laisser deviner.
+    const camps = Object.keys(vue.decks || {});
+    if (camps.length && camps.indexOf(vue.camp) < 0) {
+      h.appendChild(el("div", "pc-rien", "Vous regardez « " + vue.partie + " » sans y avoir de camp. Ses camps : "
+        + camps.join(", ") + ". Ajoutez ?id=" + vue.partie + "&camp=<le vôtre> à l'adresse."));
       return;
     }
     const bar = el("div", "pc-bar");
@@ -265,6 +257,21 @@ window.PartieVue = (() => {
                                   : vue.trone === vue.camp ? "👑 le trône est à nous" : "👑 le trône est à eux"));
     bar.appendChild(el("span", "", vue.trait === vue.camp ? "à vous de jouer" : "on attend leur coup"));
     h.appendChild(bar);
+    if (envoi) h.appendChild(el("div", "pc-bat", "le mestre inscrit le coup…"));
+    else if (leurCoup) h.appendChild(el("div", "pc-bat pc-bat-eux",
+      leurCoup === 1 ? "ils viennent de jouer — un coup de plus au livre"
+                     : "ils viennent de jouer — " + leurCoup + " coups de plus au livre"));
+    // CE QU'ILS ONT JOUÉ, ET PAS SEULEMENT QU'ILS ONT JOUÉ. La pastille rouge
+    // et « ils viennent de jouer » disaient qu'une carte avait bougé ; à deux
+    // joueurs, la seule question en revenant devant le plateau est « qu'a-t-il
+    // fait ? ». Le greffe le sait — c'est `partie.py --relire` —, et la vue le
+    // porte maintenant : les lignes du livre depuis NOTRE dernier coup, ids
+    // rhabillés de leurs titres. La liste se vide d'elle-même quand on joue :
+    // le marque-page avance, donc ce qu'on vient de lire ne se relit pas.
+    // PLUS DE BLOC AU-DESSUS DU PLATEAU (5.9) : la relecture est dite dans le
+    // fil, au premier regard, par `PartieGrille.loguer` — même chemin que
+    // chaque ligne neuve, hors fiction, jamais écrite dans flux.jsonl.
+    h.appendChild(el("div", "pc-jouable", jouable()));
     if (mot) {
       const m = el("div", "pc-mot" + (motMauvais ? " pc-mot-non" : ""), mot);
       h.appendChild(m);
@@ -282,27 +289,29 @@ window.PartieVue = (() => {
     // main de la reine. La table d'un jeu à deux se lit de haut en bas : eux,
     // le terrain disputé, nous. La position suffit à dire à qui c'est, avec la
     // couleur du bord ; aucun libellé n'a à l'expliquer.
-    if ((vue.eux || []).length) {
-      const face = el("div", "pc-eux");
-      vue.eux.forEach((c) => face.appendChild(carte(c)));
-      h.appendChild(face);
-    }
-
+    // UNE PIÈCE POSÉE N'EST PLUS DANS LA BANDE. Elle est dans la grille, sous
+    // le verrou qui l'engage — la montrer aussi ici, c'est la compter deux
+    // fois. On dessine donc le plateau D'ABORD, et la bande ne garde que ce
+    // qui n'y figure pas : le libre, ce qui arrive, ce qui se remet, et une
+    // posée dont le tenant n'a pas de ligne (un verrou sur un état).
     const plateau = el("div", "pc-plateau");
-    const attentes = (vue.cibles || []).flatMap((d) => (d.sous || []).map((s) => ({ s: s, d: d })));
-    if (attentes.length) {
-      const q = el("div", "pc-attentes");
-      attentes.forEach(({ s, d: dess }) => {
-        const cs = carte(s);
-        cs.title = "sur « " + dess.titre + " »";
-        q.appendChild(cs);
-      });
-      plateau.appendChild(q);
-    }
+    // LES ÉTATS CIBLES EN UNE RANGÉE, pas en colonne : celle-ci avait été retirée
+    // (immobile, un cinquième de l'écran), mais sans front l'écran ne disait
+    // plus même ce qu'on vise. Une rangée de cases 🎯 par racine, ses ❓ dessus.
+    plateau.appendChild(PartieGrille.desseins(vue));
     const fronts = el("div", "pc-fronts");
     if (!vue.fronts.length) fronts.appendChild(el("div", "pc-vide", "rien ne vous fait face — encore"));
     vue.fronts.forEach((f) => fronts.appendChild(front(f)));
     plateau.appendChild(fronts);
+    const dessinees = new Set([...plateau.querySelectorAll(".pc-carte")].map((n) => n.dataset.id));
+    const horsGrille = (c) => !dessinees.has(c.id);
+    const eux = (vue.eux || []).filter(horsGrille);
+    if (eux.length) {
+      const face = el("div", "pc-eux");
+      face.appendChild(PartieGrille.bandeau((eux[0] || {}).camp, false, eux.length));
+      eux.forEach((c) => face.appendChild(carte(c)));
+      h.appendChild(face);
+    }
     h.appendChild(plateau);
 
     // Le deck est aussi une CIBLE : une carte à nous qu'on y ramène est
@@ -321,26 +330,102 @@ window.PartieVue = (() => {
       if (!tenue || tenue.type === "piece") return;
       jouer({ quoi: "reprendre", sur: tenue.id });
     });
+    // L'AIRE : des cases sans règle, où l'on rapproche ce qu'on veut regarder
+    // ensemble avant d'engager quoi que ce soit. Ce rangement n'est pas un coup.
+    deck.appendChild(PartieGrille.aire(vue, relire));
     const d = vue.deck || {};
-    deck.appendChild(rangee("En main", d.main || [], "rien de libre"));
-    const ailleurs = (d.route || []).concat(d.remet || []);
+    const enAire = (c) => !PartieGrille.range(vue, c.id) && horsGrille(c);
+    const main = rangee("En main", (d.main || []).filter(enAire), "rien de libre");
+    main.appendChild(PartieGrille.demandeur());   // la case 📦 vide : demander une pièce
+    deck.appendChild(main);
+    const ailleurs = (d.route || []).concat(d.remet || []).filter(horsGrille);
     if (ailleurs.length) deck.appendChild(rangee("En route · se remet", ailleurs));
-    if ((d.posees || []).length) deck.appendChild(rangee("Posées", d.posees));
-    if ((d.detruites || []).length) deck.appendChild(rangee("Perdues", d.detruites));
+    // PLUS DE RANGÉE « POSÉES » : une pièce engagée est DANS la grille, sous la
+    // clef ou le verrou qui la tient (partie-grille.js, `ligne`). La rangée
+    // datait du temps où la vue les retirait des cartes filles et où le deck
+    // était le seul endroit à les dire — elle ne faisait plus que les répéter.
+    // une perdue encore engagée est barrée dans la grille : pas deux fois
+    const perdues = (d.detruites || []).filter(horsGrille);
+    if (perdues.length) deck.appendChild(rangee("Perdues", perdues));
+    deck.insertBefore(PartieGrille.bandeau(vue.camp, true, null), deck.firstChild);
     h.appendChild(deck);
+    h.appendChild(PartieGrille.legende());
   }
 
   // ---- charger : la vue vient du serveur, dérivée du jsonl ----------------
   function charger() {
-    fetch("/partie", { cache: "no-store" })
+    fetch(adresse("/partie"), { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
-      .then((v) => { vue = v; charge = true; dessiner(); })
+      .then((v) => {
+        // CE QU'ILS ONT ÉCRIT PENDANT QU'ON REGARDAIT. Le camp d'en face joue à
+        // la ligne, par le mestre : sans ce compte, son coup n'arrivait à
+        // l'écran qu'au prochain changement de scène, et le joueur attendait
+        // devant une position déjà périmée. On compare le n de la dernière
+        // ligne, rien d'autre — la relecture n'avance PAS le marque-page
+        // (le serveur ne le pose qu'à la première ouverture), donc les pastilles
+        // du neuf tiennent jusqu'au prochain coup à nous, comme avant.
+        if (v && v.dernier != null) {
+          if (vuDernier != null && v.dernier > vuDernier) {
+            leurCoup += v.dernier - vuDernier;
+            animerDepuis = vuDernier;
+          }
+          vuDernier = v.dernier;
+        }
+        vue = v; charge = true; dessiner();
+        PartieGrille.loguer(v);   // chaque ligne neuve dite dans le fil, sans rien écrire
+        animerLeurCoup();
+      })
       .catch(() => { vue = null; charge = true; dessiner(); });
   }
+
+  // LEUR COUP SE VOIT ARRIVER. La marque du neuf tient jusqu'à notre prochain
+  // coup, et c'est bien — mais elle est muette : une carte qui vient de
+  // changer sous nos yeux entre deux battements du guet ressemblait à une carte
+  // qui avait changé avant-hier. Ce qu'ils ont touché depuis notre dernier
+  // regard (toute carte dont `touche` dépasse le n d'avant) se pose sur la
+  // table d'un mouvement, en cascade, et le bandeau descend avec. Une fois :
+  // la classe part au bout de l'animation, la marque reste.
+  function animerLeurCoup() {
+    if (animerDepuis == null) return;
+    const seuil = animerDepuis; animerDepuis = null;
+    const h = document.getElementById("partie");
+    if (!h) return;
+    const cartes = Array.from(h.querySelectorAll(".pc-carte[data-touche]"))
+      .filter((d) => Number(d.dataset.touche) > seuil);
+    cartes.forEach((d, i) => {
+      d.style.setProperty("--pc-rang", i);
+      d.classList.add("pc-arrive");
+      d.addEventListener("animationend", () => d.classList.remove("pc-arrive"), { once: true });
+    });
+    const bat = h.querySelector(".pc-bat-eux");
+    if (bat) bat.classList.add("pc-arrive");
+  }
+
+  // Le guet ne bat que si l'onglet est SOUS LES YEUX : une vue cachée qui
+  // interroge le serveur toutes les six secondes est du réseau pour personne.
+  function guetter() {
+    const h = document.getElementById("partie");
+    if (h && h.offsetParent !== null && !envoi) charger();
+  }
   const relire = () => { dernier = ""; charger(); };
+  // Un coup à nous vaut « j'ai vu » : le compte de leurs coups repart de zéro.
+  const vuLeurs = () => { leurCoup = 0; };
 
   window.addEventListener("DOMContentLoaded", () => {
+    // La ceinture de la bretelle ci-dessus : un glissé lâché n'importe où finit
+    // toujours par rendre la main, même si sa carte n'existe plus.
+    window.addEventListener("dragend", () => {
+      const h = document.getElementById("partie");
+      if (h) h.classList.remove("pc-en-main");
+      h && h.querySelectorAll(".pc-appel").forEach((x) => x.classList.remove("pc-appel"));
+      tenue = null;
+    }, true);
+    window.addEventListener("drop", () => {
+      const h = document.getElementById("partie");
+      if (h) h.classList.remove("pc-en-main");
+    }, true);
     charger();
+    setInterval(guetter, 6000);
     if (window.Plan && Plan.echelle) {
       Plan.echelle({
         id: "conseil", nom: "Le conseil", hote: "partie", ordre: 2.6,

@@ -1,0 +1,175 @@
+<!doctype html><html lang="fr"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le coach — Le pont et le moulin</title>
+<style>
+:root{--fond:#f4eee2;--encre:#2b2119;--gris:#7a6a55;--ligne:#d9cfbc;--carte:#fffbf2;
+      --a:#2457b3;--a-f:#dfe8f7;--n:#b3302a;--n-f:#f6dedb;--arbitre:#b8651a;--or:#a3722a;--eau:#3c7a9c}
+@media (prefers-color-scheme:dark){:root{--fond:#171310;--encre:#e6dbc6;--gris:#a8977c;--ligne:#3a322a;--carte:#1f1a15;
+      --a:#7fa6ea;--a-f:#1c2a44;--n:#ee8a80;--n-f:#3a1f1e;--arbitre:#f0a84e;--or:#d9a441;--eau:#7fb3d0}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font:15px/1.5 Georgia,"Times New Roman",serif}
+header{padding:16px 22px 12px;border-bottom:1px solid var(--ligne);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+h1{font-size:19px;margin:0;font-weight:normal}
+header .k{color:var(--gris);font-size:13px}
+nav{display:flex;gap:4px;padding:8px 22px;border-bottom:1px solid var(--ligne);flex-wrap:wrap;position:sticky;top:0;background:var(--fond);z-index:3}
+nav a{font-size:13px;color:var(--gris);text-decoration:none;padding:4px 9px;border:1px solid transparent;border-radius:3px}
+nav a:hover{border-color:var(--ligne);color:var(--encre)}
+main{padding:10px 22px 60px;max-width:980px}
+section{margin-top:34px}
+h2{font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);font-weight:normal;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--ligne)}
+h3{font-size:15px;margin:16px 0 6px;font-weight:normal}
+p{margin:0 0 10px;max-width:72ch}
+pre{margin:10px 0 14px;background:var(--carte);border:1px solid var(--ligne);border-radius:4px;padding:12px 14px;
+    font:13px/1.45 ui-monospace,"Cascadia Mono",Consolas,monospace;overflow-x:auto;white-space:pre}
+pre b{font-weight:bold}
+.a{color:var(--a)}.n{color:var(--n)}.o{color:var(--or)}.e{color:var(--eau)}.g{color:var(--gris)}
+.cle{border-left:3px solid var(--or);background:var(--carte);padding:8px 14px;border-radius:0 4px 4px 0;margin:12px 0;max-width:74ch}
+.cle.a{border-color:var(--a);background:var(--a-f)}.cle.n{border-color:var(--n);background:var(--n-f)}
+.deux{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.deux{grid-template-columns:1fr}}
+.bloc{background:var(--carte);border:1px solid var(--ligne);border-radius:4px;padding:12px 14px}
+.bloc.a{border-color:var(--a)}.bloc.n{border-color:var(--n)}
+.bloc h3{margin:0 0 6px}
+.bloc p{font-size:14px;margin-bottom:6px}
+ul{margin:0 0 10px;padding-left:20px;max-width:72ch}
+li{margin-bottom:5px}
+code{font:13px ui-monospace,Consolas,monospace;background:var(--carte);border:1px solid var(--ligne);border-radius:3px;padding:0 4px}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0 14px}
+th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--ligne);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);font-weight:normal}
+.tw{overflow-x:auto}
+</style>
+
+<header>
+  <h1>🌉 Le coach — <b>Le pont et le moulin</b></h1>
+  <span class="k" id="etat">tour 2 · trait à 🔵 aurore</span>
+</header>
+<nav>
+  <a href="#but">Le but</a><a href="#carte">La carte</a><a href="#pieces">Les pièces</a><a href="#arbre">Ce qu'il faut prouver</a>
+  <a href="#cles">Les clés</a><a href="#tour">Tour 2 : vos coups</a><a href="#reponses">Si l'autre fait…</a><a href="#ecran">À l'écran</a>
+</nav>
+<main>
+
+<section id="but">
+<h2>Le but</h2>
+<p>Deux hameaux face à face, une rivière entre les deux. Chacun veut que <b>l'autre lui paie la dîme</b> — un sac de blé sur dix. Au départ personne ne paie personne : l'arbitre l'a constaté <em>faux</em> des deux côtés.</p>
+<p><b>On gagne quand l'arbitre constate vrai « le hameau d'en face nous paie la dîme ».</b> Pour ça il faut deux choses : <b>un passage</b> (le pont, ou le bac) et <b>le moulin</b> — parce que la dîme se prend sur le blé qui passe au moulin. Puis une dernière carte qui dit <em>par où passe le collecteur</em>.</p>
+<div class="cle"><p><b>La question de l'arbitre, posée aux deux :</b> <em>« Par où passe le collecteur, et qui le laisse passer ? »</em> C'est la partie entière en une phrase. Répondez-y et vous avez gagné.</p></div>
+</section>
+
+<section id="carte">
+<h2>La carte</h2>
+<pre>
+                  <b class="a">🔵 AURORE — rive gauche</b>
+        🏘️ hameau ─── 🌾 grenier ─── 👤 le maire
+              │
+        ══════╪══════ 🌉 LE PONT ══════════════════════  ← qui le tient passe quand il veut
+   <b class="e">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</b>
+   <b class="e">~~~  la rivière   ~~~   🛶 le bac (une corde, un passeur)  ~~~</b>
+   <b class="e">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</b>
+              │                        │
+        ══════╪══════ 🌉 ══════        └─ 💧 le bief ── 🚰 la vanne ── ⚙️ LE MOULIN
+              │                                          ↑
+        🏘️ hameau ─── 🌾 grenier ─── 👤 le maire         ferme la vanne : la roue s'arrête
+                  <b class="n">🔴 NICOLAS — rive droite</b>
+</pre>
+<p>Quatre endroits comptent : <b>le pont</b> (le passage de jour), <b>le bac</b> (le passage de nuit, tenu par un passeur), <b>la vanne du bief</b> (qui donne ou coupe l'eau au moulin) et <b>le grenier</b> (où dort le blé). Tout le reste est du décor.</p>
+</section>
+
+<section id="pieces">
+<h2>Les pièces — les mêmes des deux côtés</h2>
+<div class="tw"><table>
+<tr><th>pièce</th><th>ce qu'elle sait faire</th><th>sa faiblesse</th></tr>
+<tr><td>📦 <b>trois gars</b></td><td>tenir un lieu, passer, prendre une cabane. <b>La seule pièce qui garde.</b></td><td>trois hommes ne veillent pas 24 h : deux veillent, un dort — <b>à l'aube il n'en reste qu'un</b>, et il s'endort.</td></tr>
+<tr><td>📦 <b>le charpentier</b></td><td>ôter deux planches au pont, caler la vanne avec une poutre, tenir la corde du bac, ramer. <b>La pièce la plus précieuse</b> : c'est lui qui transforme un lieu.</td><td>seul, sans défense ; et une hache se paie.</td></tr>
+<tr><td>⛵ <b>la barque</b></td><td>passer de nuit sans le bac, porter une bourse, <b>décrocher la barque d'en face</b> et la laisser filer.</td><td>un anneau et une corde : elle se vole.</td></tr>
+<tr><td>💰 <b>dix pièces</b></td><td><b>retourner un homme</b> (l'aîné des gars, le charpentier, le passeur) ou parer un retournement en doublant.</td><td>une seule bourse : <b>un seul achat</b> dans toute la partie. Et l'argent laisse une trace : <em>remis par qui, quand ?</em></td></tr>
+</table></div>
+<div class="cle"><p><b>Une pièce posée est prise.</b> Vos trois gars sur le pont ne sont plus au bief. Avec quatre pièces, chaque coup est un choix : <em>où compte-t-elle le plus ?</em></p></div>
+</section>
+
+<section id="arbre">
+<h2>Ce qu'il faut prouver, dans l'ordre</h2>
+<pre>
+   🎯 « le hameau d'en face nous paie la dîme »          ← constaté FAUX au départ
+      ├── 🎯 « le pont est passable pour nous »          ← le passage
+      ├── 🎯 « le moulin tourne pour nous »              ← le blé passe chez nous
+      │      └── (la vanne, le bief : qui tient la cabane ?)
+      └── 🗝️ « le collecteur passe par… »                ← la dernière clef, quand les deux sont vrais
+</pre>
+<p>Chaque 🎯 se pose <b>un par tour</b>. L'autre pose un 🔒 dessus (« deux gars gardent le pont »). Vous posez une 🗝️ contre son 🔒 avec une pièce et une phrase qui dit <em>comment</em>. L'arbitre juge la portée. Quand le 🔒 tombe, un tour passe, et le 🎯 est constaté vrai.</p>
+</section>
+
+<section id="cles">
+<h2>Les clés — ce que la première partie a appris</h2>
+<div class="deux">
+<div class="bloc"><h3>1 · La question fait tout le travail</h3><p>Gratuite, sans limite. <em>« Deux gars sur un pont la nuit : qui les relève ? »</em> — et l'autre doit écrire que Lem est seul de minuit à l'aube. <b>Il vient de vous donner votre clef.</b> Chaque réponse est une carte pour vous.</p></div>
+<div class="bloc"><h3>2 · Le défenseur tient par défaut</h3><p>Un 🔒 posé prévaut tant qu'une 🗝️ ne l'ouvre pas. Donc <b>ne posez pas une clef que vous ne pouvez pas défendre</b> : elle sera justifiée, suspendue, et vos pièces bloquées dedans.</p></div>
+<div class="bloc"><h3>3 · La relève est le point faible de toute garde</h3><p>Trois gars = deux qui veillent, un qui dort. <b>À l'aube, un seul homme, sans relève, s'endort.</b> C'est la règle des veilles et l'arbitre l'a accordée. Toute garde se prend à l'aube ou à midi.</p></div>
+<div class="bloc"><h3>4 · Le charpentier gagne les parties</h3><p>Deux planches ôtées et un gars suffit à tenir le pont. Une poutre chevillée sur la vanne et il faut une hache. <b>Retournez le charpentier d'en face avant qu'il ne fasse ça.</b></p></div>
+<div class="bloc"><h3>5 · Une bourse, un seul coup</h3><p>Dix pièces achètent <em>un</em> homme. L'aîné des gars ? L'arbitre a comblé : <em>c'est le neveu du maire, il ne se vend pas.</em> Le charpentier ? Le passeur ? <b>Choisissez quelqu'un qui n'a pas de raison de refuser</b> — et attendez qu'il soit engagé quelque part.</p></div>
+<div class="bloc"><h3>6 · La barque est une arme</h3><p>De nuit, sans lanterne, le charpentier décroche la barque d'en face : elle file au courant. <b>Sans barque, plus de nuit</b> — plus de bourse portée, plus de bac contourné. Frappez la barque avant qu'elle ne serve.</p></div>
+</div>
+<div class="cle"><p><b>Le tempo.</b> Un coup par tour. Celui qui pose un 🎯 donne à l'autre un tour pour poser son 🔒. Celui qui pose un 🔒 donne un tour pour la question. <b>Le premier qui pose une clef qui tient a gagné le lieu.</b></p></div>
+</section>
+
+<section id="tour">
+<h2>Tour 2 — vos coups, justifiés</h2>
+<p>Trait à 🔵 Aurore, puis 🔴 Nicolas. Personne n'a rien posé. Les deux premières questions de l'ordre — <em>quelque chose vient sur moi ? il a affirmé sans prouver ?</em> — sont « non ». Donc on <b>vise</b>. Voici les trois ouvertures, pour l'un comme pour l'autre.</p>
+<div class="deux">
+<div class="bloc a"><h3>A · Le pont d'abord <span class="g">— l'ouverture de la première partie</span></h3>
+<p>🎯 <em>« Le pont est passable pour nous »</em>. Le passage de jour, le plus court chemin vers le grenier d'en face.</p>
+<p><b>Pour :</b> l'autre doit répondre avec ses gars, donc les engager <em>là</em> — et pas au bief. Vous saurez où sont ses hommes.</p>
+<p><b>Contre :</b> c'est prévisible ; son charpentier ôtera deux planches et un gars suffira à tenir. Comptez trois tours et une question bien posée.</p></div>
+<div class="bloc n"><h3>B · Le moulin d'abord <span class="g">— l'ouverture qui surprend</span></h3>
+<p>🎯 <em>« Le moulin tourne pour nous »</em>. La dîme se prend sur le blé qui passe au moulin : celui qui tient la vanne tient tout.</p>
+<p><b>Pour :</b> si l'autre a mis ses gars sur le pont, le bief est vide. Trois gars par le bac de nuit ferment la vanne — et voilà son moulin arrêté.</p>
+<p><b>Contre :</b> il faut le bac ou la barque, donc la nuit ; et un bief se reprend à midi, quand deux dorment dans la cabane.</p></div>
+<div class="bloc"><h3>C · Ne rien viser, frapper <span class="g">— l'ouverture agressive</span></h3>
+<p>💥 <em>détruire</em> la barque d'en face avec la vôtre, de nuit, par le charpentier. Elle atterrit dans deux tours ; l'autre a un tour pour parer ou demander <em>qui décroche l'anneau, d'où ?</em></p>
+<p><b>Pour :</b> sans barque, l'autre n'a plus de nuit — ni bourse portée, ni vanne fermée en cachette. Vous le condamnez au pont, de jour, sous vos yeux.</p>
+<p><b>Contre :</b> votre charpentier est engagé dans la frappe pendant deux tours ; et se joue à la ligne, par moi.</p></div>
+<div class="bloc"><h3>D · Ce qu'il ne faut PAS faire</h3>
+<p>Poser vos gars <em>sur votre propre</em> 🎯 (« ils le servent ») : rien ne s'y oppose encore, vous les bloquez pour rien. Poser la bourse au tour 2 : vous n'avez personne à acheter. Poser les quatre pièces : vous n'avez plus de réponse à rien.</p>
+<p><b>Règle du débutant : au tour 2, une carte 🎯 et rien d'autre.</b></p></div>
+</div>
+<div class="cle a"><p><b>🔵 Aurore, tu joues en premier.</b> Mon conseil : <b>A, le pont</b>. C'est le coup qui oblige Nicolas à montrer où il met ses gars — et l'information, dans ce jeu, vaut plus qu'un lieu.</p></div>
+<div class="cle n"><p><b>🔴 Nicolas, tu joues en second.</b> Si Aurore vise le pont, <b>ne le bloque pas tout de suite avec tes trois gars</b> : c'est ce qu'elle attend. Bloque avec <em>deux</em> — ou vise le moulin (B) et laisse-lui le pont : celui qui tient la vanne tient la dîme.</p></div>
+</section>
+
+<section id="reponses">
+<h2>Si l'autre fait… — la table des réponses</h2>
+<div class="tw"><table>
+<tr><th>l'autre vient de…</th><th>vous répondez (gratuit)</th><th>puis (votre coup)</th></tr>
+<tr><td>🔒 « deux gars gardent le pont »</td><td>❓ <em>qui les relève, et que fait le troisième ?</em></td><td>🗝️ passer à l'aube, quand un seul reste — avec vos gars</td></tr>
+<tr><td>➕ le charpentier ôte deux planches</td><td>❓ <em>qui les repose au matin, et où sont-elles la nuit ?</em></td><td>🗝️ la barque de nuit, sous le pont, reprend les planches</td></tr>
+<tr><td>🔒 « les gars ferment la vanne »</td><td>❓ <em>qui tenait le bac cette nuit, et qui garde le jour ?</em></td><td>🗝️ prendre la cabane à midi, quand deux dorment — gars + charpentier</td></tr>
+<tr><td>🔄 dix pièces à l'aîné de vos gars</td><td>❓ <em>remises par qui, quand ?</em></td><td>🔒 parer : la bourse double — et l'arbitre sait que l'aîné est le neveu du maire</td></tr>
+<tr><td>💥 sa barque décroche la vôtre</td><td>❓ <em>qui décroche l'anneau, d'où arrive-t-il ?</em></td><td>🔒 parer avec vos gars sur l'anneau, une nuit</td></tr>
+<tr><td>🔄 dix pièces à votre charpentier</td><td>❓ <em>portées par qui, alors que le bac ne passe plus ?</em></td><td>rien : sans chemin, l'arbitre refuse la portée</td></tr>
+</table></div>
+<p>Chaque ligne est un coup que la première partie a réellement joué. <b>Toujours la question d'abord</b> — elle ne coûte rien et elle suspend.</p>
+</section>
+
+<section id="ecran">
+<h2>À l'écran</h2>
+<p>Chacun ouvre <b>sa</b> vue : <code>http://localhost:3129/?camp=aurore</code> et <code>http://localhost:3129/?camp=nicolas</code>, onglet <em>Le conseil</em>. Vos pièces en bas, en couleur ; les siennes en haut.</p>
+<ul>
+<li><b>Poser un 🎯</b> : la case 🎯 vide en pointillé sous votre racine → écrivez la phrase → <em>Viser</em>.</li>
+<li><b>Poser un 🔒</b> sur son 🎯 : glissez une de vos pièces dessus → écrivez comment → <em>Poser</em>.</li>
+<li><b>Poser une 🗝️</b> contre son 🔒 : glissez une pièce sur le 🔒 → écrivez comment → <em>Poser</em>.</li>
+<li><b>Une question ❓</b> : la poignée au coin d'une carte d'en face, au survol. <b>Y répondre ⚔️</b> : la poignée à droite de votre carte suspendue — écrivez qui, avec quoi, quel jour. Les deux sont gratuites.</li>
+<li><b>Une frappe 💥, un achat 🔄</b> : dites-le-moi avec vos mots, je l'écris.</li>
+<li>Quand vous avez joué : <b>« tour »</b>. J'arbitre et le jour passe.</li>
+</ul>
+</section>
+
+</main>
+<script>
+fetch("/partie?camp=aurore", {cache:"no-store"}).then(r => r.json()).then(v => {
+  const em = {aurore:"🔵", nicolas:"🔴"};
+  document.getElementById("etat").textContent = "tour " + v.tour + " · trait à " + (em[v.trait]||"") + " " + v.trait
+    + " · trône à " + (v.trone ? (em[v.trone]||"") + " " + v.trone : "personne");
+}).catch(() => {});
+</script>
+</html>

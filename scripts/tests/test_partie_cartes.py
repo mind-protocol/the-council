@@ -205,3 +205,35 @@ class PartieCartesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GenreTest(unittest.TestCase):
+    """Le sous-signe d'une pièce hors de la Danse, et le faux ami « Costa »."""
+
+    def g(self, texte, rid="x", **k):
+        r = dict(texte=texte, tenu_par=k.get("tenu_par"), genre=k.get("genre"))
+        return partie_cartes.genre_piece(r, rid)
+
+    def test_le_vocabulaire_d_une_enquete(self):
+        self.assertEqual(self.g("le journal de l armoire a pharmacie"), "📄")
+        self.assertEqual(self.g("les tubes conserves en serotheque : dosages"), "🧪")
+        self.assertEqual(self.g("le corps de M. Kessler"), "⚰️")
+        self.assertEqual(self.g("la reserve de thymoglobuline et d ampoules"), "💊")
+        self.assertEqual(self.g("les acces badges du pavillon"), "🔑")
+        self.assertEqual(self.g("la mortalite du service : trois morts par trimestre"), "📊")
+        self.assertEqual(self.g("les greffes du pavillon B, onze lits"), "🛏️")
+        self.assertEqual(self.g("deux agents en faction de nuit"), "🛡️")
+        self.assertEqual(self.g("quinze ans de service sans une plainte"), "🎖️")
+
+    def test_un_mot_cle_ne_se_lit_qu_en_debut_de_mot(self):
+        self.assertEqual(self.g("le brigadier Costa", rid="costa"), "📦")
+        self.assertEqual(self.g("l ost de Peyredragon"), "⚔️")
+
+    def test_la_danse_garde_ses_signes(self):
+        self.assertEqual(self.g("Caraxes, monte par Daemon"), "🐉")
+        self.assertEqual(self.g("les coques du Serpent de Mer"), "⛵")
+        self.assertEqual(self.g("la caisse de Peyredragon", genre="or"), "💰")
+
+    def test_le_genre_dit_par_la_ligne_prime(self):
+        self.assertEqual(self.g("le brigadier Costa", genre="homme"), "👤")
+        self.assertEqual(self.g("n importe quoi", genre="🩺"), "🩺")

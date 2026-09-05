@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La table</title>
+<!-- La table : la partie (mj-partie.md) avec TOUT LE TEXTE VISIBLE, pour poser
+     sa cognition pendant qu'on joue. Lit /partie (la même vue que l'onglet
+     « Le conseil »), ne joue rien : les coups se disent au MJ. Les notes
+     restent dans le navigateur, par partie. Servie par GET /table. -->
+<style>
+  :root { --fond:#f4efe4; --encre:#2b2418; --gris:#7a705f; --ligne:#d9cfbc; --carte:#fffbf2;
+          --noir:#2b2418; --vert:#2f6b3a; --arbitre:#b3661b; --bleu:#2b4a7a; --rouge:#a33a2a; --teal:#1f6f6b; --or:#8a6a12; }
+  * { box-sizing:border-box }
+  body { margin:0; background:var(--fond); color:var(--encre); font:15px/1.45 Georgia, "Times New Roman", serif }
+  header { display:flex; gap:24px; align-items:baseline; padding:12px 20px; border-bottom:1px solid var(--ligne); background:var(--carte); position:sticky; top:0; z-index:2 }
+  header h1 { font-size:18px; margin:0; font-weight:normal }
+  header .k { color:var(--gris); font-size:13px }
+  header .k b { color:var(--encre) }
+  main { display:grid; grid-template-columns: 1fr 1.6fr 1fr; gap:16px; padding:16px 20px }
+  section h2 { font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--gris); margin:0 0 8px; font-weight:normal }
+  .bloc { background:var(--carte); border:1px solid var(--ligne); border-radius:6px; padding:10px 12px; margin-bottom:12px }
+  .carte { border-left:3px solid var(--ligne); padding:6px 10px; margin:6px 0; background:#fff; border-radius:0 4px 4px 0 }
+  .carte.neuf { box-shadow: inset 0 0 0 1px var(--or); }
+  .carte .t { font-weight:bold }
+  .carte .c { color:var(--gris); font-size:13px }
+  .carte .p { font-size:12px; color:var(--gris); display:flex; justify-content:space-between; gap:8px; margin-top:2px }
+  .carte .sous { margin-left:10px; margin-top:4px }
+  .camp-noir { border-left-color:var(--noir) }
+  .camp-vert { border-left-color:var(--vert) }
+  .camp-arbitre { border-left-color:var(--arbitre) }
+  .cible { border-left-width:5px }
+  .cible.vrai { background:#eef6ec }
+  .cible.faux { background:#f6ecec; color:var(--gris) }
+  .clef { background:#eef6f5 }
+  .verrou { background:#f9ecea }
+  .frappe { background:#fbeee6 }
+  .question { background:#f2edf8 }
+  .action { background:#f3f6ec }
+  .piece { display:flex; gap:8px; align-items:baseline; padding:4px 8px; border-bottom:1px dashed var(--ligne) }
+  .piece:last-child { border-bottom:0 }
+  .piece .e { width:22px; text-align:center }
+  .piece .n { flex:1 }
+  .piece .s { font-size:12px; color:var(--gris) }
+  .piece.posee .s { color:var(--rouge) }
+  .piece.remet .s, .piece.route .s { color:var(--or) }
+  .piece.detruite { text-decoration:line-through; color:var(--gris) }
+  .prevaut { font-size:12px; padding:1px 6px; border-radius:10px; background:#eee; color:var(--gris) }
+  .prevaut.nous { background:#dceedd; color:var(--vert) }
+  .prevaut.eux { background:#f3d9d4; color:var(--rouge) }
+  textarea { width:100%; min-height:220px; border:1px solid var(--ligne); border-radius:4px; padding:8px; font:14px/1.4 Georgia, serif; background:#fff; resize:vertical }
+  ol.six { padding-left:20px; margin:0; font-size:13px }
+  ol.six li { margin:3px 0 }
+  ol.six b { color:var(--encre) }
+  .vide { color:var(--gris); font-style:italic; font-size:13px }
+  .err { color:var(--rouge) }
+</style>
+</head>
+<body>
+<header>
+  <h1>La table — <span id="partie">…</span></h1>
+  <span class="k">tour <b id="tour">–</b> · jour <b id="jours">–</b></span>
+  <span class="k">👑 <b id="trone">–</b></span>
+  <span class="k">trait <b id="trait">–</b></span>
+  <span class="k">vous : <b id="camp">–</b></span>
+  <span class="k" id="etat"></span>
+</header>
+<main>
+  <section>
+    <h2>📦 Mes pièces</h2>
+    <div class="bloc" id="pieces"></div>
+    <h2>Les six questions, dans l'ordre</h2>
+    <div class="bloc"><ol class="six">
+      <li>💥 <b>Quelque chose vient sur moi ?</b> → parer 🔒, retirer 🗑️, ou ❓.</li>
+      <li>❓ <b>Il a affirmé sans prouver ?</b> → justifier, gratuit. Toujours.</li>
+      <li>🗝️ <b>Une pièce libre lève un verrou ?</b> → lever.</li>
+      <li>🎯 <b>Rien à lever ?</b> → viser là où mes pièces sont fortes.</li>
+      <li>💥 <b>Une pièce d'en face tient trop ?</b> → frapper ou retourner.</li>
+      <li>⏸️ <b>Rien de tout ça ?</b> → passer, et c'est un coup.</li>
+    </ol></div>
+  </section>
+  <section>
+    <h2>🎯 La dispute — états, verrous, clés, questions</h2>
+    <div id="dispute"></div>
+    <h2>Fronts ouverts — verrous et frappes debout</h2>
+    <div id="fronts"></div>
+  </section>
+  <section>
+    <h2>En face</h2>
+    <div class="bloc" id="eux"></div>
+    <h2>Mes notes (restent ici)</h2>
+    <div class="bloc"><textarea id="notes" placeholder="Ce que je crois, ce que je prépare, ce que je lui dois…"></textarea></div>
+  </section>
+</main>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  const EMO = { noir: "⚫", vert: "🟢", arbitre: "🟠" };
+  const emo = (c) => EMO[c] || "🔵";
+  let moi = "noir", cle = "";
+
+  function carte(x, prof) {
+    const cls = ["carte", "camp-" + (x.camp || ""), x.type, x.apparence, x.neuf ? "neuf" : ""].join(" ");
+    let h = '<div class="' + cls + '">';
+    h += '<div class="t">' + esc(x.emoji || "") + " " + emo(x.camp) + " " + esc(x.titre) + "</div>";
+    if (x.corps) h += '<div class="c">' + esc(x.corps) + "</div>";
+    if (x.pied && (x.pied.gauche || x.pied.droite)) h += '<div class="p"><span>' + esc(x.pied.gauche) + "</span><span>" + esc(x.pied.droite) + "</span></div>";
+    if (x.sous && x.sous.length) h += '<div class="sous">' + x.sous.map((s) => carte(s, prof + 1)).join("") + "</div>";
+    return h + "</div>";
+  }
+  function piece(x) {
+    const s = { libre: "libre", route: x.pied && x.pied.droite || "en route", remet: x.pied && x.pied.droite || "se remet", posee: "engagée" + (x.engagee_par && x.engagee_par.length ? " · " + x.engagee_par.join(", ") : ""), detruite: "perdue" }[x.apparence] || x.apparence;
+    return '<div class="piece ' + x.apparence + (x.neuf ? " neuf" : "") + '"><span class="e">' + esc(x.emoji) + '</span><span class="n">' + esc(x.titre) + (x.visee ? " <b>· VISÉE 💥</b>" : "") + '</span><span class="s">' + esc(s) + "</span></div>";
+  }
+  function rendre(v) {
+    moi = v.camp;
+    $("partie").textContent = v.partie; $("tour").textContent = v.tour; $("jours").textContent = "+" + v.jours;
+    $("trone").textContent = v.trone ? emo(v.trone) + " " + v.trone : "personne encore";
+    $("trait").textContent = emo(v.trait) + " " + v.trait; $("camp").textContent = emo(v.camp) + " " + v.camp;
+    const d = v.deck;
+    $("pieces").innerHTML = [].concat(d.main, d.route, d.remet, d.posees, d.detruites).map(piece).join("") || '<div class="vide">rien</div>';
+    $("eux").innerHTML = v.eux.map(piece).join("") || '<div class="vide">rien</div>';
+    const parId = {}; v.cibles.forEach((c) => { parId[c.id] = c; c.enfants = []; });
+    const racines = [];
+    v.cibles.forEach((c) => { const m = (c.pied && c.pied.gauche || "").startsWith("sert ") ? c : null; racines.push(c); });
+    $("dispute").innerHTML = v.cibles.map((c) => carte(c, 0)).join("") || '<div class="vide">aucun état posé</div>';
+    $("fronts").innerHTML = v.fronts.length ? v.fronts.map((f) => {
+      const qui = f.prevaut === moi ? "nous" : "eux";
+      let h = '<div class="bloc">';
+      h += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span class="k">sur : <b>' + esc(f.sur_titre) + '</b></span><span class="prevaut ' + qui + '">prévaut : ' + emo(f.prevaut) + " " + esc(f.pourquoi || "") + "</span></div>";
+      h += carte(f.tete, 0);
+      if (f.pile && f.pile.length) h += '<div class="sous">' + f.pile.map((x) => carte(x, 1)).join("") + "</div>";
+      return h + "</div>";
+    }).join("") : '<div class="vide">aucun verrou ni frappe debout</div>';
+    cle = "table-notes-" + v.partie;
+    try { const n = localStorage.getItem(cle); if (n != null && $("notes").value !== n && document.activeElement !== $("notes")) $("notes").value = n; } catch (e) {}
+  }
+  $("notes").addEventListener("input", () => { try { if (cle) localStorage.setItem(cle, $("notes").value); } catch (e) {} });
+  function charger() {
+    fetch("/partie" + location.search, { cache: "no-store" }).then((r) => r.json()).then((v) => {
+      if (!v || v.erreur) { $("etat").innerHTML = '<span class="err">' + esc((v && v.erreur) || "pas de partie") + "</span>"; return; }
+      $("etat").textContent = ""; rendre(v);
+    }).catch((e) => { $("etat").innerHTML = '<span class="err">' + esc(e.message) + "</span>"; });
+  }
+  charger(); setInterval(charger, 5000);
+})();
+</script>
+</body>
+</html>

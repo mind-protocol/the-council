@@ -23,6 +23,10 @@ l'être, il descend ici, et c'est la règle qui garde le classement honnête.
 | `partie_validite.py` | la recevabilité d'un coup et ses refus motivés (§3, règles de validité) — coupé du greffe au cliquet des 500 lignes : dire si l'on a le droit, sans rien changer à la position | `partie_greffe` |
 | `partie_lecture.py` | ce qui se lit d'une partie : chaîne, pièce, grand livre, état, relecture — séparé du greffe parce que rien ici ne change la position | `partie.py` |
 | `partie_cartes.py` | la vue JOUEUR d'une partie, en cartes (fronts, piles, deck, desseins) : le brouillard appliqué, l'apparence de chaque carte, aucun id nu — `partie.py --cartes`, servi par `/partie` | `partie.py` |
+| `partie_ascii.py` | la MÊME vue que `partie_cartes`, dessinée au terminal : un seul arbre du trône aux pièces, les statuts signés, les décomptes — `partie.py --plateau [--entier]` | `partie.py` |
+| `partie_grille.py` | la même vue en GRILLE : une colonne par point de contact, ce qui prévaut devant, le contrecarré derrière, et les CREUX que l'arbre ne montre pas — `partie.py --grille` | `partie.py` |
+| `partie_marques.py` | ce que l'écran a le droit d'OFFRIR sur une carte : `questionnable` (exiger la chaîne) et `suspendue` (écrire le maillon), posés sur la vue déjà bâtie — sortis de `partie_cartes` au cliquet des 500 lignes | `partie.py` |
+| `partie_journal.py` | ce qui vient d'être joué, dit en clair pour l'écran : les lignes du livre après le marque-page du siège, ids rhabillés de leurs titres — servi dans `vue.relecture` par `partie.py --cartes` | `partie.py` |
 | `partie_gestes.py` | ce que le joueur FAIT à l'écran traduit en coup : une carte posée sur une carte, et c'est la CIBLE qui dit lequel — refus rhabillés de leurs titres, `partie.py --geste`, servi par `POST /partie/geste` | `partie.py`, `partie_cartes`, `partie_greffe` |
 
 **`bibliotheque.py` est stricte sur chaque manifeste de maison** : volume absent,

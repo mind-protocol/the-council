@@ -100,6 +100,9 @@ class Partie(object):
                     ligne = json.loads(brut)
                     self.lignes.append(ligne)
                     self._appliquer(ligne)
+        for c in self.camps():
+            EMOJI_CAMP[c]   # amorce la palette dans l'ordre des camps : sinon la
+            # couleur d'un camp sans emoji attitre dependait de l'ordre des lectures
 
     # ---- validité --------------------------------------------------------
     def verifier(self, l):
@@ -205,7 +208,10 @@ class Partie(object):
                                         "nombre": l.get("nombre"), "tenu_par": l.get("tenu_par"),
                                         "arrive_tour": self.tour, "gel_jusqu": 0,
                                         "engagee_par": [], "detruite": False,
-                                        "en_attente": l.get("n"), "texte": l.get("texte", "")}
+                                        "en_attente": l.get("n"), "texte": l.get("texte", ""),
+                                        # le genre dit par la ligne : il était lu par la
+                                        # vue et jamais porté ici — un champ mort
+                                        "genre": l.get("genre")}
         elif coup == "arbitrer":
             for src in self._lignes_visees(l.get("sur")):
                 if src.get("coup") == "demander":
@@ -216,7 +222,7 @@ class Partie(object):
                         del self.ressources[src["id"]]
                     else:
                         r["en_attente"] = None
-                        for k in ("lieu", "nombre", "tenu_par"):
+                        for k in ("lieu", "nombre", "tenu_par", "genre"):
                             if l.get(k) is not None:
                                 r[k] = l[k]
                         r["arrive_tour"] = int(l.get("arrive_tour") or self.tour)

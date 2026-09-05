@@ -126,15 +126,14 @@ def etat(p):
     tenu = p.tenu_par()
     out.append("Tour %d · jour du monde +%d" % (p.tour, (p.tour - 1) * JOURS_PAR_TOUR))
     out.append("👑 Trône — tenu par %s" % (EMOJI_CAMP[tenu] if tenu else "personne encore"))
-    for i, camp in enumerate(p.camps()):
+    for camp in p.camps():
         r = p.racine(camp)
         if not r:
             continue
-        if i:   # la première racine est le trône lui-même ; les autres se nomment
-            e = p.etats[r]
-            feu = " · VRAI" if e.get("vrai") else (" · faux" if e.get("vrai") is False else "")
-            out.append("🎯 %s %s — %s%s" % (EMOJI_CAMP[camp], r, e["texte"], feu))
-        _sous(p, r, 1 if i else 0, out)
+        e = p.etats[r]
+        feu = " · VRAI" if e.get("vrai") else (" · faux" if e.get("vrai") is False else "")
+        out.append("🎯 %s %s — %s%s" % (EMOJI_CAMP[camp], r, e["texte"], feu))
+        _sous(p, r, 1, out)
     for kid, k in sorted(p.cles.items(), key=lambda kv: -(kv[1].get("n") or 0)):
         if k["retiree"] or k.get("tenue") or k["ouvre"]:
             continue   # une clé sans blocage : une affirmation nue, on la montre à part, une fois

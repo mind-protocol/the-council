@@ -8,6 +8,7 @@ scripts/noyau/partie_greffe.py ; ici : la ligne de commande, la recherche dans
 l'état et les livres, et la présentation d'un tour au format du manuel.
 
     python scripts/partie.py <partie> --etat
+    python scripts/partie.py <partie> --plateau [--camp <camp>]
     python scripts/partie.py <partie> --jouer '{"camp":"noir","coup":"lever",...}'
     python scripts/partie.py <partie> --fichier coups.jsonl
     python scripts/partie.py <partie> --tour
@@ -38,7 +39,11 @@ from partie_greffe import (Partie, RACINE, DOSSIER, JOURS_PAR_TOUR,  # noqa: E40
                            EMOJI_CAMP, EMOJI_COUP, liste)
 from partie_lecture import chaine, piece, grand_livre, etat, relire  # noqa: E402
 import partie_cartes  # noqa: E402  — la vue joueur, en cartes (v0)
+import partie_journal  # noqa: E402  — les derniers coups, dits en clair
+import partie_marques  # noqa: E402  — ce que l'écran a le droit d'offrir
 import partie_gestes  # noqa: E402  — une carte posée sur une carte, en coup (v1)
+import partie_ascii  # noqa: E402  — la même vue, au terminal
+import partie_grille  # noqa: E402  — la même vue en grille : où l'on se touche
 
 
 # ---------------------------------------------------------------- chercher
@@ -275,6 +280,11 @@ def main():
     ap.add_argument("--ecritures", action="store_true", help="le récap de ce qu'il faut écrire dans l'état")
     ap.add_argument("--depuis-tour", dest="depuis_tour", type=int, default=1)
     ap.add_argument("--cartes", action="store_true", help="la vue joueur en cartes, JSON (l'onglet « Le conseil »)")
+    ap.add_argument("--plateau", action="store_true", help="la même vue, dessinée au terminal")
+    ap.add_argument("--entier", action="store_true", help="avec --plateau : rien n'est coupé, les titres se replient")
+    ap.add_argument("--grille", action="store_true", help="la position en grille : les points de contact, qui prévaut, et les creux")
+    ap.add_argument("--ruban", metavar="SORTIE.html", nargs="?", const="-",
+                    help="la partie DANS LE TEMPS : les coups tour par tour et la vie de chaque pièce")
     ap.add_argument("--camp", default=None, help="le camp du siège qui regarde ou qui joue (premier camp de la partie sinon)")
     ap.add_argument("--vu", type=int, default=0, metavar="N",
                     help="le dernier numero de ligne deja vu : ce qui suit est marque neuf")
@@ -284,17 +294,60 @@ def main():
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8") if hasattr(sys.stdout, "buffer") else sys.stdout
 
     p = Partie(chemin_de(a.partie))
+    def cartes(part, camp, vu):
+        """La vue de l'écran, ET ce qui vient d'être joué en clair.
+
+        Les deux voyagent ensemble parce qu'ils répondent à la même question en
+        arrivant devant le plateau : « où en est-on, et qu'a-t-il joué ? ». La
+        position seule marquait ce qui avait bougé sans jamais le dire. On ne
+        touche pas `partie_cartes` pour autant — passé cinq cents lignes, il ne
+        peut plus que maigrir (`.claude/hooks/taille.js`).
+        """
+        v = partie_cartes.vue(part, camp, vu)
+        partie_marques.poser(v, part, camp)
+        # le verdict d'un front est fait d'ids : on les rhabille avant l'ecran
+        for f in v.get("fronts") or []:
+            f["pourquoi"] = partie_journal.clair(part, f.get("pourquoi"))
+        v["relecture"] = partie_journal.journal(part, camp, vu)
+        return v
+
     if a.geste:
         # Le résultat porte la position d'APRÈS : l'écran redessine sans
         # redemander, et ce qu'il montre est ce que le greffe vient d'écrire —
         # pas ce que la page croyait avant le geste. Refus compris : la sortie
         # est toujours du JSON, et le code de retour reste 0.
-        r = partie_gestes.jouer(p, json.loads(a.geste))
-        r["vue"] = partie_cartes.vue(Partie(p.chemin), a.camp, a.vu)
+        geste = json.loads(a.geste)
+        # `--camp` VAUT POUR LE GESTE, et pas seulement pour la vue rendue. Le
+        # serveur, lui, fond le camp dans le JSON avant d'appeler ; en ligne de
+        # commande on l'oubliait, et le coup partait au premier camp de la
+        # partie — refusé plus loin, avec un motif qui parlait d'un camp qu'on
+        # n'avait pas demandé.
+        geste.setdefault("camp", a.camp) if a.camp else None
+        r = partie_gestes.jouer(p, geste)
+        apres = Partie(p.chemin)
+        r["vue"] = cartes(apres, a.camp, a.vu)
         print(json.dumps(r, ensure_ascii=False))
         return
+    if a.ruban:
+        import partie_ruban
+        html = partie_ruban.rendre(partie_ruban.replier(p.chemin))
+        if a.ruban == "-":
+            print(html)
+        else:
+            io.open(a.ruban, "w", encoding="utf-8").write(html)
+            print("ruban écrit : %s" % a.ruban)
+        return
+    if a.grille:
+        print(chr(10).join(partie_grille.grille(partie_cartes.vue(p, a.camp, a.vu))))
+        return
+    if a.plateau:
+        # le gras seulement vers un terminal : redirigé, ce ne serait que des
+        # caractères parasites au milieu du texte
+        vue = partie_cartes.vue(p, a.camp, a.vu)
+        print(chr(10).join(partie_ascii.plateau(vue, gras=sys.stdout.isatty(), entier=a.entier)))
+        return
     if a.cartes:
-        print(json.dumps(partie_cartes.vue(p, a.camp, a.vu), ensure_ascii=False))
+        print(json.dumps(cartes(p, a.camp, a.vu), ensure_ascii=False))
         return
     if a.chercher:
         print("\n".join(chercher(a.chercher)))
@@ -340,7 +393,7 @@ def main():
         print("\n".join(piece(p, a.piece)))
     if a.grand_livre:
         print("\n".join(grand_livre(p)))
-    if a.etat or not any([a.jouer, a.fichier, a.tour, a.relire is not None, a.chaine, a.piece,
+    if a.etat or not any([a.jouer, a.fichier, a.tour, a.relire is not None, a.chaine, a.piece, a.plateau, a.grille, a.ruban,
                           a.grand_livre, a.presenter, a.ecritures]):
         print("\n".join(etat(p)))
     if p.avertissements:

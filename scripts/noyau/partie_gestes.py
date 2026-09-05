@@ -9,14 +9,27 @@ il s'agit, ET C'EST LA CIBLE QUI LE DIT :
     une pièce 📦 sur un verrou 🔒 adverse     → `lever`    (une clef neuve)
     une pièce 📦 sur une de nos clefs 🗝️      → `rearmer`  (on renforce)
     une pièce 📦 sur une frappe 💥 adverse    → `bloquer`  (on protège)
+    une pièce 📦 sur un état 🎯 adverse       → `bloquer`  (un verrou neuf)
+    une pièce 📦 sur un état 🎯 à nous        → `lever`    (une clef qui le SERT)
+    une phrase écrite sous un état à nous     → `viser`    (un état neuf)
+    une phrase écrite dans la case 📦 vide    → `demander` (une pièce, à l'arbitre)
+    une question ❓ posée sur une carte d'en face → `justifier` (on exige la chaîne)
+    une phrase écrite sous une carte à nous suspendue → `agir` (le maillon qui répond)
     une carte à nous ramenée au deck          → `retirer`  (et la pièce se remet)
     « le jour passe »                         → `tour`     (par l'arbitre)
 
-Rien d'autre n'est jouable en v1 : viser, demander, détruire, justifier et
-arbitrer restent au MJ, qui les écrit à la ligne. Un geste qu'on ne sait pas
-traduire est REFUSÉ EN CLAIR, jamais deviné — poser un dragon sur un état cible ne
-veut rien dire, et lui inventer un sens ferait un coup que le joueur n'a pas
-voulu.
+Les deux gestes sur un état et le `viser` sont du 5.9 : sans eux, une partie
+qui s'ouvre — deux racines, aucun verrou — n'offrait AUCUN geste à l'écran, et
+le joueur restait devant sept pièces libres et un plateau muet. Un verrou se
+pose SUR un état (règle 3.1), une clef peut SERVIR un état sans rien ouvrir,
+et un état neuf se pose sous un autre : ce sont trois coups du livre, pas trois
+inventions. Détruire et arbitrer restent au MJ, à la
+ligne. `demander` est entré le même jour, à la demande du joueur : gratuit, hors
+compte, la pièce attend l'arbitre — et `justifier` le lendemain, pour la même
+raison : c'était le seul coup gratuit du livre qu'un joueur ne pouvait pas
+jouer de sa main, et il fallait passer par le mestre pour dire « par où
+entrent-ils ? ». Un geste qu'on ne sait pas traduire est
+REFUSÉ EN CLAIR, jamais deviné.
 
 Ce module N'ÉCRIT QUE DANS LE JSONL DE LA PARTIE, par `Partie.ecrire`, qui
 vérifie d'abord. Rien dans `etat/` ne bouge : ce qu'un coup change dans le monde
@@ -114,7 +127,7 @@ def poser(p, camp, pieces, sur, texte=""):
                        "renfort porté à « %s »" % partie_cartes.titre(p, sur))
 
     m = p.menaces.get(sur)
-    if m is not None and m["camp"] == ennemi:
+    if m is not None and m["camp"] != camp:
         if m["realisee"] or m["tombee"]:
             return _refus(p, ["cette frappe n'est plus en route"])
         i = _id_libre(p, camp, "garde-%s" % sur)
@@ -123,12 +136,119 @@ def poser(p, camp, pieces, sur, texte=""):
                            "texte": texte or "on couvre %s" % partie_cartes.titre(p, m["cible"])},
                        "garde posée devant « %s »" % partie_cartes.titre(p, m["cible"]))
 
-    if sur in p.etats:
-        return _refus(p, ["un état cible ne se tient pas avec une pièce : posez-la sur "
-                          "le verrou qui s'y oppose"])
+    e = p.etats.get(sur)
+    if e is not None and e["camp"] != camp:
+        # UN VERROU NEUF sur un état d'en face : « je tiens ceci contre cela ».
+        # Le titre est au joueur ; à défaut, la pièce dit ce qu'elle tient.
+        if e.get("sorti"):
+            return _refus(p, ["cet état est sorti du deck : rien à y tenir"])
+        i = _id_libre(p, camp, "%s-%s" % (pieces[0], sur))
+        return _ecrire(p, {"camp": camp, "coup": "bloquer", "id": i, "sur": sur,
+                           "engage": pieces, "texte": texte or _defaut(p, pieces, sur)},
+                       "verrou posé sur « %s »" % partie_cartes.titre(p, sur))
+    if e is not None:
+        # UNE CLEF QUI SERT notre état sans rien ouvrir : elle le réalise quand
+        # l'arbitre le constate. C'est le geste d'une partie où rien ne nous fait
+        # face encore — on avance sans attendre qu'on nous barre.
+        if e.get("vrai"):
+            return _refus(p, ["cet état est déjà constaté vrai"])
+        i = _id_libre(p, camp, "%s-%s" % (pieces[0], sur))
+        return _ecrire(p, {"camp": camp, "coup": "lever", "id": i, "sert": sur,
+                           "engage": pieces, "texte": texte or _defaut(p, pieces, sur)},
+                       "clef posée pour « %s »" % partie_cartes.titre(p, sur))
     if sur in p.ressources:
         return _refus(p, ["on n'engage pas une pièce sur une autre pièce"])
     return _refus(p, ["cette carte ne se joue pas"])
+
+
+# ------------------------------------------------------------------- viser
+def viser(p, camp, sert, texte):
+    """Un état neuf, écrit sous un des nôtres — ou une racine si `sert` est vide
+    et qu'on n'en a pas encore. La phrase est au joueur, entière : c'est ce qui
+    devra être vrai, et l'arbitre le constatera sur ces mots."""
+    texte = (texte or "").strip()
+    if not texte:
+        return _refus(p, ["un état est une phrase : dites ce qui doit être vrai"])
+    sert = str(sert or "") or None
+    if sert:
+        parent = p.etats.get(sert)
+        if parent is None:
+            return _refus(p, ["%s n'est pas un état" % sert])
+        if parent["camp"] != camp:
+            return _refus(p, ["on ne pose pas un état sous un état d'en face"])
+    i = _id_libre(p, camp, texte[:24])
+    ligne = {"camp": camp, "coup": "viser", "id": i, "texte": texte}
+    if sert:
+        ligne["sert"] = sert
+    return _ecrire(p, ligne, "état posé : « %s »" % texte)
+
+
+# ---------------------------------------------------------------- demander
+def demander(p, camp, texte, lieu=None, tenu_par=None):
+    """Une pièce demandée au grand livre. Gratuit, hors compte : elle n'existe
+    qu'à l'arbitrage, qui la date et la corrige. Le joueur dit ce qu'il veut en
+    une phrase ; le lieu et le tenant sont à lui s'il les sait, à l'arbitre
+    sinon."""
+    texte = (texte or "").strip()
+    if not texte:
+        return _refus(p, ["une demande est une phrase : dites ce qu'il vous faut, et où"])
+    i = _id_libre(p, camp, texte[:24])
+    ligne = {"camp": camp, "coup": "demander", "id": i, "texte": texte}
+    if (lieu or "").strip():
+        ligne["lieu"] = lieu.strip()
+    if (tenu_par or "").strip():
+        ligne["tenu_par"] = tenu_par.strip()
+    return _ecrire(p, ligne, "demande portée au mestre : « %s »" % texte)
+
+
+# --------------------------------------------------------------- justifier
+def justifier(p, camp, sur, texte):
+    """« Par où entrent-ils ? » — on exige la chaîne d'une pièce d'en face.
+
+    Gratuit et hors compte : il ne prend pas le coup du tour. Ce qu'il coûte est
+    d'une autre monnaie — UNE SEULE FOIS par pièce dans toute la partie, tous
+    camps confondus. La cible passe en suspens et cesse de prévaloir jusqu'au
+    maillon écrit dessous.
+
+    On ne revérifie rien ici : le camp de la cible, la justification déjà
+    dépensée, l'id qui ne désigne rien sont l'affaire de `partie_validite`, et
+    ses refus reviennent au joueur rhabillés de leurs titres. Ce qui appartient
+    à ce module, c'est la seule chose que le greffe ne peut pas savoir : une
+    question sans phrase suspend une pièce sans que personne sache sur quoi.
+    """
+    texte = (texte or "").strip()
+    if not texte:
+        return _refus(p, ["une question est une phrase : dites ce que vous exigez"])
+    return _ecrire(p, {"camp": camp, "coup": "justifier", "sur": str(sur or ""),
+                       "texte": texte},
+                   "question posée sur « %s »" % partie_cartes.titre(p, sur))
+
+
+# ----------------------------------------------------------------- maillon
+def maillon(p, camp, sur, texte, qui=None):
+    """La réponse à un ❓ : qui a fait quoi, avec quoi — et la suspension tombe.
+
+    C'est le pendant de `justifier`, et il lui manquait : on pouvait suspendre
+    la pièce d'en face depuis l'écran sans que son camp puisse la relever. Une
+    clef suspendue ne prévaut plus ; tant que personne n'écrit le maillon, elle
+    reste morte sur la table.
+
+    Gratuit quand il répond à une question — c'est le greffe qui le voit et qui
+    pose `repond` sur la ligne. `avec` reprend ce que la cible engage déjà :
+    répondre n'est pas engager une pièce de plus, c'est dire ce qu'on a fait de
+    celles qui sont posées.
+    """
+    texte = (texte or "").strip()
+    if not texte:
+        return _refus(p, ["un maillon est une phrase : dites qui, avec quoi, quel jour"])
+    sur = str(sur or "")
+    cible = p.cles.get(sur) or p.blocages.get(sur) or p.menaces.get(sur)
+    avec = liste((cible or {}).get("engage"))
+    i = _id_libre(p, camp, "maillon-%s" % sur)
+    return _ecrire(p, {"camp": camp, "coup": "agir", "id": i, "realise": sur,
+                       "qui": qui or camp, "avec": avec, "etat": "faite",
+                       "texte": texte},
+                   "maillon écrit sous « %s »" % partie_cartes.titre(p, sur))
 
 
 # --------------------------------------------------------------- reprendre
@@ -155,7 +275,7 @@ def jour(p):
 
 # ------------------------------------------------------------------- entrée
 def jouer(p, geste):
-    """L'entrée unique : `{quoi, camp, pieces|piece, sur, texte}`."""
+    """L'entrée unique : `{quoi, camp, pieces|piece, sur, sert, texte}`."""
     geste = geste or {}
     quoi = geste.get("quoi")
     camp = geste.get("camp") or (p.camps() or ["noir"])[0]
@@ -164,6 +284,14 @@ def jouer(p, geste):
     if quoi == "poser":
         return poser(p, camp, geste.get("pieces") or geste.get("piece"),
                      geste.get("sur"), geste.get("texte"))
+    if quoi == "viser":
+        return viser(p, camp, geste.get("sert"), geste.get("texte"))
+    if quoi == "demander":
+        return demander(p, camp, geste.get("texte"), geste.get("lieu"), geste.get("tenu_par"))
+    if quoi == "justifier":
+        return justifier(p, camp, geste.get("sur"), geste.get("texte"))
+    if quoi == "maillon":
+        return maillon(p, camp, geste.get("sur"), geste.get("texte"), geste.get("qui"))
     if quoi == "reprendre":
         return reprendre(p, camp, geste.get("sur"))
     if quoi == "jour":

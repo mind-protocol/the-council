@@ -1,0 +1,199 @@
+<!doctype html><html lang=fr><meta charset=utf-8>
+<title>Ruban — le-roi-est-mort</title>
+<style>
+:root{--fond:#f4eee2;--encre:#2b2119;--gris:#7a6a55;--ligne:#d9cfbc;--carte:#fffbf2}
+@media (prefers-color-scheme:dark){:root{--fond:#171310;--encre:#e6dbc6;--gris:#a8977c;--ligne:#3a322a;--carte:#1f1a15}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font:14px/1.4 Georgia,"Times New Roman",serif}
+header{padding:14px 20px;border-bottom:1px solid var(--ligne)}
+h1{font-size:17px;margin:0 0 3px;font-weight:normal}
+header .k{color:var(--gris);font-size:12.5px}
+main{padding:12px 20px 40px;overflow-x:auto}
+table{border-collapse:collapse}
+th,td{padding:0;vertical-align:top}
+th.t{font-weight:normal;font-size:11px;color:var(--gris);text-align:center;
+  border-bottom:1px solid var(--ligne);padding:2px 0 4px}
+td.lab,th.lab{position:sticky;left:0;background:var(--fond);z-index:2;
+  padding-right:10px;font-size:12px;white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.voie td{border-bottom:1px solid var(--ligne);padding:3px 3px 5px}
+.cp{display:block;font-size:11px;line-height:1.25;margin:2px 0;padding:3px 5px;border-radius:3px;
+  border:1px solid var(--ligne);background:var(--carte)}
+.cp.compte{border-color:currentColor;font-weight:600}
+.cp.gratuit{opacity:.62;border-style:dashed}
+.rien{color:var(--gris);font-size:11px;font-style:italic;text-align:center;display:block;padding:4px 0}
+.bande td{padding:0 1px}
+.b{height:15px;border-radius:2px;background:var(--ligne);opacity:.35}
+.b.on{opacity:1}
+.pl{font-size:11.5px}
+.marque{margin:3px 0;padding:3px 5px;border-radius:3px;font-size:11px;line-height:1.25;
+  border-left:3px solid #6f9c62;background:color-mix(in srgb,#6f9c62 14%,transparent)}
+.marque.faux{border-left-color:#a34a3a;background:color-mix(in srgb,#a34a3a 14%,transparent)}
+h2{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gris);
+  font-weight:normal;margin:22px 0 6px}
+.leg{color:var(--gris);font-size:11.5px;margin:6px 0 0}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 3px 0 12px;vertical-align:-1px}
+/* LE VOLET. Le `title` du navigateur mettait une seconde à paraître, coupait
+   au-delà d'une ligne et ne savait pas mettre un mot en gras — sur un ruban où
+   TOUT le détail est au survol, c'était la moitié de la vue rendue illisible.
+   Celui-ci paraît sans délai, tient plusieurs lignes, et se pose du côté où il
+   y a la place. Il ne prend jamais le curseur. */
+#volet{position:fixed;z-index:99;max-width:380px;pointer-events:none;display:none;
+  background:var(--carte);border:1px solid var(--encre);border-radius:4px;
+  padding:7px 9px;box-shadow:0 6px 18px rgba(0,0,0,.28);font-size:12px;line-height:1.35}
+#volet b{font-weight:600}
+#volet .q{color:var(--gris);font-size:11px;display:block;margin-top:3px}
+[data-info]{cursor:help}
+</style>
+<header><h1>le-roi-est-mort</h1><div class=k>2 tours · 🔵 enquete 🔴 tueur 🟡 nicolas · 👑 personne</div></header><main>
+<h2>Les coups — ce qui compte est plein, ce qui est gratuit est en creux</h2>
+<table><tr><th class=lab></th>
+<th class=t style='width:150px'>tour 1</th>
+<th class=t style='width:150px'>tour 2</th>
+</tr>
+<tr class=voie><td class=lab>🔵 enquete</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Un nom est prononce devant le conseil, et la main qui a verse est prise avant que la couronne touche la tete&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 1&lt;/span&gt;">🎯 viser</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;la capitaine des manteaux d or, saisie par le conseil&lt;/div&gt;&lt;div&gt;le mestre qui a refuse de signer la mort naturelle&lt;/div&gt;&lt;div&gt;le corps du roi, pas encore embaume&lt;/div&gt;&lt;div&gt;le registre des entrees du palais, la nuit du trois&lt;/div&gt;&lt;div&gt;le gouteur du roi, vivant et terrifie&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 4–12&lt;/span&gt;">📦 demander ×5</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🗝️ lever&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;assiste à la scene et a entendu le nom pronocé&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 30 · engage « la capitaine des manteaux d or, saisie par le conseil »&lt;/span&gt;">🗝️ lever</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;la broche de Nicolas&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 31&lt;/span&gt;">📦 demander</span>
+<span class='cp compte' data-info="&lt;b&gt;🗝️ lever&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;le registre du palais montre que la capitaine se trouver dans la salle bain du 4ieme avec dame gynette &lt;span class=q style='display:inline'&gt;→ ouvre « il y a entendu un faux nom: la capitaine des manteaux d'or »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 35 · engage « le registre des entrees du palais, la nuit du trois »&lt;/span&gt;">🗝️ lever</span>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;assiste à la scene et a entendu le nom pronocé&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 43 · engage « le gouteur du roi, vivant et terrifie »&lt;/span&gt;">➕ rearmer</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;le journal du roi&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 44&lt;/span&gt;">📦 demander</span>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;la courronne est perdue&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 45&lt;/span&gt;">🎯 viser</span>
+<span class='cp gratuit' data-info="&lt;b&gt;❓ justifier&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;comment et par quel moyen ? &lt;span class=q style='display:inline'&gt;→ sur « j'y vais réucupérer mon argent »&lt;/span&gt;&lt;/div&gt;&lt;div&gt;La tête de qui ? &lt;span class=q style='display:inline'&gt;→ sur « Le huitieme jour, la couronne touche la tete et l affaire est close »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 46–47&lt;/span&gt;">❓ justifier ×2</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;une bourse d'or&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 49&lt;/span&gt;">📦 demander</span>
+<span class='cp compte' data-info="&lt;b&gt;🗝️ lever&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;porte un indice prouvant la presence du chapelain lors de sa mort &lt;span class=q style='display:inline'&gt;→ ouvre « le chapelain, qui veut le couronnement a l heure et rien d autre »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 53 · engage « le corps du roi, pas encore embaume »&lt;/span&gt;">🗝️ lever</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;une part de gateau du soir de la mort du roi&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 55&lt;/span&gt;">📦 demander</span>
+<span class='cp gratuit' data-info="&lt;b&gt;❓ justifier&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;quel rapport? &lt;span class=q style='display:inline'&gt;→ sur « le chapelain, qui veut le couronnement a l heure et rien d autre »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 56&lt;/span&gt;">❓ justifier</span>
+</td>
+</tr>
+<tr class=voie><td class=lab>🔴 tueur</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Le roi est mort de son coeur : le couronnement a lieu a l heure et aucun nom n est prononce&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 2&lt;/span&gt;">🎯 viser</span>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Le huitieme jour, la couronne touche la tete et l affaire est close&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 3&lt;/span&gt;">🎯 viser</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;votre charge au palais : les clefs des offices et le droit d y passer&lt;/div&gt;&lt;div&gt;l apothicaire de la rue des Soeurs, qui vous doit trois cents&lt;/div&gt;&lt;div&gt;une bourse : de quoi retourner un homme, une fois&lt;/div&gt;&lt;div&gt;le chapelain, qui veut le couronnement a l heure et rien d autre&lt;/div&gt;&lt;div&gt;la coupe, lavee le matin meme&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 14–22&lt;/span&gt;">📦 demander ×5</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🔒 bloquer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il y a entendu un faux nom: la capitaine des manteaux d'or &lt;span class=q style='display:inline'&gt;→ sur « Un nom est prononce devant le conseil, et la main qui a verse est prise avant que la couronne touche la tete »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 32 · engage « une bourse : de quoi retourner un homme, une fois »&lt;/span&gt;">🔒 bloquer</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;une épée&lt;/div&gt;&lt;div&gt;une faveur d'un membre du conseil&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 33–34&lt;/span&gt;">📦 demander ×2</span>
+<span class='cp compte' data-info="&lt;b&gt;🗝️ lever&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;j'y vais réucupérer mon argent&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 38 · engage « l apothicaire de la rue des Soeurs, qui vous doit trois cents »&lt;/span&gt;">🗝️ lever</span>
+<span class='cp gratuit' data-info="&lt;b&gt;❓ justifier&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;et pourquoi devrais je savooir ou elle se trouve &lt;span class=q style='display:inline'&gt;→ sur « la courronne est perdue »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 48&lt;/span&gt;">❓ justifier</span>
+<span class='cp gratuit' data-info="&lt;b&gt;⚔️ agir&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;avec le chapelain&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 50 · répond à la ligne 46, donc gratuit&lt;/span&gt;">⚔️ agir</span>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il y a entendu un faux nom: la capitaine des manteaux d'or&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 51 · engage « votre charge au palais : les clefs des offices et le droit d y passer »&lt;/span&gt;">➕ rearmer</span>
+<span class='cp compte' data-info="&lt;b&gt;🔒 bloquer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;le chapelain, qui veut le couronnement a l heure et rien d autre &lt;span class=q style='display:inline'&gt;→ sur « Un nom est prononce devant le conseil, et la main qui a verse est prise avant que la couronne touche la tete »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 52 · engage « le chapelain, qui veut le couronnement a l heure et rien d autre »&lt;/span&gt;">🔒 bloquer</span>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;le chapelain, qui veut le couronnement a l heure et rien d autre&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 54 · engage « la coupe, lavee le matin meme »&lt;/span&gt;">➕ rearmer</span>
+</td>
+</tr>
+<tr class=voie><td class=lab>🟡 nicolas</td>
+<td><span class=rien>—</span></td>
+<td>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;une personne sur qui je peuc compter&lt;/div&gt;&lt;div&gt;un essai qui ne doit pas passer&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 29–39&lt;/span&gt;">📦 demander ×2</span>
+</td>
+</tr>
+<tr class=voie><td class=lab>✅ constats</td>
+<td>
+<div class='marque faux' data-info="&lt;b&gt;❌ constat : faux&lt;/b&gt; Un nom est prononce devant le conseil, et la main qui a verse est prise avant que la couronne touche la tete&lt;span class=q&gt;Au premier jour, aucun nom n a ete prononce devant le conseil : rien n est prouve et personne n est pris. C est le point de depart, pas une defaite.&lt;/span&gt;">🔵 Un nom est prononce devant le conseil, et la m…</div>
+<div class='marque faux' data-info="&lt;b&gt;❌ constat : faux&lt;/b&gt; Le roi est mort de son coeur : le couronnement a lieu a l heure et aucun nom n est prononce&lt;span class=q&gt;Au premier jour, la couronne n a touche aucune tete et le mestre a refuse de signer : ce n est pas encore un coeur qui a lache. Point de depart symetrique.&lt;/span&gt;">🔴 Le roi est mort de son coeur : le couronnement…</div>
+</td>
+<td></td>
+</tr></table>
+<h2>Les pièces — ce qui était pris, et par quoi</h2>
+<table>
+<tr class=bande><td class='lab pl'>🔵 📦 la broche de Nicolas</td>
+<td style='width:150px'><div class='b' style='background:transparent' data-info="&lt;b&gt;📦 la broche de Nicolas&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 la broche de Nicolas&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 la capitaine des manteaux d or, saisie par le conseil</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 la capitaine des manteaux d or, saisie par le conseil&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 la capitaine des manteaux d or, saisie par le conseil&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « assiste à la scene et a entendu le nom pronocé »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 ⚰️ le corps du roi, pas encore embaume</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;⚰️ le corps du roi, pas encore embaume&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;⚰️ le corps du roi, pas encore embaume&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « porte un indice prouvant la presence du chapelain lors de sa mort »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 le gouteur du roi, vivant et terrifie</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le gouteur du roi, vivant et terrifie&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 le gouteur du roi, vivant et terrifie&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « assiste à la scene et a entendu le nom pronocé »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📄 le journal du roi</td>
+<td style='width:150px'><div class='b' style='background:transparent' data-info="&lt;b&gt;📄 le journal du roi&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#9a8f7a' data-info="&lt;b&gt;📄 le journal du roi&lt;/b&gt;&lt;span class=q&gt;tour 2 · attend l'arbitrage&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 le mestre qui a refuse de signer la mort naturelle</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le mestre qui a refuse de signer la mort naturelle&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le mestre qui a refuse de signer la mort naturelle&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📄 le registre des entrees du palais, la nuit du trois</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📄 le registre des entrees du palais, la nuit du trois&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📄 le registre des entrees du palais, la nuit du trois&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « le registre du palais montre que la capitaine se trouver dans la salle bain du 4ieme avec dame gynette »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 💰 une bourse d'or</td>
+<td style='width:150px'><div class='b' style='background:transparent' data-info="&lt;b&gt;💰 une bourse d'or&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#9a8f7a' data-info="&lt;b&gt;💰 une bourse d'or&lt;/b&gt;&lt;span class=q&gt;tour 2 · attend l'arbitrage&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 une part de gateau du soir de la mort du roi</td>
+<td style='width:150px'><div class='b' style='background:transparent' data-info="&lt;b&gt;📦 une part de gateau du soir de la mort du roi&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#9a8f7a' data-info="&lt;b&gt;📦 une part de gateau du soir de la mort du roi&lt;/b&gt;&lt;span class=q&gt;tour 2 · attend l'arbitrage&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 l apothicaire de la rue des Soeurs, qui vous doit trois cents</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 l apothicaire de la rue des Soeurs, qui vous doit trois cents&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 l apothicaire de la rue des Soeurs, qui vous doit trois cents&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « j'y vais réucupérer mon argent »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 la coupe, lavee le matin meme</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 la coupe, lavee le matin meme&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 la coupe, lavee le matin meme&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « le chapelain, qui veut le couronnement a l heure et rien d autre »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 le chapelain, qui veut le couronnement a l heure et rien d autre</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le chapelain, qui veut le couronnement a l heure et rien d autre&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 le chapelain, qui veut le couronnement a l heure et rien d autre&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « le chapelain, qui veut le couronnement a l heure et rien d autre »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 💰 une bourse : de quoi retourner un homme, une fois</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;💰 une bourse : de quoi retourner un homme, une fois&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;💰 une bourse : de quoi retourner un homme, une fois&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « il y a entendu un faux nom: la capitaine des manteaux d'or »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 une faveur d'un membre du conseil</td>
+<td style='width:150px'><div class='b' style='background:transparent' data-info="&lt;b&gt;📦 une faveur d'un membre du conseil&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 une faveur d'un membre du conseil&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 une épée</td>
+<td style='width:150px'><div class='b' style='background:transparent' data-info="&lt;b&gt;📦 une épée&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 une épée&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 votre charge au palais : les clefs des offices et le droit d y passer</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 votre charge au palais : les clefs des offices et le droit d y passer&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:150px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 votre charge au palais : les clefs des offices et le droit d y passer&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « il y a entendu un faux nom: la capitaine des manteaux d'or »&lt;/span&gt;"></div></td>
+</tr>
+</table>
+<p class=leg>
+<i style='background:#8aa87e'></i>libre
+<i style='background:#c0873a'></i>engagée
+<i style='background:#7d8fa8'></i>gelée
+<i style='background:#9a8f7a'></i>attend l'arbitrage
+<i style='background:#a34a3a'></i>perdue
+</p></main><div id=volet></div>
+<script>
+(function(){
+  var v=document.getElementById("volet");
+  document.addEventListener("mouseover",function(e){
+    var c=e.target.closest("[data-info]");
+    if(!c){v.style.display="none";return;}
+    v.innerHTML=c.getAttribute("data-info");
+    v.style.display="block";
+    poser(e);
+  });
+  document.addEventListener("mousemove",function(e){
+    if(v.style.display==="block") poser(e);
+  });
+  // Il se pose du côté où il y a la place : collé au bord droit, un volet de
+  // 380 px sur une pièce du dernier tour sortait de l'écran et se lisait à moitié.
+  function poser(e){
+    var b=v.getBoundingClientRect();
+    var x=e.clientX+14, y=e.clientY+16;
+    if(x+b.width>innerWidth-8) x=e.clientX-b.width-14;
+    if(y+b.height>innerHeight-8) y=e.clientY-b.height-16;
+    v.style.left=Math.max(6,x)+"px"; v.style.top=Math.max(6,y)+"px";
+  }
+})();
+</script></html>

@@ -90,11 +90,14 @@ Deux règles de tenue, chacune payée par un défaut constaté :
 | `scripts/noyau/partie_cartes.py` | la vue : fronts, piles, deck, desseins, apparences, brouillard |
 | `scripts/noyau/partie_gestes.py` | le geste traduit en coup : la CIBLE dit lequel, les refus rhabillés en clair |
 | `scripts/partie.py --cartes [--camp <camp>]` | la même vue en JSON, au terminal (le premier camp de la partie sinon) |
-| `serveur/domaine/partie.js` | quelle partie pour cette requête (`?id=`, sinon la plus récente) |
+| `scripts/noyau/partie_ascii.py` | la même vue DESSINÉE, au terminal : `--plateau` |
+| `serveur/domaine/partie.js` | quelle partie pour cette requête (`?id=`, sinon `_courante.json`), et QUEL CAMP (`?camp=`, sinon le `camp` de `_courante.json`, sinon le premier de la partie — plus jamais « noir » en dur) |
 | `serveur/routes/partie.js` | `GET /partie`, `POST /partie/geste`, `POST /partie/jour` |
-| `ecrans/modules/partie.js` `.css` | l'échelle « Le conseil » du décor |
+| `ecrans/modules/partie.js` `.css` | l'échelle « Le conseil » du décor : le serveur, la vue, le plateau |
+| `ecrans/modules/partie-grille.js` | la carte, le geste, et la GRILLE : une ligne par objet avec ses pièces posées dedans, plus l'aire de rangement |
 | `scripts/tests/test_partie_cartes.py` | le banc de la vue, sur `scripts/tests/donnees/partie-duel.jsonl` |
 | `scripts/tests/test_partie_gestes.py` | le banc des gestes, sur une copie jetable du même duel |
+| `scripts/tests/test_partie_ascii.py` | le banc du plateau texte : rien de la vue ne doit manquer au dessin |
 
 ## Faire jouer un camp par un homme — essayé, mesuré, retiré
 
@@ -129,6 +132,26 @@ que pour un coup qui n'est pas « tenir ».
 
 ## Le geste (v1)
 
+**Les pièces posées sont DANS la grille.** Une ligne = un objet du plateau, et
+les pièces qu'il engage sont rangées à sa suite, suivies d'une case vide quand
+on peut encore y lâcher quelque chose. Elles n'étaient nulle part auparavant :
+`partie_cartes.py` les retire des cartes filles d'une clef — elles y répétaient
+son titre —, si bien que ce avec quoi on tenait un verrou ne se voyait pas.
+**La case vide est la règle rendue visible** : là où il n'y en a pas, on ne peut
+pas poser.
+
+**L'aire — des cases sans règle.** Sous le plateau, douze cases où l'on range ce
+qu'on veut, librement. Le plateau ne montre que ce qui est ENGAGÉ ; avant
+d'engager, on veut rapprocher trois pièces et les regarder ensemble, ce que fait
+la main d'un joueur au-dessus d'un vrai plateau. **Ce rangement n'est pas un
+coup** : il ne part pas au greffe et vit dans le navigateur (`localStorage`, une
+clé par partie et par siège), jamais dans `etat/`. Une pièce qui cesse d'être
+libre quitte l'aire d'elle-même — elle est sur le plateau, l'y laisser en double
+serait un mensonge. Corollaire assumé : **toute pièce à nous se soulève**, libre
+ou non, sans quoi on ne pourrait pas mettre de côté ce qu'on ne peut pas encore
+jouer ; ce qui est illégal se refuse au greffe, avec sa phrase, pas en rendant
+la carte inerte.
+
 **Un seul geste, toujours le même : on prend une carte et on la pose sur une
 autre.** Ce que ça VEUT DIRE, c'est la carte du dessous qui le dit — l'écran ne
 connaît aucun nom de coup, il envoie « j'ai posé ceci sur cela » et
@@ -140,6 +163,12 @@ connaît aucun nom de coup, il envoie « j'ai posé ceci sur cela » et
 | une pièce 📦 | un obstacle 🔒 déjà tenu par un de nos ordres | `rearmer` — on renforce, on n'ouvre pas un doublon |
 | une pièce 📦 | un de nos ordres 🗝️ | `rearmer` |
 | une pièce 📦 | une frappe 💥 d'en face | `bloquer` — on couvre la pièce visée |
+| une pièce 📦 | un état 🎯 d'en face | `bloquer` — un verrou neuf, dont le titre est au joueur |
+| une pièce 📦 | un état 🎯 à nous | `lever` — une clef qui le SERT, sans rien ouvrir |
+| une phrase | la case 🎯 vide au bout de notre rangée | `viser` — un état neuf, sous la racine |
+| une phrase | la case 📦 vide au bout de « En main » | `demander` — une pièce, qui attend l'arbitre ; gratuit |
+| une phrase | la poignée ❓ d'une carte d'en face | `justifier` — on exige la chaîne ; gratuit, et une seule fois par pièce |
+| une phrase | la poignée ⚔️ d'une carte à nous suspendue | `agir` — le maillon qui répond, et la suspension tombe ; gratuit |
 | une carte à nous | le deck | `retirer` — et ses pièces se remettent quatre jours |
 | — | « Le jour passe » | `tour`, par l'arbitre |
 
@@ -162,8 +191,30 @@ tour » reste **gradué** : le second coup passe et se dit, il ne se bloque pas.
 qu'un coup change dans le monde reste au MJ, qui l'applique par
 `partie.py --ecritures`.
 
-Cinq coups restent hors de l'écran : `viser` (poser un dessein), `demander` une
-pièce, `detruire`, `justifier` et tout ce qui est `arbitrer`. Ils se jouent à la
-ligne, par le MJ. La raison est la même pour les cinq : ils n'ont pas de geste
-naturel sur un plateau de cartes, et leur donner un bouton ferait un menu — ce
-qu'on s'interdit partout ailleurs.
+**Le maillon a suivi le ❓ le 5.9 au soir**, et il le fallait : on pouvait
+suspendre la pièce d'en face d'un clic sans que son camp puisse la relever, ce
+qui donnait à la question un pouvoir qu'elle n'a pas au livre. La poignée ⚔️
+paraît sur NOS cartes suspendues (`suspendue`, posé par `partie_marques` avec
+`questionnable`), ouvre la même bulle, et le greffe reconnaît de lui-même que le
+maillon répond à la question — il pose `repond`, et le coup ne compte pas.
+
+Deux coups restent hors de l'écran : `detruire` et tout ce qui est `arbitrer`.
+Ils se jouent à la ligne, par le MJ.
+La raison est la même : ils n'ont pas de geste naturel sur un plateau de cartes,
+et leur donner un bouton ferait un menu — ce qu'on s'interdit partout ailleurs.
+
+**`justifier` est entré le 5.9 par la poignée ❓**, et c'est le seul coup de
+l'écran qui ne soit pas un glissé — parce qu'une question n'engage aucune pièce.
+Elle se paie d'une autre monnaie : une seule fois par pièce dans toute la
+partie. La poignée ne paraît qu'au survol d'une carte D'EN FACE, et seulement là
+où le greffe dirait oui : `partie_cartes` pose `questionnable` du même jugement
+que `partie_validite` — camp adverse, pas déjà justifiée. Ce n'est pas un menu
+non plus : c'est la carte elle-même qu'on interroge, à l'endroit où elle est
+posée.
+
+**`viser` et le verrou sur un état sont entrés le 5.9**, sur une partie qui
+s'ouvrait (`pavillon-b`) : deux racines, aucun verrou — et donc AUCUN geste
+possible à l'écran, devant sept pièces libres. Un verrou se pose sur un état
+(règle 3.1) et un état se pose sous un autre : ce sont deux coups du livre, et
+ils ont un geste naturel — une pièce sur la case 🎯, une phrase dans la case 🎯
+vide. Ce n'est pas un menu ; c'est une case de plus.

@@ -1,0 +1,155 @@
+<!doctype html><html lang=fr><meta charset=utf-8>
+<title>Ruban — pavillon-b</title>
+<style>
+:root{--fond:#f4eee2;--encre:#2b2119;--gris:#7a6a55;--ligne:#d9cfbc;--carte:#fffbf2}
+@media (prefers-color-scheme:dark){:root{--fond:#171310;--encre:#e6dbc6;--gris:#a8977c;--ligne:#3a322a;--carte:#1f1a15}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font:14px/1.4 Georgia,"Times New Roman",serif}
+header{padding:14px 20px;border-bottom:1px solid var(--ligne)}
+h1{font-size:17px;margin:0 0 3px;font-weight:normal}
+header .k{color:var(--gris);font-size:12.5px}
+main{padding:12px 20px 40px;overflow-x:auto}
+table{border-collapse:collapse}
+th,td{padding:0;vertical-align:top}
+th.t{font-weight:normal;font-size:11px;color:var(--gris);text-align:center;
+  border-bottom:1px solid var(--ligne);padding:2px 0 4px}
+td.lab,th.lab{position:sticky;left:0;background:var(--fond);z-index:2;
+  padding-right:10px;font-size:12px;white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.voie td{border-bottom:1px solid var(--ligne);padding:3px 3px 5px}
+.cp{display:block;font-size:11px;line-height:1.25;margin:2px 0;padding:3px 5px;border-radius:3px;
+  border:1px solid var(--ligne);background:var(--carte)}
+.cp.compte{border-color:currentColor;font-weight:600}
+.cp.gratuit{opacity:.62;border-style:dashed}
+.rien{color:var(--gris);font-size:11px;font-style:italic;text-align:center;display:block;padding:4px 0}
+.bande td{padding:0 1px}
+.b{height:15px;border-radius:2px;background:var(--ligne);opacity:.35}
+.b.on{opacity:1}
+.pl{font-size:11.5px}
+.marque{margin:3px 0;padding:3px 5px;border-radius:3px;font-size:11px;line-height:1.25;
+  border-left:3px solid #6f9c62;background:color-mix(in srgb,#6f9c62 14%,transparent)}
+.marque.faux{border-left-color:#a34a3a;background:color-mix(in srgb,#a34a3a 14%,transparent)}
+h2{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gris);
+  font-weight:normal;margin:22px 0 6px}
+.leg{color:var(--gris);font-size:11.5px;margin:6px 0 0}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 3px 0 12px;vertical-align:-1px}
+/* LE VOLET. Le `title` du navigateur mettait une seconde à paraître, coupait
+   au-delà d'une ligne et ne savait pas mettre un mot en gras — sur un ruban où
+   TOUT le détail est au survol, c'était la moitié de la vue rendue illisible.
+   Celui-ci paraît sans délai, tient plusieurs lignes, et se pose du côté où il
+   y a la place. Il ne prend jamais le curseur. */
+#volet{position:fixed;z-index:99;max-width:380px;pointer-events:none;display:none;
+  background:var(--carte);border:1px solid var(--encre);border-radius:4px;
+  padding:7px 9px;box-shadow:0 6px 18px rgba(0,0,0,.28);font-size:12px;line-height:1.35}
+#volet b{font-weight:600}
+#volet .q{color:var(--gris);font-size:11px;display:block;margin-top:3px}
+[data-info]{cursor:help}
+</style>
+<header><h1>pavillon-b</h1><div class=k>1 tours · 🔵 police 🔴 tueur · 👑 personne</div></header><main>
+<h2>Les coups — ce qui compte est plein, ce qui est gratuit est en creux</h2>
+<table><tr><th class=lab></th>
+<th class=t style='width:150px'>tour 1</th>
+</tr>
+<tr class=voie><td class=lab>🔵 police</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Un membre du pavillon B est mis en examen pour les morts d Ardant et de Kessler avant qu un troisieme greffe meure&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 1&lt;/span&gt;">🎯 viser</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;la capitaine Naima Beyer, police judiciaire&lt;/div&gt;&lt;div&gt;le brigadier Costa&lt;/div&gt;&lt;div&gt;le Dr Halim, medecin legiste, qui a refuse de signer Kessler en mort naturelle&lt;/div&gt;&lt;div&gt;le corps de M. Kessler, mort a 4h10 d un choc septique au pavillon B&lt;/div&gt;&lt;div&gt;le corps de Mme Ardant, inhumee au cimetiere de l Est, morte d un rejet aigu neuf jours avant&lt;/div&gt;&lt;div&gt;les tubes conserves en serotheque des deux patients : dosages retrospectifs de tacrolimus et de creatinine&lt;/div&gt;&lt;div&gt;le journal de l armoire a pharmacie automatisee du pavillon B : qui a ouvert quoi, quand&lt;/div&gt;&lt;div&gt;les acces badges du pavillon B sur trente jours&lt;/div&gt;&lt;div&gt;le planning des gardes de nuit du pavillon B sur le mois&lt;/div&gt;&lt;div&gt;les greffes du pavillon B, sous immunosuppresseurs, onze lits&lt;/div&gt;&lt;div&gt;deux agents en faction de nuit au pavillon B, a la demande du parquet&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 4–24&lt;/span&gt;">📦 demander ×11</span>
+</td>
+</tr>
+<tr class=voie><td class=lab>🔴 tueur</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Le pavillon B a perdu un troisieme greffe et l enquete n a pas de nom&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 2&lt;/span&gt;">🎯 viser</span>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;La troisieme mort du pavillon B est classee naturelle par le service&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 3&lt;/span&gt;">🎯 viser</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;le roulement de nuit : une semaine sur deux, trois soignants par nuit&lt;/div&gt;&lt;div&gt;les codes de l armoire a pharmacie, partages par toute l equipe depuis un an&lt;/div&gt;&lt;div&gt;la mortalite du service : trois morts par trimestre en moyenne sur cinq ans&lt;/div&gt;&lt;div&gt;le Pr Delorme, chef de service, qui ne veut pas d une police dans son unite&lt;/div&gt;&lt;div&gt;Lucas Ferrand, interne de premiere annee, present et epuise les deux nuits&lt;/div&gt;&lt;div&gt;la reserve de thymoglobuline et d ampoules de chlorure de potassium, comptee une fois par mois&lt;/div&gt;&lt;div&gt;quinze ans de service sans une plainte&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 26–38&lt;/span&gt;">📦 demander ×7</span>
+</td>
+</tr>
+<tr class=voie><td class=lab>✅ constats</td>
+<td></td>
+</tr></table>
+<h2>Les pièces — ce qui était pris, et par quoi</h2>
+<table>
+<tr class=bande><td class='lab pl'>🔵 📦 deux agents en faction de nuit au pavillon B, a la demande du parquet</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 deux agents en faction de nuit au pavillon B, a la demande du parquet&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 👤 la capitaine Naima Beyer, police judiciaire</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;👤 la capitaine Naima Beyer, police judiciaire&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 👤 le Dr Halim, medecin legiste, qui a refuse de signer Kessler en mort naturelle</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;👤 le Dr Halim, medecin legiste, qui a refuse de signer Kessler en mort naturelle&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 ⚔️ le brigadier Costa</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;⚔️ le brigadier Costa&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 le corps de M. Kessler, mort a 4h10 d un choc septique au pavillon B</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le corps de M. Kessler, mort a 4h10 d un choc septique au pavillon B&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 le corps de Mme Ardant, inhumee au cimetiere de l Est, morte d un rejet aigu neuf jours avant</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le corps de Mme Ardant, inhumee au cimetiere de l Est, morte d un rejet aigu neuf jours avant&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 le journal de l armoire a pharmacie automatisee du pavillon B : qui a ouvert quoi, quand</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le journal de l armoire a pharmacie automatisee du pavillon B : qui a ouvert quoi, quand&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 le planning des gardes de nuit du pavillon B sur le mois</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le planning des gardes de nuit du pavillon B sur le mois&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 les acces badges du pavillon B sur trente jours</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 les acces badges du pavillon B sur trente jours&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 les greffes du pavillon B, sous immunosuppresseurs, onze lits</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 les greffes du pavillon B, sous immunosuppresseurs, onze lits&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 les tubes conserves en serotheque des deux patients : dosages retrospectifs de tacrolimus et de creatinine</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 les tubes conserves en serotheque des deux patients : dosages retrospectifs de tacrolimus et de creatinine&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 👤 Lucas Ferrand, interne de premiere annee, present et epuise les deux nuits</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;👤 Lucas Ferrand, interne de premiere annee, present et epuise les deux nuits&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 la mortalite du service : trois morts par trimestre en moyenne sur cinq ans</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 la mortalite du service : trois morts par trimestre en moyenne sur cinq ans&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 la reserve de thymoglobuline et d ampoules de chlorure de potassium, comptee une fois par mois</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 la reserve de thymoglobuline et d ampoules de chlorure de potassium, comptee une fois par mois&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 👤 le Pr Delorme, chef de service, qui ne veut pas d une police dans son unite</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;👤 le Pr Delorme, chef de service, qui ne veut pas d une police dans son unite&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 le roulement de nuit : une semaine sur deux, trois soignants par nuit</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 le roulement de nuit : une semaine sur deux, trois soignants par nuit&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 les codes de l armoire a pharmacie, partages par toute l equipe depuis un an</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 les codes de l armoire a pharmacie, partages par toute l equipe depuis un an&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 quinze ans de service sans une plainte</td>
+<td style='width:150px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 quinze ans de service sans une plainte&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+</tr>
+</table>
+<p class=leg>
+<i style='background:#8aa87e'></i>libre
+<i style='background:#c0873a'></i>engagée
+<i style='background:#7d8fa8'></i>gelée
+<i style='background:#9a8f7a'></i>attend l'arbitrage
+<i style='background:#a34a3a'></i>perdue
+</p></main><div id=volet></div>
+<script>
+(function(){
+  var v=document.getElementById("volet");
+  document.addEventListener("mouseover",function(e){
+    var c=e.target.closest("[data-info]");
+    if(!c){v.style.display="none";return;}
+    v.innerHTML=c.getAttribute("data-info");
+    v.style.display="block";
+    poser(e);
+  });
+  document.addEventListener("mousemove",function(e){
+    if(v.style.display==="block") poser(e);
+  });
+  // Il se pose du côté où il y a la place : collé au bord droit, un volet de
+  // 380 px sur une pièce du dernier tour sortait de l'écran et se lisait à moitié.
+  function poser(e){
+    var b=v.getBoundingClientRect();
+    var x=e.clientX+14, y=e.clientY+16;
+    if(x+b.width>innerWidth-8) x=e.clientX-b.width-14;
+    if(y+b.height>innerHeight-8) y=e.clientY-b.height-16;
+    v.style.left=Math.max(6,x)+"px"; v.style.top=Math.max(6,y)+"px";
+  }
+})();
+</script></html>

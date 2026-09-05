@@ -1,0 +1,182 @@
+<!doctype html><html lang="fr"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le coach — Le roi est mort</title>
+<style>
+:root{--fond:#f4eee2;--encre:#2b2119;--gris:#7a6a55;--ligne:#d9cfbc;--carte:#fffbf2;
+      --a:#2457b3;--a-f:#dfe8f7;--n:#b3302a;--n-f:#f6dedb;--arbitre:#b8651a;--or:#a3722a;--eau:#3c7a9c}
+@media (prefers-color-scheme:dark){:root{--fond:#171310;--encre:#e6dbc6;--gris:#a8977c;--ligne:#3a322a;--carte:#1f1a15;
+      --a:#7fa6ea;--a-f:#1c2a44;--n:#ee8a80;--n-f:#3a1f1e;--arbitre:#f0a84e;--or:#d9a441;--eau:#7fb3d0}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font:15px/1.5 Georgia,"Times New Roman",serif}
+header{padding:16px 22px 12px;border-bottom:1px solid var(--ligne);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+h1{font-size:19px;margin:0;font-weight:normal}
+header .k{color:var(--gris);font-size:13px}
+nav{display:flex;gap:4px;padding:8px 22px;border-bottom:1px solid var(--ligne);flex-wrap:wrap;position:sticky;top:0;background:var(--fond);z-index:3}
+nav a{font-size:13px;color:var(--gris);text-decoration:none;padding:4px 9px;border:1px solid transparent;border-radius:3px}
+nav a:hover{border-color:var(--ligne);color:var(--encre)}
+main{padding:10px 22px 60px;max-width:980px}
+section{margin-top:34px}
+h2{font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);font-weight:normal;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--ligne)}
+h3{font-size:15px;margin:16px 0 6px;font-weight:normal}
+p{margin:0 0 10px;max-width:72ch}
+pre{margin:10px 0 14px;background:var(--carte);border:1px solid var(--ligne);border-radius:4px;padding:12px 14px;
+    font:13px/1.45 ui-monospace,"Cascadia Mono",Consolas,monospace;overflow-x:auto;white-space:pre}
+pre b{font-weight:bold}
+.a{color:var(--a)}.n{color:var(--n)}.o{color:var(--or)}.e{color:var(--eau)}.g{color:var(--gris)}
+.cle{border-left:3px solid var(--or);background:var(--carte);padding:8px 14px;border-radius:0 4px 4px 0;margin:12px 0;max-width:74ch}
+.cle.a{border-color:var(--a);background:var(--a-f)}.cle.n{border-color:var(--n);background:var(--n-f)}
+.deux{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.deux{grid-template-columns:1fr}}
+.bloc{background:var(--carte);border:1px solid var(--ligne);border-radius:4px;padding:12px 14px}
+.bloc.a{border-color:var(--a)}.bloc.n{border-color:var(--n)}
+.bloc h3{margin:0 0 6px}
+.bloc p{font-size:14px;margin-bottom:6px}
+ul{margin:0 0 10px;padding-left:20px;max-width:72ch}
+li{margin-bottom:5px}
+code{font:13px ui-monospace,Consolas,monospace;background:var(--carte);border:1px solid var(--ligne);border-radius:3px;padding:0 4px}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0 14px}
+th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--ligne);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);font-weight:normal}
+.tw{overflow-x:auto}
+</style>
+
+<header>
+  <h1>👑 Le coach — <b>Le roi est mort</b></h1>
+  <span class="k" id="etat">tour 2 · trait à 🔵 l'enquête</span>
+</header>
+<nav>
+  <a href="#horloge">⏳ L'horloge</a><a href="#forces">⚖️ Les deux camps</a><a href="#marches">🪜 Les deux marches</a>
+  <a href="#bleu">🔵 Aurore</a><a href="#rouge">🔴 Le tueur</a><a href="#reponses">🔁 Si l'autre fait…</a><a href="#fautes">💀 Les fautes</a>
+</nav>
+<main>
+
+<section id="horloge">
+<h2>⏳ L'horloge — elle décide de tout</h2>
+<pre>
+   tour 2          tour 3              tour 4            après
+   ┌─────────────┬───────────────────┬─────────────────┬──────────────
+   │ vous êtes   │ 🕯️ ON EMBAUME     │ 👑 COURONNEMENT │  plus rien
+   │ ici         │    LE ROI         │ l'affaire est   │
+   │             │                   │ close           │
+   └─────────────┴───────────────────┴─────────────────┴──────────────
+      🔵 trois coups au plus  ·  🔴 trois coups au plus
+</pre>
+<div class="cle"><p><b>Deux dates, et elles ne tirent pas dans le même sens.</b> Le couronnement travaille
+<b>pour 🔴</b> : il n'a pas à gagner, il a à durer. L'embaumement travaille <b>contre 🔵</b> : ce qu'elle
+n'aura pas demandé au corps avant le tour 3, elle ne le lui demandera plus jamais. Trois coups chacun —
+<b>un coup gâché est un tiers de la partie</b>.</p></div>
+</section>
+
+<section id="forces">
+<h2>⚖️ Les deux camps — ce que chacun a, et ce qui lui manque</h2>
+<div class="deux">
+<div class="bloc a"><h3>🔵 L'enquête — cinq pièces, aucune qui prouve seule</h3>
+<p>🛡️ <b>la capitaine</b> ouvre les portes, elle ne trouve rien. ⚰️ <b>le mestre</b> lit un corps, pas les hommes.
+💀 <b>le corps</b> est la seule pièce périssable de la partie. 📄 <b>le registre</b> dit qui est <em>entré</em> —
+pas qui était déjà dedans. 👤 <b>le goûteur</b> est vivant : c'est un fait, et c'est un homme, donc il s'achète.</p>
+<p><b>Sa force est la combinaison</b>, jamais la pièce seule. <b>Sa faiblesse est le temps</b>, et le temps
+ne se rachète pas.</p></div>
+<div class="bloc n"><h3>🔴 Le tueur — cinq pièces, aucune qui ait à prouver</h3>
+<p>🔑 <b>votre charge</b> vous met partout et au-dessus du soupçon — jusqu'au jour où l'on vous nomme.
+💊 <b>l'apothicaire</b> vous doit trois cents : un lien tient tant que personne ne le trouve.
+💰 <b>la bourse</b> retourne un homme, <b>une seule fois dans toute la partie</b>.
+⛪ <b>le chapelain</b> ne travaille pas pour vous, mais tout ce qui retarde la cérémonie le trouve en travers.
+🍷 <b>la coupe</b> est lavée : elle vous sert tant que personne ne demande <em>qui</em> l'a lavée.</p>
+<p><b>Vous n'avez rien à démontrer</b> — c'est votre avantage entier. <b>Mais chaque coup que vous jouez est
+une ligne au livre qui porte votre nom</b>, et une pièce engagée est une pièce qu'on peut interroger.</p></div>
+</div>
+</section>
+
+<section id="marches">
+<h2>🪜 Les deux marches — l'arbitre l'a écrit, et c'est toute la partie</h2>
+<pre>
+  🎯 « un nom est prononcé, et la main qui a versé est prise »
+      │
+      ├── 🪜 MARCHE 1 · <b>ce n'est pas son cœur</b>   ⟵ quel poison, trouvé où, par quel examen
+      │        ⚰️ le mestre + 💀 le corps — <b>avant le tour 3</b>
+      │
+      └── 🪜 MARCHE 2 · <b>quelle main</b>             ⟵ qui a versé, quel jour, vu par qui
+               📄 le registre + 👤 le goûteur + 🍷 la coupe
+</pre>
+<div class="cle"><p><b>« Je ne prends pas la seconde sans la première. »</b> C'est écrit dans ma question
+d'ouverture et je m'y tiendrai. 🔵 doit monter <b>deux</b> marches en trois coups ; 🔴 n'a besoin d'en casser
+<b>qu'une</b> — et la première est celle qu'il a le plus intérêt à laisser passer.</p></div>
+</section>
+
+<section id="bleu">
+<h2>🔵 Aurore — vous ouvrez</h2>
+<div class="deux">
+<div class="bloc a"><h3>A · Viser, puis prouver <span class="g">— recommandé</span></h3>
+<p>🎯 <em>« le roi a été empoisonné »</em>, et 🗝️ le mestre avec le corps dessous.
+<b>Pour :</b> ça parle dans les mots de l'arbitre et ça crée une marche constatable.
+<b>Contre :</b> deux coups sur trois — il ne vous en reste qu'un pour la main.</p></div>
+<div class="bloc a"><h3>B · Tout sur le corps, tout de suite</h3>
+<p>🗝️ mestre + corps directement sous la racine, sans état intermédiaire.
+<b>Pour :</b> un seul coup, et le corps est joué avant qu'on l'embaume.
+<b>Contre :</b> une clef qui prétend franchir les deux marches d'un coup se fait justifier — et elle est nue.</p></div>
+<div class="bloc"><h3>C · Le goûteur d'abord <span class="g">— la voie oblique</span></h3>
+<p>Il a goûté et il n'est pas mort : c'est déjà une marche 1 <em>sans</em> le corps, donc sans l'horloge de l'embaumement.
+<b>Contre :</b> un homme s'achète, et 🔴 a une bourse. Ce que vous bâtissez sur lui, il peut le racheter au tour 3.</p></div>
+<div class="bloc"><h3>D · Ce qu'il ne faut PAS faire</h3>
+<p><b>Bloquer sa racine.</b> Le couronnement aura lieu de toute façon : un verrou dessus ne prouve rien et vous
+coûte un tiers de vos coups. On gagne en <b>bâtissant</b>, pas en empêchant.</p></div>
+</div>
+</section>
+
+<section id="rouge">
+<h2>🔴 Le tueur — vous répondez</h2>
+<div class="deux">
+<div class="bloc n"><h3>1 · Ne défendez pas la marche 1</h3>
+<p>Le poison, <b>laissez-le passer</b>. Le bloquer engage une de vos pièces sur une affaire qui ne vous nomme
+pas encore, et donne à Aurore une pièce à questionner — donc une porte sur vous.
+<b>Un roi empoisonné n'accuse personne.</b></p></div>
+<div class="bloc n"><h3>2 · Tout se joue sur la main</h3>
+<p>Gardez 🔑 la charge, 💰 la bourse et 🍷 la coupe pour la marche 2. C'est là qu'un verrou vous rapporte le tour
+entier — et le défenseur tient par défaut : il suffit qu'elle ne prouve pas.</p></div>
+<div class="bloc n"><h3>3 · Le faux nom, mais TARD</h3>
+<p>🎯 <em>« c'est l'échanson qui a versé »</em>, appuyé par 💰 la bourse. Ça ne vous innocente pas : ça
+<b>mange son temps</b>, et le temps est la seule chose qu'elle ne peut pas racheter. Posé au tour 2, il se
+démonte et vous nomme ; posé au tour 3, il tient jusqu'à la couronne.</p></div>
+<div class="bloc n"><h3>4 · Votre question vaut un coup entier</h3>
+<p>❓ gratuite, une fois par pièce. Pas sur sa racine — l'arbitre l'a déjà justifiée. Sur <b>sa première clef</b> :
+<em>« par quel poison, trouvé où dans le corps, par quel examen, et quel jour ? »</em> Si l'examen tombe après
+le tour 3, le corps est embaumé et sa chaîne meurt de sa propre date.</p></div>
+</div>
+<div class="cle n"><p><b>Le tueur qui gagne est celui qui a joué deux coups en quatre tours.</b> Le silence n'est
+pas de la passivité : c'est votre meilleure défense, et elle ne coûte rien.</p></div>
+</section>
+
+<section id="reponses">
+<h2>🔁 Si l'autre fait… — la table des réponses</h2>
+<div class="tw"><table>
+<tr><th>l'autre vient de…</th><th>vous répondez (gratuit)</th><th>puis (votre coup)</th></tr>
+<tr><td>🔵 🗝️ mestre + corps : « poison »</td><td>❓ <em>quel poison, trouvé où, par quel examen, quel jour ?</em></td><td>rien — laissez la marche 1 passer</td></tr>
+<tr><td>🔵 🗝️ registre : « il est entré à minuit »</td><td>❓ <em>et ceux qui étaient déjà dedans, qui les a comptés ?</em></td><td>🔒 la charge : y être chez soi n'est pas une preuve</td></tr>
+<tr><td>🔵 🗝️ le goûteur parle</td><td>❓ <em>il a goûté quoi, à quelle heure, et pourquoi vit-il ?</em></td><td>💰 la bourse sur lui — une seule fois, choisissez bien</td></tr>
+<tr><td>🔴 🎯 « c'est l'échanson »</td><td>❓ <em>versé quand, vu par qui, et qui l'a payé ?</em></td><td>🗝️ le registre : l'échanson n'était pas là cette nuit-là</td></tr>
+<tr><td>🔴 🔒 sur la marche 2</td><td>❓ <em>par quoi tenez-vous cela ?</em> — il devra écrire son maillon</td><td>🗝️ la coupe : <b>qui l'a lavée, et sur l'ordre de qui ?</b></td></tr>
+<tr><td>🕯️ l'embaumement (tour 3)</td><td>—</td><td>🔵 tout ce qui touchait au corps devient impossible : basculez sur les hommes</td></tr>
+</table></div>
+</section>
+
+<section id="fautes">
+<h2>💀 Les trois fautes qui perdent cette partie</h2>
+<ul>
+<li><b>🔵 dépenser un coup à empêcher.</b> Trois coups, deux marches à monter : il n'y a pas de place pour un verrou décoratif.</li>
+<li><b>🔴 jouer trop tôt.</b> Une pièce engagée au tour 2 est une pièce interrogée au tour 3.</li>
+<li><b>Les deux : oublier la question.</b> Elle est gratuite, elle suspend, elle oblige l'autre à écrire.
+Une partie de trois coups se gagne avec les coups qui n'en coûtent aucun.</li>
+</ul>
+<p class="k">Écrit à la main par le mestre, sur la position du tour 2. Il ne se met pas à jour tout seul :
+ce qu'il dit du tour 4 vaut jusqu'à ce que quelqu'un fasse mentir le tour 3.</p>
+</section>
+
+</main>
+<script>
+fetch("/partie?id=le-roi-est-mort&camp=enquete", {cache:"no-store"}).then(r => r.json()).then(v => {
+  const em = {enquete:"\u{1F535}", tueur:"\u{1F534}"};
+  document.getElementById("etat").textContent = "tour " + v.tour + " \u00b7 trait \u00e0 " + (em[v.trait]||"") + " " + v.trait
+    + " \u00b7 tr\u00f4ne \u00e0 " + (v.trone ? (em[v.trone]||"") + " " + v.trone : "personne");
+}).catch(() => {});
+</script>
+</html>

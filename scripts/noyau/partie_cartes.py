@@ -31,9 +31,10 @@ Lecture seule : rien ici ne change la position ni n'écrit dans etat/.
 import io
 import json
 import os
+import re
 
 import partie_lecture
-from partie_greffe import RACINE, JOURS_PAR_TOUR, liste
+from partie_greffe import RACINE, JOURS_PAR_TOUR, DECK_MAX, liste
 
 TYPES = {"cible": "🎯", "verrou": "🔒", "clef": "🗝️", "action": "⚔️",
          "piece": "📦", "question": "❓", "frappe": "💥"}
@@ -85,20 +86,51 @@ _DRAGONS = ("caraxes", "syrax", "meleys", "vermax", "vhagar", "sunfyre", "tessar
             "silverwing", "sheepstealer", "cannibal", "grey-ghost")
 
 
+# LE GENRE D'UNE PIÈCE, dit par la ligne (`genre`) ou deviné de son texte. La
+# première table ne connaissait que la Danse — dragons, nefs, osts, bourses —
+# et tout le reste tombait dans 📦 : sur `pavillon-b`, onze pièces sur dix-huit
+# étaient la même boîte, un journal d'armoire comme un cadavre. Le jeu ne
+# tient pas qu'aux dragons ; ses signes non plus.
+GENRES = {"dragon": "🐉", "nef": "⛵", "troupe": "⚔️", "or": "💰", "homme": "👤", "lieu": "🏰",
+          "document": "📄", "labo": "🧪", "corps": "⚰️", "remede": "💊", "acces": "🔑",
+          "chiffre": "📊", "lits": "🛏️", "garde": "🛡️", "merite": "🎖️"}
+_MOTS = (
+    ("⛵", ("coque", "galer", "nef", "barque", "flotte")),
+    ("⚔️", ("ost", "lance", "garnison", "guet", "compagnie", "hommes", "arch")),
+    ("💰", ("cassette", "bourse", "dragons d'or", "deniers", "hask", "euros", "liquide")),
+    ("🧪", ("labo", "dosage", "serotheque", "sérothèque", "adn", "analyse", "tube", "prelev", "prélèv", "toxico")),
+    ("⚰️", ("corps d", "cadavre", "depouille", "dépouille", "autopsie", "exhum")),
+    ("💊", ("reserve", "réserve", "ampoule", "flacon", "medicament", "médicament", "seringue", "thymoglobuline", "potassium", "tacrolimus")),
+    ("🔑", ("badge", "codes", "acces", "accès", "clef de", "cle de", "clé de")),
+    ("📄", ("journal", "dossier", "releve", "relevé", "registre", "planning", "roulement", "pv ", "proces", "procès", "rapport", "comptage", "inventaire", "bordereau", "courrier", "lettre")),
+    ("📊", ("statisti", "mortalit", "moyenne", "taux de", "chiffre")),
+    ("🛏️", ("lits", "patients", "greffes du", "greffés du", "malades", "riverain")),
+    ("🛡️", ("agent", "faction", "patrouille", "garde de", "garde-", "vigile", "sentinelle")),
+    ("🎖️", ("sans une plainte", "sans tache", "sans tâche", "reputation", "réputation", "ans de service", "etats de service", "états de service")),
+)
+
+
+def _contient(s, mot):
+    """Le mot EN DÉBUT DE MOT : « ost » se lit dans « l'ost de Peyredragon », pas
+    dans « Costa » — le brigadier était devenu une troupe."""
+    return re.search(r"(?<![a-zà-ÿ])" + re.escape(mot), s) is not None
+
+
 def genre_piece(r, rid):
-    """Le sous-emoji d'une pièce : dit par la ligne (`genre`) ou deviné du nom."""
+    """Le sous-emoji d'une pièce : dit par la ligne (`genre`) ou deviné du nom.
+    La Danse d'abord, puis le vocabulaire d'une enquête ; une personne est un
+    👤 quand elle se tient elle-même ; sinon la boîte."""
     g = r.get("genre")
-    if g in ("dragon", "nef", "troupe", "or", "homme", "lieu"):
-        return {"dragon": "🐉", "nef": "⛵", "troupe": "⚔️", "or": "💰", "homme": "👤", "lieu": "🏰"}[g]
+    if g in GENRES:
+        return GENRES[g]
+    if g and len(g) <= 4 and not g.isalnum():
+        return g                      # un emoji donné tel quel par la ligne
     s = (rid + " " + (r.get("texte") or "")).lower()
-    if any(d in s for d in _DRAGONS):
+    if any(_contient(s, d) for d in _DRAGONS):
         return "🐉"
-    if any(k in s for k in ("coque", "galer", "nef", "barque", "flotte")):
-        return "⛵"
-    if any(k in s for k in ("ost", "lance", "garnison", "guet", "compagnie", "hommes", "arch")):
-        return "⚔️"
-    if any(k in s for k in ("cassette", "bourse", "dragons d'or", "deniers", "hask")):
-        return "💰"
+    for emoji, mots in _MOTS:
+        if any(_contient(s, k) for k in mots):
+            return emoji
     if r.get("tenu_par") and str(r["tenu_par"]) == rid:
         return "👤"
     return "📦"
@@ -119,7 +151,98 @@ def touches(p):
     return out
 
 
+# ------------------------------------------------------------------ le journal
+def _ligne_claire(p, l):
+    """Une ligne du greffe dite en clair : qui, quel coup, sur quoi, la phrase."""
+    from partie_greffe import EMOJI_COUP
+    cible = l.get("id") or l.get("sur") or l.get("etat") or l.get("cible") or l.get("realise") or ""
+    sujet = titre(p, cible) if cible else ""
+    if sujet == cible or not sujet:
+        sujet = nom(cible) if cible else ""
+    return {"n": l.get("n"), "tour": l.get("tour"), "camp": l.get("camp"), "coup": l.get("coup"),
+            "emoji": EMOJI_COUP.get(l.get("coup"), "·"), "sujet": sujet,
+            "texte": l.get("texte") or l.get("motif") or "", "verdict": l.get("verdict"),
+            "engage": [nom(x) for x in liste(l.get("engage"))],
+            "gratuit": l.get("coup") in ("demander", "justifier", "consigne") or bool(l.get("repond"))}
+
+
+# ------------------------------------------------------------ le dernier tour
+SIGNALE = ("constatables", "inactifs", "branches_mortes", "menaces", "parees",
+           "parades_tenues", "arrivees", "degeles", "etats_arrives")
+
+
+def _signale(p):
+    """Ce que le greffe a porté sur la dernière ligne `tour` : ni verdict ni
+    coup, mais c'est là que se lisent les états mûrs à constater, les camps
+    qui n'ont rien joué depuis trois tours, et les pièces qu'on a demandées
+    puis oubliées. Les listes vides sont retirées : on ne montre pas un titre
+    pour dire qu'il n'y a rien dessous."""
+    for l in reversed(p.lignes):
+        if l.get("coup") == "tour":
+            return dict((k, l[k]) for k in SIGNALE if l.get(k))
+    return {}
+
+
 # ---------------------------------------------------------------- les pièces
+# ---------------------------------------------------------------- le signe
+# LE SIGNE DIT LA CHOSE, LE TYPE SE LIT EN COIN. Sept emojis de type sur trente
+# cartes, c'était trente cartes pareilles : 🔒 🔒 🔒 🔒 ne dit pas si c'est une
+# porte, une bête ou un homme qui écoute. Chaque carte porte donc un signe
+# deviné de son texte — le premier qui répond, du plus précis au plus vague —,
+# et l'emoji du type passe en petit, dans le coin. Le lexique couvre la Danse
+# et ce qu'on a joué depuis (l'hôpital de pavillon-b) ; ce qu'il ne reconnaît
+# pas garde le signe de son type, jamais un emoji au hasard.
+_SIGNES = (
+    # L'ORDRE EST LA RÈGLE : le plus précis d'abord. Un homme se reconnaît à son
+    # métier avant la scène où il est ; un corps avant le cimetière ; une bête
+    # avant le château. Les entrées portent leurs espaces à dessein — « ost »
+    # sans espace attrapait « Costa », et « dragon » attrapait « Peyredragon ».
+    (_DRAGONS + (" dragon", " bête", " bete", "vole ", " ciel", "fossedragon"), "🐉"),
+    (("larys", "pied-bot", "oreille", "espion", "secret", " sait ", "apprend"), "👂"),
+    (("légiste", "legiste", "autopsie", "morgue", "exhum", "cimetière", "cimetiere", "inhum"), "⚰️"),
+    (("médecin", "medecin", "interne", "chef de service", "professeur", " dr ", " pr ",
+      "soignant", "infirm", "cadre de sant"), "🩺"),
+    (("police", "capitaine", "brigadier", "enquêt", "enquet", "commissariat", " agents"), "👮"),
+    (("mis en examen", " juge", "ordonnance", "procès", "proces", "tribunal"), "⚖️"),
+    (("corps de", " mort", "meurt", "cadavre", "pendu", " tue "), "💀"),
+    (("poterne", " porte", "battant", " seuil"), "🚪"),
+    (("pharmac", "ampoule", "thymoglobuline", "chlorure", "dose", "sérothèque",
+      "serotheque", " tube", "réserve", "reserve"), "💊"),
+    (("badge", "accès", "acces", " code"), "🪪"),
+    (("journal", "informatique", "pyxis", " log"), "💻"),
+    (("greffé", " greffe", "patient", "chambre", "pavillon", " lit", "mortalité", "mortalite"), "🛏️"),
+    (("plainte", "quinze ans", "réputation", "reputation", "carrière", "carriere"), "🏅"),
+    (("corbeau", " pli", "lettre", " sceau", "écrit", "ecrit", "registre", "signature"), "📜"),
+    ((" or ", "dragons d'or", "caisse", "bourse", " paye", " payé", " paie",
+      "mille dragons", "trésor", "tresor"), "💰"),
+    (("coque", "galère", "galere", " nef", "barque", "flotte", " rade", "gosier",
+      " baie", " quai", "embarque", "grève", " greve"), "⛵"),
+    (("archer", "scorpion"), "🏹"),
+    (("donjon", "château", "chateau", " mur ", "harrenhal", "sombreval"), "🏰"),
+    (("garnison", " guet", "manteaux d'or", "faction"), "🛡️"),
+    ((" ost ", " ost,", "armée", "armee", "hommes", "lances", "troupe", "levée",
+      "levee", "campe", "colonne"), "⚔️"),
+    (("route", "chemin", "marche", "cavalier", "charrette"), "🐎"),
+    (("trône", "trone", "s'assied", "assise", "couronne", " roi ", "reine"), "👑"),
+    (("ville", "capitale", " rue", "port-réal", "port-real", "bourg"), "🏘️"),
+    ((" feu", "brûle", "brule", "flamme"), "🔥"),
+    (("nuit", "roulement", "planning"), "🌙"),
+    (("jour d'entrée", "jour d entree", " date", "calendrier", "jour "), "📅"),
+    (("trou", "mesurer", "inconnu"), "🕳️"),
+    (("homme", "sergent", "ser ", "lord", "lady", "otto", "criston", "aegon",
+      "aemond", "daemon", "steffon", "corlys", "rhaenys"), "👤"),
+)
+
+
+def signe_de(texte, rid=""):
+    """Le signe descriptif d'une carte, deviné de son texte ; None si rien ne répond."""
+    s = (" " + str(rid).replace("-", " ") + " " + (texte or "") + " ").lower()
+    for mots, e in _SIGNES:
+        if any(m in s for m in mots):
+            return e
+    return None
+
+
 def carte_piece(p, rid):
     r = p.ressources[rid]
     app, droite = "libre", "libre"
@@ -176,18 +299,29 @@ def _ruban(p, k, kid):
 
 
 def _questions_sur(p, cible_id):
-    """Les lignes `justifier` encore ouvertes sur une pièce : une carte ❓ chacune."""
+    """Les lignes `justifier` posées sur une pièce : une carte ❓ chacune, et
+    SON SORT AU PIED — « en attente » tant qu'elle suspend, « répondue » quand
+    le maillon est tombé dessous.
+
+    Deux corrections du 5.9, et la même cause. Les blocages manquaient à la
+    recherche : une question posée sur un verrou n'apparaissait sur AUCUNE
+    carte, et celui qui venait de la poser croyait son clic perdu. Et l'on ne
+    rendait que la question vivante : y répondre la faisait disparaître, ce qui
+    ressemble exactement à ne l'avoir jamais posée. Une question qu'on a
+    satisfaite doit rester à sa place, éteinte."""
     out = []
+    cible = (p.cles.get(cible_id) or p.menaces.get(cible_id)
+             or p.blocages.get(cible_id) or p.etats.get(cible_id))
     for l in p.lignes:
         if l.get("coup") != "justifier" or str(l.get("sur")) != str(cible_id):
             continue
-        cible = p.cles.get(cible_id) or p.menaces.get(cible_id) or p.etats.get(cible_id)
-        if cible is not None and cible.get("suspendue_par") == l.get("n"):
-            out.append({"id": "q%s" % l.get("n"), "type": "question", "emoji": TYPES["question"],
-                        "camp": l.get("camp"), "titre": l.get("texte", ""),
-                        "corps": "",
-                        "pied": {"gauche": nom(l.get("par")) if l.get("par") else "", "droite": ""},
-                        "apparence": "question", "n": l.get("n")})
+        vive = cible is not None and cible.get("suspendue_par") == l.get("n")
+        out.append({"id": "q%s" % l.get("n"), "type": "question", "emoji": TYPES["question"],
+                    "camp": l.get("camp"), "titre": l.get("texte", ""),
+                    "corps": "", "sur": str(cible_id),
+                    "pied": {"gauche": nom(l.get("par")) if l.get("par") else "",
+                             "droite": "en attente" if vive else "répondue"},
+                    "apparence": "question" if vive else "repondue", "n": l.get("n")})
     return out
 
 
@@ -265,7 +399,10 @@ def _front_verrou(p, bid, camp):
             if bid in k["ouvre"] and k["camp"] == contre and not k["retiree"]]
     return {"id": bid, "sur": b["sur"], "sur_titre": titre(p, b["sur"]),
             "chaine": _chaine(p, b["sur"]),
-            "prevaut": qui, "pourquoi": pourquoi, "tete": tete, "pile": pile}
+            # ses questions D'ABORD : c'est ce qui le tient en suspens, et ça se
+            # lit avant les clefs qu'on lui oppose
+            "prevaut": qui, "pourquoi": pourquoi, "tete": tete,
+            "pile": _questions_sur(p, bid) + pile}
 
 
 def _front_frappe(p, mid, camp):
@@ -289,6 +426,9 @@ def _front_frappe(p, mid, camp):
 
 
 # ---------------------------------------------------------------- la vue
+# Ce que l'écran a le droit d'offrir sur une carte — `questionnable`,
+# `suspendue` — se pose après coup, dans `partie_marques`, appelé par
+# `partie.py`. Rien ici n'a à le savoir.
 def _marquer_neuf(objet, tou, vu):
     """Pose `neuf` sur toute carte du paquet dont l'id a été touché après `vu`.
 
@@ -300,6 +440,15 @@ def _marquer_neuf(objet, tou, vu):
     if isinstance(objet, dict):
         if objet.get("id") is not None and "type" in objet:
             objet["neuf"] = seuil is not None and int(tou.get(str(objet["id"]), 0)) > seuil
+            # LA LIGNE QUI L'A TOUCHÉE EN DERNIER, en clair. `neuf` dit ce qui a
+            # bougé depuis le marque-page ; l'écran, lui, veut aussi savoir ce
+            # qui a bougé depuis SON dernier regard, six secondes plus tôt —
+            # c'est ce qu'il anime quand l'autre camp vient de jouer.
+            objet["touche"] = int(tou.get(str(objet["id"]), 0))
+            if "signe" not in objet:
+                # une pièce garde son genre pour signe (🐉 ⛵ 💰 …) ; le reste se devine
+                objet["signe"] = signe_de((objet.get("titre") or "") + " " + (objet.get("corps") or ""),
+                                          objet["id"]) or objet["emoji"]
         for v in objet.values():
             _marquer_neuf(v, tou, vu)
     elif isinstance(objet, list):
@@ -361,9 +510,18 @@ def vue(p, camp=None, vu=0):
             corps, app = "rien ne s'y oppose encore", "cible"
         cibles.append({"id": eid, "type": "cible", "emoji": TYPES["cible"], "camp": cp,
                          "titre": titre(p, eid), "corps": corps,
+                         # l'ID du parent, et pas seulement son titre au pied : deux
+                         # camps peuvent viser le même énoncé (pont-et-moulin), et un
+                         # arbre bâti sur les titres les confondrait.
+                         "sert": e.get("sert"),
                          "pied": {"gauche": ("sert " + titre(p, e["sert"])) if e.get("sert") else "",
                                   "droite": ""},
-                         "apparence": app, "sous": _questions_sur(p, eid)})
+                         "apparence": app,
+                         # ses questions, puis les clés qui le SERVENT sans rien ouvrir :
+                         # avant, une clé nue n'apparaissait nulle part sur le plateau
+                         "sous": _questions_sur(p, eid) + [
+                             _pile_clef(p, kid, k["camp"]) for kid, k in sorted(p.cles.items(), key=lambda kv: kv[1].get("n") or 0)
+                             if str(k.get("sert") or "") == str(eid) and not k["ouvre"] and not k["retiree"]]})
 
     deck = {"main": [], "route": [], "remet": [], "posees": [], "detruites": []}
     eux = []
@@ -380,5 +538,26 @@ def vue(p, camp=None, vu=0):
          "trait": trait, "trone": p.tenu_par(),
          "vu": int(vu or 0), "dernier": dernier,
          "cibles": cibles, "fronts": fronts, "deck": deck, "eux": eux,
+         # CE QUI A FAIT SON OFFICE ET NE TIENT PLUS DE PLACE. Une clé tenue sort
+         # des fronts (son blocage est tombé) et n'était donc plus servie nulle
+         # part : sur un duel gagné, les huit clés qui ont fait la victoire
+         # disparaissaient de la position.
+         "tenues": [{"id": kid, "camp": k["camp"], "titre": titre(p, kid),
+                     "sert": k.get("sert"), "ouvre": liste(k.get("ouvre"))}
+                    for kid, k in sorted(p.cles.items(), key=lambda kv: kv[1].get("n") or 0)
+                    if k.get("tenue")],
+         # la place au deck est une contrainte dure (dix états, règle 26) : elle
+         # se compte, donc elle se sert — l'écran la devinait carte par carte
+         "decks": dict((c, {"pris": len([1 for x in p.etats.values()
+                                         if x["camp"] == c and x.get("deck") and not x.get("vrai")]),
+                            "max": DECK_MAX}) for c in p.camps()),
+         # ce que le greffe a SIGNALÉ au dernier passage de tour : ni verdict ni
+         # coup, mais c'est là que se lisent les états mûrs, les camps muets et
+         # les pièces qu'on a demandées puis oubliées
+         "signale": _signale(p),
+         # LE JOURNAL : les lignes depuis le dernier regard, en clair, pour que
+         # l'écran les dise dans le fil — sans rien écrire nulle part. Le jsonl
+         # est déjà l'histoire ; on en sert la queue.
+         "journal": [_ligne_claire(p, x) for x in p.lignes if int(x.get("n") or 0) > int(vu or 0)][-40:],
          "consignes": dict(p.consignes)},
         touches(p), vu)
