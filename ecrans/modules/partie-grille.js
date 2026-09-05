@@ -708,8 +708,12 @@ window.PartieGrille = (function () {
     if (!cibles.length) return d;
     const parParent = {};
     cibles.forEach((c) => { (parParent[c.sert || ""] = parParent[c.sert || ""] || []).push(c); });
-    (parParent[""] || []).forEach((r) => {
-      const rangee = el("div", "pc-dessein pc-camp-" + (r.camp || ""));
+    // FACE À FACE : ma racine d'abord (à gauche, tournée vers l'axe), la sienne
+    // ensuite (à droite). Les deux se touchent au milieu ; ce qui pend de
+    // chacune s'étale vers l'extérieur. C'est la disposition d'une partie.
+    const racines = (parParent[""] || []).slice().sort((a, b) => (aNous(b) ? 1 : 0) - (aNous(a) ? 1 : 0));
+    racines.forEach((r) => {
+      const rangee = el("div", "pc-dessein pc-camp-" + (r.camp || "") + (aNous(r) ? " pc-dessein-nous" : " pc-dessein-eux"));
       rangee.appendChild(carte(r));
       const pose = (c, cls) => {
         (c.sous || []).forEach((q) => { const cq = carte(q); cq.classList.add("pc-sur"); rangee.appendChild(cq); });

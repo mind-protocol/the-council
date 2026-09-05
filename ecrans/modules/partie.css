@@ -379,15 +379,27 @@
    suivent les ronds du greffe — ⚫ 🟢 🟠 pour la Danse et l'arbitre, puis
    🔵 🔴 🟡 🟣 pour les autres camps, dans l'ordre d'entrée. Le lavis reste
    assez clair pour que le signe se lise, et la bordure porte la couleur pleine. */
-#partie .pc-teinte-noir{background-color:color-mix(in srgb,var(--ink) 14%,var(--fond));border-color:var(--ink);}
-#partie .pc-teinte-vert{background-color:color-mix(in srgb,var(--vert) 22%,var(--fond));border-color:var(--vert);}
-#partie .pc-teinte-arbitre{background-color:color-mix(in srgb,#d9822b 26%,var(--fond));border-color:#b8651a;}
-#partie .pc-teinte-1{background-color:color-mix(in srgb,#2f6fd6 26%,var(--fond));border-color:#2457b3;}
-#partie .pc-teinte-2{background-color:color-mix(in srgb,#d64a3a 26%,var(--fond));border-color:#b3302a;}
-#partie .pc-teinte-3{background-color:color-mix(in srgb,#e2b700 30%,var(--fond));border-color:#a88600;}
-#partie .pc-teinte-4{background-color:color-mix(in srgb,#8e4fd6 26%,var(--fond));border-color:#6f37b3;}
-#partie .pc-teinte-5{background-color:color-mix(in srgb,#8b5a2b 26%,var(--fond));border-color:#6e4520;}
-#partie .pc-teinte-autre{background-color:color-mix(in srgb,var(--muted) 18%,var(--fond));}
+#partie .pc-teinte-noir{--pc-couleur:var(--ink);background-color:color-mix(in srgb,var(--ink) 14%,var(--fond));border-color:var(--ink);}
+#partie .pc-teinte-vert{--pc-couleur:var(--vert);background-color:color-mix(in srgb,var(--vert) 22%,var(--fond));border-color:var(--vert);}
+#partie .pc-teinte-arbitre{--pc-couleur:#d9822b;background-color:color-mix(in srgb,#d9822b 26%,var(--fond));border-color:#b8651a;}
+#partie .pc-teinte-1{--pc-couleur:#2f6fd6;background-color:color-mix(in srgb,#2f6fd6 26%,var(--fond));border-color:#2457b3;}
+#partie .pc-teinte-2{--pc-couleur:#d64a3a;background-color:color-mix(in srgb,#d64a3a 26%,var(--fond));border-color:#b3302a;}
+#partie .pc-teinte-3{--pc-couleur:#e2b700;background-color:color-mix(in srgb,#e2b700 30%,var(--fond));border-color:#a88600;}
+#partie .pc-teinte-4{--pc-couleur:#8e4fd6;background-color:color-mix(in srgb,#8e4fd6 26%,var(--fond));border-color:#6f37b3;}
+#partie .pc-teinte-5{--pc-couleur:#8b5a2b;background-color:color-mix(in srgb,#8b5a2b 26%,var(--fond));border-color:#6e4520;}
+#partie .pc-teinte-autre{--pc-couleur:var(--muted);background-color:color-mix(in srgb,var(--muted) 18%,var(--fond));}
+
+/* PLUS DE COULEUR LÀ OÙ L'ON REGARDE AVANT DE DÉCIDER (6.9, à la demande du
+   joueur) : les états cibles en tête du plateau, et les pièces qu'on a en main
+   au deck. Ce sont les deux bouts du geste — ce qu'on veut, ce qu'on a pour
+   l'obtenir —, et ils étaient lavés au même quart de teinte que tout le reste.
+   Le lavis pâle garde son sens ailleurs : ce qui est déjà engagé doit reculer.
+   `--pc-couleur` est celle du camp, posée juste au-dessus ; un état constaté
+   vrai ou faux n'y touche pas, son or et son sang ne sont pas une teinte de
+   camp et se lisent avant l'appartenance. */
+#partie .pc-main > .pc-carte,
+#partie .pc-cible:not(.pc-v-vrai):not(.pc-v-faux):not(.pc-app-vrai):not(.pc-app-faux){
+  background-color:color-mix(in srgb,var(--pc-couleur,var(--ink)) 46%,var(--fond));}
 /* ---- LE MOTIF DIT LE TYPE, sous le lavis du camp. Le signe en grand dit
    maintenant la chose (une porte, une bête, un corps), donc le type ne se lit
    plus au centre : il se lit à la trame du fond, et en petit dans le coin.
@@ -537,3 +549,33 @@
 #partie .pc-coup-passer{cursor:pointer;text-decoration:underline dotted;}
 #partie .pc-jour{margin-left:auto;font-size:12px;padding:2px 9px;}
 .pc-bulle .pc-bt-second{background:color-mix(in srgb,var(--sang) 18%,transparent);}
+
+/* ==== CENTRÉ, SYMÉTRIQUE (5.9, à la demande du joueur) ==========================
+   Tout était ancré à gauche : les rangées de cartes, les fronts, la main, la
+   légende — une pile de listes. Le plateau est un plateau : ce qui se joue se
+   lit autour d'un axe, de part et d'autre. Les rangées se centrent, les fronts
+   se répartissent autour du milieu, la main et la bande d'en face se font face. */
+#partie .pc-eux,#partie .pc-rangee,#partie .pc-dessein,#partie .pc-ligne,#partie .pc-pile,
+#partie .pc-legende,#partie .pc-aire{justify-content:center;}
+#partie .pc-aire{grid-template-columns:repeat(auto-fit,minmax(58px,65px));justify-content:center;}
+#partie .pc-fronts{justify-content:center;grid-auto-columns:minmax(210px,280px);}
+#partie .pc-desseins{align-items:center;}
+#partie .pc-rangee .pc-lbl,#partie .pc-lbl{text-align:center;}
+#partie .pc-bar,#partie .pc-jouable,#partie .pc-mot,#partie .pc-bat{text-align:center;justify-content:center;}
+#partie .pc-bandeau{justify-content:center;}
+#partie .pc-bandeau-n{margin-left:12px;}
+#partie .pc-vide,#partie .pc-rien{text-align:center;}
+#partie .pc-verdict{justify-content:center;text-align:center;}
+#partie .pc-jour{margin-left:12px;}
+
+/* LES DEUX RACINES FACE À FACE. Deux colonnes autour de l'axe : la mienne à
+   gauche, tournée vers le milieu (row-reverse : la racine est la carte la plus
+   proche de l'axe, ses fils et ses questions s'étalent vers la gauche) ; la
+   sienne à droite, la racine contre l'axe, le reste vers la droite. Un trait
+   vertical marque l'axe. À trois camps, la troisième passe dessous, centrée. */
+#partie .pc-desseins{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;align-items:start;position:relative;}
+#partie .pc-desseins::before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed var(--bord);}
+#partie .pc-dessein{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+#partie .pc-dessein-nous{flex-direction:row-reverse;justify-content:flex-start;}
+#partie .pc-dessein-eux{flex-direction:row;justify-content:flex-start;}
+#partie .pc-dessein:nth-child(n+3){grid-column:1 / -1;justify-content:center;flex-direction:row;}
