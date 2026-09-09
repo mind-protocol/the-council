@@ -123,6 +123,95 @@ def titre(s):
     print("-" * len(s))
 
 
+# ---- LA PARTIE EN COURS — ce que l'arbitre doit savoir qu'on attend de lui --
+#
+# Audit du 7.9, C2 : `POST /partie/geste` ne reveille personne (voulu), mais
+# rien ne le remplacait — ni la feuille de reprise, ni le message de reveil du
+# MJ ne lisaient `etat/parties`. Une `demander` attendait un arbitre qui
+# n'apprenait son existence que si le joueur le lui disait. Ce bloc est la
+# queue de `partie.py --etat` (dix lignes) plus les `constatables` et `inactifs`
+# de la derniere ligne `tour` du jsonl. Il est lu ici ET par mj.py (_message),
+# pour que les deux disent la meme chose.
+PARTIES = os.path.join(etat, "parties")
+# Les lignes du resume de `--etat` qu'on garde : l'arbre des etats est trop
+# long pour un reveil, ces lignes-la disent ce qui ATTEND.
+_LIGNES_ETAT = ("Tour ", "👑", "À arbitrer", "Menaces", "Arrivées",
+                "Trait à", "Deck", "États datés", "Gelés")
+
+
+def partie_courante():
+    """L'identifiant de la partie que `_courante.json` nomme, SI son jsonl
+    existe ; None sinon. C'est le seul test de « partie active » : mj.py s'en
+    sert pour decider de charger le manuel et le livre de regles."""
+    try:
+        with io.open(os.path.join(PARTIES, "_courante.json"), encoding="utf-8") as f:
+            c = json.load(f)
+        pid = str((c or {}).get("partie") or "")
+        if (re.match(r"^[A-Za-z0-9_-]+$", pid)
+                and os.path.exists(os.path.join(PARTIES, pid + ".jsonl"))):
+            return pid
+    except Exception:
+        pass
+    return None
+
+
+def _derniere_ligne_tour(pid):
+    """La derniere ligne `tour` du jsonl (celle que le greffe ecrit quand le
+    jour passe), ou {} — sans jamais lever : une ligne tronquee se saute."""
+    derniere = {}
+    try:
+        with io.open(os.path.join(PARTIES, pid + ".jsonl"), encoding="utf-8") as f:
+            for l in f:
+                l = l.strip()
+                if not l:
+                    continue
+                try:
+                    o = json.loads(l)
+                except Exception:
+                    continue
+                if isinstance(o, dict) and o.get("coup") == "tour":
+                    derniere = o
+    except Exception:
+        pass
+    return derniere
+
+
+def feuille_partie(pid=None, timeout=20):
+    """Le bloc « La partie » : une dizaine de lignes, ou "" si aucune partie
+    n'est active ou si le greffe ne repond pas. Jamais bloquant : un echec du
+    sous-processus rend "" et ne dit rien."""
+    import subprocess
+    pid = pid or partie_courante()
+    if not pid:
+        return u""
+    lignes = []
+    try:
+        env = dict(os.environ, PYTHONIOENCODING="utf-8")
+        r = subprocess.run(
+            [sys.executable, os.path.join(racine, "scripts", "partie.py"), pid, "--etat"],
+            cwd=racine, capture_output=True, timeout=timeout, env=env)
+        if r.returncode != 0:
+            return u""
+        for l in r.stdout.decode("utf-8", "replace").splitlines():
+            if l.startswith(_LIGNES_ETAT):
+                lignes.append(l.rstrip())
+    except Exception:
+        return u""
+    if not lignes:
+        return u""
+    tour = _derniere_ligne_tour(pid)
+    if tour.get("constatables"):
+        lignes.append(u"Constatables (le greffe attend que l'arbitre constate) : "
+                      + u" · ".join(str(x) for x in tour["constatables"]))
+    if tour.get("inactifs"):
+        lignes.append(u"Inactifs (n'ont rien joue ce tour) : "
+                      + u" · ".join(str(x) for x in tour["inactifs"]))
+    lignes.append(u"Ce sont des demandes faites a l'arbitre ; arbitre-les par "
+                  u"`python scripts/partie.py %s --jouer '{...}'` "
+                  u"(`--etat` pour la position entiere, `--tour` pour faire passer le jour)." % pid)
+    return u"\n".join(lignes)
+
+
 def nom_de(pid, gens):
     for p in gens:
         if p.get("id") == pid:
@@ -266,6 +355,13 @@ def main(argv):
         titre("LES DERNIERES SCENES (le journal — un resume, pas une source)")
         for s in scenes[-5:]:
             print("  %s  %s" % (date_courte(s.get("date") or {}), utile(s.get("resume"), 170)))
+
+    # 8. LA PARTIE — si une partie est ouverte, ce qu'on attend de l'arbitre
+    partie = feuille_partie()
+    if partie:
+        titre("LA PARTIE (%s)" % partie_courante())
+        for l in partie.splitlines():
+            print("  " + l)
 
     print("")
     print("  Pour creuser un nom qui sort d'ici : python scripts/dossier.py --sur <mot>")

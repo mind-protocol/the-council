@@ -105,6 +105,7 @@ window.PartieVue = (() => {
     const buts = dans.filter(cible);
     const reprises = dans.filter(prenable);
     if (vue.trait !== vue.camp) return "Le trait est à eux : leur coup s'écrit à la ligne, par le mestre.";
+    if (PartieGrille.epuise()) return PartieGrille.motEpuise();
     if (!mains.length && !reprises.length) return "Aucune pièce libre en main : rien à poser d'ici.";
     if (!buts.length)
       return mains.length + " pièce" + (mains.length > 1 ? "s" : "") + " libre" + (mains.length > 1 ? "s" : "")
@@ -132,7 +133,18 @@ window.PartieVue = (() => {
   }
 
   // ---- envoyer le geste ---------------------------------------------------
+  // LA PORTE DURE DU « UN COUP PAR JOUR ». Les cartes ne se soulèvent déjà plus
+  // (`PartieGrille.epuise`), mais le blocage se tient AUSSI ici, sur le seul
+  // chemin par lequel un coup part vers le greffe : c'est la dernière porte, et
+  // aucun geste — bulle laissée ouverte avant le premier coup, case cliquée,
+  // raccourci à venir — ne passe à côté. Ce qui ne compte pas passe : demander,
+  // justifier, le maillon qui répond. Le compte est celui du greffe.
+  const COMPTES = ["poser", "viser", "reprendre", "passer"];
   function jouer(geste) {
+    if (COMPTES.indexOf((geste || {}).quoi) >= 0 && PartieGrille.epuise()) {
+      mot = PartieGrille.motEpuise(); motMauvais = true; dernier = ""; dessiner();
+      return;
+    }
     mot = "le mestre inscrit le coup…"; motMauvais = false; envoi = true; dernier = ""; dessiner();
     fetch(adresse("/partie/geste"), { method: "POST", headers: { "Content-Type": "application/json" },
                              body: JSON.stringify(geste) })
@@ -182,7 +194,7 @@ window.PartieVue = (() => {
     // vivait que dans l'infobulle de la colonne. L'ancien en-tête avait été
     // retiré parce qu'il recopiait le dessein ; celui-ci ne recopie rien : il
     // dit qui tient, et par quoi. Le motif vient du greffe (`pourquoi`), qui
-    // sait dire « levé par 🗝️ … », « suspendu par ❓ … », « rien en face ».
+    // sait dire « levé par 🗝️ … », « suspendu par ❓ … », « aucune clef ne le lève ».
     const nous = f.prevaut && vue.camp && f.prevaut === vue.camp;
     const verdict = el("div", "pc-verdict" + (nous ? " pc-verdict-nous" : ""));
     verdict.appendChild(el("span", "pc-verdict-q", (nous ? "à vous" : "à eux")));
@@ -191,7 +203,31 @@ window.PartieVue = (() => {
     const pile = el("div", "pc-pile");
     pile.dataset.prevaut = PartieGrille.teinte(f.prevaut);   // le bord double va au camp qui prévaut
     const eng = engagees();
-    pile.appendChild(ligne(f.tete, eng));
+    // LA CARTE DU DESSOUS (6.9). Un verrou posé sur une CLEF vivait dans son
+    // front sans dire sur quoi il était, et la clef, dans la rangée de son
+    // état, ne disait pas qu'elle était couverte : « la clef est posée sur
+    // quoi ? » — on était perdu. Le greffe sert `dessous`, la clef visée ;
+    // elle se montre en tête du front, sous le mot « sur », et le verrou
+    // s'empile dessus. C'est le langage du plateau, une carte sur une carte,
+    // pas une ligne de titres.
+    // À DROITE, PAS EN DESSOUS (6.9, à la demande du joueur) : la clef bloquée
+    // d'abord, puis le verrou après elle, sur la même rangée — on lit de gauche
+    // à droite « cette clef, bloquée par ce verrou ».
+    // DANS L'ORDRE : LA CLEF (et ce qu'elle engage), PUIS LA PIÈCE, PUIS LE
+    // VERROU. La pièce produit le verrou — il en est la conséquence et la fin
+    // de la chaîne —, donc elle se lit avant lui : « cette clef, bloquée par
+    // le lecteur, d'où ce verrou ».
+    if (f.dessous) {
+      const rang = el("div", "pc-rang-sur");
+      const sur = el("div", "pc-dessous");
+      sur.appendChild(ligne(f.dessous, eng));
+      sur.appendChild(el("span", "pc-dessous-l", "bloquée par"));
+      rang.appendChild(sur);
+      rang.appendChild(ligne(f.tete, eng, null, true));
+      pile.appendChild(rang);
+    } else {
+      pile.appendChild(ligne(f.tete, eng));
+    }
     (f.pile || []).forEach((o) => {
       pile.appendChild(ligne(o, eng, "pc-sous"));
       (o.sous || []).forEach((s) => {
@@ -209,7 +245,7 @@ window.PartieVue = (() => {
 
   function rangee(nom, cartes, vide) {
     const r = el("div", "pc-rangee");
-    r.appendChild(el("div", "pc-lbl", nom));
+    if (nom) r.appendChild(el("div", "pc-lbl", nom));
     if (!cartes.length) r.appendChild(el("div", "pc-vide", vide || "—"));
     cartes.forEach((c) => r.appendChild(carte(c)));
     return r;
@@ -253,13 +289,25 @@ window.PartieVue = (() => {
     }
     const bar = el("div", "pc-bar");
     bar.appendChild(el("span", "", "jour " + (vue.jours + 1) + " de la partie"));
+    // « EUX » NE DÉSIGNE PERSONNE À PLUS DE DEUX CAMPS (6.9). Sur main haute,
+    // quatre camps : « le trône est à eux » et « on attend leur coup » ne
+    // disaient pas lequel — et c'est la seule chose qu'on cherche en revenant
+    // devant le plateau. La couleur est celle du joueur : on nomme le camp,
+    // avec son rond, partout où l'on disait « eux ».
+    const nomme = (c) => PartieGrille.rond(c) + " " + c;
     bar.appendChild(el("span", "", !vue.trone ? "👑 le trône n'est constaté à personne"
-                                  : vue.trone === vue.camp ? "👑 le trône est à nous" : "👑 le trône est à eux"));
-    bar.appendChild(el("span", "", vue.trait === vue.camp ? "à vous de jouer" : "on attend leur coup"));
+                                  : vue.trone === vue.camp ? "👑 le trône est à nous"
+                                  : "👑 le trône est à " + nomme(vue.trone)));
+    bar.appendChild(el("span", "", vue.trait === vue.camp ? "à vous de jouer"
+                                  : vue.trait ? "on attend " + nomme(vue.trait)
+                                  : "tous ont joué — le jour peut passer"));
     // LE COUP DU JOUR — la règle que tout le monde casse, enfin affichée
     const n = ((vue.coups_du_jour || {})[vue.camp]) || 0;
-    const cj = el("span", "pc-coup-jour" + (n ? (n > 1 ? " pc-coup-trop" : " pc-coup-fait") : " pc-coup-passer"),
-      n === 0 ? "● coup du jour : à jouer — ou passer" : n === 1 ? "✓ coup du jour : joué" : "⚠ " + n + " coups ce jour — un seul compte");
+    const max = vue.coups_max || 1;   // deux quand un humain et une IA se partagent le camp
+    const cj = el("span", "pc-coup-jour" + (n ? (n > max ? " pc-coup-trop" : " pc-coup-fait") : " pc-coup-passer"),
+      n === 0 ? "● coup du jour : à jouer — ou passer"
+      : n > max ? "⚠ " + n + " coups ce jour — " + max + " seulement compte" + (max > 1 ? "nt" : "")
+      : max > 1 ? "✓ " + n + " coup" + (n > 1 ? "s" : "") + " sur " + max + " ce jour" : "✓ coup du jour : joué");
     if (n === 0 && vue.camp !== "arbitre") {   // PASSER est un coup : un clic, une confirmation
       cj.title = "Passer ce jour sans rien poser";
       cj.addEventListener("click", () => { if (confirm("Passer ce jour sans rien poser ?")) jouer({ quoi: "passer" }); });
@@ -312,28 +360,52 @@ window.PartieVue = (() => {
     // LES ÉTATS CIBLES EN UNE RANGÉE, pas en colonne : celle-ci avait été retirée
     // (immobile, un cinquième de l'écran), mais sans front l'écran ne disait
     // plus même ce qu'on vise. Une rangée de cases 🎯 par racine, ses ❓ dessus.
-    plateau.appendChild(PartieGrille.desseins(vue));
-    const fronts = el("div", "pc-fronts");
-    if (!vue.fronts.length) fronts.appendChild(el("div", "pc-vide", "rien ne vous fait face — encore"));
-    vue.fronts.forEach((f) => fronts.appendChild(front(f)));
-    plateau.appendChild(fronts);
+    // LA CARTE EN LIGNES (6.9) : une ligne par état, l'arbre par retrait, et
+    // tout ce qui s'applique à l'état à sa droite, dans l'ordre de la chaîne
+    // (partie-grille.js, `lignes`). Les verrous ont quitté les colonnes : ils
+    // sont sur la ligne de ce qu'ils bloquent. Les fronts ne gardent que les
+    // FRAPPES, posées sur des pièces et non sur des états.
+    plateau.appendChild(PartieGrille.lignes(vue));
+    const frappes = (vue.fronts || []).filter((f) => f.tete && f.tete.type === "frappe");
+    if (frappes.length) {
+      const fronts = el("div", "pc-fronts");
+      frappes.forEach((f) => fronts.appendChild(front(f)));
+      plateau.appendChild(fronts);
+    }
     const dessinees = new Set([...plateau.querySelectorAll(".pc-carte")].map((n) => n.dataset.id));
     const horsGrille = (c) => !dessinees.has(c.id);
+    // UNE BANDE PAR CAMP D'EN FACE, dans l'ordre des camps de la partie (6.9).
+    // Une seule bande prenait le camp de sa première carte pour nommer tout le
+    // reste : sur main haute elle disait « 🔴 EUX openai · 24 pièces » pour
+    // dix-sept pièces d'OpenAI, cinq du successeur et deux du continent. À
+    // deux camps, rien ne change : une bande. À quatre, chacun a la sienne,
+    // avec son rond, son nom, son compte — et le lavis du trait va à la seule
+    // bande de celui qui doit jouer, dans SA couleur.
     const eux = (vue.eux || []).filter(horsGrille);
-    if (eux.length) {
-      const face = el("div", "pc-eux");
-      face.appendChild(PartieGrille.bandeau((eux[0] || {}).camp, false, eux.length));
-      eux.forEach((c) => face.appendChild(carte(c)));
+    const ordre = Object.keys(vue.decks || {}).filter((c) => c !== vue.camp);
+    eux.map((c) => c.camp).forEach((c) => { if (ordre.indexOf(c) < 0) ordre.push(c); });
+    ordre.forEach((campEux) => {
+      const siennes = eux.filter((c) => c.camp === campEux);
+      if (!siennes.length) return;
+      const face = el("div", "pc-eux pc-teinte-" + PartieGrille.teinte(campEux)
+                             + (vue.trait === campEux ? " pc-a-lui" : ""));
+      face.dataset.camp = campEux;
+      face.appendChild(PartieGrille.bandeau(campEux, false, "main"));
+      siennes.forEach((c) => face.appendChild(carte(c)));
       h.appendChild(face);
-    }
+    });
     h.appendChild(plateau);
 
     // Le deck est aussi une CIBLE : une carte à nous qu'on y ramène est
     // reprise, et ses pièces se remettent deux jours. Le geste est le même que
     // celui qui les a posées, à l'envers — rien de neuf à apprendre.
     const deck = el("div", "pc-deck");
+    // UNE PIÈCE VISÉE PAR UNE FRAPPE RENTRE AUSSI (6.9) : la frappe tombe et la
+    // pièce se remet quatre jours — règle 23. Le seul geste du plateau qui
+    // demande confirmation, parce qu'il a un prix et qu'on le lâche vite.
+    const reprenable = (t) => t && (t.type !== "piece" || t.apparence === "detruite" || (t.visee && t.camp === vue.camp));
     deck.addEventListener("dragover", (e) => {
-      if (!tenue || (tenue.type === "piece" && tenue.apparence !== "detruite")) return;
+      if (!reprenable(tenue)) return;
       e.preventDefault();
       deck.classList.add("pc-survol");
     });
@@ -341,11 +413,16 @@ window.PartieVue = (() => {
     deck.addEventListener("drop", (e) => {
       e.preventDefault();
       deck.classList.remove("pc-survol");
-      if (!tenue || (tenue.type === "piece" && tenue.apparence !== "detruite")) return;
+      if (!reprenable(tenue)) return;
+      if (tenue.type === "piece" && tenue.apparence !== "detruite"
+          && !confirm("Rentrer « " + tenue.titre + " » ? La frappe tombe, la pièce se remet 4 jours.")) return;
       jouer({ quoi: "reprendre", sur: tenue.id });   // clef, verrou → retirer · état → sortir · perdue → reconstruire
     });
     const d = vue.deck || {};
-    const main = rangee("En main", (d.main || []).filter(horsGrille), "rien de libre");
+    // « MAIN » NE PREND PLUS UNE LIGNE (6.9) : le mot est dans le coin du
+    // bandeau du deck, la rangée commence directement par les cartes.
+    const main = rangee(null, (d.main || []).filter(horsGrille), "rien de libre");
+    main.classList.add("pc-main");   // la rangée se nomme : son fond porte la couleur pleine du camp
     main.appendChild(PartieGrille.demandeur());   // la case 📦 vide : demander une pièce
     deck.appendChild(main);
     const ailleurs = (d.route || []).concat(d.remet || []).filter(horsGrille);
@@ -357,7 +434,7 @@ window.PartieVue = (() => {
     // une perdue encore engagée est barrée dans la grille : pas deux fois
     const perdues = (d.detruites || []).filter(horsGrille);
     if (perdues.length) deck.appendChild(rangee("Perdues", perdues));
-    deck.insertBefore(PartieGrille.bandeau(vue.camp, true, null), deck.firstChild);
+    deck.insertBefore(PartieGrille.bandeau(vue.camp, true, "votre main"), deck.firstChild);
     h.appendChild(deck);
     h.appendChild(PartieGrille.legende());
   }

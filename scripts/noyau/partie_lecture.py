@@ -8,7 +8,8 @@ fonctions ne change la position : elles la parcourent et la rendent en texte.
 Une règle du jeu se change dans partie_greffe ; une façon de la montrer, ici.
 Chaque fonction prend la partie repliée (`p`) en premier argument.
 """
-from partie_greffe import DECK_MAX, EMOJI_CAMP, EMOJI_COUP, JOURS_PAR_TOUR, liste
+from partie_greffe import (COUPS_COMPTES, DECK_MAX, EMOJI_CAMP, EMOJI_COUP,
+                            JOURS_PAR_TOUR, liste)
 
 
 def chaine(p, cible):
@@ -31,7 +32,7 @@ def chaine(p, cible):
                 out += ["   " + x for x in chaine(p, kid)]
     elif cible in p.cles:
         k = p.cles[cible]
-        etat = ("suspendue par ❓ %s" % k["suspendue_par"] if k["suspendue_par"]
+        etat = ("suspendue par ❓ %s" % k["suspendue_par"] if k["suspendue_par"]  # regle: etats-cle
                 else "tenue, blocage tombé" if k.get("tenue") else "retirée" if k["retiree"] else "valide")
         out.append("🗝️ %s %s — %s · ouvre %s · engage %s · %s" % (
             EMOJI_CAMP[k["camp"]], cible, k["texte"], ", ".join(k["ouvre"]), ", ".join(k["engage"]), etat))
@@ -48,7 +49,7 @@ def chaine(p, cible):
         out.append("rien ne s'appelle %s" % cible)
     return out
 
-def piece(p, rid):
+def piece(p, rid):  # regle: etats-ressource
     r = p.ressources.get(rid)
     if not r:
         return ["pièce inconnue : %s" % rid]
@@ -110,7 +111,7 @@ def _sous(p, eid, prof, out):
         for kid, k in p.cles.items():
             if bid in k["ouvre"] and not k["retiree"] and not k.get("tenue"):
                 for mid, m in sorted(p.maillons.items()):
-                    if m["realise"] == kid and m["etat"] == "faite":
+                    if m["realise"] == kid:
                         out.append("%s   ← %s ⚔️ %s %s — réalisé" % (ind, EMOJI_CAMP[m["camp"]], mid, m["texte"]))
     for cid, e in p.etats.items():
         if e.get("sert") != eid or not e.get("deck"):
@@ -170,13 +171,21 @@ def etat(p):
     out.append("Trait à %s." % EMOJI_CAMP[trait(p)])
     return out
 
-def trait(p):
+def trait(p):  # regle: trait-ordre-d-entree
     """À qui de jouer : le camp qui suit, dans l'ordre d'entrée, le dernier camp
-    qui a écrit une ligne ; le premier camp si personne n'a encore joué."""
+    qui a joué un coup COMPTÉ ; le premier camp si personne n'a encore joué.
+
+    Compté, et non « qui a écrit une ligne » : demander, justifier, écrire un
+    maillon et donner une consigne sont gratuits et hors compte — le tour ne
+    tourne pas dessus. L'indicateur passait pourtant la main à chaque demande,
+    si bien qu'un joueur qui réclamait du matériel lisait aussitôt « on attend
+    leur coup » alors que c'était toujours à lui. (Vu le 5.9 sur « vingt
+    jours », deux fois de suite.)"""
     camps = p.camps()
     if not camps:
         return None
-    dernier = next((x["camp"] for x in reversed(p.lignes) if x.get("camp") in camps), None)
+    dernier = next((x["camp"] for x in reversed(p.lignes)
+                    if x.get("camp") in camps and x.get("coup") in COUPS_COMPTES), None)
     return camps[(camps.index(dernier) + 1) % len(camps)] if dernier else camps[0]
 
 

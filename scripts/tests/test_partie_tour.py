@@ -24,7 +24,7 @@ class TestPassageDuTour(unittest.TestCase):
         self.ok({"camp": "noir", "coup": "viser", "id": "49000", "texte": "La reine est assise"})
         self.ok({"camp": "noir", "coup": "viser", "id": "200", "sert": "49000", "texte": "La porte est acquise"})
         for camp, rid in (("noir", "ost"), ("vert", "guet"), ("vert", "galeres"), ("noir", "barques")):
-            self.ok({"camp": camp, "coup": "demander", "id": rid, "lieu": "x", "nombre": 3})
+            self.ok({"camp": camp, "coup": "demander", "id": rid, "nombre": 3})
             self.ok({"camp": "arbitre", "coup": "arbitrer", "sur": rid, "verdict": "accorde", "motif": "test"})
 
     def tearDown(self):

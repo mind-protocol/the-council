@@ -1,6 +1,6 @@
 // GET /partie[?id=<partie>]   — la vue en cartes de la partie (« Le conseil »)
 // POST /partie/geste          — une carte posée sur une carte, ou reprise
-// POST /partie/jour           — le jour passe
+// POST /partie/jour           — le jour passe (arbitre seulement)
 //
 // Le calcul et l'écriture vivent dans domaine/partie.js, qui appelle le
 // greffier. La seule chose qui s'écrit est le jsonl de la partie : rien de ce
@@ -19,9 +19,18 @@ const { RACINE } = require("../contexte");
 
 // Un refus du greffe revient en 200 : c'est une réponse de jeu (« Caraxes est
 // déjà posé »), pas une panne, et elle s'affiche sous la carte.
+//
+// DEUX ECHECS QUI NE SE RESSEMBLENT PAS (audit du 7.9, B5) : « aucune partie
+// ouverte » est une reponse (404, rien a jouer), « le greffe a plante » est une
+// panne (502, avec la derniere ligne du traceback — domaine/partie.js l'a deja
+// reduite a cela). L'ecran les confondait en « Aucune partie ouverte ».
 function repondre(req, res, siege, camp) {
   return (err, r) => {
-    if (err) return envoyer(res, 502, JSON.stringify({ ok: false, refus: [err.message] }));
+    if (err) return envoyer(res, 502, JSON.stringify({ ok: false, erreur: "greffe",
+                                                        refus: ["le greffe a plante : " + err.message] }));
+    if (r && !r.ok && !r.vue && !partieDe(req.url)) {
+      return envoyer(res, 404, JSON.stringify(Object.assign({ erreur: "aucune-partie" }, r)));
+    }
     // Le joueur vient de jouer : il a donc regardé. Le marque-page avance,
     // et tout ce que l'autre camp fera d'ici son prochain coup restera neuf.
     if (r && r.ok && r.vue && r.vue.dernier) poserVu(siege, partieDe(req.url), r.vue.dernier, camp);
@@ -81,7 +90,8 @@ function traiter(req, res, url) {
     const camp = campDe(req.url);
     const dejaVu = vuDe(siege, id, camp);
     vue(req.url, null, (err, v) => {
-      if (err) return envoyer(res, 502, JSON.stringify({ erreur: err.message }));
+      if (err) return envoyer(res, 502, JSON.stringify({ erreur: "greffe", partie: id,
+                                                          detail: "le greffe a plante : " + err.message }));
       // PREMIÈRE OUVERTURE : on pose le marque-page sans rien marquer. C'est
       // ce coup d'œil-ci qui devient l'« avant » ; à partir du prochain, ce
       // que l'autre camp aura fait se verra.
@@ -108,6 +118,22 @@ function traiter(req, res, url) {
           + [...camps].filter((c) => c !== "arbitre").join(", ")
           + ". Votre onglet est reste sur l'adresse d'une autre partie."] }));
       }
+      // LE CORPS NE CHOISIT PAS SON CAMP (audit du 7.9, B1). Le camp est celui
+      // que le serveur resout (`?camp=`, puis `_courante.json`) ; un `camp`
+      // glisse dans le JSON qui dit autre chose est une usurpation, pas une
+      // precision — on le refuse au lieu de le laisser ecraser le vrai.
+      if (g.camp != null && String(g.camp) !== String(camp || "")) {
+        return envoyer(res, 400, JSON.stringify({ ok: false, refus: [
+          "le corps nomme le camp « " + g.camp + " » mais vous jouez « "
+          + (camp || "aucun camp") + " » — le camp ne se choisit pas dans le geste."] }));
+      }
+      // LE JOUR NE PASSE QUE PAR L'ARBITRE (audit du 7.9, B2). Le greffe laisse
+      // `jour` a tout camp ; l'ecran ne montre pas le bouton, mais rien ne
+      // l'imposait — un camp pouvait faire tomber les menaces de l'autre.
+      if (String(g.quoi) === "jour" && camp !== "arbitre") {
+        return envoyer(res, 400, JSON.stringify({ ok: false, refus: [
+          "seul l'arbitre fait passer le jour — vous jouez « " + (camp || "aucun camp") + " »."] }));
+      }
       jouer(req.url, null, g, repondre(req, res, siege, camp),
             vuDe(siege, partieDe(req.url), camp));
     });
@@ -117,6 +143,10 @@ function traiter(req, res, url) {
     corps(req, () => {
       const siege = siegeDe(req);
       const camp = campDe(req.url);
+      if (camp !== "arbitre") {   // B2 : le jour est a l'arbitre, et a lui seul
+        return envoyer(res, 400, JSON.stringify({ ok: false, refus: [
+          "seul l'arbitre fait passer le jour — vous jouez « " + (camp || "aucun camp") + " »."] }));
+      }
       jouer(req.url, null, { quoi: "jour" }, repondre(req, res, siege, camp),
             vuDe(siege, partieDe(req.url), camp));
     });

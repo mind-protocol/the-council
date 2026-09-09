@@ -172,3 +172,96 @@ histoires comparables.
   carte de croyances, et les nouvelles qui voyagent réellement de l'une à
   l'autre avec leurs délais. Le brouillard par siège est déjà là ; ce qui manque
   est une convention pour que les deux MJ ne se lisent pas.
+
+---
+
+## VI. Charmed — le bien contre la Source (ouverte le 6.9)
+
+**Sièges :** le bien par Aurore, le mal par une IA en entier ; le MJ arbitre.
+**Ce que ça fait :** une partie où le trône est tenu dès le premier jour, et où
+tout le jeu est de le garder. Le bien tient l'équilibre par **trois choses
+constatées vraies** — les sœurs ensemble, le Livre au grenier, le Nexus
+scellé — et chacune est un front : un verrou du mal dessus, avec un démon,
+oblige l'arbitre à la reconstater. Le mal a **trois marches** sous sa racine
+« le monde entier est contrôlé par le mal » — briser le Pouvoir des Trois,
+prendre le Livre, éveiller le Nexus —, et la racine ne se constate que quand
+les trois sont vraies.
+
+**Ce qui fait bouger la position :** les pièces qui meurent. Les démons se
+reconstruisent en deux tours, les sœurs non ; Cole est une pièce du bien que
+Balthazar peut retourner ; une potion vainc un démon nommé. Les pièces du bien
+sont des **gestes** — utiliser un pouvoir, regarder dans le Livre, appeler Leo,
+demander aux Fondateurs — et un geste engagé n'est plus disponible tant que
+le coup tient.
+
+**L'équilibre des mains, compté le 6.9.** Pour le greffe, une pièce est une
+engagement, quel que soit le nombre écrit dessus : douze démons s'engagent une
+fois. Sans réarmer ni reconstruire, ce qui est engagé ne se renforce plus et ce
+qui est détruit ne revient plus ; chaque échange est un contre un. Le bien tient
+le trône, donc l'immobilité le fait gagner : à six corps contre huit, le mal
+perdait à l'usure. Il en a reçu deux — l'Ombre du Nexus, une sorcière passée au
+mal —, huit contre huit. Une **table de portée** (`portee` de la configuration)
+dit ce que chaque pièce peut atteindre, et l'arbitre refuse ce qui la dépasse :
+une potion tue un démon nommé et se consume, Leo pare une frappe mais ne lève
+pas un verrou, la Source ne quitte les Enfers qu'avec deux marches vraies, une
+frappe du bien sur la bande des démons en tue un nombre et jamais la bande. Et
+la partie a une **fin** : vingt tours, une lune, le trône décide.
+
+**Ce que ces mains font émerger (6.9).** Un verrou garde sa pièce même
+levé, une clef garde les siennes tant que ce qu'elle ouvre n'est pas tombé :
+sans réarmer ni reconstruire, chaque front absorbe une pièce de chaque côté
+pour toujours, et vers le tour 8 les mains sont vides — la tranchée, que le
+bien gagne au trône. Les frappes sont la seule sortie. **Pas de règle nouvelle
+pour y répondre, de meilleurs items** : le bien reçoit une seconde potion, le
+sort du Pouvoir des Trois (il vainc ce qu'aucun pouvoir seul ne vainc, et
+engage les trois sœurs), Grams et le manoir ; les Enfers envoient Shax, Barbas
+et Zankou aux tours 4, 8 et 12, des corps forts et datés qui donnent au mal une
+raison de frapper. La table de portée dit ce que chaque pièce peut atteindre,
+rien d'autre.
+
+**La première version ne marchait pas**, et c'est la leçon : un bien dont la
+racine était vraie sans mesure n'avait rien à jouer, un mal à quarante tours
+de sa racine n'avait pas d'échelle, et personne ne pouvait perdre une pièce.
+Une ouverture cohérente donne à chaque camp une chose à tenir ou à prendre à
+chaque tour, et une façon de la perdre.
+
+## VII. Charmed 2 — la Source contre les Halliwell, saison 4 (ouverte le 6.9 au soir)
+
+**Sièges :** le bien par Aurore, le mal par une IA en entier ; le MJ arbitre.
+Tout le dossier de préparation est dans [`../import/charmed/`](../import/charmed/README.md) :
+le bilan des sept tours de la première (`01`), la référence série pour l'arc
+choisi (`02`), la conception (`03`), **les cartes de départ** avec chaque
+ligne, sa portée et sa note de jeu (`04`), l'ouverture prête à jouer (`05`)
+et la doctrine de l'arbitre (`06`).
+
+**Ce qui change par rapport à la première.** Un arc et un point de départ :
+4x01, le lendemain de l'enterrement de Prue — plus de Nexus, de Zankou ni
+de Barbas avec Balthazar. Les sœurs sont les pièces, pas leurs pouvoirs. Les
+deux racines sont **datées au vingtième tour et fausses à l'ouverture** : le
+bien doit reconstituer le Pouvoir des Trois avec Paige puis vaincre la
+Source ; le mal n'a besoin que d'une sœur, morte ou retournée. `retourner`
+et `rearmer` sont permis — l'arc en est fait (la fenêtre de Paige, Piper en
+Furie, Cole par la Voyante) ; `reconstruire` reste interdit. Le calendrier
+des Enfers est public : les Furies au 3, un darklighter au 5, la Voyante au
+6, le Hollow au 12. La portée du Livre des Ombres interdit ce que la
+première partie a laissé passer : aucune main du mal ne le prend.
+
+**Le caractère du mal vit dans la configuration** (`caractere` de
+`etat/parties/charmed-2.json`), lu par `partie_ia.py` avant sa table
+`CAMPS`. Premier coup de la Source au tour 2 : le retournement de Paige par
+Shane, exactement 4x01.
+
+## VIII. La poterne — l'énigme en un coup (conçue le 7.9)
+
+**Sièges :** ⚫ dehors, 🟢 dedans, l'un ou l'autre au trait ; l'arbitre
+constate. **Ce que ça fait :** une position et non une partie, à lire comme
+un problème d'échecs. Chaque camp a deux verrous qui tiennent contre sa
+racine, une seule pièce libre, et une question sans réponse posée sur sa
+propre clef ; le reste du plateau est fait pour égarer (un guet qui ne prend
+qu'à minuit, une échelle qui n'est pas montée, une barque rentrée au port, un
+état-fils qui ne sert à rien). Trois lignes gagnent au tour 1, de plus en
+plus dures à trouver et de plus en plus solides : la question gratuite, la
+réponse à sa propre question, et rien poser du tout. Une seule tient contre
+toute réplique. Deux fichiers pour les deux sens, même ouverture :
+`la-poterne-noir` et `la-poterne-vert`. Solutions, pièges et verdicts du
+greffe dans [`parties/la-poterne.md`](parties/la-poterne.md).

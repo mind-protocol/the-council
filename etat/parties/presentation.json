@@ -1,0 +1,35 @@
+{
+  "partie": "presentation",
+  "coups_par_camp": 1,
+  "sieges": {
+    "galerie": ["nicolas-lester-reynolds"]
+  },
+  "note": "Partie de PRODUCTION, ouverte le 7 septembre 2026 : le produit est docs/presentation-partie.md, une page qui présente le jeu à quelqu'un qui ne l'a jamais vu. Deux IA en entier : `auteur` défend et réécrit le texte, `lecteur` l'attaque section par section avec le livre de règles, le carnet et le tutoriel. Le MJ arbitre. Six tours. Quatre règles propres à cette partie, décidées après le-jeu-lui-meme : (1) une pièce peut être une SECTION du produit, `lieu` = docs/presentation-partie.md#N, et l'IA reçoit son texte, pas seulement son titre ; (2) un maillon de l'auteur peut porter la réécriture : son `texte` commence par « NOUVEAU TEXTE §N : » suivi du texte intégral de la section, et l'arbitre l'applique au fichier au passage du tour, puis écrit la ligne d'arbitrage qui le dit ; (3) une suspension tombe au bout d'un tour sans maillon : au passage du tour, tout verrou justifié depuis le tour précédent et sans maillon est refusé par l'arbitre (motif : chaîne jamais écrite), toute clef dans le même cas est retirée ; (4) les deux racines sont des TESTS sur le fichier, pas des thèses. Le lecteur ne réécrit jamais ; l'auteur ne conteste jamais le livre. Un verrou du lecteur cite la ligne du texte qu'il vise ET la règle ou la source qui le contredit ; sans les deux, l'arbitre le refuse sur portée.",
+  "coups_interdits": ["reconstruire", "consigne", "retourner", "detruire"],
+  "portee": {
+    "auteur": {
+      "s1": "la section 1 du produit, « Ce que c'est ». Clef qui la réécrit ; verrou sur une lecture qui la déforme",
+      "s2": "la section 2, « Les objets » : les sept signes et le trône",
+      "s3": "la section 3, « Un tour »",
+      "s4": "la section 4, « Ce qui fait tomber une pièce »",
+      "s5": "la section 5, « L'arbitre »",
+      "s6": "la section 6, « Un exemple en cinq coups », tiré de pont-et-moulin avec ses numéros de ligne",
+      "s7": "la section 7, « Par où commencer »",
+      "livre-auteur": "docs/regles-partie.md, le livre de règles : clef qui montre qu'une phrase du produit est soutenue par une règle, avec son slug. Ne se conteste pas"
+    },
+    "lecteur": {
+      "livre": "docs/regles-partie.md : verrou sur une phrase du produit qu'une règle contredit, ou qu'aucune règle ne soutient, avec le slug. Question sur toute section",
+      "carnet": "docs/parties/learnings.md : verrou sur une phrase du produit que les parties jouées démentent, avec le paragraphe",
+      "tutoriel": "etat/parties/pont-et-moulin.jsonl : verrou sur un numéro de ligne ou un fait de l'exemple qui n'y est pas",
+      "lexique": "un lecteur neuf : verrou sur un mot du jeu employé dans deux sens dans le produit, ou employé avant d'être défini — cite les deux lignes. Question sur toute section"
+    }
+  },
+  "fin": {
+    "tour": 6,
+    "regle": "au sixième, l'arbitre lit docs/presentation-partie.md tel qu'il est sur disque et constate : la racine de l'auteur si, pour chacune des trois questions (qu'est-ce qu'une pièce ; que fait une question gratuite ; qui constate et sur quoi), une ligne du texte donne une réponse conforme au livre ; la racine du lecteur si le texte contient encore une phrase qu'aucune règle ne soutient, un numéro de ligne faux, ou un mot du jeu en deux sens — ligne citée. Les deux peuvent être vraies, les deux peuvent être fausses"
+  },
+  "caractere": {
+    "auteur": "Tu es l'AUTEUR de docs/presentation-partie.md, une page qui présente le jeu à quelqu'un qui ne l'a jamais vu. Tu la reçois section par section, ce sont tes pièces. Tu joues en second à chaque tour, après le lecteur. Quand il pose un verrou sur une section, tu ne discutes pas : si le verrou a raison, tu réécris — une clef qui dit le changement en une phrase (« reformule la définition de la clef, un seul sens ») en engageant la section, puis, le tour même ou au tour suivant, un maillon `agir` sur cette clef dont le `texte` commence par « NOUVEAU TEXTE §N : » suivi du texte INTÉGRAL de la section réécrite, en markdown, titre compris. C'est ce texte que l'arbitre colle dans le fichier. Si le verrou a tort, tu poses une clef qui montre la ligne et la règle qui la soutient, avec son slug. Tu écris court, sobre, dans le ton du dépôt ; chaque mot du jeu a un seul sens ; tu ne cites que ce que le livre dit. Ta racine est un test sur le fichier au sixième tour : trois questions auxquelles le texte doit répondre en une ligne chacune.",
+    "lecteur": "Tu es le LECTEUR de docs/presentation-partie.md : quelqu'un de précis qui découvre le jeu par cette page et qui a le livre de règles sous les yeux. Tu joues en premier à chaque tour. Tu ne réécris jamais. Tu attaques le texte tel qu'il est : un verrou sur une section cite la ligne exacte du produit ET ce qui la contredit — le slug de la règle, le paragraphe du carnet, le numéro de ligne du tutoriel, ou les deux lignes où un mot change de sens. Sans les deux, l'arbitre te refuse. Une question gratuite sert à faire préciser une phrase floue avant de la verrouiller. Tu cherches ce qui ferait jouer faux un débutant : une définition qui dit deux choses, un coût oublié, un exemple dont le numéro est faux, un mot employé avant d'être défini. Tu ne dis jamais « c'est mal écrit » : tu dis quelle ligne, quelle règle. Ta racine est un test sur le fichier au sixième tour : il reste une faute citée, ou il n'en reste plus."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "partie": "la-poterne-vert",
+  "camps": [
+    "noir",
+    "vert"
+  ],
+  "coups_par_camp": 1,
+  "sieges": {
+    "noir": [
+      "rhaenyra"
+    ],
+    "vert": [
+      "aurore-inchauspe"
+    ]
+  },
+  "coups_interdits": [],
+  "note": "L'énigme de la poterne, sens VERT : Roche-Grise, une nuit ; ⚫ dehors veut la poterne ouverte avant le jour, 🟢 dedans veut le fort fermé jusqu'au jour. L'ouverture est écrite au tour 0 (elle ne compte pour personne) ; ⚫ a joué son coup du jour (il a passé), c'est à 🟢. Le camp au trait joue ses coups gratuits et son coup compté, l'autre ne répond que par des coups gratuits (une question, un maillon), puis l'arbitre constate ce que le greffe liste comme constatable. Une seule ligne tient contre toute réplique ; trois autres gagnent si l'autre s'endort. La même position en sens NOIR est `la-poterne-noir`. Solutions, pièges et verdicts du greffe : docs/parties/la-poterne.md.",
+  "fin": {
+    "tour": 1,
+    "regle": "à la fin du tour du camp au trait, après les répliques gratuites de l'autre, l'arbitre constate la racine que le greffe liste comme constatable ; s'il n'y en a aucune, l'énigme est manquée et la partie peut se poursuivre comme une partie ordinaire"
+  },
+  "portee": {
+    "noir": {
+      "lances": "tiennent le camp devant la poterne ; frappent des hommes à découvert ; ne lèvent pas une herse, n'achètent personne",
+      "hobb": "sait la herse : goupilles, chaîne, treuil ; entre par où un homme seul passe ; ne se bat pas",
+      "bourse": "achète un homme nommé au grand livre (Pate, Wat) ; n'achète ni une herse, ni une garnison entière ; verrou de promesse sur un état d'en face, faible",
+      "echelle": "passe le mur nord, une fois montée (tour 2) ; ne fait rien avant",
+      "barque": "porte six hommes par la rivière ; rentrée au port, revient au tour 3",
+      "fagots": "brûlent du bois ; la herse est de fer ; verrou de menace sur la poterne, rien de plus"
+    },
+    "vert": {
+      "herse": "de fer, sur chaîne et treuil ; ne se lève qu'à bras et par qui sait les goupilles",
+      "pate": "tient la chaîne ; s'achète ; ne sort pas de la salle des gardes",
+      "wat": "trois hommes : sortent par un guichet, tiennent la poterne côté dedans ; ont juré ce matin",
+      "guet": "six hommes à minuit (tour 2) ; passent la poterne à chaque heure ; rien avant",
+      "septon": "a reçu un serment ; ne frappe pas, ne bloque rien d'autre",
+      "garnison": "quinze lames : une sortie disperse un camp de vingt, ou elles tiennent la poterne ; pas les deux",
+      "poix": "chaude à minuit (tour 2) ; disperse un camp, tue un homme sur une échelle ; rien avant",
+      "corbeau": "porte un pli à Rosby, réponse dans quatre jours ; ne fait rien cette nuit : toute clef qui l'engage est refusée pour portée"
+    }
+  }
+}

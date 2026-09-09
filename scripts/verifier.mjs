@@ -82,10 +82,41 @@ const EPREUVES = [
       + "et non le 3129 : lancer la verification ne derange pas une partie en cours.",
   },
   {
+    // POURQUOI CETTE GARDE A ETE AJOUTEE (9.9). Elle existait, verifiee par
+    // MUTATION (desarmer le verrou du bas la fait tomber), et elle ne tournait
+    // pas. C'est la seule epreuve qui garde le BROUILLARD : trois sieges, dix
+    // items dont six adresses, chacun recoit exactement le sien. Un item sans
+    // `pour` n'est servi a personne — le defaut sur est la fermeture. Ecrite et
+    // muette, elle ne gardait rien.
+    id: "serveur-siege", rang: "garde", secondes: 0.3,
+    commande: ["node", "serveur/test_siege.js"],
+    pourquoi: "Le brouillard par siege, en lecture (GET /scene) et en ecriture "
+      + "(POST /action) : chaque siege recoit exactement ce qui lui est adresse, "
+      + "et un item sans audience n'est servi a personne.",
+  },
+  {
+    // Meme raison : ecrite, verifiee, jamais lancee. Elle monte le monde 3D en
+    // jonction, donc elle est plus lente que les autres — c'est le prix du seul
+    // etalon qui tienne les DISTANCES, dont depend chaque cout de deplacement.
+    id: "serveur-marche", rang: "garde", secondes: 2.0,
+    commande: ["node", "serveur/test_marche.js"],
+    pourquoi: "Les invariants du moteur de marche : itineraire deterministe, "
+      + "polyligne jamais plus courte que la ligne droite, report des fractions "
+      + "de minute, sac depose a l'arrivee seulement.",
+  },
+  {
     id: "chainage-actions", rang: "garde", secondes: 0.2,
     commande: [PY, "scripts/verifier_chainage_actions.py"],
     pourquoi: "Les actes qui citent une action pointent vers sa vraie affaire ; "
       + "toute action fermee depuis l'activation possede un fait lie.",
+  },
+  {
+    id: "regles-partie", rang: "garde", secondes: 0.2,
+    commande: [PY, "scripts/regles.py", "--verifier"],
+    pourquoi: "Le livre de regles de la partie (docs/regles-partie.md, un slug par "
+      + "regle) et le code qui les applique (`# regle: <slug>`), lies dans les deux "
+      + "sens : une regle sans marqueur, un marqueur sans regle ou une ligne « ou » "
+      + "perimee barre la route. Les regles declarees `sans code` sont listees a part.",
   },
   // --- LES MESURES ----------------------------------------------------------
   {

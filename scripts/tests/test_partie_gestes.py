@@ -120,11 +120,14 @@ class GestesTest(unittest.TestCase):
         self.assertEqual(self.relire().etats[r["ligne"]["id"]]["texte"], "Une porte de Port-Réal est acquise")
 
     def test_demander_une_piece_l_ecrit_en_attente(self):
-        r = partie_gestes.demander(self.p, "noir", "un comptage de la réserve", "pavillon-b", "costa")
+        # Depuis le 6.9, le lieu et le tenant se disent dans la phrase : c'est
+        # l'arbitre qui les écrit en accordant (docs/parties/gestes-manquants.md).
+        r = partie_gestes.demander(self.p, "noir", "un comptage de la réserve au pavillon B, par Costa", nombre=1)
         self.assertTrue(r["ok"], r["refus"])
         self.assertEqual(r["ligne"]["coup"], "demander")
-        self.assertEqual(r["ligne"]["lieu"], "pavillon-b")
-        self.assertEqual(r["ligne"]["tenu_par"], "costa")
+        self.assertNotIn("lieu", r["ligne"])
+        self.assertNotIn("tenu_par", r["ligne"])
+        self.assertEqual(r["ligne"]["nombre"], 1)
         self.assertIn("demande portée", r["dit"])
         pr = self.relire()
         self.assertTrue(pr.ressources[r["ligne"]["id"]].get("en_attente"))

@@ -20,6 +20,29 @@ function mjDisponible() {
   } catch (e) { return false; }
 }
 
+// L'ESTAMPILLE DES RESSOURCES — pourquoi elle existe, le 6.9.
+//
+// La page charge ses feuilles et ses modules par des chemins nus (`/jeu.css`,
+// `/modules/partie.css`). Le serveur les envoie déjà en `no-store`, et
+// pourtant : tant qu'un onglet reste ouvert, il garde en mémoire le CSS qu'il
+// a lu au chargement. On peut donc éditer une feuille, redémarrer le serveur,
+// et voir l'ancien rendu — c'est arrivé, et la conclusion qu'on en tire est
+// « ça ne marche pas », pas « il faut recharger ».
+//
+// On colle donc à chaque ressource locale la date de sa dernière écriture. Le
+// chemin change quand le fichier change, jamais autrement : le navigateur
+// reprend le neuf sans qu'on ait rien à lui demander, et garde le vieux tant
+// que rien n'a bougé. Un fichier introuvable est laissé tel quel — on
+// n'invente pas une version pour une ressource qu'on ne sert pas.
+function estampiller(html) {
+  return String(html).replace(/(href|src)="(\/[^"?#]+\.(?:css|js))"/g, (tout, attr, chemin) => {
+    try {
+      const t = Math.floor(fs.statSync(path.join(RACINE, "ecrans", chemin.slice(1))).mtimeMs);
+      return attr + '="' + chemin + "?v=" + t + '"';
+    } catch (e) { return tout; }
+  });
+}
+
 function traiter(req, res, url) {
   if (req.method === "GET") {
     if (url === "/") {
@@ -30,7 +53,7 @@ function traiter(req, res, url) {
         ? { "Set-Cookie": "jeton=" + encodeURIComponent(j.jeton) + "; Path=/; Max-Age=31536000; SameSite=Lax" }
         : null;
       try {
-        const corps = fs.readFileSync(path.join(RACINE, "ecrans", "jeu.html"));
+        const corps = estampiller(fs.readFileSync(path.join(RACINE, "ecrans", "jeu.html"), "utf-8"));
         return envoyer(res, 200, corps, "text/html; charset=utf-8", entetes);
       } catch (e) { return envoyer(res, 404, JSON.stringify({ erreur: "jeu.html" })); }
     }

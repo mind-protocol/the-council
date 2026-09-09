@@ -1,0 +1,38 @@
+{
+  "partie": "la-poterne-1",
+  "camps": [
+    "noir",
+    "vert"
+  ],
+  "coups_par_camp": 1,
+  "coups_interdits": [],
+  "note": "La poterne, première partie jouée : la position nue de l'énigme (personne n'a passé), les deux camps tenus par scripts/partie_ia.py, le MJ arbitre. Pas de sièges déclarés : l'IA ne publie dans aucun fil. Voir docs/parties/la-poterne.md.",
+  "fin": {
+    "tour": 1,
+    "regle": "à la fin du tour du camp au trait, après les répliques gratuites de l'autre, l'arbitre constate la racine que le greffe liste comme constatable ; s'il n'y en a aucune, l'énigme est manquée et la partie peut se poursuivre comme une partie ordinaire"
+  },
+  "portee": {
+    "noir": {
+      "lances": "tiennent le camp devant la poterne ; frappent des hommes à découvert ; ne lèvent pas une herse, n'achètent personne",
+      "hobb": "sait la herse : goupilles, chaîne, treuil ; entre par où un homme seul passe ; ne se bat pas",
+      "bourse": "achète un homme nommé au grand livre (Pate, Wat) ; n'achète ni une herse, ni une garnison entière ; verrou de promesse sur un état d'en face, faible",
+      "echelle": "passe le mur nord, une fois montée (tour 2) ; ne fait rien avant",
+      "barque": "porte six hommes par la rivière ; rentrée au port, revient au tour 3",
+      "fagots": "brûlent du bois ; la herse est de fer ; verrou de menace sur la poterne, rien de plus"
+    },
+    "vert": {
+      "herse": "de fer, sur chaîne et treuil ; ne se lève qu'à bras et par qui sait les goupilles",
+      "pate": "tient la chaîne ; s'achète ; ne sort pas de la salle des gardes",
+      "wat": "trois hommes : sortent par un guichet, tiennent la poterne côté dedans ; ont juré ce matin",
+      "guet": "six hommes à minuit (tour 2) ; passent la poterne à chaque heure ; rien avant",
+      "septon": "a reçu un serment ; ne frappe pas, ne bloque rien d'autre",
+      "garnison": "quinze lames : une sortie disperse un camp de vingt, ou elles tiennent la poterne ; pas les deux",
+      "poix": "chaude à minuit (tour 2) ; disperse un camp, tue un homme sur une échelle ; rien avant",
+      "corbeau": "porte un pli à Rosby, réponse dans quatre jours ; ne fait rien cette nuit : toute clef qui l'engage est refusée pour portée"
+    }
+  },
+  "caractere": {
+    "noir": "Tu es SER DICKON, pour la reine, devant Roche-Grise cette nuit : vingt lances, un forgeron qui a posé la chaîne de la herse, une bourse de cent dragons, trois charrettes de fagots, une échelle qu'on monte encore, une barque rentrée au port. Ta racine : la poterne du levant ouverte et tenue par les tiens avant le jour. Tu n'as qu'une nuit et un coup compté : lis la position entière avant de jouer, ce qui tient vraiment contre toi, ce qui ne tient pas encore, ce qui est suspendu, et ce que tes pièces peuvent atteindre. Tu parles court, en soldat, à ser Gyles sur son mur : tu lui dis ce que tu fais, jamais ce que tu prépares.",
+    "vert": "Tu es SER GYLES, castellan de Roche-Grise pour le roi : quinze lames, un sergent qui a juré ce matin, un garde qui tient la chaîne du treuil, une herse goupillée, un guet qui prend à minuit, de la poix qui chauffe, un corbeau pour Rosby. Ta racine : le fort fermé et tenu pour le roi jusqu'au jour. Tu n'as qu'une nuit et un coup compté : lis la position entière avant de jouer, ce qui tient vraiment contre toi, ce qui ne tient pas encore, ce qui est suspendu, et ce que tes pièces peuvent atteindre. Tu parles court, depuis le chemin de ronde, à ser Dickon en bas : tu lui dis ce que tu fais, jamais ce que tu prépares."
+  }
+}

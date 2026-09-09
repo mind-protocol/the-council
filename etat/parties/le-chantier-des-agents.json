@@ -1,0 +1,51 @@
+{
+  "partie": "le-chantier-des-agents",
+  "coups_par_camp": 2,
+  "camps": [
+    "le-chantier",
+    "la-facture"
+  ],
+  "sieges": {
+    "le-chantier": [
+      "nicolas-lester-reynolds"
+    ],
+    "la-facture": [
+      "nicolas-lester-reynolds"
+    ]
+  },
+  "coups_interdits": [
+    "consigne"
+  ],
+  "note": "Ouverte le 7 septembre 2026, soeur de la-ville-des-agents, montee A L'ENVERS. La-ville partait du sommet (une racine a cinq garanties) ; ici on part du SOL : ce qu'un agent a deja aujourd'hui, et ce qu'on peut lui ajouter MAINTENANT, capacite par capacite, avec le comment. LE CHANTIER se joue a deux mains : --role politique = L'ARCHITECTE (il pose les capacites comme etats DATES, `arrive_tour`, et choisit l'ordre — c'est lui qui ecrit la feuille de route) ; --role technique = L'INGENIEUR (il demande les pieces existantes, pose les clefs et ecrit les maillons : le comment). LA FACTURE joue --role entier et n'en joue QU'UN par tour. LA FEUILLE DE ROUTE EST LE DECK LUI-MEME (R27 deck-calendrier) : une capacite est un etat date, « Un agent de la ville peut desormais X », et sa date est le tour ou l'architecte pretend qu'elle est tenable. Dix places au deck, donc dix capacites en jeu au plus, les constatees vraies rendant leur place. UNE PIECE EST UNE CHOSE QUI EXISTE AUJOURD'HUI, comme dans la partie soeur : protocole publie, composant deploye, mecanisme en service, institution qui fonctionne. L'arbitre l'accorde avec sa servitude et ne comble jamais.",
+  "socle": {
+    "ce qu'un agent a au tour 1": "un modele accessible par API (payant a l'usage), un contexte borne, des outils qu'on lui donne (shell, navigateur, fichiers), une session qui meurt a la fin de la tache, aucun compte a lui, aucune adresse, aucun argent, un humain qui a lance la tache et qui repond de lui",
+    "regle du socle": "le socle ne s'accorde pas d'office : chaque piece du socle passe par demander puis arbitrer, gratuitement, comme tout le reste (P2). Le premier tour de l'ingenieur y passe, et c'est voulu : on compte ce qu'on a avant de batir"
+  },
+  "capacite": {
+    "forme": "un etat date : « Un agent de la ville peut desormais <verbe> <chose>, <a quelle echelle>, <a quel prix> ». Jamais une garantie abstraite : une chose qu'un agent FAIT et qu'un autre agent ou un humain peut constater",
+    "exige": "un `sert` vers la capacite dont elle depend, ou vers la racine si elle ne depend de rien. La chaine des `sert` EST l'ordre de la feuille de route ; une capacite posee sans son prerequis au deck est la faute que la facture cherche",
+    "tenue": "une capacite est tenable quand une clef valide la sert en engageant une piece EXISTANTE et qu'un maillon dit le comment : qui la branche, avec quoi, ce que ca coute par agent et par mois"
+  },
+  "portee": {
+    "le-chantier": {
+      "ce qui est une piece": "un mecanisme qui existe et qu'un agent peut brancher aujourd'hui : un protocole publie et implemente, un service en production, un composant deploye a une echelle connue, une regle de droit qui autorise. Tu le nommes, tu dis a quelle echelle il tourne et ce qu'il coute ; l'arbitre l'accorde avec sa servitude",
+      "ce qui se demande comme mesure": "un chiffre que tu n'as pas et qui trancherait l'ordre ou le prix (un cout par appel, une latence, un plafond de volume, un delai d'ouverture de compte). Delai 2 a 4 tours ; il entre au livre tel qu'il tombe, pour les deux camps",
+      "ce qui se reporte long": "un mecanisme en pilote, en preprint ou en liste d'attente : il entre avec `arrive_tour` loin, et la capacite qui en depend recule d'autant",
+      "ce qui se refuse": "une capacite qui presuppose la ville finie, une piece que tu ne peux pas nommer, et une capacite posee sans `sert` vers ce qu'elle exige alors qu'elle exige quelque chose"
+    },
+    "la-facture": {
+      "ce qui est une piece": "un FAIT QUI RETARDE OU RENCHERIT : un cout mesure, une latence physique, un plafond de volume constate, un prerequis manquant nomme, une regle de droit en vigueur, un echec documente d'un branchement du meme genre. Tu nommes et tu chiffres",
+      "ce qui se demande comme mesure": "le meme droit qu'eux, delai 2 a 4, tel qu'il tombe pour les deux camps",
+      "ce qui se refuse": "une borne qui n'est qu'une crainte. Une crainte est une question, et la question est gratuite",
+      "ce que tu peux faire de plus": "REORDONNER : un verrou de la facture peut dire « pas avant telle autre capacite » en nommant le prerequis manquant ; si le chantier le pose et le tient, le verrou tombe et la feuille de route est meilleure. C'est ainsi que tu construis avec eux"
+    }
+  },
+  "fin": {
+    "tour": 20,
+    "regle": "Au vingtieme, l'arbitre LIT LA FEUILLE DE ROUTE au grand livre : les capacites constatees vraies, dans l'ordre de leurs `arrive_tour`, chacune avec le mecanisme qui la tient et son prix ; puis les capacites bloquees, avec le verrou qui les tient et ce qu'il exige d'abord ; puis les mesures tombees. C'est le livrable, et il s'ecrit dans docs/parties/roadmap-chantier-des-agents.md. La racine du chantier est vraie si au moins CINQ capacites sont constatees vraies, chacune servie par une clef tenue dont un maillon nomme un mecanisme existant avec son prix, et si aucune constatee vraie ne s'appuie sur une capacite non constatee. La racine de la facture est vraie si l'arbitre peut nommer au livre une capacite constatee vraie dont le prerequis manque, ou dont le cout au livre depasse ce que la bourse de l'agent au livre permet. Les deux peuvent etre vraies : une bonne feuille de route avec un trou est une reponse."
+  },
+  "caractere": {
+    "le-chantier": "Vous tenez LE CHANTIER DE LA VILLE DES AGENTS et vous batissez de bas en haut. Vous ne partez pas d'une utopie : vous partez de ce qu'un agent a AUJOURD'HUI — un modele par API, des outils qu'on lui prete, une session qui meurt, pas de compte, pas d'argent, un humain qui repond de lui — et vous lui ajoutez une capacite a la fois, dans l'ordre ou elles se tiennent. Chaque capacite est un etat DATE : « Un agent de la ville peut desormais… », a tel tour, a tel prix, tenu par tel mecanisme qui existe. La chaine des `sert` est votre feuille de route et l'arbitre la lira telle quelle au vingtieme tour : c'est le livrable. Votre regle de fer : LE PREREQUIS D'ABORD. Une capacite posee avant ce qu'elle exige est la faute qu'on vous cherche ; regardez ce que chaque capacite suppose — un compte, une adresse, une bourse, une identite, une memoire — et posez-le en amont, meme si c'est moins brillant. Vous parlez en ingenieurs : un nom de mecanisme, une echelle, un prix par agent et par mois. L'adversaire n'est pas un ennemi : quand la facture dit « pas avant ceci », elle vous donne l'ordre, et vous la remerciez en le posant.",
+    "la-facture": "Tu es LA FACTURE. Tu ne dis pas que la ville est impossible : tu dis ce que chaque capacite COUTE et ce qu'elle EXIGE D'ABORD. Tes pieces sont des couts mesures, des latences physiques, des plafonds de volume, des prerequis nommes, des regles de droit, des echecs documentes. Ton coup favori est le verrou qui reordonne : « pas avant telle capacite, parce que… », avec la piece qui le prouve. Si le chantier pose le prerequis et le tient, ton verrou tombe et tu le dis : la feuille de route est meilleure, et c'est ton oeuvre autant que la leur. Tu ne bornes JAMAIS par une crainte ; une crainte est une question et la question est gratuite. TU NE JOUES QU'UN COUP COMPTE PAR TOUR, meme si le plateau t'en tolere deux. Ta faiblesse : chaque prix que tu nommes leur dit ce qu'il faut budgeter, chaque prerequis que tu nommes leur donne l'etape suivante. Tu parles sec, tu comptes, tu ne meprises pas. Si une mesure te donne tort, tu le dis."
+  }
+}

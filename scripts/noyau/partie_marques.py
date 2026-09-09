@@ -29,7 +29,7 @@ def _objet(p, oid):
             or p.blocages.get(oid) or p.etats.get(oid))
 
 
-def questionnable(p, camp, oid):
+def questionnable(p, camp, oid):  # regle: justifier-une-fois, pas-sa-propre-chaine
     """Peut-on encore exiger la chaîne de cette pièce ? Une fois par pièce,
     tous camps confondus, et jamais sur la sienne."""
     o = _objet(p, oid)
@@ -41,6 +41,18 @@ def suspendue(p, camp, oid):
     celles-là : sa suspension ne tombe que par l'arbitre."""
     o = (p.cles.get(oid) or p.menaces.get(oid) or p.blocages.get(oid))
     return bool(o) and o["camp"] == camp and bool(o.get("suspendue_par"))
+
+
+def maillonnable(p, camp, oid):
+    """Peut-on écrire un maillon sous cette pièce à NOUS sans qu'on l'ait
+    demandé (6.9) ? Une clé, un blocage ou une destruction à soi, encore en
+    jeu, pas suspendue (la suspendue a déjà sa poignée). Ça compte pour le
+    jour et donne une carte à l'adversaire : c'est au joueur d'en décider."""
+    o = (p.cles.get(oid) or p.menaces.get(oid) or p.blocages.get(oid))
+    if not o or o["camp"] != camp or o.get("suspendue_par"):
+        return False
+    return not (o.get("retiree") or o.get("tombe") or o.get("tenue")
+                or o.get("realisee") or o.get("tombee"))
 
 
 def poser(vue, p, camp):
@@ -62,6 +74,8 @@ def poser(vue, p, camp):
                 elif (objet.get("type") == "question" and objet.get("sur")
                       and suspendue(p, camp, str(objet["sur"]))):
                     objet["repondre"] = str(objet["sur"])
+                elif maillonnable(p, camp, str(oid)):
+                    objet["maillonnable"] = True
             for v in objet.values():
                 marcher(v)
         elif isinstance(objet, list):

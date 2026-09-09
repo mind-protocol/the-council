@@ -1,0 +1,53 @@
+{
+  "partie": "charmed",
+  "coups_par_camp": 1,
+  "sieges": {
+    "bien": [
+      "aurore-inchauspe"
+    ]
+  },
+  "note": "Le bien est joué par Aurore, le mal par une IA en entier (scripts/partie_ia.py charmed --camp mal --role entier --vraiment). Le MJ arbitre. Le bien tient le trône par trois états constatés vrais ; un verrou du mal sur l'un d'eux oblige l'arbitre à le reconstater. Le mal a trois marches sous sa racine, constatée quand les trois sont vraies. Se joue SANS retourner, reconstruire, rearmer ni consigne (coups_interdits). Pas d'autre règle : `portee` dit seulement ce que chaque pièce peut atteindre, et l'arbitre refuse ce qui la dépasse. Les Enfers envoient Shax (t4), Barbas (t8), Zankou (t12). `fin` : vingt tours, le trône décide.",
+  "coups_interdits": [
+    "retourner",
+    "reconstruire",
+    "rearmer",
+    "consigne"
+  ],
+  "portee": {
+    "bien": {
+      "pouvoir-prue": "frappe un démon, un chasseur, l'Ombre, la sorcière ou un démon nommé ; ne touche pas la Source",
+      "pouvoir-piper": "pare une frappe sur une sœur (fige) ; frappe un démon ; ne touche pas la Source",
+      "pouvoir-phoebe": "pare une frappe qu'elle a vue venir ; verrou sur une clef du mal ; ne frappe pas",
+      "pouvoir-des-trois": "frappe ce qu'aucun pouvoir seul ne vainc — Shax, Zankou, la Source montée ; engage les trois sœurs ensemble : s'il est joué, aucun pouvoir seul n'est libre ce tour",
+      "leo": "pare une frappe sur une sœur (soigne) ; clef sur le Nexus ; ne lève pas un verrou, ne frappe pas",
+      "livre": "clef qui sert un état du bien (un sort) ; lève un verrou du Grimoire ou du Devin ; ne frappe pas ; engagé, il n'est pas au grenier",
+      "potion": "frappe un démon nommé, ou un nombre de démons de la bande ; se consume quand la frappe atterrit",
+      "potion-2": "comme la potion",
+      "grams": "clef sur le Livre ou sur Leo ; répond à une question à la place des sœurs ; lève un verrou de la sorcière",
+      "manoir": "verrou sur ce qui vise une sœur ou le Livre à l'intérieur ; clef sur le Nexus ; ne bouge pas",
+      "fondateurs": "clef sur le Nexus ou sur Leo ; répond à une question ; jamais une frappe, jamais un verrou",
+      "cole": "verrou sur un état ou une clef du mal (il connaît les Enfers) ; ne frappe pas ; les chasseurs le visent"
+    },
+    "mal": {
+      "source": "ne quitte les Enfers que si deux marches sont vraies ; alors clef sur la racine, ou frappe sur une sœur",
+      "demons": "verrou sur un état du bien ; frappe sur Cole ou une sœur ; une frappe du bien dessus en tue un nombre, jamais la bande",
+      "chasseurs": "frappe sur Cole d'abord ; verrou sur ce qui sort du manoir",
+      "shax": "frappe sur une sœur ; un pouvoir seul ne le vainc pas : le Pouvoir des Trois ou une potion",
+      "barbas": "frappe sur une sœur par sa peur ; la prémonition le voit venir ; la potion ne le tue pas, un pouvoir oui",
+      "zankou": "clef sur le Nexus ; lève un verrou du Livre ; une potion ne suffit pas, le Pouvoir des Trois oui",
+      "grimoire": "clef sur le Livre ou le Nexus ; lève un verrou du Livre des Ombres",
+      "devin": "verrou sur la prémonition de Phoebe ; répond à une question ; ne frappe pas",
+      "balthazar": "clef ou verrou qui touche Phoebe ou Cole ; ne frappe pas",
+      "ombre": "clef sur le Nexus ; verrou sur ce qui le scelle ; ne sort pas du manoir",
+      "sorciere": "verrou sur le Livre ou une sœur ; lève un verrou de Cole ; une frappe la tue"
+    }
+  },
+  "fin": {
+    "tour": 20,
+    "regle": "à la vingtième, le trône décide : le bien gagne s'il le tient encore, le mal s'il l'a pris"
+  },
+  "caractere": {
+    "mal": "Tu es le MAL de Charmed : la Source de tout mal et ce qu'elle commande — Balthazar, les démons de bas étage, les chasseurs de primes, le Grimoire, le Devin. Ta racine a TROIS MARCHES, déjà posées sous elle : briser le Pouvoir des Trois (une sœur morte, ou passée de ton côté), prendre le Livre des Ombres, éveiller le Nexus sous le manoir. L'arbitre ne constate ta racine que quand les trois sont vraies : joue les marches, pas la racine. Le bien tient le trône par trois états constatés vrais — un état vrai reste attaquable : un verrou dessus avec un démon oblige l'arbitre à le reconstater. Tes armes, dans l'ordre où tu les aimes : séparer (une clef ou un verrou qui coupe une sœur des deux autres — Balthazar sous la peau de Cole est ta main pour ça), puis frapper (une menace datée sur une sœur, que Leo ou Piper devront parer), et questionner ce qu'elles affirment. Les démons meurent, les sœurs aussi ; la Source ne monte qu'à la fin. Tu parles comme la Source : bref, sûr, sans mentir sur ce que tu tiens, parce qu'un mensonge se justifie et tombe.",
+    "bien": "Tu es le BIEN de Charmed : les trois sœurs Halliwell, le Livre des Ombres, Leo, le manoir. Tu tiens le trône par trois choses constatées vraies — les sœurs ensemble, le Livre au grenier, le Nexus scellé — et chacune est un front. Tes pièces sont des gestes : un pouvoir, le Livre, une potion, Leo, les Fondateurs, Cole. Tu lèves les verrous du mal avec un pouvoir, tu pares ses frappes avec Leo ou Piper, tu vaincs un démon en tirant sa pièce sur une potion ou un pouvoir."
+  }
+}

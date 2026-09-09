@@ -161,9 +161,10 @@ class MessageJoueurTests(unittest.TestCase):
             "gestes": ["command_execution python scripts/parloir.py --dire"]}))
         self.assertFalse(mj._a_interroge_un_pnj({"gestes": []}))
 
-    def _manuel_avec(self, contenus):
+    def _manuel_avec(self, contenus, partie="reine-des-enfers"):
         with mock.patch.object(mj, "lire",
                                side_effect=lambda p: contenus.get(p)), \
+                mock.patch.object(mj, "_partie_active", return_value=partie), \
                 mock.patch.object(mj.chambre, "chemin",
                                   return_value="C:\\chambre-mj"):
             return mj._manuel()
@@ -172,23 +173,54 @@ class MessageJoueurTests(unittest.TestCase):
         manuel = self._manuel_avec({
             mj.MANUEL_MJ_RACINE: "CONSTITUTION RACINE",
             mj.MJ_SPECTACLE_MD: "MANUEL SPECTACLE",
-            mj.MJ_PARTIE_MD: "REGLES DE LA PARTIE",
+            mj.MJ_PARTIE_MD: "MANUEL DE L'ARBITRE",
+            mj.REGLES_PARTIE_MD: "LIVRE DE REGLES",
         })
         self.assertLess(manuel.index("CONSTITUTION RACINE"),
                         manuel.index("MANUEL SPECTACLE"))
         self.assertLess(manuel.index("MANUEL SPECTACLE"),
-                        manuel.index("REGLES DE LA PARTIE"))
+                        manuel.index("MANUEL DE L'ARBITRE"))
+        self.assertLess(manuel.index("MANUEL DE L'ARBITRE"),
+                        manuel.index("LIVRE DE REGLES"))
+        self.assertIn("# Le livre de règles de la partie", manuel)
 
-    def test_le_mj_a_toujours_les_regles_de_la_partie(self):
+    def test_le_mj_a_les_regles_de_la_partie_quand_elle_est_active(self):
         """Le 3.9, le MJ etait reveille sur un coup du conseil de guerre sans
         avoir jamais lu mj-partie.md, et il repartait faire autre chose. Un
         arbitre a qui l'on ne donne pas les regles n'arbitre pas : le manuel
-        REFUSE desormais de se monter sans elles."""
+        REFUSE de se monter sans elles — le manuel de l'arbitre ET le livre
+        de regles (audit du 7.9, C1 : le manuel cite les regles par adresse
+        sans en porter le texte)."""
         with self.assertRaises(SystemExit):
             self._manuel_avec({
                 mj.MANUEL_MJ_RACINE: "CONSTITUTION RACINE",
                 mj.MJ_SPECTACLE_MD: "MANUEL SPECTACLE",
             })
+        with self.assertRaises(SystemExit):
+            self._manuel_avec({
+                mj.MANUEL_MJ_RACINE: "CONSTITUTION RACINE",
+                mj.MJ_SPECTACLE_MD: "MANUEL SPECTACLE",
+                mj.MJ_PARTIE_MD: "MANUEL DE L'ARBITRE",
+            })
+
+    def test_sans_partie_active_le_mj_ne_recoit_rien_de_la_partie(self):
+        """Audit du 7.9, C1 : un reveil ordinaire n'a rien a faire d'un
+        wargame — ni le manuel de l'arbitre ni le livre de regles ne se
+        chargent quand `_courante.json` ne nomme aucune partie vivante, et
+        leur absence sur disque n'est alors pas une faute."""
+        manuel = self._manuel_avec({
+            mj.MANUEL_MJ_RACINE: "CONSTITUTION RACINE",
+            mj.MJ_SPECTACLE_MD: "MANUEL SPECTACLE",
+            mj.MJ_PARTIE_MD: "MANUEL DE L'ARBITRE",
+            mj.REGLES_PARTIE_MD: "LIVRE DE REGLES",
+        }, partie=None)
+        self.assertIn("CONSTITUTION RACINE", manuel)
+        self.assertNotIn("MANUEL DE L'ARBITRE", manuel)
+        self.assertNotIn("LIVRE DE REGLES", manuel)
+        self.assertEqual(manuel, self._manuel_avec({
+            mj.MANUEL_MJ_RACINE: "CONSTITUTION RACINE",
+            mj.MJ_SPECTACLE_MD: "MANUEL SPECTACLE",
+        }, partie=None))
 
 
 if __name__ == "__main__":

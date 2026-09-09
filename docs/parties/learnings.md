@@ -226,3 +226,37 @@ pour faire une enquête sans brouillard.
 - **Le Vert de la Danse ne poursuit pas** : dans `duel-50`, cinq états visés,
   aucune clé. Le signal `inactifs` existe depuis le 3.9 ; reste à voir s'il
   suffit à faire jouer un camp tenu par le MJ.
+
+## 9. Les règles ont une adresse — 7 septembre 2026
+
+Chaque règle du livre (`docs/regles-partie.md`) a reçu un slug stable, et le
+code un marqueur `# regle: <slug>` là où il l'applique ou la refuse ;
+`python scripts/regles.py --verifier` tient les deux bouts (garde de
+`verifier.mjs`), `--ecrire` regénère sous chaque règle la ligne « où ». Ce que
+la vérification bidirectionnelle a fait apparaître :
+
+- **73 règles nommées** — les 31 du §4, plus ce qui était implicite : les
+  quatre objets (`un-id-un-objet`, les états d'une ressource, d'une clé, d'un
+  blocage), les 13 coups des camps, les 4 de l'arbitre, les 4 verdicts, 5
+  règles de temps, 4 d'ouverture, 3 d'arbitrage, et l'id visé par un
+  arbitrage. La règle 14 s'est révélée être trois choses vérifiables
+  (`justifier-suspend`, `justifier-une-fois`, `reponse-gratuite`), scindées.
+- **8 règles sans code**, déclarées telles avec leur raison : la table des
+  délais (`delais-d-arrivee`), l'ordre d'arbitrage (`ordre-d-arbitrage`),
+  `motif-sans-menu`, trois pratiques d'ouverture (`racine-au-premier-tour`,
+  `arbitre-justifie-les-racines`, `deck-en-jouant`), et deux règles qui
+  n'étaient écrites que dans ce fichier : `constatable-attend-un-tour` (§5)
+  et `question-sur-etat-sans-reponse` (§8). Toutes sont des jugements de
+  l'arbitre ou des défauts connus, pas du code manquant — rien n'a été
+  inventé dans le greffe pour les porter.
+- **Aucun marqueur sans règle** : tout ce que le code refuse ou applique
+  avait une phrase dans le livre. L'inverse n'était pas vrai : le manuel
+  (`mj-partie.md` §3) portait quatorze règles numérotées dans le désordre,
+  toutes présentes au livre sous un autre numéro ; il ne garde plus que leurs
+  motivations et les cite par slug.
+- **120 marqueurs dans 6 modules**, en fin de ligne pour ne pas grossir des
+  fichiers déjà au cliquet : `partie_validite` (32), `partie_greffe` (53),
+  `partie_tour` (11), `partie_lecture` (3), `partie_marques` (1),
+  `partie_gestes` (1). `partie_cartes` n'en porte aucun : à 599 lignes, il ne
+  peut que maigrir, et ce qu'il montre (préséance, deck) est marqué à sa source
+  dans le greffe.

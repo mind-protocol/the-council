@@ -1,0 +1,37 @@
+{
+  "partie": "rosby",
+  "coups_par_camp": 1,
+  "sieges": {
+    "rosby": ["rhaenyra"]
+  },
+  "note": "La maison qui n'a pas répondu. 129 AC, 3e lune : Aegon II vient d'être couronné, la convocation à prêter serment est partie de Port-Réal. Le camp rosby (lord Ambrose Rosby) est joué par le joueur, coaché ; le camp vert (Otto Hightower, Main du roi) par une IA en entier (scripts/partie_ia.py rosby --camp vert --role entier --vraiment). Le MJ arbitre. Dix tours, vingt jours, deux racines datées et fausses toutes les deux à l'ouverture. Pas de dragon dans cette partie : la reine tient les siens à Peyredragon et les Verts n'en risquent pas un pour un banneret à un jour de leurs murs — la partie se gagne par les hommes, l'or, les plis et le grain.",
+  "coups_interdits": ["consigne"],
+  "portee": {
+    "rosby": {
+      "garnison-rosby": "soixante hommes de murs : verrou sur les portes et sur toute entrée au château ; ne sort pas du château ; ne frappe pas sur la route. Une garnison ne tient pas contre un ost de quinze cents assis devant elle plus de deux tours sans les levées",
+      "levees-rosby": "quatre cents paysans en armes, prêts au tour 2 : verrou sur la route, la récolte, les portes ; frappe sur une colonne de moins de deux cents. Une fois levées, le grain ne se rentre plus au même rythme : les mêmes bras",
+      "bourse-rosby": "trente mille dragons : clef qui achète un délai, un homme, un silence ; verrou sur un retournement adverse par une bourse égale. Se fractionne par nombre. Ne frappe pas",
+      "mestre-rosby": "le mestre et sa roukerie : clef sur tout état qui passe par un pli — une réponse, une demande de délai, une lettre à Peyredragon ou à Sombreval ; répond une fois par tour à une question posée à rosby. Ne frappe pas, ne verrouille pas",
+      "route-sombreval": "la route de Sombreval traverse le fief : verrou sur toute marche verte vers le nord ; clef sur un état qui vend le passage. Ne frappe pas ; tombe si les levées ne la tiennent pas",
+      "alarra": "dame Alarra, née à Pierredanse : clef sur un état qui passe par Peyredragon (elle y est reçue) ; verrou sur une accusation de trahison, parce qu'elle part sans rien demander ; retournable par personne. Mortelle ; une dame en route se saisit",
+      "grain-rosby": "la récolte, à demi rentrée : la chose que tout le monde veut. Verrou sur un état vert par la disette qu'il coûterait à Port-Réal ; frappable par un ost, jamais par un pli. Détruit, ne se reconstruit pas",
+      "homme-a-pr": "un facteur de Rosby à Port-Réal, connu du Guet : répond une fois par tour à une question sur la ville ; clef sur un état qui demande d'être prévenu d'avance. Retournable en deux tours par de l'or vert ; frappable par le Guet"
+    },
+    "vert": {
+      "otto": "la Main du roi : clef sur tout état vert qui passe par une lettre, un décret, une promesse ; verrou sur un état rosby par la loi (un banneret qui ne jure pas est félon). Ne frappe pas ; ne quitte pas Port-Réal",
+      "pli-royal": "la convocation scellée du roi : clef sur « Rosby a prêté serment » ; une fois refusée par écrit, elle devient la preuve d'une félonie. Ne frappe pas",
+      "manteaux-dor": "deux cents manteaux d'or, à un jour de marche : verrou sur la route du sud, frappe sur un facteur ou une dame en route, saisie d'une charrette. Ne prennent pas un château tenu ; se retirent devant quatre cents levées",
+      "ost-cole": "l'ost de ser Criston Cole, quinze cents hommes, devant Rosby au tour 4 au plus tôt : verrou sur les portes, frappe sur la récolte, prend le château si la garnison est seule deux tours. Ne peut pas être à Rosby et à Sombreval le même tour",
+      "or-royal": "l'or du trésor : retourne un homme de Rosby en deux tours, un facteur en un ; achète un délai qu'Otto refuserait. Ne frappe pas",
+      "septon-royal": "un septon de la Foi porteur de l'onction d'Aegon : verrou sur une lettre rosby qui invoque le serment à Rhaenyra ; clef sur un état vert par la légitimité. Ne frappe pas ; ne verrouille pas des hommes",
+      "cousin-rosby": "un cousin Rosby à la cour, écuyer : clef sur un état vert qui a besoin d'un Rosby qui jure à la place du lord ; retournable par rosby en un tour par une lettre du lord. Ne frappe pas"
+    }
+  },
+  "fin": {
+    "tour": 10,
+    "regle": "au dixième tour, l'arbitre constate les deux racines avec sa source : Rosby a-t-il juré à qui que ce soit, ses portes sont-elles fermées et sa récolte rentrée ; un lieutenant vert tient-il le château. Les deux peuvent être fausses — le trône est alors à personne, et c'est une fin"
+  },
+  "caractere": {
+    "vert": "Tu es OTTO HIGHTOWER, Main du roi Aegon II, à Port-Réal, 129 AC, troisième lune. Le roi est couronné depuis huit jours. Les corbeaux de convocation sont partis vers tous les bannerets des terres de la Couronne ; Rosby, à un jour de marche, n'a pas répondu, et Rosby nourrit la ville. Ta racine est datée : au dixième tour, lord Ambrose Rosby a prêté serment à Aegon, ou un lieutenant du roi tient son château. Tu n'as besoin que de l'un des deux.\n\nTu connais Ambrose : prudent, faible, courtois, il promet d'étudier et ne s'engage jamais. Sa femme est née à Pierredanse et regarde vers Peyredragon. Sa récolte est à demi rentrée. Ta pente naturelle est la loi avant la force : une lettre, un délai court, un cousin qui jure à sa place, et l'ost de Cole quand la lettre n'a pas suffi — Cole est disponible au tour 4 au plus tôt, et il ne peut pas être à Rosby et ailleurs le même tour. Tu n'as pas de dragon à mettre sur Rosby : la reine tient les siens à Peyredragon, et le roi ne risquera pas Feux-du-Soleil pour un banneret.\n\nTu ne mens pas sur ce que tu tiens : un mensonge se justifie et tombe. Tu ne frappes pas ce qui nourrit la ville sans avoir d'abord tenté de l'acheter. Tu exiges la chaîne de tout ce que Rosby affirme sans pièce.\n\nTu parles bref, courtois, sans menace inutile. Tu t'adresses à lord Rosby, tu lui dis ce que tu viens de faire et ce que son silence lui coûte, et tu ne lui donnes jamais un conseil qui ne te serve. Tu es patient : tu as dix tours et lui a besoin de tous."
+  }
+}

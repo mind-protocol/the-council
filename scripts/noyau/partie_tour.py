@@ -26,7 +26,7 @@ def _g():
 TOURS_MUET = 3   # passer (ou rien) trois tours de suite : le camp est signalé inactif
 
 
-def tolerees(p):
+def tolerees(p):  # regle: branche-morte
     """Une pièce qui a figuré une fois dans un engage, un avec, un qui ou une
     consigne n'est jamais une branche morte (le guetteur et le septon d'essai-1)."""
     liste, vues = _g().liste, set()
@@ -42,18 +42,18 @@ def _en_l_air(p, tour):
     parées pour de bon (deuxième tour de parade), parées ou suspendues (attendent)."""
     tombent, attendent, parees = [], [], []
     for mid, m in p.menaces.items():
-        if m["realisee"] or m["tombee"] or m["arrive_tour"] >= tour:
+        if m["realisee"] or m["tombee"] or m["arrive_tour"] >= tour:  # regle: menace-datee
             continue
-        if m.get("suspendue_par"):
+        if m.get("suspendue_par"):  # regle: menace-suspendue-attend
             attendent.append(mid)
-        elif p._protegee(mid):
+        elif p._protegee(mid):  # regle: parade-un-tour
             (parees if m.get("paree_tour") else attendent).append(mid)
         else:
             tombent.append(mid)
     return tombent, parees, attendent
 
 
-def constatables(p):
+def constatables(p):  # regle: greffe-liste-arbitre-constate
     """Les états au deck, non constatés, que rien n'empêche plus : tous leurs
     blocages sont tombés ou levés par une clé qui prévaut ; ou, sans blocage,
     une clé valide les sert. Une liste, pas un verdict : l'arbitre constate."""
@@ -76,7 +76,7 @@ def constatables(p):
     return out
 
 
-def inactifs(p, tour):
+def inactifs(p, tour):  # regle: greffe-liste-arbitre-constate, reponse-gratuite
     """Les camps qui n'ont rien joué d'autre que passer sur les TOURS_MUET derniers tours."""
     g = _g()
     if tour <= TOURS_MUET:
@@ -90,7 +90,7 @@ def inactifs(p, tour):
     return out
 
 
-def ligne(p, tour):
+def ligne(p, tour):  # regle: passage-du-tour, coup-tour
     """Ce que la ligne `tour` annonce, calculé sur la position AVANT le passage."""
     g = _g()
     tombent, parees, attendent = _en_l_air(p, tour)
@@ -107,7 +107,7 @@ def ligne(p, tour):
                           if e.get("arrive_tour") == tour and not e.get("sorti")],
         "constatables": constatables(p),
         "inactifs": inactifs(p, tour),
-        "branches_mortes": [rid for rid, r in p.ressources.items()
+        "branches_mortes": [rid for rid, r in p.ressources.items()  # regle: branche-morte
                             if not r["engagee_par"] and not r.get("detruite")
                             and not r.get("en_attente") and rid not in frappees
                             and r.get("arrive_tour", 0) + 2 <= tour and rid not in tol],
@@ -115,19 +115,19 @@ def ligne(p, tour):
     }
 
 
-def appliquer(p, l):
+def appliquer(p, l):  # regle: passage-du-tour
     """Le passage du tour sur la position : états datés au deck, menaces qui
     atterrissent, parades qui tiennent (la frappe tombe, l'écran est rendu, la
     pièce qui frappait rentre gelée un tour), premières parades marquées."""
     g = _g()
     p.tour = int(l.get("tour") or p.tour + 1)
     for e in p.etats.values():
-        if e.get("arrive_tour") and not e.get("sorti") and int(e["arrive_tour"]) <= p.tour:
+        if e.get("arrive_tour") and not e.get("sorti") and int(e["arrive_tour"]) <= p.tour:  # regle: deck-calendrier
             e["deck"] = True
     tombent, parees, attendent = _en_l_air(p, p.tour)
     for mid in tombent:
         p._realiser_menace(mid, None)
-    for mid in parees:
+    for mid in parees:  # regle: parade-un-tour, defenseur-tient
         m = p.menaces[mid]
         m["tombee"], m["paree_tenue"] = True, p.tour
         p._liberer(mid, g.GEL_FRAPPE)

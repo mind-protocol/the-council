@@ -123,7 +123,9 @@ sortie (`node scripts/verifier.mjs`, ou `--long` pour ce qui coûte des minutes)
 Son manifeste est la seule déclaration de ce qui vérifie ce dépôt : une épreuve
 neuve entre par ce fichier, sinon les listes divergent comme elles l'ont déjà
 fait pour l'ordre de chargement. Les bancs eux-mêmes vivent dans `analyse/` et
-`tests/`.
+`tests/`. `regles.py` — le livre de règles de la partie et le code qui les
+applique, liés dans les deux sens (`--verifier`, `--ecrire` ; matière dans
+`noyau/regles_partie.py`).
 
 **La sauvegarde Git des données** — `pousser_donnees.py` : aperçu sans effet par
 défaut ; `--vraiment` valide les JSON/JSONL modifiés, refuse un index déjà

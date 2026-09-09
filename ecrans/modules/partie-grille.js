@@ -62,6 +62,9 @@ window.PartieGrille = (function () {
     // COIN. `signe` vient du greffe, deviné du texte ; à défaut c'est le type.
     d.appendChild(el("span", "pc-type", c.signe || c.emoji));
     if (c.signe && c.signe !== TYPES[c.type]) d.appendChild(el("span", "pc-sorte", TYPES[c.type] || c.emoji));
+    // LE NUMÉRO D'ARRIVÉE, discret, en bas à droite (6.9 au soir) : une seule
+    // suite pour toute la partie, le nom qu'on dit à voix haute sans lire le titre.
+    if (c.numero) d.appendChild(el("span", "pc-num", c.numero));
     const t = el("div", "pc-texte");
     t.appendChild(el("div", "pc-titre", c.titre || ""));
     if (c.corps) t.appendChild(el("div", "pc-corps", c.corps));
@@ -119,7 +122,12 @@ window.PartieGrille = (function () {
     if (c.type === "question" && c.repondre) c.pied = { gauche: "", droite: "⚔️ à répondre" };
     const dit = (c.pied || {}).droite;
     const statut = dit && dit !== "✅ tient" ? court(dit, c.jours) : "";
-    if (statut) d.appendChild(el("span", "pc-etat", statut));
+    // UN COMPTE DE JOURS SE LIT DE LOIN. C'est le seul chiffre du plateau, il
+    // décide de tout ce qui se prépare — quand la pièce arrive, depuis combien
+    // de temps une question attend — et il était écrit en 9,5 px gris, du même
+    // gris que « répondue » ou « faite ». Il a sa propre classe et son propre
+    // corps ; le reste des statuts garde le sien.
+    if (statut) d.appendChild(el("span", "pc-etat" + (statut[0] === "⏳" ? " pc-jours" : ""), statut));
     // LE FILET DU SURVOL. Tant que le plateau se croit « en main », la CSS
     // masque tous les volets de texte (`pc-en-main .pc-texte`) — c'est voulu
     // pendant un glissé, et c'est un écran mort si l'état reste collé. Il le
@@ -137,6 +145,7 @@ window.PartieGrille = (function () {
     if (c.touche != null) d.dataset.touche = c.touche;
     if (c.visee) d.appendChild(el("span", "pc-visee", "💥"));
     if (c.questionnable) d.appendChild(poignee(c));
+    if (c.maillonnable) d.appendChild(maillonneur(c));
     if (c.repondre) {
       d.appendChild(repondeur(c));
       // LA CARTE ENTIERE REPOND, pas seulement sa poignee. Une pastille de 28 px
@@ -315,6 +324,25 @@ window.PartieGrille = (function () {
     return b;
   }
 
+  // LE MAILLON SANS QU'ON LE DEMANDE (6.9). Même poignée, sur toute clef, garde
+  // ou frappe à nous encore en jeu (`maillonnable`, partie_marques). Ce
+  // coup-là COMPTE pour le jour et donne une carte à l'adversaire, à
+  // l'inverse de la réponse à un ❓ : la bulle le dit.
+  function maillonneur(c) {
+    const b = el("span", "pc-rep pc-rep-libre", "⚔️");
+    b.title = "Écrire le maillon de « " + (c.titre || "") + " » — compte pour le jour";
+    b.draggable = false;
+    b.addEventListener("mousedown", (e) => e.stopPropagation());
+    b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (epuise()) return outil.dire(MOT_EPUISE);
+      bulle(b, "Le maillon : qui, avec quoi, quel jour", "qui, avec quoi, quel jour", "Écrire",
+            (texte) => outil.jouer({ quoi: "maillon", sur: c.id, texte: texte }),
+            null, null, { note: "Compte pour votre coup du jour. L'adversaire lira la chaîne.", sansChamp: true });
+    });
+    return b;
+  }
+
   function demanderMaillon(ancre, c) {
     bulle(ancre, "Par quoi ? La reponse a la question",
           "qui, avec quoi, quel jour", "Repondre",
@@ -332,18 +360,41 @@ window.PartieGrille = (function () {
     t.style.display = "";
     const H = window.innerHeight || document.documentElement.clientHeight;
     const W = window.innerWidth || document.documentElement.clientWidth;
-    t.style.left = Math.max(6, Math.min(r.left, W - w - 6)) + "px";
-    // TOUJOURS AU-DESSUS, et par en dessous seulement s'il n'y a pas la place.
-    // Le volet s'ouvrait sous la carte par defaut : dans le deck, en bas de
-    // l'ecran, il tombait hors du cadre, et dans une colonne il couvrait la
-    // rangee suivante — c'est-a-dire justement les cartes qu'on est en train de
-    // comparer. Au-dessus, il ne couvre que ce qu'on vient de lire.
-    const dessus = r.top - 6 - h;
-    t.style.top = (dessus >= 6 ? dessus : Math.min(r.bottom + 4, Math.max(6, H - h - 6))) + "px";
+    // TOUT EN HAUT DE L'ECRAN, TOUJOURS (6.9). Le volet se posait au-dessus
+    // de la carte, ou dessous faute de place : il couvrait tantot la rangee
+    // du dessus, tantot celle du dessous, et l'oeil ne savait jamais ou lire.
+    // Il a maintenant une place fixe, le haut de la fenetre, comme un bandeau
+    // de lecture : on survole en bas, on lit en haut, et rien de ce qu'on
+    // compare n'est cache. Seule exception : quand la carte elle-meme est
+    // dans la bande du haut, le volet se decale a cote d'elle plutot que
+    // dessus, pour qu'on voie encore ce qu'on lit.
+    let left = r.left;
+    if (r.top < 6 + h + 4) left = (r.left - w - 8 >= 6) ? r.left - w - 8 : r.right + 8;
+    t.style.left = Math.max(6, Math.min(left, W - w - 6)) + "px";
+    t.style.top = "6px";
+    t.style.maxHeight = (H - 12) + "px";
   }
 
   // ---- le geste : on prend une carte, on la pose sur une autre -------------
   const aNous = (c) => c.camp === (outil.vue() && outil.vue().camp);
+  // UN COUP PAR CAMP ET PAR JOUR — et l'écran ne le laisse plus casser. Le
+  // greffe reste gradué : il écrit le second coup et le SIGNALE, parce qu'un
+  // MJ qui rattrape une ligne à la main doit pouvoir le faire. Mais un joueur
+  // devant le plateau n'a aucune raison de pouvoir jouer deux fois, et il le
+  // faisait — trois fois dans le même tour sur « vingt jours », payés après
+  // coup par trois jours de calendrier que personne n'avait vus venir.
+  // Ce qui reste ouvert, c'est ce qui ne compte pas : demander une pièce,
+  // questionner une carte d'en face, écrire le maillon qui répond. Le compte
+  // vient du greffe (`coups_du_jour`, posé par `partie_cartes`) et jamais d'ici.
+  const epuise = () => {
+    const v = outil.vue();
+    // la limite vient du greffe aussi (`coups_max`) : un par camp, ou deux
+    // quand un humain et une IA se partagent le camp
+    return !!v && v.camp !== "arbitre" && (((v.coups_du_jour || {})[v.camp]) || 0) >= (v.coups_max || 1);
+  };
+  const MOT_EPUISE = "Votre coup du jour est joué : un coup par camp et par jour. "
+                   + "Restent les gestes qui ne comptent pas — demander une pièce, "
+                   + "questionner une carte d'en face, écrire un maillon.";
   const arbitre = () => !!outil.vue() && outil.vue().camp === "arbitre";
   // Ce qu'une pièce en main peut atteindre. La règle est ici, en trois lignes,
   // et elle est la même que celle du greffier : un obstacle ou une frappe d'en
@@ -360,8 +411,9 @@ window.PartieGrille = (function () {
   // achat si c'est la bourse, une frappe sinon — le greffier décide
   // (partie_gestes, branche « sur une ressource »). Ma pièce libre est donc
   // une cible, mais seulement pour une pièce d'en face : `accepte` le vérifie.
+  const interdit = (coup) => (((outil.vue() || {}).coups_interdits) || []).indexOf(coup) >= 0;
   const cible = (c) => (c.type === "verrou") || (c.type === "frappe" && !aNous(c))
-                    || (c.type === "clef" && aNous(c))
+                    || (c.type === "clef" && aNous(c) && !interdit("rearmer"))   // une partie sans renfort n'allume pas nos clefs
                     || (c.type === "cible" && !(aNous(c) && c.apparence === "vrai"))
                     || (c.type === "piece" && aNous(c) && c.apparence === "libre");
   // ce que la cible accepte selon ce qu'on tient : une pièce à nous partout
@@ -372,12 +424,36 @@ window.PartieGrille = (function () {
   // ne trouvera aucune case allumée, et si on la lâche quand même, c'est le
   // greffe qui refuse — avec sa phrase, qui apprend la règle. Éteindre la
   // carte, à l'inverse, ne dit jamais pourquoi.
-  const prenable = (c) => (c.type === "piece" && aNous(c))
+  // `epuise` passe AVANT tout le reste : une carte qu'on ne peut plus jouer ne
+  // se soulève pas, et le marquage `pc-interdit` de `jouable` la grise au repos.
+  const prenable = (c) => !epuise()
+                       && ((c.type === "piece" && aNous(c))
                        || ((c.type === "clef" || c.type === "verrou") && aNous(c))
                        // mon état au deck (→ sortir), ma pièce perdue (→ reconstruire) : vers la main
                        || (c.type === "cible" && aNous(c) && c.apparence !== "vrai")
                        // la leur, libre : on peut la tirer à soi (achat, frappe)
-                       || (c.type === "piece" && !aNous(c) && c.apparence === "libre");
+                       || (c.type === "piece" && !aNous(c) && c.apparence === "libre"));
+
+  // CE QUI SE JOUE MAINTENANT — la règle du GREFFE, et non celle du glissé.
+  // Les deux ne se recouvrent pas, et c'est voulu : toute pièce à nous se
+  // soulève (`prenable`) pour que le refus vienne du greffe avec sa phrase,
+  // mais une pièce gelée, engagée ailleurs, détruite ou qui attend encore son
+  // arbitrage ne peut RIEN faire ce tour-ci. C'est cette liste-là qu'on
+  // marque, parce que c'est la question qu'on se pose devant le plateau
+  // immobile : qu'ai-je le droit de prendre ?
+  // Une pièce EN ROUTE se joue : le greffe accepte qu'on l'engage d'avance, et
+  // la clef est simplement « prête au tour N » (règle 4.1.3). L'exclure aurait
+  // été plus faux que de ne rien marquer.
+  function jouable(c) {
+    if (c.repondre || c.questionnable) return true;   // gratuits : jamais fermés
+    if (epuise()) return false;
+    if (c.type === "piece") {
+      if (!aNous(c)) return c.apparence === "libre";   // on ne tire à soi qu'une pièce libre
+      if (c.apparence === "libre") return true;
+      return c.apparence === "route" && !/attend l'arbitre/.test((c.pied || {}).droite || "");
+    }
+    return cible(c) || prenable(c);
+  }
 
   // ---- CE QUE LE GESTE FERAIT, DIT SUR LA CIBLE ELLE-MÊME -----------------
   // Le glissé n'allumait qu'une chose : « ici, oui ». Il ne disait pas CE QUE
@@ -394,7 +470,7 @@ window.PartieGrille = (function () {
     if (!accepte(sur, piece)) return null;   // la leur ne va que sur les miennes, et réciproquement
     if (sur.type === "piece")
       return /💰/.test(sur.signe || sur.emoji || "") ? { signe: "🔄", mot: "achat" }
-                                                    : { signe: "💥", mot: "frappe" };
+                                                    : { signe: "💥🔄", mot: "frappe ou retour" };
     if (sur.type === "verrou")
       return (aNous(sur) || dejaUneClef(sur.id)) ? { signe: "\u2795", mot: "renfort" }
                                                  : { signe: "\ud83d\udddd\ufe0f", mot: "clef" };
@@ -423,6 +499,11 @@ window.PartieGrille = (function () {
       if (deck) marquer(deck, { signe: "\ud83d\uddd1\ufe0f", mot: "reprendre" });
       tracer();
       return;
+    }
+    if (aNous(tenue) && tenue.visee) {
+      // UNE PIÈCE VISÉE RENTRE (6.9) : la frappe tombe, la pièce se remet — règle 23
+      const deck = h.querySelector(".pc-deck");
+      if (deck) marquer(deck, { signe: "\u21a9", mot: "rentrer" });
     }
     h.querySelectorAll("[data-jouable='1']").forEach((x) => {
       const g = geste(tenue, quoi.get(x));
@@ -543,6 +624,18 @@ window.PartieGrille = (function () {
   document.addEventListener("drop", eteindre, true);
 
   function armer(d, c) {
+    // CE QU'ON NE PEUT PAS JOUER LE DIT AU REPOS, et pas seulement pendant un
+    // glissé. La règle « ce qui n'est pas jouable ne s'allume pas » ne servait
+    // qu'une fois la carte en main : devant le plateau immobile, une pièce en
+    // route, gelée ou déjà engagée avait exactement l'air d'une pièce libre, et
+    // l'on ne l'apprenait qu'en essayant. Le bandeau dit POURQUOI (⏳4, remet
+    // 4 j, détruite) ; ce trait-ci dit QUE — bord gris pointillé, couleur
+    // éteinte, curseur barré.
+    // UNE QUESTION N'EST JAMAIS « INTERDITE » (6.9) : elle ne se prend ni ne se
+    // lâche, mais elle est active — c'est elle qui suspend. La griser et la
+    // tireter la faisait paraître suspendue à son tour. Même chose pour un
+    // maillon fait : il est fait, il n'est pas empêché.
+    if (!jouable(c) && c.type !== "question" && c.type !== "action") d.classList.add("pc-interdit");
     if (prenable(c)) {
       d.draggable = true;
       if (c.apparence === "libre" || c.type !== "piece") d.classList.add("pc-prenable");
@@ -590,11 +683,20 @@ window.PartieGrille = (function () {
               || sur.type === "cible" || sur.type === "piece";
     if (!neuf) return outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id });
     if (sur.type === "piece") {
+      // UNE BOURSE ACHÈTE, et c'est le seul raccourci qui reste (6.9). Tout le
+      // reste demande le verbe : on retourne aussi un homme avec une promesse,
+      // un otage, une lettre — deux verbes dans la bulle, comme Vrai et Faux.
       const achat = /💰/.test(sur.signe || sur.emoji || "");
-      return bulle(ancre, (achat ? "Acheter " : "Frapper ") + piece.titre + " avec " + sur.titre,
-                   achat ? "à qui l'argent est remis, quand, pour quoi" : "de nuit, par où, qui tient l'arme",
-                   achat ? "Acheter" : "Frapper",
-                   (texte) => outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: texte }));
+      if (achat)
+        return bulle(ancre, "Acheter " + piece.titre + " avec " + sur.titre,
+                     "à qui l'argent est remis, quand, pour quoi", "Acheter",
+                     (texte) => outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: texte, verbe: "retourner" }));
+      return bulle(ancre, piece.titre + " avec " + sur.titre,
+                   "frapper : de nuit, par où — retourner : par quelle promesse, remise par qui",
+                   "Retourner",
+                   (texte) => outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: texte, verbe: "retourner" }),
+                   "Frapper",
+                   (texte) => outil.jouer({ quoi: "poser", piece: piece.id, sur: sur.id, texte: texte, verbe: "detruire" }));
     }
     const contre = sur.type === "cible" && aNous(sur) ? " pour « " : " contre « ";
     bulle(ancre, "Et " + piece.titre + " y fait quoi ?", piece.titre + contre + sur.titre + " »",
@@ -607,7 +709,9 @@ window.PartieGrille = (function () {
   // La bulle est posée sur le CORPS, en repère fixe, et non dans la carte : la
   // colonne des fronts défile en `overflow:auto`, et une bulle qui y vivrait
   // serait coupée au bord dès que le front est près de la marge.
-  function bulle(ancre, titre, placeholder, verbe, valider, verbe2, valider2) {
+  // `extra` (6.9) : un petit champ à droite de la phrase — « au jour », « combien ».
+  // Facultatif, vide par défaut ; `valider` reçoit alors (texte, extra).
+  function bulle(ancre, titre, placeholder, verbe, valider, verbe2, valider2, extra) {
     document.querySelectorAll(".pc-bulle").forEach((x) => x.remove());
     const b = el("div", "pc-bulle");
     const r = ancre.getBoundingClientRect();
@@ -619,14 +723,33 @@ window.PartieGrille = (function () {
     const champ = document.createElement("input");
     champ.type = "text";
     champ.placeholder = placeholder;
-    b.appendChild(champ);
+    let petit = null;
+    if (extra && extra.sansChamp) {
+      b.appendChild(champ);
+    } else if (extra) {
+      // LA PHRASE A SA LIGNE, LE PETIT CHAMP LA SIENNE (6.9). Sur une seule
+      // ligne, « combien » ecrasait la phrase a vingt caracteres et le nombre
+      // a deux : on ne lisait ni l'un ni l'autre.
+      b.appendChild(champ);
+      const rang = el("div", "pc-bulle-rang");
+      rang.appendChild(el("span", "pc-bulle-lab", extra.label));
+      petit = document.createElement("input");
+      petit.type = "number"; petit.min = "0"; petit.className = "pc-bulle-petit";
+      petit.placeholder = extra.placeholder || "";
+      rang.appendChild(petit);
+      if (extra.aide) rang.appendChild(el("span", "pc-bulle-aide", extra.aide));
+      b.appendChild(rang);
+    } else {
+      b.appendChild(champ);
+    }
+    if (extra && extra.note) b.appendChild(el("div", "pc-bulle-note", extra.note));
     const pied = el("div", "pc-bulle-p");
     const ok = el("button", "pc-bt", verbe);
     const non = el("button", "pc-bt pc-bt-nu", "Laisser");
     pied.appendChild(non);
     if (verbe2) {   // deux verbes : constater VRAI ou FAUX, du même motif
       const ok2 = el("button", "pc-bt pc-bt-second", verbe2);
-      ok2.addEventListener("click", () => { const t = champ.value.trim(); b.remove(); valider2(t); });
+      ok2.addEventListener("click", () => { const t = champ.value.trim(); b.remove(); valider2(t, petit && petit.value); });
       pied.appendChild(ok2);
     }
     pied.appendChild(ok);
@@ -634,13 +757,13 @@ window.PartieGrille = (function () {
     document.body.appendChild(b);
     champ.focus();
     const partir = () => b.remove();
-    const aller = () => { const t = champ.value.trim(); partir(); valider(t); };
+    const aller = () => { const t = champ.value.trim(); partir(); valider(t, petit && petit.value); };
     ok.addEventListener("click", aller);
     non.addEventListener("click", partir);
-    champ.addEventListener("keydown", (e) => {
+    [champ, petit].filter(Boolean).forEach((x) => x.addEventListener("keydown", (e) => {
       if (e.key === "Enter") aller();
       if (e.key === "Escape") partir();
-    });
+    }));
   }
 
   // Les pièces indexées par CE QUI LES ENGAGE, comme le fait le greffe. La vue
@@ -677,14 +800,19 @@ window.PartieGrille = (function () {
   }
 
   // ---- la ligne : un objet, ce qu'il engage, et où lâcher -------------------
-  function ligne(o, eng, cls) {
+  function ligne(o, eng, cls, piecesAvant) {
     const l = el("div", "pc-ligne" + (cls ? " " + cls : ""));
-    l.appendChild(carte(o));
+    // LES PIÈCES AVANT LA CARTE quand on le demande (`piecesAvant`) : sur la
+    // rangée d'un verrou posé sur une clef, la pièce PRODUIT le verrou — il en
+    // est la conséquence et la fin de la chaîne —, donc elle se lit avant lui.
+    // Partout ailleurs, l'objet d'abord, ses pièces rangées à sa suite.
+    if (!piecesAvant) l.appendChild(carte(o));
     (eng[o.id] || []).forEach((p) => {
       const cp = carte(p);
       cp.classList.add("pc-mise");
       l.appendChild(cp);
     });
+    if (piecesAvant) l.appendChild(carte(o));
     // Une case vide au bout dit qu'on peut lâcher là ; sur un objet hors
     // d'atteinte il n'y en a pas. La règle s'apprend sans se lire.
     if (cible(o)) {
@@ -733,6 +861,101 @@ window.PartieGrille = (function () {
     return d;
   }
 
+  // ---- LA CARTE EN LIGNES (6.9, à la demande du joueur) --------------------
+  // « Il n'y a pas moyen de savoir où les verrous et les clefs s'appliquent. »
+  // Les états vivaient dans une rangée, les verrous dans des colonnes à part,
+  // et rien ne reliait les uns aux autres. Ici, UNE LIGNE PAR ÉTAT, l'arbre
+  // par retrait (un enfant sous son parent, décalé d'un cran), et tout ce qui
+  // s'applique à l'état s'écrit À SA DROITE, dans l'ordre de la chaîne :
+  //
+  //     E                                   (un état, rien dessus)
+  //       e   r r c   →   R V               (son enfant ; les pièces, puis la
+  //                                          clef qu'elles produisent ; puis la
+  //                                          pièce, puis le verrou)
+  //       e   →   R V   →   r c             (un verrou posé sur l'état, puis la
+  //                                          pièce et la clef qui le lève)
+  //
+  // TOUJOURS LA PIÈCE AVANT CE QU'ELLE PRODUIT — clef comme verrou : la pièce
+  // est la cause, la carte en est la conséquence. Chaque maillon garde
+  // sa case vide s'il en a une : on pose une pièce sur l'état (verrou ou
+  // clef), sur un verrou d'en face (clef), sur une clef à nous (renfort). Les
+  // frappes, posées sur des pièces et non sur des états, gardent leur front.
+  function lignes(vue) {
+    const cibles = (vue && vue.cibles) || [];
+    const fronts = ((vue && vue.fronts) || []).filter((f) => f.tete && f.tete.type === "verrou");
+    const eng = engagees(vue);
+    const parParent = {};
+    cibles.forEach((c) => { (parParent[c.sert || ""] = parParent[c.sert || ""] || []).push(c); });
+    const surs = {};
+    fronts.forEach((f) => { (surs[f.sur] = surs[f.sur] || []).push(f); });
+    const d = el("div", "pc-lignes");
+    const fleche = () => el("span", "pc-fleche", "→");
+    const petite = (q) => { const c = carte(q); c.classList.add("pc-sur"); return c; };
+    const vus = new Set();
+    function chaineClef(r, k) {
+      if (vus.has(k.id)) return;
+      vus.add(k.id);
+      r.appendChild(ligne(k, eng, null, true));   // la pièce d'abord, la clef qu'elle produit ensuite
+      (k.sous || []).filter((q) => q.type === "question").forEach((q) => r.appendChild(petite(q)));
+      (surs[k.id] || []).forEach((f) => chaineVerrou(r, f));
+    }
+    function chaineVerrou(r, f) {
+      if (vus.has(f.id)) return;
+      vus.add(f.id);
+      r.appendChild(fleche());
+      r.appendChild(ligne(f.tete, eng, null, true));
+      (f.pile || []).forEach((o) => {
+        if (o.type === "question") r.appendChild(petite(o));
+        else if (o.type === "clef") { r.appendChild(fleche()); chaineClef(r, o); }
+      });
+    }
+    function rangeeEtat(c, prof, sortie) {
+      const r = el("div", "pc-lg pc-lg-" + (aNous(c) ? "nous" : "eux") + " pc-camp-" + (c.camp || "")
+                        + (prof ? " pc-lg-fils" : " pc-lg-racine"));
+      r.style.paddingLeft = (prof * 30) + "px";
+      r.style.setProperty("--pc-retrait", (prof * 30) + "px");   // le tiret qui relie l'enfant au parent
+      r.appendChild(ligne(c, eng));
+      // LA CHAÎNE SE REPLIE (6.9, à la demande du joueur) : l'état reste à
+      // gauche, et tout ce qui s'applique à lui vit dans son propre conteneur,
+      // qui passe au rang du dessous quand la largeur manque. Une clef et ses
+      // pièces restent ensemble ; c'est entre deux maillons que ça se replie.
+      const ch = el("div", "pc-lg-chaine");
+      r.appendChild(ch);
+      (c.sous || []).forEach((o) => {
+        if (o.type === "question") ch.appendChild(petite(o));
+        else if (o.type === "clef") { ch.appendChild(fleche()); chaineClef(ch, o); }
+      });
+      (surs[c.id] || []).forEach((f) => chaineVerrou(ch, f));
+      // la case 🎯 vide au bout de notre racine : l'état suivant s'écrit là
+      if (aNous(c) && !c.sert) ch.appendChild(viseur(c));
+      sortie.push(r);
+      (parParent[c.id] || []).forEach((f) => rangeeEtat(f, prof + 1, sortie));
+    }
+    // CHAQUE CAMP REGARDE VERS CHEZ LUI (6.9, à la demande du joueur). Leur
+    // arbre en haut, racine contre la bande « EUX », ses états en dessous ; le
+    // nôtre en bas, racine contre notre main, ses états AU-DESSUS d'elle — les
+    // lignes de notre arbre sont rendues à l'envers. Entre les deux, la table.
+    const racines = (parParent[""] || []).slice().sort((a, b) => (aNous(a) ? 1 : 0) - (aNous(b) ? 1 : 0));
+    racines.forEach((rac, i) => {
+      if (i) d.appendChild(el("div", "pc-lg-sep"));
+      const lignesDe = [];
+      rangeeEtat(rac, 0, lignesDe);
+      if (aNous(rac)) lignesDe.reverse();
+      lignesDe.forEach((r) => d.appendChild(r));
+    });
+    // PAS DE RACINE À NOUS : la case 🎯 seule, au rang racine (6.9). Sans elle
+    // une partie ne s'ouvrait qu'à la ligne — la grille était vide et rien ne
+    // s'y posait.
+    if (!racines.some(aNous) && (outil.vue() || {}).camp !== "arbitre") {
+      if (racines.length) d.appendChild(el("div", "pc-lg-sep"));
+      const r = el("div", "pc-lg pc-lg-nous pc-lg-racine");
+      r.appendChild(viseur(null));
+      r.appendChild(el("span", "pc-lg-mot", "votre racine — rien n'est encore visé"));
+      d.appendChild(r);
+    }
+    return d;
+  }
+
   // LA CASE 📦 VIDE au bout de « En main » : on y écrit ce qu'on demande au
   // mestre. Gratuit, hors compte ; la pièce arrive « attend l'arbitre » et
   // n'existe qu'une fois accordée. Une phrase suffit — le lieu et le tenant,
@@ -743,17 +966,23 @@ window.PartieGrille = (function () {
     v.appendChild(el("span", "pc-type", "📦"));
     v.addEventListener("click", () => bulle(v, "Ce qu'il vous faut, et où",
       "une pièce : qui, quoi, où — le mestre l'arbitre", "Demander",
-      (texte) => outil.jouer({ quoi: "demander", texte: texte })));
+      (texte, n) => outil.jouer({ quoi: "demander", texte: texte, nombre: n || undefined }),
+      null, null, { label: "combien", placeholder: "1", aide: "vide = une seule" }));
     return v;
   }
 
+  // SANS PARENT (6.9) : la case de la RACINE, quand le camp n'en a pas encore.
+  // C'est par elle qu'une partie s'ouvre depuis l'écran. Et « au jour N » à
+  // droite : l'état daté, qui tient sa place et n'entre au deck qu'à sa date.
   function viseur(parent) {
-    const v = el("div", "pc-case pc-viseur");
-    v.title = "Écrire un état qui sert « " + parent.titre + " »";
+    const v = el("div", "pc-case pc-viseur" + (parent ? "" : " pc-viseur-racine"));
+    v.title = parent ? "Écrire un état qui sert « " + parent.titre + " »" : "Écrire votre racine : ce qui doit être vrai à la fin";
     v.appendChild(el("span", "pc-type", "🎯"));
-    v.addEventListener("click", () => bulle(v, "Ce qui doit être vrai, sous « " + parent.titre + " »",
+    v.addEventListener("click", () => epuise() ? outil.dire(MOT_EPUISE) : bulle(v,
+      parent ? "Ce qui doit être vrai, sous « " + parent.titre + " »" : "Votre racine : ce qui doit être vrai à la fin",
       "une phrase constatable, jamais une action", "Viser",
-      (texte) => outil.jouer({ quoi: "viser", sert: parent.id, texte: texte })));
+      (texte, jour) => outil.jouer({ quoi: "viser", sert: parent ? parent.id : undefined, texte: texte, jour: jour || undefined }),
+      null, null, { label: "au jour", placeholder: "", aide: "vide = tout de suite" }));
     return v;
   }
 
@@ -764,11 +993,15 @@ window.PartieGrille = (function () {
   const ROND = { noir: "⚫", vert: "🟢", arbitre: "🟠", "1": "🔵", "2": "🔴", "3": "🟡", "4": "🟣", "5": "🟤" };
   const rond = (camp) => ROND[teinte(camp)] || "🔸";
 
-  function bandeau(camp, nous, n) {
+  // LE BANDEAU DIT LE CAMP, PAS « EUX » (6.9). À quatre camps, « EUX » ne
+  // désignait personne ; le rond et le nom suffisent, et la position (en haut,
+  // en bas) dit le reste. Plus de compte de pièces : il prenait la place et ne
+  // servait à rien — on les voit. Un mot dans le coin (`coin`), en petit, là où
+  // le compte était : « main », « votre main ».
+  function bandeau(camp, nous, coin) {
     const b = el("div", "pc-bandeau pc-teinte-" + teinte(camp));
-    b.appendChild(el("span", "pc-bandeau-qui", rond(camp) + " " + (nous ? "VOUS" : "EUX")));
-    b.appendChild(el("span", "pc-bandeau-camp", camp || ""));
-    if (n != null) b.appendChild(el("span", "pc-bandeau-n", n + " pièce" + (n > 1 ? "s" : "")));
+    b.appendChild(el("span", "pc-bandeau-qui", rond(camp) + " " + (camp || "")));
+    if (coin) b.appendChild(el("span", "pc-bandeau-coin", coin));
     return b;
   }
 
@@ -777,9 +1010,16 @@ window.PartieGrille = (function () {
   // — six signes, ça se rappelle.
   function legende() {
     const l = el("div", "pc-legende");
-    [["🎯", "état à prouver"], ["🔒", "verrou"], ["🗝️", "clef"], ["❓", "question"],
-     ["📦", "pièce"], ["💥", "frappe"]].forEach(([e, t]) => {
-      const s = el("span", "pc-leg"); s.appendChild(el("b", "", e)); s.appendChild(document.createTextNode(" " + t)); l.appendChild(s);
+    // LA LÉGENDE PORTE LA COULEUR DE CHAQUE TYPE, depuis que le fond d'une carte
+    // dit le type et non le camp. Sans elle, la palette s'apprend en devinant ;
+    // avec elle, on la lit une fois et l'on n'y revient plus. Chaque entrée
+    // prend la classe de sa famille : la couleur vient de la feuille, jamais
+    // d'une seconde table ici — deux tables divergeraient au premier ajout.
+    [["🎯", "état à prouver", "cible"], ["🔒", "verrou", "verrou"], ["🗝️", "clef", "clef"],
+     ["❓", "question", "question"], ["📦", "pièce", "piece"], ["💥", "frappe", "frappe"],
+     ["⚔️", "action faite", "action"]].forEach(([e, t, fam]) => {
+      const s = el("span", "pc-leg pc-leg-" + fam);
+      s.appendChild(el("b", "", e)); s.appendChild(document.createTextNode(" " + t)); l.appendChild(s);
     });
     const f = el("span", "pc-leg pc-leg-formes",
                  "plein = libre · pointillé = en route · liseré or = posée · barré = perdue");
@@ -830,9 +1070,9 @@ window.PartieGrille = (function () {
 
   return {
     armer: (o) => { outil = o; },
-    geste: geste,
+    geste: geste, epuise: epuise, motEpuise: () => MOT_EPUISE,
     carte: carte, cible: cible, prenable: prenable, aNous: (c) => aNous(c),
-    engagees: engagees, ligne: ligne, desseins: desseins,
-    demandeur: demandeur, bandeau: bandeau, legende: legende, loguer: loguer, teinte: teinte,
+    engagees: engagees, ligne: ligne, desseins: desseins, lignes: lignes,
+    demandeur: demandeur, bandeau: bandeau, legende: legende, loguer: loguer, teinte: teinte, rond: rond,
   };
 })();

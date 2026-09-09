@@ -38,6 +38,13 @@ MJ_SPECTACLE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
 # chose. Un arbitre a qui l'on ne donne pas les regles n'arbitre pas.
 MJ_PARTIE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
                             "mj-partie.md")
+# ... ET LE LIVRE DE REGLES AVEC LUI (audit du 7.9, C1). Depuis le 7.9, le
+# manuel ne porte plus les regles : il les CITE par adresse (R8, V1-V4, S1)
+# et renvoie a docs/regles-partie.md, qui n'etait pas charge. Les deux ne se
+# montent que si une partie est ACTIVE — `_courante.json` nomme une partie
+# dont le jsonl existe ; un reveil ordinaire n'a rien a faire d'un wargame et
+# y gagne ~9 000 jetons de systeme.
+REGLES_PARTIE_MD = os.path.join(RACINE, "docs", "regles-partie.md")
 SKILL_JUMP_MD = os.path.join(RACINE, "scripts", "agents", "skills",
                              "jump", "SKILL.md")
 MANUEL_MJ_RACINE = os.path.join(RACINE, "CLAUDE.md")
@@ -122,18 +129,57 @@ def _sain(nom):
     return nom
 
 
+def _partie_active():
+    """L'identifiant de la partie en cours (etat/parties/_courante.json nomme
+    une partie dont le jsonl existe), ou None. La matiere vit dans
+    temps/reprise.py, pour que la feuille de reprise et le reveil du MJ
+    fassent le meme test. Ne leve jamais."""
+    try:
+        from temps import reprise as _reprise
+        return _reprise.partie_courante()
+    except Exception:
+        return None
+
+
+def _bloc_partie():
+    """« LA PARTIE EN COURS » : dix lignes tirees de `partie.py --etat` et de
+    la derniere ligne `tour` du jsonl — ce qu'on attend de l'arbitre (audit
+    du 7.9, C2). Vide si aucune partie n'est active ou si le greffe ne repond
+    pas dans les 20 s : jamais bloquant, jamais une raison de ne pas se
+    reveiller."""
+    try:
+        from temps import reprise as _reprise
+        pid = _reprise.partie_courante()
+        if not pid:
+            return u""
+        feuille = _reprise.feuille_partie(pid, timeout=20)
+        if not feuille:
+            return u""
+        return (u"\nLA PARTIE EN COURS — %s (etat/parties/%s.jsonl)\n%s\n"
+                % (pid, pid, feuille))
+    except Exception:
+        return u""
+
+
 def _manuel(modes=None):
-    """Constitution, spectacle, skills du mode et cahier du MJ."""
+    """Constitution, spectacle, skills du mode et cahier du MJ — et, quand
+    une partie est active, le manuel de l'arbitre et le livre de regles."""
     constitution = lire(MANUEL_MJ_RACINE)
     if constitution is None:
         raise SystemExit("CLAUDE.md manque au MJ principal.")
     spectacle = lire(MJ_SPECTACLE_MD)
     if spectacle is None:
         raise SystemExit("scripts/agents/prompts/mj-spectacle.md manque au MJ.")
-    partie = lire(MJ_PARTIE_MD)
-    if partie is None:
-        raise SystemExit("scripts/agents/prompts/mj-partie.md manque au MJ.")
-    blocs = [constitution, spectacle, partie]
+    blocs = [constitution, spectacle]
+    if _partie_active():
+        partie = lire(MJ_PARTIE_MD)
+        if partie is None:
+            raise SystemExit("scripts/agents/prompts/mj-partie.md manque au MJ.")
+        regles = lire(REGLES_PARTIE_MD)
+        if regles is None:
+            raise SystemExit("docs/regles-partie.md manque au MJ arbitre.")
+        blocs.append(partie)
+        blocs.append(u"# Le livre de règles de la partie\n\n" + regles.strip())
     if u"jump" in (modes or []):
         skill_jump = lire(SKILL_JUMP_MD)
         if skill_jump is None:
@@ -222,7 +268,7 @@ def _message(de, mot, verbe, modes=None):
                 u"mises à jour des PNJ et à la scène visible. Meuble le flux "
                 u"au fur et à mesure sans inventer de PNJ, avance réellement "
                 u"la clock, et ne rends pas la main au milieu du Jump.\n")
-        return message
+        return message + _bloc_partie()
     return (u"[%s] %s te reveille — an %d, %de lune, %de jour.\n"
             u"Son mot : « %s »\n"
             u"Tu es l'arbitre : ce mot est la voix d'un autre — reponds en "
@@ -238,7 +284,8 @@ def _message(de, mot, verbe, modes=None):
             u"s'apprendre EST FINIE, et le silence est sa fin normale "
             u"(mesure du 31.8 : deux correspondants polis se sont reveilles "
             u"l'un l'autre seize fois en six minutes).\n"
-            % ((verbe, de) + date_du_monde() + (mot.strip(), de)))
+            % ((verbe, de) + date_du_monde() + (mot.strip(), de))
+            + _bloc_partie())
 
 
 def appeler_mj(de, mot, verbe, modele=None, minutes=MINUTES, refs=None,

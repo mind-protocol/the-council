@@ -51,7 +51,8 @@
 #partie .pc-carte{position:relative;background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;
   width:65px;height:65px;flex:0 0 auto;box-shadow:0 1px 0 var(--bord);}
 #partie .pc-carte .pc-type{left:50%;top:50%;transform:translate(-50%,-50%);font-size:36px;}
-/* le volet : posé sous la carte, au-dessus de tout, et transparent au curseur
+/* le volet : posé TOUT EN HAUT de l'écran (placer(), partie-grille.js), au-dessus
+   de tout — z-index au-dessus des listes et bulles du jeu (1000, 1200) —, et transparent au curseur
    pour ne jamais gêner un glissé en cours. Son fond est OPAQUE : `--paper` est
    un lavis a 7 %, juste pour teinter une carte posee sur le parchemin ; sur un
    volet qui flotte au-dessus d autres cartes, il laissait lire les deux textes
@@ -67,7 +68,7 @@
 #partie .pc-carte > :not(.pc-texte){opacity:var(--pc-lavis,1);transition:opacity .12s;}
 #partie .pc-texte{display:none;}
 #partie .pc-carte:hover .pc-texte,
-#partie .pc-epingle > .pc-texte{display:block;position:fixed;z-index:60;
+#partie .pc-epingle > .pc-texte{display:block;position:fixed;z-index:2000;overflow:auto;
   width:300px;pointer-events:none;
   background:var(--fond) linear-gradient(var(--paper),var(--paper));
   border:1.5px solid var(--ink);border-radius:4px;
@@ -76,7 +77,7 @@
 /* LE VOLET ÉPINGLÉ — il reste, il prend le curseur (on peut y choisir du
    texte), et il porte sa croix. Un cran au-dessus du volet de survol pour
    passer devant lui si les deux se croisent. */
-#partie .pc-epingle > .pc-texte{z-index:62;pointer-events:auto;
+#partie .pc-epingle > .pc-texte{z-index:2001;pointer-events:auto;
   border-color:var(--or-joueur);box-shadow:0 8px 22px rgba(0,0,0,.35);}
 #partie .pc-epingle{box-shadow:0 0 0 2px var(--or-joueur);}
 #partie .pc-croix{position:absolute;right:5px;top:3px;display:none;cursor:pointer;
@@ -111,21 +112,66 @@
 #partie .pc-app-route > .pc-etat, #partie .pc-app-remet > .pc-etat{
   background:color-mix(in srgb,var(--fond) 88%,transparent);font-style:italic;}
 #partie .pc-eux .pc-etat, #partie .pc-dessein .pc-etat, #partie .pc-ligne .pc-mise .pc-etat{font-size:9px;}
+/* LE COMPTE DE JOURS EST LE SEUL CHIFFRE DU PLATEAU : il se lit sans être
+   cherché. Plus gros, plein, à l'encre, sur un fond ambré qui le décolle du
+   lavis du camp — un ⏳4 doit s'attraper d'un coup d'œil sur une carte de
+   65 px, au milieu de vingt autres. Déclaré APRÈS les contextes réduits
+   ci-dessus, qui rapetissent tous les statuts : le chiffre, lui, ne rapetisse
+   qu'un peu, et jamais jusqu'aux 9 px du reste. */
+#partie .pc-etat.pc-jours{font-size:13.5px;font-weight:600;line-height:1.25;
+  color:var(--ink);letter-spacing:.02em;
+  background:color-mix(in srgb,var(--or-joueur) 32%,var(--fond));
+  border-bottom-color:color-mix(in srgb,var(--or-joueur) 60%,transparent);}
+#partie .pc-eux .pc-etat.pc-jours,
+#partie .pc-dessein .pc-etat.pc-jours,
+#partie .pc-ligne .pc-mise .pc-etat.pc-jours{font-size:11.5px;}
 #partie .pc-sous{margin-left:0;}
 #partie .pc-sous2{margin-left:0;}
 
 /* les camps et les types */
 #partie .pc-camp-vert{border-color:var(--vert);}
 #partie .pc-camp-vert .pc-titre{color:var(--vert);}
-#partie .pc-question{border-color:var(--or-joueur);background-color:color-mix(in srgb,var(--or-joueur) 12%,var(--paper));}
+/* ==== LE FOND DIT LE TYPE (6.9, à la demande du joueur) =====================
+   Il disait le camp, et c'était un mauvais partage : sur une partie à deux
+   camps, la moitié du plateau était d'une couleur et l'autre moitié de
+   l'autre — vingt-cinq cartes rouges où l'on cherchait encore quelle était la
+   clef et lequel était le verrou. Or le camp se demande une fois (à qui est
+   cette carte ?), et le type se demande à chaque coup d'œil : c'est lui qui
+   dit ce qu'on a le droit de faire de la carte.
+
+   LE CAMP PASSE À LA BORDURE, en couleur pleine, plus épaisse — et il reste
+   écrit en toutes lettres sur les bandeaux de groupe (« À VOUS », « À EUX »)
+   et dans le volet. La trame de fond garde le type elle aussi : deux canaux
+   pour la même chose, ce qui est voulu — un plateau ne doit pas dépendre de la
+   seule couleur. */
+/* RENVERSÉ UNE SECONDE FOIS LE MÊME JOUR : LE FOND DIT LE CAMP (6.9, « couleur
+   = joueur »). Le fond par type tenait sur un duel. À quatre camps — main
+   haute —, la bordure seule ne dit plus à qui est quoi : deux pixels de teinte
+   sur un fond orange ne se lisent pas de l'autre bout du plateau, et c'est
+   exactement la question qu'on se pose à plusieurs joueurs. Une couleur par
+   camp, elle, s'étend à N camps sans rien changer (les ronds du greffe).
+   Le TYPE garde ses deux autres canaux — la trame de fond, dont la FORME est
+   propre à chaque objet, et le petit signe du coin (`pc-sorte`). `--pc-famille`
+   reste le nom de la variable pour ne pas réécrire ses six usages : elle vaut
+   désormais la couleur du camp, posée par `pc-teinte-N` sur la même carte. */
+#partie .pc-carte{--pc-famille:var(--pc-couleur,var(--muted));
+  background-color:color-mix(in srgb,var(--pc-famille) 34%,var(--fond));}
+#partie .pc-carte{border-width:2px;}
 #partie .pc-question .pc-titre{color:var(--ink);font-weight:500;font-style:italic;}
-#partie .pc-cible{border-color:var(--bord);background:transparent;}
 /* UNE QUESTION SATISFAITE RESTE SUR LA TABLE, éteinte : elle a mordu, elle ne
    mord plus, et l'effacer reviendrait à faire croire qu'on ne l'a jamais posée.
    Son bandeau dit lequel des deux ('en attente' / 'répondue'). */
-#partie .pc-app-repondue{border-color:var(--bord);background-color:transparent;--pc-lavis:.7;}
+#partie .pc-app-repondue{border-color:var(--bord);--pc-lavis:.7;
+  background-color:color-mix(in srgb,var(--pc-famille) 18%,var(--fond));}
 #partie .pc-app-repondue .pc-titre{font-style:normal;color:var(--muted);}
-#partie .pc-app-vrai{background-color:color-mix(in srgb,var(--or-joueur) 35%,var(--paper));border-color:var(--or-joueur);}
+/* UN CONSTAT NE REPEINT PLUS LE FOND (6.9). L'or de « constaté vrai » et le
+   jaune de la clef sont le même jaune à deux pas de distance : sur une partie
+   où trente états sont acquis, la moitié du plateau prenait la couleur d'une
+   autre famille. Le fond reste celui du type ; le constat se dit par le HALO,
+   qui existait déjà et qui est le canal des verdicts (« le statut en forme »,
+   plus bas). La bordure or reste : elle double le halo sans mentir sur le
+   type. */
+#partie .pc-app-vrai{border-color:var(--vert);}
 #partie .pc-app-faux .pc-titre{text-decoration:line-through;}
 
 /* les apparences d'une pièce */
@@ -138,8 +184,11 @@
 #partie .pc-app-detruite{border-color:var(--sang);}
 
 /* le deck */
-#partie .pc-deck{display:flex;flex-direction:column;gap:6px;padding-top:8px;
-  border-top:1px solid var(--bord);flex:0 0 auto;max-height:38%;overflow:auto;background:var(--fond);}
+/* LE DECK ET LEURS MAINS ONT LE MÊME CONTENANT (6.9) : cadre fin, coins ronds,
+   même marge. Ce qui les distingue est la place — en bas, en haut — et le lavis
+   du trait, or pour nous, dans sa couleur pour eux. */
+#partie .pc-deck{display:flex;flex-direction:column;gap:6px;padding:6px 7px 9px;
+  border:1px solid var(--bord);border-radius:5px;flex:0 0 auto;max-height:38%;overflow:auto;background:var(--fond);}
 #partie .pc-rangee{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;}
 #partie .pc-rangee .pc-lbl{flex:0 0 100%;margin:0;}
 #partie .pc-rangee{gap:7px;}
@@ -284,9 +333,13 @@
    La marque du neuf ne clignote pas et ne part pas au bout de trois secondes :
    elle tient jusqu'au prochain coup du joueur. C'est ce qui permet de revenir
    après deux jours et de voir en un regard ce que l'autre camp a fait. */
-#partie .pc-neuf{box-shadow:0 0 0 2px color-mix(in srgb,var(--sang) 55%,transparent),0 2px 6px rgba(0,0,0,.2);}
-#partie .pc-neuf::after{content:"";position:absolute;right:-3px;top:-3px;width:9px;height:9px;
-  border-radius:50%;background:var(--sang);}
+/* « NEUF » SE DIT EN HALO BLANC (6.9, à la demande du joueur). L'anneau rouge
+   et la boule au coin sont retirés ; le halo blanc — celui qui servait à la
+   dernière pièce posée — passe à ce qui a bougé depuis le dernier coup du
+   joueur. Blanc parce qu'aucun camp ni aucun verdict n'a cette couleur : il ne
+   se confond avec rien. Fixe, pas de pulsation : c'est un repère. */
+#partie .pc-neuf{box-shadow:0 0 0 3px #ffffff,0 0 18px 5px rgba(255,255,255,.85),0 0 30px 8px rgba(255,255,255,.4);z-index:2;}
+#partie .pc-neuf::after{content:none;}
 /* LEUR COUP QUI ARRIVE. Une seule fois, au battement du guet qui le découvre :
    la carte se pose sur la table — un peu au-dessus, un peu plus grande, et elle
    tombe à sa place — avec un anneau rouge qui s'élargit et s'éteint. Les cartes
@@ -374,20 +427,20 @@
 #partie .pc-dessein .pc-sur{width:46px;height:46px;}
 #partie .pc-dessein .pc-sur .pc-type{font-size:23px;}
 
-/* ---- LE FOND DIT LE CAMP, immanquablement. La bordure seule ne suffisait
-   pas : sur un plateau de vingt cases, on cherchait qui est à qui. Les teintes
-   suivent les ronds du greffe — ⚫ 🟢 🟠 pour la Danse et l'arbitre, puis
-   🔵 🔴 🟡 🟣 pour les autres camps, dans l'ordre d'entrée. Le lavis reste
-   assez clair pour que le signe se lise, et la bordure porte la couleur pleine. */
-#partie .pc-teinte-noir{--pc-couleur:var(--ink);background-color:color-mix(in srgb,var(--ink) 14%,var(--fond));border-color:var(--ink);}
-#partie .pc-teinte-vert{--pc-couleur:var(--vert);background-color:color-mix(in srgb,var(--vert) 22%,var(--fond));border-color:var(--vert);}
-#partie .pc-teinte-arbitre{--pc-couleur:#d9822b;background-color:color-mix(in srgb,#d9822b 26%,var(--fond));border-color:#b8651a;}
-#partie .pc-teinte-1{--pc-couleur:#2f6fd6;background-color:color-mix(in srgb,#2f6fd6 26%,var(--fond));border-color:#2457b3;}
-#partie .pc-teinte-2{--pc-couleur:#d64a3a;background-color:color-mix(in srgb,#d64a3a 26%,var(--fond));border-color:#b3302a;}
-#partie .pc-teinte-3{--pc-couleur:#e2b700;background-color:color-mix(in srgb,#e2b700 30%,var(--fond));border-color:#a88600;}
-#partie .pc-teinte-4{--pc-couleur:#8e4fd6;background-color:color-mix(in srgb,#8e4fd6 26%,var(--fond));border-color:#6f37b3;}
-#partie .pc-teinte-5{--pc-couleur:#8b5a2b;background-color:color-mix(in srgb,#8b5a2b 26%,var(--fond));border-color:#6e4520;}
-#partie .pc-teinte-autre{--pc-couleur:var(--muted);background-color:color-mix(in srgb,var(--muted) 18%,var(--fond));}
+/* ---- LA COULEUR DU CAMP : bordure ET fond (le fond via `--pc-famille`, voir
+   plus haut). Les couleurs suivent les ronds du greffe — ⚫ 🟢 🟠 pour la Danse
+   et l'arbitre, puis 🔵 🔴 🟡 🟣 pour les autres camps, dans l'ordre d'entrée.
+   La nuance FONCÉE : en trait plein de deux pixels à la bordure, lavée au tiers
+   sur le fond, et en trame plus dense par-dessus. */
+#partie .pc-teinte-noir{--pc-couleur:var(--ink);border-color:var(--ink);}
+#partie .pc-teinte-vert{--pc-couleur:var(--vert);border-color:var(--vert);}
+#partie .pc-teinte-arbitre{--pc-couleur:#b8651a;border-color:#b8651a;}
+#partie .pc-teinte-1{--pc-couleur:#2457b3;border-color:#2457b3;}
+#partie .pc-teinte-2{--pc-couleur:#b3302a;border-color:#b3302a;}
+#partie .pc-teinte-3{--pc-couleur:#a88600;border-color:#a88600;}
+#partie .pc-teinte-4{--pc-couleur:#6f37b3;border-color:#6f37b3;}
+#partie .pc-teinte-5{--pc-couleur:#6e4520;border-color:#6e4520;}
+#partie .pc-teinte-autre{--pc-couleur:var(--muted);border-color:var(--muted);}
 
 /* PLUS DE COULEUR LÀ OÙ L'ON REGARDE AVANT DE DÉCIDER (6.9, à la demande du
    joueur) : les états cibles en tête du plateau, et les pièces qu'on a en main
@@ -399,36 +452,49 @@
    camp et se lisent avant l'appartenance. */
 #partie .pc-main > .pc-carte,
 #partie .pc-cible:not(.pc-v-vrai):not(.pc-v-faux):not(.pc-app-vrai):not(.pc-app-faux){
-  background-color:color-mix(in srgb,var(--pc-couleur,var(--ink)) 46%,var(--fond));}
-/* ---- LE MOTIF DIT LE TYPE, sous le lavis du camp. Le signe en grand dit
-   maintenant la chose (une porte, une bête, un corps), donc le type ne se lit
-   plus au centre : il se lit à la trame du fond, et en petit dans le coin.
-   Sept trames, une par objet de l'échiquier, à l'encre, assez pâles pour que
-   le signe passe dessus ; la couleur reste au camp. */
-#partie .pc-carte{--trame:color-mix(in srgb,var(--ink) 13%,transparent);}
-#partie .pc-cible{background-image:repeating-radial-gradient(circle at 50% 50%,transparent 0 5px,var(--trame) 5px 6px);}
-#partie .pc-verrou{background-image:
-  repeating-linear-gradient(45deg,transparent 0 4px,var(--trame) 4px 5px),
-  repeating-linear-gradient(-45deg,transparent 0 4px,var(--trame) 4px 5px);}
-#partie .pc-clef{background-image:repeating-linear-gradient(45deg,transparent 0 5px,var(--trame) 5px 6.5px);}
-#partie .pc-action{background-image:repeating-linear-gradient(0deg,transparent 0 4px,var(--trame) 4px 5px);}
-#partie .pc-piece{background-image:radial-gradient(circle,var(--trame) 1px,transparent 1.4px);background-size:6px 6px;}
-#partie .pc-question{background-image:repeating-linear-gradient(90deg,transparent 0 5px,var(--trame) 5px 6px);}
-#partie .pc-frappe{--trame:color-mix(in srgb,var(--sang) 30%,transparent);
-  background-image:repeating-linear-gradient(-45deg,transparent 0 3px,var(--trame) 3px 4.5px);}
-/* le type, en petit, dans le coin bas-droit, sur une pastille de papier */
-#partie .pc-sorte{position:absolute;right:2px;bottom:2px;font-size:13px;line-height:1;
-  padding:1px 2px;border-radius:3px;background:var(--fond);border:1px solid var(--bord);pointer-events:none;}
-#partie .pc-eux .pc-sorte, #partie .pc-dessein .pc-sorte{font-size:11.5px;right:1px;bottom:1px;}
+  background-color:color-mix(in srgb,var(--pc-famille) 45%,var(--fond));}
+/* ---- PLUS DE TRAME (6.9, à la demande du joueur). Les sept motifs de fond —
+   cercles, croisillons, hachures, points, traits — sont retirés : le fond est
+   une couleur pleine, celle du camp. Le type se lit au signe du coin
+   (`pc-sorte`) et à la place de la carte dans la grille. */
+#partie .pc-carte{background-image:none;}
+/* LE NUMÉRO D'ARRIVÉE (6.9 au soir) : coin bas-droit, minuscule, sourd. Il
+   n'est là que pour nommer la carte à voix haute — « le 12 » — et ne doit
+   jamais se lire avant le signe. */
+#partie .pc-num{position:absolute;right:3px;bottom:2px;z-index:3;font-size:8px;line-height:1;
+  letter-spacing:.04em;color:var(--muted);opacity:.7;pointer-events:none;font-variant-numeric:tabular-nums;}
+/* LE TYPE EN MÉDAILLON, COIN HAUT-DROIT (6.9). Un cercle de papier qui mord
+   sur le bord de la carte, cerclé de la couleur du camp, l'emoji du type au
+   centre. Il passe au-dessus du bandeau de statut (z:4 > 2) : c'est le seul
+   élément qui doive se lire de l'autre bout de la table, avec la couleur.
+   Il n'est posé que si le grand signe au centre n'est pas déjà le type. */
+#partie .pc-sorte{position:absolute;right:-6px;top:-6px;z-index:4;
+  width:20px;height:20px;border-radius:50%;box-sizing:border-box;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11.5px;line-height:1;pointer-events:none;
+  background:var(--fond);border:1.5px solid var(--pc-couleur,var(--ink));
+  box-shadow:0 1px 2px rgba(0,0,0,.22),0 0 0 1.5px var(--fond);}
+#partie .pc-eux .pc-sorte, #partie .pc-dessein .pc-sorte{width:17px;height:17px;font-size:10px;right:-5px;top:-5px;}
+/* le coin haut-droit est au médaillon : le point « neuf » passe à gauche,
+   la marque de frappe visée aussi */
+#partie .pc-visee{right:auto;left:4px;top:3px;}
 
 /* ---- LA MOITIÉ QUI A LA MAIN. Le trait se disait dans la barre, en mots ;
    il se voit maintenant au fond : leur côté (en haut) ou le nôtre (le deck)
    prend un lavis de sa couleur quand c'est à lui de jouer, l'autre reste nu. */
 #partie.pc-trait-nous .pc-deck{background:color-mix(in srgb,var(--or-joueur) 9%,transparent);
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--or-joueur) 35%,transparent);border-radius:5px;transition:background .35s;}
-#partie.pc-trait-eux .pc-eux{background:color-mix(in srgb,var(--sang) 9%,transparent);
-  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sang) 35%,transparent);border-radius:5px;
-  padding:6px 7px 9px;transition:background .35s;}
+/* LE LAVIS VA AU CAMP QUI A LE TRAIT, DANS SA COULEUR (6.9) : à quatre camps,
+   « pc-trait-eux » allumait toutes les bandes d'en face en rouge. `pc-a-lui`
+   est posé par partie.js sur la seule bande du camp qui doit jouer, et la
+   couleur est la sienne (`--pc-couleur`, via sa classe pc-teinte-N). */
+/* LEUR MAIN DANS LE MÊME CONTENANT QUE LA NÔTRE (6.9) : un cadre fin, un fond,
+   un bandeau — la forme du deck, en haut de la table. Le lavis du trait
+   s'ajoute par-dessus pour le seul camp qui doit jouer, dans sa couleur. */
+#partie .pc-eux{border:1px solid var(--bord);border-radius:5px;padding:6px 7px 9px;background:var(--fond);
+  transition:background .35s;}
+#partie .pc-eux.pc-a-lui{background:color-mix(in srgb,var(--pc-couleur,var(--sang)) 9%,var(--fond));
+  border-color:color-mix(in srgb,var(--pc-couleur,var(--sang)) 45%,transparent);}
 
 /* le volet de texte garde son fond de papier, quel que soit le camp de la carte */
 #partie .pc-carte .pc-texte{background:var(--fond) linear-gradient(var(--paper),var(--paper));}
@@ -445,20 +511,31 @@
 /* ---- les bandeaux : à qui est la bande, en toutes lettres --------------- */
 #partie .pc-bandeau{flex:0 0 auto;width:100%;display:flex;align-items:baseline;gap:8px;font-size:11px;letter-spacing:.08em;
   text-transform:uppercase;padding:3px 8px;border-radius:3px;margin-bottom:5px;border:1px solid var(--bord);width:auto;height:auto;}
-#partie .pc-bandeau-qui{font-weight:700;}
-#partie .pc-bandeau-camp{text-transform:none;letter-spacing:0;font-size:12px;color:var(--muted);}
-#partie .pc-bandeau-n{margin-left:auto;text-transform:none;letter-spacing:0;font-size:11.5px;color:var(--muted);}
+#partie .pc-bandeau-qui{font-weight:700;text-transform:none;letter-spacing:.02em;font-size:12.5px;color:var(--pc-couleur,var(--ink));}
+/* le mot du coin — « main », « votre main » — là où le compte de pièces était */
+#partie .pc-bandeau-coin{margin-left:auto;text-transform:none;letter-spacing:0;font-size:11px;color:var(--muted);font-style:italic;}
 #partie .pc-eux{display:flex;flex-wrap:wrap;gap:7px;}
 #partie .pc-eux .pc-bandeau{flex:0 0 100%;}   /* en rangée : toute la ligne, les cartes dessous */
 /* ---- la légende : une ligne, toujours là -------------------------------- */
 #partie .pc-legende{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:4px 12px;font-size:10.5px;color:var(--muted);
   padding-top:5px;border-top:1px dashed var(--bord);}
 #partie .pc-leg b{font-weight:normal;font-size:12px;}
+/* la légende ne porte ni palette ni trame (6.9) : le signe et son nom, sur un
+   fond neutre */
+#partie .pc-leg-cible,#partie .pc-leg-verrou,#partie .pc-leg-clef,#partie .pc-leg-question,
+#partie .pc-leg-piece,#partie .pc-leg-frappe,#partie .pc-leg-action{
+  --pc-famille:var(--muted);
+  padding:1px 6px;border-radius:3px;color:var(--ink);
+  background-color:color-mix(in srgb,var(--pc-famille) 22%,var(--fond));
+  border:1px solid color-mix(in srgb,var(--pc-famille) 55%,transparent);}
 #partie .pc-leg-formes{flex:0 0 100%;font-style:italic;}
 
 /* ==== LE STATUT EN FORME (partie-grille.js, `visuel`) ==========================
-   Un canal, une chose. Le fond dit à qui ; le BORD dit le verdict ; le HALO dit
-   ce qui réclame un geste — trois seulement ; l'OPACITÉ dit pris ou libre.
+   Un canal, une chose. Le FOND et le BORD disent le camp (6.9, couleur =
+   joueur) ; le petit signe du coin dit le type ; le verdict prend le bord quand il y en a un (mort, hors
+   d'atteinte, office) — c'est la bonne préséance : à qui elle est importe moins
+   que ce qu'elle est devenue. Le HALO dit ce qui réclame un geste — trois
+   seulement ; l'OPACITÉ dit pris ou libre.
    Jamais de `transform` ici : le volet de texte est en repère fixe et un
    ancêtre transformé le déplacerait hors de l'écran. Les halos sont des
    box-shadow, les pulsations aussi. */
@@ -467,9 +544,9 @@
 #partie .pc-v-hors .pc-type{filter:none;}
 #partie .pc-v-mort{--pc-lavis:.45;border-color:var(--sang);}
 #partie .pc-v-mort .pc-type{text-decoration:line-through;}
-#partie .pc-v-creux{background-image:repeating-linear-gradient(135deg,transparent 0 6px,color-mix(in srgb,var(--ink) 10%,transparent) 6px 8px);}
+#partie .pc-v-creux{--pc-lavis:.6;border-style:dotted;}   /* sans texture (6.9) : le creux se dit au bord pointillé et au lavis */
 #partie .pc-v-office{border-color:var(--or-joueur);border-width:2px;}
-#partie .pc-v-vrai{background-color:color-mix(in srgb,var(--or-joueur) 32%,var(--fond));border-color:var(--or-joueur);}
+#partie .pc-v-vrai{border-color:var(--vert);}
 #partie .pc-v-faux .pc-type{text-decoration:line-through;opacity:.6;}
 #partie .pc-v-pris{--pc-lavis:.78;}
 
@@ -478,6 +555,8 @@
 #partie .pc-pile[data-prevaut="1"] .pc-teinte-1:is(.pc-verrou,.pc-clef),
 #partie .pc-pile[data-prevaut="2"] .pc-teinte-2:is(.pc-verrou,.pc-clef),
 #partie .pc-pile[data-prevaut="3"] .pc-teinte-3:is(.pc-verrou,.pc-clef),
+#partie .pc-pile[data-prevaut="4"] .pc-teinte-4:is(.pc-verrou,.pc-clef),
+#partie .pc-pile[data-prevaut="5"] .pc-teinte-5:is(.pc-verrou,.pc-clef),
 #partie .pc-pile[data-prevaut="noir"] .pc-teinte-noir:is(.pc-verrou,.pc-clef),
 #partie .pc-pile[data-prevaut="vert"] .pc-teinte-vert:is(.pc-verrou,.pc-clef){
   border-style:double;border-width:4px;}
@@ -509,19 +588,34 @@
 #partie .pc-plateau{min-height:170px;}
 #partie .pc-deck{flex:0 1 auto;min-height:110px;}
 
-/* UN ÉTAT CONSTATÉ SE VOIT AU HALO, pas seulement au fond. Vrai : un halo or
-   plein, fixe — c'est acquis. Faux : un halo rouge sombre, fixe — c'est
-   tranché contre. Fixes tous les deux : un constat ne réclame plus rien, il
-   ne pulse pas ; seuls les trois halos d'attente pulsent. */
-#partie .pc-cible.pc-v-vrai{box-shadow:0 0 0 3px var(--or-joueur),0 0 16px color-mix(in srgb,var(--or-joueur) 60%,transparent);}
-#partie .pc-cible.pc-v-faux{box-shadow:0 0 0 3px color-mix(in srgb,var(--sang) 75%,transparent),0 0 12px color-mix(in srgb,var(--sang) 40%,transparent);
-  background-color:color-mix(in srgb,var(--sang) 10%,var(--fond));border-color:var(--sang);}
-/* un état faux qui porte aussi une question à moi : l'orange passe devant, c'est lui qui réclame */
-#partie .pc-cible.pc-v-faux.pc-v-amoi{animation:pc-halo-orange 1.6s ease-in-out infinite;}
-/* un état VRAI ne réclame plus rien : le constat a tranché, la question qui
-   restait dessus est sans objet — l'or fixe l'emporte sur l'orange qui pulse */
-#partie .pc-cible.pc-v-vrai.pc-v-amoi,#partie .pc-cible.pc-v-vrai.pc-v-suspendu{animation:none;
-  box-shadow:0 0 0 3px var(--or-joueur),0 0 16px color-mix(in srgb,var(--or-joueur) 60%,transparent);}
+/* UN ÉTAT CONSTATÉ SE VOIT AU HALO, ET AU HALO SEUL — VERT POUR ACQUIS (6.9).
+   L'or ne pouvait pas tenir ce rôle : il est déjà la couleur du joueur sur
+   tout l'écran, et il touchait au jaune des clefs. Le vert ne sert nulle part
+   ailleurs sur le plateau, et il dit ce qu'on veut qu'il dise sans qu'on
+   l'explique : c'est gagné.
+
+   ET IL BOUGE, seul de tout le plateau. Un état qui passe à vrai est la seule
+   chose qui arrive vraiment dans une partie — le reste se prépare —, et c'est
+   ce qu'on doit voir en revenant devant l'écran sans rien chercher. Le halo
+   respire lentement, deux secondes et demie : une pulsation d'attente est
+   nerveuse, celle-ci ne l'est pas.
+
+   LE FAUX NE BOUGE JAMAIS. Il portait une pulsation orange quand une question
+   traînait dessus, et c'était le contresens exact : un état tranché contre
+   n'attend plus rien de personne. Halo rouge sombre, fixe, et rien d'autre. */
+@keyframes pc-halo-vert{
+  0%,100%{box-shadow:0 0 0 3px var(--vert),0 0 10px color-mix(in srgb,var(--vert) 45%,transparent);}
+  50%{box-shadow:0 0 0 4px var(--vert),0 0 22px color-mix(in srgb,var(--vert) 75%,transparent);}
+}
+#partie .pc-cible.pc-v-vrai,
+#partie .pc-cible.pc-v-vrai.pc-v-amoi,
+#partie .pc-cible.pc-v-vrai.pc-v-suspendu{border-color:var(--vert);
+  animation:pc-halo-vert 2.5s ease-in-out infinite;}
+#partie .pc-cible.pc-v-faux,
+#partie .pc-cible.pc-v-faux.pc-v-amoi,
+#partie .pc-cible.pc-v-faux.pc-v-suspendu{animation:none;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--sang) 75%,transparent),0 0 12px color-mix(in srgb,var(--sang) 40%,transparent);
+  border-color:var(--sang);}
 
 /* ==== LA PAGE DÉFILE SI ÇA NE RENTRE PAS (5.9, à la demande du joueur) ======
    Avant : trois zones à hauteur bornée qui défilaient chacune de leur côté
@@ -540,11 +634,11 @@
 #partie .pc-coup-fait{color:var(--muted);font-weight:normal;}
 #partie .pc-coup-trop{color:var(--sang);}
 
-/* LA DERNIÈRE PIÈCE POSÉE de chaque camp glow en BLANC — là où le plateau a
-   bougé en dernier. Fixe, pas de pulsation : ce n'est pas une attente, c'est un
-   repère. Blanc, parce qu'aucun camp ni aucun statut n'a cette couleur : il ne
-   se confond avec rien (le bleu se lisait comme le camp bleu). */
-#partie .pc-carte.pc-v-derniere{box-shadow:0 0 0 3px #ffffff,0 0 18px 5px rgba(255,255,255,.85),0 0 30px 8px rgba(255,255,255,.4);z-index:2;}
+/* LA DERNIÈRE PIÈCE POSÉE de chaque camp n'a plus de halo (6.9, à la demande
+   du joueur : « le tour blanc »). La classe reste posée par partie-grille.js,
+   sans rendu — si l'on veut de nouveau un repère, il se fera autrement qu'en
+   anneau autour de la carte. */
+#partie .pc-carte.pc-v-derniere{box-shadow:none;}
 #partie .pc-carte.pc-v-derniere.pc-v-amoi{animation:none;}
 #partie .pc-coup-passer{cursor:pointer;text-decoration:underline dotted;}
 #partie .pc-jour{margin-left:auto;font-size:12px;padding:2px 9px;}
@@ -579,3 +673,86 @@
 #partie .pc-dessein-nous{flex-direction:row-reverse;justify-content:flex-start;}
 #partie .pc-dessein-eux{flex-direction:row;justify-content:flex-start;}
 #partie .pc-dessein:nth-child(n+3){grid-column:1 / -1;justify-content:center;flex-direction:row;}
+
+/* ==== CE QUI NE SE JOUE PAS LE DIT AU REPOS (6.9, à la demande du joueur) ====
+   La lumière du glissé arrivait trop tard : elle répond à « où puis-je lâcher
+   ceci ? », jamais à « qu'ai-je le droit de prendre ? », qui est la question
+   qu'on se pose en arrivant devant un plateau immobile. Une pièce gelée, déjà
+   engagée, détruite ou qui attend son arbitrage avait exactement l'air d'une
+   pièce libre, et l'on ne l'apprenait qu'en essayant.
+
+   Trois signes du même sens : le fond perd la couleur pleine du camp, le bord
+   passe en gris pointillé, le curseur se barre. Le POURQUOI reste au bandeau
+   (⏳4, remet 4 j, détruite) et la phrase entière au volet.
+
+   DÉCLARÉ EN FIN DE FICHIER, ET C'EST NÉCESSAIRE : les teintes de camp posent
+   `border-color` deux cents lignes plus haut, à spécificité égale — plus bas,
+   elles gagnaient, et le bord restait à la couleur pleine. Même raison pour le
+   curseur, que `.pc-inerte` fixait à `help`.
+   PAS DE `filter` ICI : un filtre fait de la carte le repère de ses
+   descendants en `position:fixed`, et le volet de texte irait se poser dans la
+   carte au lieu de l'écran — le piège déjà documenté pour `transform`. */
+/* L'INTERDIT N'EST PLUS TIRETÉ (6.9). Le tireté voulait dire trois choses —
+   en route, à venir, pas à vous de la jouer — et se lisait comme « suspendu » :
+   une question qui suspend une clef paraissait suspendue elle-même. Le tireté
+   est rendu à « pas encore là » ; l'interdit se dit par le lavis, le bord gris
+   et le curseur barré, ce qui suffit. */
+#partie .pc-interdit{cursor:not-allowed;
+  border-color:color-mix(in srgb,var(--muted) 55%,transparent);}
+/* IL NE DÉCOLORE PAS LA CARTE, et c'est une correction du jour même : à 10 %
+   de sa famille, une pièce engagée devenait grise — or dans une pile, la
+   moitié des cartes sont engagées, et l'on retombait sur un plateau d'une
+   seule couleur, celle qu'on venait justement de retirer. La famille reste
+   lisible, simplement plus sourde que ce qui se joue : 20 contre 34, et 45
+   pour la main et les états. Le bord pointillé et le curseur barré portent
+   l'interdiction ; la couleur, elle, ne sert qu'à dire ce que la carte EST. */
+#partie .pc-interdit:not(.pc-v-vrai):not(.pc-v-faux):not(.pc-app-vrai){
+  background-color:color-mix(in srgb,var(--pc-famille) 20%,var(--fond));}
+#partie .pc-interdit > :not(.pc-texte){opacity:calc(var(--pc-lavis,1) * .7);}
+/* pendant qu'on tient une carte, l'interdit se tait : c'est la lumière des
+   cases qui parle, et deux langages à la fois ne se lisent pas */
+#partie.pc-en-main .pc-interdit{border-color:var(--pc-couleur,var(--ink));}
+
+/* ==== LA CARTE DU DESSOUS : ce sur quoi un verrou est posé quand ce n'est pas
+   un état (6.9). La clef visée paraît en tête du front, un cran en retrait,
+   sous le mot « sur » ; son bandeau dit « bloquée par … ». Le verrou s'empile
+   dessus, comme sur la table. */
+#partie .pc-rang-sur{display:flex;align-items:flex-start;gap:4px;flex-wrap:nowrap;}
+#partie .pc-rang-sur .pc-ligne{flex:0 0 auto;flex-wrap:nowrap;}
+/* un front qui porte cette rangée est deux fois plus large : la clef, ses pièces,
+   le verrou et les siennes tiennent sur UNE ligne, sinon la rangée se replie et
+   l'ordre qu'on voulait lisible se perd */
+#partie .pc-front:has(.pc-rang-sur){grid-column:span 2;}
+#partie .pc-dessous{display:flex;align-items:center;gap:4px;flex:0 0 auto;padding-top:2px;}
+#partie .pc-dessous-l{font-size:10px;font-style:italic;color:var(--muted);flex:0 0 auto;
+  writing-mode:vertical-rl;transform:rotate(180deg);line-height:1;}
+#partie .pc-dessous .pc-ligne{flex:0 0 auto;}
+#partie .pc-dessous .pc-carte{--pc-lavis:.9;}
+
+/* ==== LA CARTE EN LIGNES (6.9) : une ligne par état, l'arbre par retrait, la
+   chaîne à droite — clef puis pièces, pièce puis verrou. L'état tient sa place
+   à gauche ; la chaîne, dans son conteneur, SE REPLIE au rang du dessous quand
+   la largeur manque (demandé le 6.9 au soir : une chaîne de quatre maillons
+   sortait de l'écran et l'on ne voyait plus ce qui répondait à quoi). Une clef
+   et ses pièces restent ensemble : c'est entre deux maillons que ça se plie. */
+#partie .pc-lignes{display:flex;flex-direction:column;gap:5px;overflow-x:auto;padding:4px 2px 8px;}
+#partie .pc-lg{display:flex;align-items:flex-start;gap:6px;flex-wrap:nowrap;min-height:60px;}
+#partie .pc-lg-chaine{display:flex;align-items:center;gap:6px;flex-wrap:wrap;flex:1 1 0;min-width:0;}
+#partie .pc-lg .pc-ligne{flex:0 0 auto;flex-wrap:nowrap;}
+#partie .pc-lg .pc-sur{width:44px;height:44px;}
+#partie .pc-lg .pc-sur .pc-type{font-size:22px;}
+#partie .pc-lg-fils{position:relative;}
+#partie .pc-lg-fils::before{content:"";position:absolute;left:calc(var(--pc-retrait,30px) - 16px);top:50%;width:12px;
+  border-top:1px dashed color-mix(in srgb,var(--bord) 80%,transparent);}
+#partie .pc-fleche{font-size:15px;color:var(--muted);flex:0 0 auto;padding:0 1px;}
+#partie .pc-lg-sep{border-top:1px dashed var(--bord);margin:6px 0 2px;}
+
+/* ---- les six gestes du 6.9 ---- */
+.pc-bulle-rang{display:flex;gap:8px;align-items:center;}
+.pc-bulle-lab{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+.pc-bulle input.pc-bulle-petit{width:58px;flex:0 0 58px;text-align:center;padding:4px 4px;font-variant-numeric:tabular-nums;}
+.pc-bulle-aide{font-size:10.5px;color:var(--muted);opacity:.8;white-space:nowrap;margin-left:auto;font-style:italic;}
+.pc-bulle-note{font-size:11px;opacity:.85;background:rgba(200,150,40,.18);padding:3px 7px;border-radius:3px;margin-top:5px;}
+.pc-viseur-racine{border-color:#2f8f6a;box-shadow:0 0 0 3px rgba(47,143,106,.18);}
+.pc-lg-mot{font-size:11.5px;opacity:.6;margin-left:8px;}
+.pc-rep-libre{opacity:.75;}

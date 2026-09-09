@@ -44,7 +44,12 @@ class PartieCartesTest(unittest.TestCase):
     def test_tour_et_trait(self):
         self.assertEqual(self.v["tour"], 2)
         self.assertEqual(self.v["jours"], 2)
-        self.assertEqual(self.v["trait"], "noir")
+        # LE TRAIT SUIT LE DERNIER COUP COMPTÉ, pas la dernière ligne écrite.
+        # Dans le duel, noir a levé (ligne 17, compté) et vert n'a répondu que
+        # par des demandes et une question — gratuites, hors compte. Le tour est
+        # donc à VERT, qui n'a pas encore joué de coup compté. L'ancienne règle
+        # rendait « noir » et lui donnait deux coups de suite.
+        self.assertEqual(self.v["trait"], "vert")
         self.assertIsNone(self.v["trone"])      # rien n'a été constaté sur une racine
 
     def test_deux_fronts_verts_sur_le_trone(self):
@@ -196,7 +201,7 @@ class PartieCartesTest(unittest.TestCase):
             p2 = Partie(copie)
             avant = p2.lignes[-1]["n"]
             p2.ecrire({"camp": "vert", "coup": "demander", "id": "renfort-tardif",
-                       "lieu": "port-real", "nombre": 900, "texte": "un renfort de plus"})
+                       "nombre": 900, "texte": "un renfort de plus, à Port-Réal"})
             v = partie_cartes.vue(p2, "noir", vu=avant)
             self.assertEqual([c["id"] for c in v["eux"] if c["neuf"]], ["renfort-tardif"])
         finally:

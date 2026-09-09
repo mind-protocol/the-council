@@ -104,8 +104,17 @@ def clair(p, texte):
     dire. Meme geste que pour les refus (`partie_gestes._lisible`) : on ne sert
     jamais un id nu a l'ecran."""
     out = str(texte or "")
+    # SEULS LES IDS CONNUS DU GREFFE s'habillent. `titre()` rend un nom lisible
+    # pour N'IMPORTE QUEL mot — majuscule en tête —, si bien que « rien en face »
+    # devenait « Rien » en « Face », avec des guillemets qui promettaient deux
+    # pièces qui n'existent pas. On regarde d'abord si le mot EST un objet.
+    connus = set()
+    for reg in (p.ressources, p.etats, p.blocages, p.cles, p.maillons, p.menaces):
+        connus.update(str(k) for k in reg)
     for mot in sorted(set(re.findall(r"[A-Za-z0-9][A-Za-z0-9_-]{3,60}", out)),
                       key=len, reverse=True):
+        if mot not in connus:
+            continue
         t = partie_cartes.titre(p, mot)
         if t and t != mot:
             out = out.replace(mot, "« %s »" % _t(p, mot, 42))

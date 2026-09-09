@@ -1,0 +1,23 @@
+{"camp": "eux", "coup": "viser", "id": "e-pont", "texte": "Le pont reste à eux jusqu'à la fin de la lune", "n": 1, "tour": 1}
+{"camp": "nous", "coup": "demander", "id": "caraxes", "texte": "Caraxes, monté par Daemon", "n": 2, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "caraxes", "verdict": "accorde", "genre": "dragon", "motif": "partie de débogage : accordée sur pièce", "n": 3, "tour": 1}
+{"camp": "nous", "coup": "demander", "id": "barques", "texte": "les deux barques de Selm", "n": 4, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "barques", "verdict": "accorde", "genre": "nef", "motif": "partie de débogage : accordée sur pièce", "n": 5, "tour": 1}
+{"camp": "nous", "coup": "demander", "id": "bourse", "texte": "une bourse de mille dragons", "n": 6, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "bourse", "verdict": "accorde", "genre": "or", "motif": "partie de débogage : accordée sur pièce", "n": 7, "tour": 1}
+{"camp": "nous", "coup": "demander", "id": "steffon", "texte": "ser Steffon Darklyn", "n": 8, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "steffon", "verdict": "accorde", "genre": "homme", "motif": "partie de débogage : accordée sur pièce", "n": 9, "tour": 1}
+{"camp": "eux", "coup": "demander", "id": "larys", "texte": "Larys Fort, le Pied-Bot", "n": 10, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "larys", "verdict": "accorde", "genre": "homme", "motif": "partie de débogage : accordée sur pièce", "n": 11, "tour": 1}
+{"camp": "eux", "coup": "demander", "id": "galeres", "texte": "les galères royales", "n": 12, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "galeres", "verdict": "accorde", "genre": "nef", "motif": "partie de débogage : accordée sur pièce", "n": 13, "tour": 1}
+{"camp": "eux", "coup": "demander", "id": "garnison", "texte": "la garnison du pont", "n": 14, "tour": 1}
+{"camp": "arbitre", "coup": "arbitrer", "sur": "garnison", "verdict": "accorde", "genre": "troupe", "motif": "partie de débogage : accordée sur pièce", "n": 15, "tour": 1}
+{"camp": "eux", "coup": "detruire", "id": "e-coule", "cible": "barques", "engage": ["galeres"], "texte": "Coule les deux barques de nuit", "n": 16, "tour": 1}
+{"camp": "nous", "coup": "viser", "id": "n-le-pont-est-nous-la", "texte": "Le pont est à nous à la fin de la lune", "n": 17, "tour": 1}
+{"camp": "nous", "coup": "lever", "id": "n-steffon-n-le-pont-est-nous-la", "sert": "n-le-pont-est-nous-la", "engage": ["steffon"], "texte": "Steffon tient la tête de pont", "n": 18, "tour": 1}
+{"camp": "nous", "coup": "demander", "id": "n-deux-gars-sur-le-pont", "texte": "Deux gars sur le pont", "nombre": 2, "n": 19, "tour": 1}
+{"camp": "nous", "coup": "retourner", "id": "n-caraxes-larys", "cible": "larys", "engage": ["caraxes"], "texte": "Larys retourné sous la menace du dragon", "n": 20, "tour": 1}
+{"camp": "nous", "coup": "viser", "id": "n-le-huiti-me-jour-la-garn", "texte": "Le huitième jour la garnison est relevée", "sert": "n-le-pont-est-nous-la", "arrive_tour": 5, "n": 21, "tour": 1}
+{"camp": "nous", "coup": "retirer", "id": "barques", "n": 22, "tour": 1}
+{"camp": "nous", "coup": "agir", "id": "n-maillon-n-steffon-n-le-pont-est-", "realise": "n-steffon-n-le-pont-est-nous-la", "qui": "nous", "avec": ["steffon"], "texte": "Steffon monte au pont à l'aube avec vingt hommes", "n": 23, "tour": 1}

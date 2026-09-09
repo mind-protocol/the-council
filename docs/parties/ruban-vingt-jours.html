@@ -1,0 +1,347 @@
+<!doctype html><html lang=fr><meta charset=utf-8>
+<title>Ruban — vingt-jours</title>
+<style>
+:root{--fond:#f4eee2;--encre:#2b2119;--gris:#7a6a55;--ligne:#d9cfbc;--carte:#fffbf2}
+@media (prefers-color-scheme:dark){:root{--fond:#171310;--encre:#e6dbc6;--gris:#a8977c;--ligne:#3a322a;--carte:#1f1a15}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font:14px/1.4 Georgia,"Times New Roman",serif}
+header{padding:14px 20px;border-bottom:1px solid var(--ligne)}
+h1{font-size:17px;margin:0 0 3px;font-weight:normal}
+header .k{color:var(--gris);font-size:12.5px}
+main{padding:12px 20px 40px;overflow-x:auto}
+table{border-collapse:collapse}
+th,td{padding:0;vertical-align:top}
+th.t{font-weight:normal;font-size:11px;color:var(--gris);text-align:center;
+  border-bottom:1px solid var(--ligne);padding:2px 0 4px}
+td.lab,th.lab{position:sticky;left:0;background:var(--fond);z-index:2;
+  padding-right:10px;font-size:12px;white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.voie td{border-bottom:1px solid var(--ligne);padding:3px 3px 5px}
+.cp{display:block;font-size:11px;line-height:1.25;margin:2px 0;padding:3px 5px;border-radius:3px;
+  border:1px solid var(--ligne);background:var(--carte)}
+.cp.compte{border-color:currentColor;font-weight:600}
+.cp.gratuit{opacity:.62;border-style:dashed}
+.rien{color:var(--gris);font-size:11px;font-style:italic;text-align:center;display:block;padding:4px 0}
+.bande td{padding:0 1px}
+.b{height:15px;border-radius:2px;background:var(--ligne);opacity:.35}
+.b.on{opacity:1}
+.pl{font-size:11.5px}
+.marque{margin:3px 0;padding:3px 5px;border-radius:3px;font-size:11px;line-height:1.25;
+  border-left:3px solid #6f9c62;background:color-mix(in srgb,#6f9c62 14%,transparent)}
+.marque.faux{border-left-color:#a34a3a;background:color-mix(in srgb,#a34a3a 14%,transparent)}
+h2{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gris);
+  font-weight:normal;margin:22px 0 6px}
+.leg{color:var(--gris);font-size:11.5px;margin:6px 0 0}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 3px 0 12px;vertical-align:-1px}
+/* LE VOLET. Le `title` du navigateur mettait une seconde à paraître, coupait
+   au-delà d'une ligne et ne savait pas mettre un mot en gras — sur un ruban où
+   TOUT le détail est au survol, c'était la moitié de la vue rendue illisible.
+   Celui-ci paraît sans délai, tient plusieurs lignes, et se pose du côté où il
+   y a la place. Il ne prend jamais le curseur. */
+#volet{position:fixed;z-index:99;max-width:380px;pointer-events:none;display:none;
+  background:var(--carte);border:1px solid var(--encre);border-radius:4px;
+  padding:7px 9px;box-shadow:0 6px 18px rgba(0,0,0,.28);font-size:12px;line-height:1.35}
+#volet b{font-weight:600}
+#volet .q{color:var(--gris);font-size:11px;display:block;margin-top:3px}
+[data-info]{cursor:help}
+</style>
+<header><h1>vingt-jours</h1><div class=k>11 tours · 🔵 labo 🔴 virus · 👑 personne</div></header><main>
+<h2>Les coups — ce qui compte est plein, ce qui est gratuit est en creux</h2>
+<table><tr><th class=lab></th>
+<th class=t style='width:136px'>tour 1</th>
+<th class=t style='width:136px'>tour 2</th>
+<th class=t style='width:136px'>tour 3</th>
+<th class=t style='width:136px'>tour 4</th>
+<th class=t style='width:136px'>tour 5</th>
+<th class=t style='width:136px'>tour 6</th>
+<th class=t style='width:136px'>tour 7</th>
+<th class=t style='width:136px'>tour 8</th>
+<th class=t style='width:136px'>tour 9</th>
+<th class=t style='width:136px'>tour 10</th>
+<th class=t style='width:136px'>tour 11</th>
+</tr>
+<tr class=voie><td class=lab>🔵 labo</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;L agent est identifie, sa source nommee, et la chaine de transmission coupee avant le vingtieme jour&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 1&lt;/span&gt;">🎯 viser</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;le sequenceur haut debit du labo&lt;/div&gt;&lt;div&gt;le laboratoire P3 et ses cultures cellulaires&lt;/div&gt;&lt;div&gt;la biobanque : les serums des cinq dernieres annees&lt;/div&gt;&lt;div&gt;Sofia Marek, epidemiologiste de terrain&lt;/div&gt;&lt;div&gt;Nour, doctorante, qui ne dort pas&lt;/div&gt;&lt;div&gt;les reactifs : de quoi tenir trois passages&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 5–15&lt;/span&gt;">📦 demander ×6</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🗝️ lever&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion &lt;span class=q style='display:inline'&gt;→ ouvre « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 27 · engage « Nour, doctorante, qui ne dort pas »&lt;/span&gt;">🗝️ lever</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;anticorps bispecifiques ciblant protéine de surface du virus&lt;/div&gt;&lt;span class=q&gt;tour 2 · ligne 28&lt;/span&gt;">📦 demander</span>
+</td>
+<td>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;les résulttas d'analyse du premier patient décédé&lt;/div&gt;&lt;div&gt;microscope electronique&lt;/div&gt;&lt;span class=q&gt;tour 3 · ligne 32–34&lt;/span&gt;">📦 demander ×2</span>
+<span class='cp gratuit' data-info="&lt;b&gt;⚔️ agir&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;la forme , la structure sont caracteristique de la famille des virus, cela permet de faire une premier identification&lt;/div&gt;&lt;span class=q&gt;tour 3 · ligne 36 · répond à la ligne 29, donc gratuit&lt;/span&gt;">⚔️ agir</span>
+<span class='cp compte' data-info="&lt;b&gt;🔒 bloquer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;identifie la nouvelle souche &lt;span class=q style='display:inline'&gt;→ sur « Le quatorzieme jour la souche change assez pour que les premiers tests rendent faux ce qu ils rendaient vrai »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 3 · ligne 37 · engage « le sequenceur haut debit du labo »&lt;/span&gt;">🔒 bloquer</span>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion&lt;/div&gt;&lt;span class=q&gt;tour 3 · ligne 38 · engage « Sofia Marek, epidemiologiste de terrain »&lt;/span&gt;">➕ rearmer</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion&lt;/div&gt;&lt;span class=q&gt;tour 4 · ligne 42 · engage « microscope electronique »&lt;/span&gt;">➕ rearmer</span>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;identifie la nouvelle souche&lt;/div&gt;&lt;span class=q&gt;tour 4 · ligne 44 · engage « la biobanque : les serums des cinq dernieres annees »&lt;/span&gt;">➕ rearmer</span>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;identifie la nouvelle souche&lt;/div&gt;&lt;span class=q&gt;tour 4 · ligne 45 · engage « le laboratoire P3 et ses cultures cellulaires »&lt;/span&gt;">➕ rearmer</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;test ELISA&lt;/div&gt;&lt;span class=q&gt;tour 4 · ligne 46&lt;/span&gt;">📦 demander</span>
+</td>
+<td><span class=rien>—</span></td>
+<td><span class=rien>—</span></td>
+<td>
+<span class='cp gratuit' data-info="&lt;b&gt;⚔️ agir&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;identification du code gentique et identifier les nouveaux variants&lt;/div&gt;&lt;span class=q&gt;tour 7 · ligne 54 · répond à la ligne 40, donc gratuit&lt;/span&gt;">⚔️ agir</span>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion&lt;/div&gt;&lt;span class=q&gt;tour 7 · ligne 55 · engage « Sofia Marek, epidemiologiste de terrain »&lt;/span&gt;">➕ rearmer</span>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion&lt;/div&gt;&lt;span class=q&gt;tour 7 · ligne 56 · engage « Sofia Marek, epidemiologiste de terrain »&lt;/span&gt;">➕ rearmer</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🔒 bloquer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;analyse et recuperation de la nouvelle souche &lt;span class=q style='display:inline'&gt;→ sur « Le quatorzieme jour la souche change assez pour que les premiers tests rendent faux ce qu ils rendaient vrai »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 8 · ligne 60 · engage « les reactifs : de quoi tenir trois passages »&lt;/span&gt;">🔒 bloquer</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;serologie des patient infectée&lt;/div&gt;&lt;span class=q&gt;tour 9 · ligne 64&lt;/span&gt;">🎯 viser</span>
+<span class='cp compte' data-info="&lt;b&gt;🗝️ lever&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;permet d'identifier la sérologie&lt;/div&gt;&lt;span class=q&gt;tour 9 · ligne 65 · engage « test ELISA »&lt;/span&gt;">🗝️ lever</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;➕ rearmer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;permet d'identifier la sérologie&lt;/div&gt;&lt;span class=q&gt;tour 10 · ligne 68 · engage « le sequenceur haut debit du labo »&lt;/span&gt;">➕ rearmer</span>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;SARS-CoV-2 identifié par séquencage du génome et ELISA sur les serum des patients nouvellement infectée confirm&lt;/div&gt;&lt;span class=q&gt;tour 10 · ligne 69&lt;/span&gt;">🎯 viser</span>
+</td>
+<td><span class=rien>—</span></td>
+</tr>
+<tr class=voie><td class=lab>🔴 virus</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Au vingtieme jour la ville compte cent malades et personne ne sait ce que c est&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 2&lt;/span&gt;">🎯 viser</span>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Le huitieme jour, le premier mort, et la ville l apprend le soir meme&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 3&lt;/span&gt;">🎯 viser</span>
+<span class='cp compte' data-info="&lt;b&gt;🎯 viser&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Le quatorzieme jour la souche change assez pour que les premiers tests rendent faux ce qu ils rendaient vrai&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 4&lt;/span&gt;">🎯 viser</span>
+<span class='cp gratuit' data-info="&lt;b&gt;📦 demander&lt;/b&gt; &lt;span class=q style='display:inline'&gt;gratuit&lt;/span&gt;&lt;div&gt;l incubation : huit jours entre la contamination et le premier signe&lt;/div&gt;&lt;div&gt;un porteur qui ne tousse pas et qui travaille&lt;/div&gt;&lt;div&gt;quelque chose que les onze premiers cas ont en commun&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 17–21&lt;/span&gt;">📦 demander ×3</span>
+<span class='cp compte' data-info="&lt;b&gt;🔒 bloquer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes &lt;span class=q style='display:inline'&gt;→ sur « L agent est identifie, sa source nommee, et la chaine de transmission coupee avant le vingtieme jour »&lt;/span&gt;&lt;/div&gt;&lt;span class=q&gt;tour 1 · ligne 23 · engage « quelque chose que les onze premiers cas ont en commun »&lt;/span&gt;">🔒 bloquer</span>
+</td>
+<td><span class=rien>—</span></td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;⏸️ passer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il incube : huit jours entre la contamination et le premier signe, et rien de ce que fait le labo ne se voit encore&lt;/div&gt;&lt;span class=q&gt;tour 3 · ligne 31&lt;/span&gt;">⏸️ passer</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;⏸️ passer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il ne fait rien : le sixieme jour, celui qui mourra le huitieme est deja couche&lt;/div&gt;&lt;span class=q&gt;tour 4 · ligne 43&lt;/span&gt;">⏸️ passer</span>
+</td>
+<td><span class=rien>—</span></td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;⏸️ passer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il n a rien a faire : ce qu il a seme le deuxieme jour sort de terre tout seul&lt;/div&gt;&lt;span class=q&gt;tour 6 · ligne 50&lt;/span&gt;">⏸️ passer</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;⏸️ passer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il ne fait rien : au douzieme jour, ceux qui tomberont au vingtieme sont deja contamines&lt;/div&gt;&lt;span class=q&gt;tour 7 · ligne 53&lt;/span&gt;">⏸️ passer</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;⏸️ passer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il n a rien a faire : il vient de changer de visage sans que personne l ait vu&lt;/div&gt;&lt;span class=q&gt;tour 8 · ligne 59&lt;/span&gt;">⏸️ passer</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;⏸️ passer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il n a rien a faire : au seizieme jour la ville commence a compter ses malades toute seule&lt;/div&gt;&lt;span class=q&gt;tour 9 · ligne 63&lt;/span&gt;">⏸️ passer</span>
+</td>
+<td>
+<span class='cp compte' data-info="&lt;b&gt;⏸️ passer&lt;/b&gt; &lt;span class=q style='display:inline'&gt;coup compté&lt;/span&gt;&lt;div&gt;il n a rien a faire : au dix-huitieme jour, les contamines du dixieme commencent a tousser&lt;/div&gt;&lt;span class=q&gt;tour 10 · ligne 67&lt;/span&gt;">⏸️ passer</span>
+</td>
+<td><span class=rien>—</span></td>
+</tr>
+<tr class=voie><td class=lab>✅ constats</td>
+<td>
+<div class='marque faux' data-info="&lt;b&gt;❌ constat : faux&lt;/b&gt; L agent est identifie, sa source nommee, et la chaine de transmission coupee avant le vingtieme jour&lt;span class=q&gt;Au premier jour : onze malades, aucun agent nomme, aucune source. Point de depart.&lt;/span&gt;">🔵 L agent est identifie, sa source nommee, et la…</div>
+</td>
+<td></td>
+<td></td>
+<td></td>
+<td>
+<div class='marque' data-info="&lt;b&gt;✅ constat : vrai&lt;/b&gt; Le huitieme jour, le premier mort, et la ville l apprend le soir meme&lt;span class=q&gt;Le huitieme jour. Un homme meurt a l hopital en fin d apres-midi — le troisieme cas declare, celui qu on croyait le moins atteint — et la ville l apprend le soir meme. Cet etat etait ecrit au livre depuis l ouverture et pose sur la table depuis le tour 4 : il ne surprend personne, et c est bien ce qui le rend dur. Il sert la racine du virus. Il donne aussi au labo la seule chose que la partie lui devait : un CORPS, donc de l organe, donc de la charge virale sans culture.&lt;/span&gt;">🔴 Le huitieme jour, le premier mort, et la ville…</div>
+</td>
+<td></td>
+<td></td>
+<td>
+<div class='marque' data-info="&lt;b&gt;✅ constat : vrai&lt;/b&gt; Le quatorzieme jour la souche change assez pour que les premiers tests rendent faux ce qu ils rendaient vrai&lt;span class=q&gt;Le quatorzieme jour, la souche change. Je la constate VRAIE parce qu une machine n empeche pas un virus de muter — mais lisez la suite, votre verrou n a pas ete pose pour rien, et il coupe l effet en deux. CE QU IL VOUS SAUVE : le sequenceur lit un code, quel qu il soit ; tant qu il a du materiel preleve APRES le changement, il suit la souche neuve et vous ne perdez pas votre identification de famille. Trois machines etaient dessus, elles paient ici. CE QU IL NE VOUS SAUVE PAS : l ELISA. Il est monte sur l antigene du mort du huitieme jour, donc sur l ANCIENNE souche — livre aujourd hui, il rend faux ce qu il rendait vrai des demain sur les cas neufs. Le recalibrer coutera un second passage de reactifs, et il ne vous en restera qu un. Enfin, la ou personne ne regarde : la mutation ne touche pas le PASSE. La biobanque et les seroteques d avant restent lisibles a l ancien test, et c est la que se trouve encore votre source.&lt;/span&gt;">🔴 Le quatorzieme jour la souche change assez pou…</div>
+</td>
+<td></td>
+<td></td>
+<td>
+<div class='marque faux' data-info="&lt;b&gt;❌ constat : faux&lt;/b&gt; L agent est identifie, sa source nommee, et la chaine de transmission coupee avant le vingtieme jour&lt;span class=q&gt;Vingtieme jour, et je constate FAUX. La racine demandait trois choses ; vous en avez une demie. L AGENT : vous tenez une FAMILLE — un virus enveloppe, cent nanometres, vu au microscope electronique, et le maillon qui le disait etait juste, modeste et bien joue. Ce n est pas un nom. Vous aviez le sequenceur libre et l organe du mort a partir du dixieme jour : le nom etait a UN coup, et ce coup n a jamais ete joue. LA SOURCE : rien. Ce que les onze premiers cas ont en commun est reste sur la table du virus du premier au dernier jour, sans qu une seule carte le touche. Sofia Marek, votre epidemiologiste, la seule piece capable de rapporter des gens et des lieux, a passe la partie entiere engagee dans une clef de paillasse. LA CHAINE COUPEE : rien non plus. Le vrai defaut n est pas d avoir mal joue une carte, c est d avoir joue tout le temps a la meme table : neuf coups de laboratoire, zero coup de terrain. Vous avez battu ce qui vous barrait la vue, et vous n avez jamais cherche ce qui rendait les gens malades.&lt;/span&gt;">🔵 L agent est identifie, sa source nommee, et la…</div>
+<div class='marque faux' data-info="&lt;b&gt;❌ constat : faux&lt;/b&gt; Au vingtieme jour la ville compte cent malades et personne ne sait ce que c est&lt;span class=q&gt;Et je constate FAUX de ce cote aussi, ce qui n est pas une politesse. La phrase disait deux choses liees par un ET : la ville compte cent malades AU vingtieme jour, ET personne ne sait ce que c est. La premiere est vraie — l epidemie a suivi son cours, personne ne l a ralentie, les contamines du dixieme jour toussent depuis deux jours. La seconde est FAUSSE, et c est le labo qui l a rendue fausse : au huitieme jour cette ville ignorait tout, au vingtieme elle sait qu il s agit d un virus enveloppe, nouveau, invisible aux milieux standards, dont on tient l image et dont on suit la souche apres mutation. Une phrase composee dont une moitie tombe est fausse entiere. LE TRONE N EST A PERSONNE. Le virus a gagne les corps ; il a perdu le noir complet, et il l a perdu contre un microscope et une doctorante qui ne dormait pas.&lt;/span&gt;">🔴 Au vingtieme jour la ville compte cent malades…</div>
+</td>
+</tr></table>
+<h2>Les pièces — ce qui était pris, et par quoi</h2>
+<table>
+<tr class=bande><td class='lab pl'>🔵 🥼 Nour, doctorante, qui ne dort pas</td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 3 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 4 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 5 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 6 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 7 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 8 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 9 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 10 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🥼 Nour, doctorante, qui ne dort pas&lt;/b&gt;&lt;span class=q&gt;tour 11 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 🗺️ Sofia Marek, epidemiologiste de terrain</td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 3 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 4 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 5 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 6 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 7 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 8 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 9 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 10 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🗺️ Sofia Marek, epidemiologiste de terrain&lt;/b&gt;&lt;span class=q&gt;tour 11 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 🧊 la biobanque : les serums des cinq dernieres annees</td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 3 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 4 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 5 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 6 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 7 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 8 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 9 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 10 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧊 la biobanque : les serums des cinq dernieres annees&lt;/b&gt;&lt;span class=q&gt;tour 11 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 🧪 le laboratoire P3 et ses cultures cellulaires</td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 3 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 4 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 5 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 6 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 7 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 8 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 9 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 10 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 le laboratoire P3 et ses cultures cellulaires&lt;/b&gt;&lt;span class=q&gt;tour 11 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 🧬 le sequenceur haut debit du labo</td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 3 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 4 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 5 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 6 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 7 · engagée par « identifie la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 8 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 9 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 10 · engagée par « permet d'identifier la sérologie »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧬 le sequenceur haut debit du labo&lt;/b&gt;&lt;span class=q&gt;tour 11 · engagée par « permet d'identifier la sérologie »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 🧪 les reactifs : de quoi tenir trois passages</td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 3 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 4 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 5 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 6 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 7 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 8 · engagée par « analyse et recuperation de la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 9 · engagée par « analyse et recuperation de la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 10 · engagée par « analyse et recuperation de la nouvelle souche »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🧪 les reactifs : de quoi tenir trois passages&lt;/b&gt;&lt;span class=q&gt;tour 11 · engagée par « analyse et recuperation de la nouvelle souche »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 🧪 les résulttas d'analyse du premier patient décédé</td>
+<td style='width:136px'><div class='b' style='background:transparent' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b' style='background:transparent' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 2 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 3 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 4 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 5 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 6 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 7 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 8 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 9 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 10 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🧪 les résulttas d'analyse du premier patient décédé&lt;/b&gt;&lt;span class=q&gt;tour 11 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 🔬 microscope electronique</td>
+<td style='width:136px'><div class='b' style='background:transparent' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b' style='background:transparent' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 2 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 3 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 4 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 5 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 6 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 7 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 8 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 9 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 10 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;🔬 microscope electronique&lt;/b&gt;&lt;span class=q&gt;tour 11 · engagée par « le microscope electronique a permis d'identifie la structure du virsu et son lieu de replicatoion »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔵 📦 test ELISA</td>
+<td style='width:136px'><div class='b' style='background:transparent' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 1 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b' style='background:transparent' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 2 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b' style='background:transparent' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 3 · pas encore au livre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#9a8f7a' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 4 · attend l'arbitrage&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#9a8f7a' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 5 · attend l'arbitrage&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 6 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 7 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 8 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 9 · engagée par « permet d'identifier la sérologie »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 10 · engagée par « permet d'identifier la sérologie »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 test ELISA&lt;/b&gt;&lt;span class=q&gt;tour 11 · engagée par « permet d'identifier la sérologie »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 🦠 l incubation : huit jours entre la contamination et le premier signe</td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 3 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 4 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 5 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 6 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 7 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 8 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 9 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 10 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 l incubation : huit jours entre la contamination et le premier signe&lt;/b&gt;&lt;span class=q&gt;tour 11 · libre&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 📦 quelque chose que les onze premiers cas ont en commun</td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 1 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 2 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 3 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 4 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 5 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 6 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 7 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 8 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 9 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 10 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#c0873a' data-info="&lt;b&gt;📦 quelque chose que les onze premiers cas ont en commun&lt;/b&gt;&lt;span class=q&gt;tour 11 · engagée par « Il ne pousse sur aucun milieu standard et le microscope optique ne montre rien : au onzieme cas, vous n avez que des symptomes »&lt;/span&gt;"></div></td>
+</tr>
+<tr class=bande><td class='lab pl'>🔴 🦠 un porteur qui ne tousse pas et qui travaille</td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 1 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 2 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 3 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 4 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 5 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 6 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 7 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 8 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 9 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 10 · libre&lt;/span&gt;"></div></td>
+<td style='width:136px'><div class='b on' style='background:#8aa87e' data-info="&lt;b&gt;🦠 un porteur qui ne tousse pas et qui travaille&lt;/b&gt;&lt;span class=q&gt;tour 11 · libre&lt;/span&gt;"></div></td>
+</tr>
+</table>
+<p class=leg>
+<i style='background:#8aa87e'></i>libre
+<i style='background:#c0873a'></i>engagée
+<i style='background:#7d8fa8'></i>gelée
+<i style='background:#9a8f7a'></i>attend l'arbitrage
+<i style='background:#a34a3a'></i>perdue
+</p></main><div id=volet></div>
+<script>
+(function(){
+  var v=document.getElementById("volet");
+  document.addEventListener("mouseover",function(e){
+    var c=e.target.closest("[data-info]");
+    if(!c){v.style.display="none";return;}
+    v.innerHTML=c.getAttribute("data-info");
+    v.style.display="block";
+    poser(e);
+  });
+  document.addEventListener("mousemove",function(e){
+    if(v.style.display==="block") poser(e);
+  });
+  // Il se pose du côté où il y a la place : collé au bord droit, un volet de
+  // 380 px sur une pièce du dernier tour sortait de l'écran et se lisait à moitié.
+  function poser(e){
+    var b=v.getBoundingClientRect();
+    var x=e.clientX+14, y=e.clientY+16;
+    if(x+b.width>innerWidth-8) x=e.clientX-b.width-14;
+    if(y+b.height>innerHeight-8) y=e.clientY-b.height-16;
+    v.style.left=Math.max(6,x)+"px"; v.style.top=Math.max(6,y)+"px";
+  }
+})();
+</script></html>

@@ -29,6 +29,14 @@ function campsDe(id) {
   try {
     const brut = fs.readFileSync(path.join(DOSSIER, id + ".jsonl"), "utf-8");
     const out = new Set();
+    // UN CAMP QUI N'A PAS ENCORE VISE EXISTE QUAND MEME s'il est NOMME par la
+    // configuration de la partie (`camps` de etat/parties/<id>.json, 6.9) :
+    // c'est le cas de l'ouverture depuis l'ecran, ou la racine est le premier
+    // geste — sans cela, poser sa racine etait refuse faute de racine.
+    try {
+      const conf = JSON.parse(fs.readFileSync(path.join(DOSSIER, id + ".json"), "utf-8"));
+      (conf.camps || []).forEach((c) => out.add(String(c)));
+    } catch (e) {}
     for (const l of brut.split("\n")) {
       if (!l.trim()) continue;
       // CE QUI FAIT UN CAMP, C'EST D'AVOIR VISE — pas d'avoir ecrit. Le premier
@@ -88,7 +96,7 @@ function vue(url, camp, cb, vu) {
     { cwd: RACINE, timeout: 20000, maxBuffer: 8 * 1024 * 1024, windowsHide: true,
       env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) },
     (err, stdout, stderr) => {
-      if (err) return cb(new Error(String(stderr || err.message || "").slice(0, 600)));
+      if (err) return cb(new Error(derniereLigne(stderr, err)));
       try { return cb(null, JSON.parse(String(stdout))); }
       catch (e) { return cb(new Error("vue illisible : " + String(stdout).slice(0, 200))); }
     });
@@ -99,21 +107,63 @@ function vue(url, camp, cb, vu) {
 // greffier a déjà vérifié, et un refus n'est PAS une erreur de transport : il
 // revient en 200 avec sa raison en clair, parce que c'est une réponse de jeu et
 // qu'elle s'affiche sous la carte.
+//
+// LE CAMP DU SERVEUR PRIME SUR LE CORPS (audit du 7.9, B1). On faisait
+// `Object.assign({ camp }, geste)` : un `camp` glisse dans le JSON du client
+// ecrasait celui que le serveur avait resolu, et n'importe quel onglet pouvait
+// passer pour l'adversaire — ou pour l'arbitre. La route refuse deja un camp
+// du corps qui differe ; ici on l'ecrase quoi qu'il arrive.
+//
+// UNE FILE PAR PARTIE (audit du 7.9, B5 / A6). Chaque coup est un `python`
+// qui relit le jsonl, calcule `n = dernier + 1` et ajoute une ligne : deux
+// POST simultanes sur la meme partie donnaient deux lignes de meme `n`
+// (charmed-2 n=106, 118, 122 ; successeurs n=55). Les coups d'une meme partie
+// passent donc l'un apres l'autre ; deux parties differentes ne s'attendent pas.
 function jouer(url, camp, geste, cb, vu) {
   const id = partieDe(url);
   if (!id) return cb(null, { ok: false, refus: ["aucune partie ouverte"], vue: null });
   camp = camp || campDe(url);
   const args = [path.join(RACINE, "scripts", "partie.py"), id, "--geste",
-                JSON.stringify(camp ? Object.assign({ camp: camp }, geste) : geste),
+                JSON.stringify(camp ? Object.assign({}, geste, { camp: camp }) : geste),
                 "--vu", String(vu || 0)].concat(camp ? ["--camp", camp] : []);
-  execFile(process.env.PYTHON || "python", args,
-    { cwd: RACINE, timeout: 20000, maxBuffer: 8 * 1024 * 1024, windowsHide: true,
-      env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) },
-    (err, stdout, stderr) => {
-      if (err) return cb(new Error(String(stderr || err.message || "").slice(0, 600)));
-      try { return cb(null, JSON.parse(String(stdout))); }
-      catch (e) { return cb(new Error("réponse illisible : " + String(stdout).slice(0, 200))); }
-    });
+  enFile(id, (fin) => {
+    execFile(process.env.PYTHON || "python", args,
+      { cwd: RACINE, timeout: 20000, maxBuffer: 8 * 1024 * 1024, windowsHide: true,
+        env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) },
+      (err, stdout, stderr) => {
+        try {
+          if (err) return cb(new Error(derniereLigne(stderr, err)));
+          let r;
+          try { r = JSON.parse(String(stdout)); }
+          catch (e) { return cb(new Error("réponse illisible : " + String(stdout).slice(0, 200))); }
+          return cb(null, r);
+        } finally { fin(); }
+      });
+  });
+}
+
+// La file d'attente : une promesse chainee par identifiant de partie. Le
+// travail recoit `fin`, qu'il DOIT appeler quand le greffe a rendu la main ;
+// le suivant ne part qu'apres. La file d'une partie disparait quand elle est
+// vide, pour ne pas garder une entree par partie jamais rejouee.
+const FILES = new Map();
+function enFile(id, travail) {
+  const avant = FILES.get(id) || Promise.resolve();
+  const courant = avant.then(() => new Promise((fin) => {
+    try { travail(fin); } catch (e) { fin(); throw e; }
+  })).catch(() => {});
+  FILES.set(id, courant);
+  courant.then(() => { if (FILES.get(id) === courant) FILES.delete(id); });
+}
+
+// UN TRACEBACK PYTHON NE SE MONTRE PAS EN ENTIER : sa derniere ligne non vide
+// (« KeyError: 'b1' », « json.decoder.JSONDecodeError: … ») dit tout ce qu'un
+// ecran peut en faire. Le reste est pour le terminal du greffe.
+function derniereLigne(stderr, err) {
+  const lignes = String(stderr || "").split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  const texte = lignes.length ? lignes[lignes.length - 1]
+                              : String((err && err.message) || "le greffe n'a rien dit");
+  return texte.slice(0, 300);
 }
 
 // LE RUBAN : la partie dans le temps (scripts/noyau/partie_ruban.py), rendue à
@@ -126,7 +176,7 @@ function ruban(url, cb) {
     [path.join(RACINE, "scripts", "partie.py"), id, "--ruban", "-"],
     { cwd: RACINE, timeout: 20000, maxBuffer: 16 * 1024 * 1024, windowsHide: true,
       env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) },
-    (err, stdout, stderr) => err ? cb(new Error(String(stderr || err.message || "").slice(0, 600)))
+    (err, stdout, stderr) => err ? cb(new Error(derniereLigne(stderr, err)))
                                  : cb(null, String(stdout)));
 }
 

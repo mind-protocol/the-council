@@ -22,7 +22,7 @@ class TestPartie(unittest.TestCase):
         self.ok({"camp": "noir", "coup": "viser", "id": "49000", "texte": "La reine est assise"})
         self.ok({"camp": "noir", "coup": "viser", "id": "200", "sert": "49000", "texte": "La porte est acquise"})
         for camp, rid in (("noir", "ost"), ("vert", "guet"), ("vert", "galeres"), ("noir", "barques")):
-            self.ok({"camp": camp, "coup": "demander", "id": rid, "lieu": "x", "nombre": 3})
+            self.ok({"camp": camp, "coup": "demander", "id": rid, "nombre": 3})
             self.ok({"camp": "arbitre", "coup": "arbitrer", "sur": rid, "verdict": "accorde", "motif": "test"})
 
     def tearDown(self):
@@ -139,7 +139,7 @@ class TestPartie(unittest.TestCase):
 
     def test_arbitrer_ne_date_pas_une_arrivee_dans_le_passe(self):
         self.ok({"camp": "arbitre", "coup": "tour"})
-        self.ok({"camp": "noir", "coup": "demander", "id": "cavaliers", "lieu": "x", "nombre": 200})
+        self.ok({"camp": "noir", "coup": "demander", "id": "cavaliers", "nombre": 200})
         self.refuse({"camp": "arbitre", "coup": "arbitrer", "sur": "cavaliers", "verdict": "accorde",
                      "arrive_tour": 1, "motif": "une arrivée d'hier"}, "déjà passé")
 

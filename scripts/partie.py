@@ -17,6 +17,7 @@ l'état et les livres, et la présentation d'un tour au format du manuel.
     python scripts/partie.py <partie> --piece vhagar
     python scripts/partie.py <partie> --grand-livre
     python scripts/partie.py <partie> --chercher galeres
+    python scripts/partie.py <partie> --coach etat/parties/_commentaire-mj.json [--voir]
 
 <partie> est un id (etat/parties/<id>.jsonl) ou un chemin. Le fichier est
 append-only : --jouer, --fichier et --tour ajoutent des lignes, rien d'autre.
@@ -44,6 +45,7 @@ import partie_marques  # noqa: E402  — ce que l'écran a le droit d'offrir
 import partie_gestes  # noqa: E402  — une carte posée sur une carte, en coup (v1)
 import partie_ascii  # noqa: E402  — la même vue, au terminal
 import partie_grille  # noqa: E402  — la même vue en grille : où l'on se touche
+import partie_coach  # noqa: E402  — le banc de touche, poussé aux sièges de la partie (C6)
 
 
 # ---------------------------------------------------------------- chercher
@@ -290,10 +292,15 @@ def main():
                     help="le dernier numero de ligne deja vu : ce qui suit est marque neuf")
     ap.add_argument("--geste", metavar="JSON",
                     help="un geste de l'écran : {quoi:poser|reprendre|jour, piece, sur, texte}")
+    ap.add_argument("--coach", metavar="ITEMS.json",
+                    help="pousser ce commentaire (liste d'items) au fil des sièges déclarés dans `sieges`")
+    ap.add_argument("--voir", action="store_true", help="avec --coach : imprimer les commandes sans les lancer")
     a = ap.parse_args()
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8") if hasattr(sys.stdout, "buffer") else sys.stdout
 
     p = Partie(chemin_de(a.partie))
+    if a.coach:
+        sys.exit(partie_coach.coach(p, a.coach, voir=a.voir))
     def cartes(part, camp, vu):
         """La vue de l'écran, ET ce qui vient d'être joué en clair.
 

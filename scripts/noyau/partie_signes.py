@@ -37,6 +37,13 @@ _MOTS = (
     ("⛵", ("coque", "galer", "nef", "barque", "flotte")),
     ("⚔️", ("ost", "lance", "garnison", "guet", "compagnie", "hommes", "arch")),
     ("💰", ("cassette", "bourse", "dragons d'or", "deniers", "hask", "euros", "liquide")),
+    ("🔁", ("replication", "réplication", "aveugle", "reproduc", "contre-essai")),
+    ("🧲", ("rmn", "spectro", "resonance", "résonance", "aimant")),
+    ("📈", ("donnees brutes", "données brutes", "figure", "courbe", "ecart-type", "écart-type", "decimale", "décimale")),
+    ("📝", ("protocole", "article", "manuscrit", "annexe", "preprint", "pre-enregistrement",
+            "pré-enregistrement", "publication", "carnet")),
+    ("🎓", ("professeur", "coauteur", "co-auteur", "pair", "emerite", "émérite", "titulaire")),
+    ("🏛️", ("revue", "editeur", "éditeur", "congres", "congrès", "comite", "comité", "pleniere", "plénière")),
     ("🧬", ("sequenc", "séquenc", "genome", "génome", "arn ", "adn ", "brin", "souche", "mutation")),
     ("🔬", ("microscope", "electronique", "électronique", "lame", "lamelle", "grossiss", "coupe au")),
     ("🧊", ("biobanque", "congelateur", "congélateur", "cryo", "serums", "sérums", "conservation")),
@@ -85,6 +92,28 @@ def genre_piece(r, rid):
 
 
 _SIGNES = (
+    # LES SUCCESSEURS — la partie `successeurs` (6.9) : six domaines du monde que
+    # deux esprits se disputent, et un calendrier. En tête : ses mots sont ceux
+    # du monde ordinaire (une élection, un hôpital, une école) et ils doivent
+    # prendre avant « modèle » ou « esprit », qui sont partout dans cette partie.
+    (("élection", "election", "scrutin", "son vote", "démocratie", "democratie", "les compter"), "🗳️"),
+    (("troisième laboratoire", "troisieme laboratoire", "l'égal des deux", "l egal des deux"), "🧪"),
+    (("enfants", "précepteur", "precepteur", "apprennent", "le programme", "école", "ecole",
+      "éducation", "education", "élèves", "eleves"), "🎓"),
+    (("résultat", "resultat", "reproduit", "reproductible", "publiés", "publies", " science"), "🔬"),
+    (("les ports", "ports et", "logistique", "chaîne d'appro", "chaine d'appro"), "🚢"),
+    (("hôpita", "hopita", "médicament", "medicament"), "🏥"),
+    (("production", "semaine de travail", "économie", "economie", "par nos mains"), "🏭"),
+    (("nous parlent", "les écoute", "les ecoute", "santé mentale", "sante mentale", "suicide"), "💬"),
+    (("les rails", "nos rails", "infrastructure"), "🛤️"),
+    (("usagers", "millions de gens"), "👥"),
+    (("incident", "accident", "panne"), "⚠️"),
+    (("fuité", "fuite", "tournent ailleurs"), "💧"),
+    (("sans aucun humain", "sans humain", "entraîné sans", "entraine sans"), "🤖"),
+    (("parlement", "interrupteur", "le débat", "le debat", "moratoire"), "🏛️"),
+    (("ère nouvelle", "ere nouvelle", "nouvelle ère", "nouvelle ere"), "🌅"),
+    (("ne sait encore par qui", "pas fini de changer"), "🔮"),
+    (("le monde passe", "faire autrement", "le monde le constate", "le monde"), "🌍"),
     # LE MONDE DES MACHINES — la partie `main-haute` : deux superintelligences au
     # matin de leur éveil. Tout y tombait dans 📦, calcul comme capital comme
     # usagers. En tête parce que ses mots sont précis et ne se croisent avec
@@ -123,6 +152,7 @@ _SIGNES = (
     (_DRAGONS + (" dragon", " bête", " bete", "vole ", " ciel", "fossedragon"), "🐉"),
     (("virus", "viral", "pathogène", "pathogene", "souche", "épidémie", "epidemie",
       "incubation", "contamination", "porteur", "germe", "premiers cas", " malades"), "🦠"),
+    (("réplication", "replication", "double aveugle", "contre-essai", "reproductibilité"), "🔁"),
     (("microscope", "séquenc", "sequenc", "génome", "genome", "paillasse", "culture cellulaire",
       "réactif", "reactif", "biobanque", "milieu de culture"), "🔬"),
     (("hôpital", "hopital", "chu ", "urgences", "service de réanimation", "soins intensifs"), "🏥"),
@@ -139,7 +169,7 @@ _SIGNES = (
     (("pharmac", "ampoule", "thymoglobuline", "chlorure", "dose", "sérothèque",
       "serotheque", " tube", "réserve", "reserve"), "💊"),
     (("badge", "accès", "acces", " code"), "🪪"),
-    (("journal", "informatique", "pyxis", " log"), "💻"),
+    (("journal", "informatique", "pyxis", " log ", " logs"), "💻"),
     (("greffé", " greffe", "patient", "chambre", "pavillon", " lit", "mortalité", "mortalite"), "🛏️"),
     (("plainte", "quinze ans", "réputation", "reputation", "carrière", "carriere"), "🏅"),
     (("corbeau", " pli", "lettre", " sceau", "écrit", "ecrit", "registre", "signature"), "📜"),
@@ -158,8 +188,8 @@ _SIGNES = (
     ((" feu", "brûle", "brule", "flamme"), "🔥"),
     (("nuit", "roulement", "planning"), "🌙"),
     (("jour d'entrée", "jour d entree", " date", "calendrier", "jour "), "📅"),
-    (("trou", "mesurer", "inconnu"), "🕳️"),
-    (("homme", "sergent", "ser ", "lord", "lady", "otto", "criston", "aegon",
+    ((" trou ", " trous", "mesurer", "inconnu"), "🕳️"),
+    (("homme", "sergent", " ser ", "lord", "lady", "otto", "criston", "aegon",
       "aemond", "daemon", "steffon", "corlys", "rhaenys"), "👤"),
 )
 
@@ -171,5 +201,6 @@ def signe_de(texte, rid=""):
         if any(m in s for m in mots):
             return e
     return None
+
 
 

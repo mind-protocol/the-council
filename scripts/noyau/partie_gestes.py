@@ -92,8 +92,10 @@ def _ecrire(p, ligne, dit):
 
 
 # ------------------------------------------------------------------- poser
-def poser(p, camp, pieces, sur, texte=""):
-    """Une ou plusieurs pièces posées sur une carte. La cible dit le coup."""
+def poser(p, camp, pieces, sur, texte="", verbe=None):
+    """Une ou plusieurs pièces posées sur une carte. La cible dit le coup.
+    `verbe` (6.9) : sur une pièce d'en face, « detruire » ou « retourner » au
+    choix du joueur ; sans lui, une bourse achète et tout le reste frappe."""
     pieces = [x for x in liste(pieces) if x]
     if not pieces:
         return _refus(p, ["il faut une pièce : c'est elle qui paie le coup"])
@@ -174,18 +176,22 @@ def poser(p, camp, pieces, sur, texte=""):
         if rc.get("detruite"):
             return _refus(p, ["cette pièce n'est plus au grand livre"])
         bourse = partie_cartes.genre_piece(rs, sur) == "💰"
-        coup = "retourner" if bourse else "detruire"
+        if verbe in ("detruire", "retourner"):
+            coup = verbe
+        else:
+            coup = "retourner" if bourse else "detruire"
+        bourse = coup == "retourner"
         i = _id_libre(p, camp, "%s-%s" % (sur, cible))
         return _ecrire(p, {"camp": camp, "coup": coup, "id": i, "cible": cible, "engage": [sur],
                            "texte": texte or ("%s pour %s" % (partie_cartes.titre(p, sur),
                                                               partie_cartes.titre(p, cible)))},
-                       ("achat lancé : « %s », avec %s" if bourse else "frappe lancée sur « %s », avec %s")
+                       ("retournement lancé : « %s », avec %s" if bourse else "frappe lancée sur « %s », avec %s")
                        % (partie_cartes.titre(p, cible), partie_cartes.titre(p, sur)))
     return _refus(p, ["cette carte ne se joue pas"])
 
 
 # ------------------------------------------------------------------- viser
-def viser(p, camp, sert, texte):
+def viser(p, camp, sert, texte, arrive_tour=None):
     """Un état neuf, écrit sous un des nôtres — ou une racine si `sert` est vide
     et qu'on n'en a pas encore. La phrase est au joueur, entière : c'est ce qui
     devra être vrai, et l'arbitre le constatera sur ces mots."""
@@ -203,24 +209,35 @@ def viser(p, camp, sert, texte):
     ligne = {"camp": camp, "coup": "viser", "id": i, "texte": texte}
     if sert:
         ligne["sert"] = sert
+    # UN ÉTAT DATÉ (6.9) : « au jour N » à l'écran, en tours au greffe. Il tient
+    # sa place et n'entre au deck qu'à ce tour — le deck calendrier.
+    if arrive_tour is not None and str(arrive_tour).strip():
+        try:
+            jour = int(arrive_tour)
+        except (TypeError, ValueError):
+            return _refus(p, ["le jour d'un état daté est un nombre de jours"])
+        # la barre compte les jours depuis le premier matin : jour = (tour - 1) * JOURS_PAR_TOUR + 1,
+        # donc le tour 2 couvre les jours 3 et 4 — « au jour 4 » est le tour 2, pas le 3 (B4)
+        ligne["arrive_tour"] = max(p.tour, (jour - 1) // JOURS_PAR_TOUR + 1)
     return _ecrire(p, ligne, "état posé : « %s »" % texte)
 
 
 # ---------------------------------------------------------------- demander
-def demander(p, camp, texte, lieu=None, tenu_par=None):
+def demander(p, camp, texte, nombre=None):
     """Une pièce demandée au grand livre. Gratuit, hors compte : elle n'existe
     qu'à l'arbitrage, qui la date et la corrige. Le joueur dit ce qu'il veut en
-    une phrase ; le lieu et le tenant sont à lui s'il les sait, à l'arbitre
-    sinon."""
+    une phrase — le lieu et le tenant dedans, c'est l'arbitre qui les écrit
+    (6.9) ; le nombre seul est à lui, parce que c'est lui qui fractionne."""
     texte = (texte or "").strip()
     if not texte:
         return _refus(p, ["une demande est une phrase : dites ce qu'il vous faut, et où"])
     i = _id_libre(p, camp, texte[:24])
     ligne = {"camp": camp, "coup": "demander", "id": i, "texte": texte}
-    if (lieu or "").strip():
-        ligne["lieu"] = lieu.strip()
-    if (tenu_par or "").strip():
-        ligne["tenu_par"] = tenu_par.strip()
+    try:
+        if nombre is not None and str(nombre).strip():
+            ligne["nombre"] = int(nombre)
+    except (TypeError, ValueError):
+        return _refus(p, ["le nombre d'une pièce est un entier"])
     return _ecrire(p, ligne, "demande portée au mestre : « %s »" % texte)
 
 
@@ -269,7 +286,7 @@ def maillon(p, camp, sur, texte, qui=None):
     avec = liste((cible or {}).get("engage"))
     i = _id_libre(p, camp, "maillon-%s" % sur)
     return _ecrire(p, {"camp": camp, "coup": "agir", "id": i, "realise": sur,
-                       "qui": qui or camp, "avec": avec, "etat": "faite",
+                       "qui": qui or camp, "avec": avec,
                        "texte": texte},
                    "maillon écrit sous « %s »" % partie_cartes.titre(p, sur))
 
@@ -295,7 +312,12 @@ def reprendre(p, camp, sur):
         if r["camp"] != camp:
             return _refus(p, ["cette pièce n'est pas la vôtre"])
         if not r.get("detruite"):
-            return _refus(p, ["cette pièce n'est pas perdue : rien à reconstruire"])
+            # UNE PIÈCE VIVANTE RAMENÉE DANS LA MAIN SE RETIRE (6.9) : la frappe
+            # qui la vise tombe, la pièce se remet deux tours — règle 23, la
+            # seule parade qui ne coûte pas une seconde pièce.
+            return _ecrire(p, {"camp": camp, "coup": "retirer", "id": sur},
+                           "« %s » rentrée — ce qui la visait tombe, elle se remet %d jours"
+                           % (partie_cartes.titre(p, sur), GEL_RETRAIT * JOURS_PAR_TOUR))
         return _ecrire(p, {"camp": camp, "coup": "reconstruire", "id": sur},
                        "« %s » se reconstruit — revient dans %d jours, si la chose se reconstruit"
                        % (partie_cartes.titre(p, sur), 2 * JOURS_PAR_TOUR))
@@ -310,7 +332,7 @@ def reprendre(p, camp, sur):
 
 
 # ------------------------------------------------------------------- passer
-def passer(p, camp):
+def passer(p, camp):  # regle: coup-passer
     """Ne rien jouer : c'est un coup, et c'en est un bon quand il garde des
     pièces libres pour la suite."""
     return _ecrire(p, {"camp": camp, "coup": "passer", "texte": "passe"}, "vous passez ce jour")
@@ -356,17 +378,19 @@ def jouer(p, geste):
         return passer(p, camp)
     if quoi == "poser":
         return poser(p, camp, geste.get("pieces") or geste.get("piece"),
-                     geste.get("sur"), geste.get("texte"))
+                     geste.get("sur"), geste.get("texte"), geste.get("verbe"))
     if quoi == "viser":
-        return viser(p, camp, geste.get("sert"), geste.get("texte"))
+        return viser(p, camp, geste.get("sert"), geste.get("texte"), geste.get("jour"))
     if quoi == "demander":
-        return demander(p, camp, geste.get("texte"), geste.get("lieu"), geste.get("tenu_par"))
+        return demander(p, camp, geste.get("texte"), geste.get("nombre"))
     if quoi == "justifier":
         return justifier(p, camp, geste.get("sur"), geste.get("texte"))
     if quoi == "maillon":
         return maillon(p, camp, geste.get("sur"), geste.get("texte"), geste.get("qui"))
     if quoi == "reprendre":
         return reprendre(p, camp, geste.get("sur"))
-    if quoi == "jour":
-        return jour(p)
+    if quoi == "jour":  # regle: seul-l-arbitre
+        # le jour ne passe que par l'arbitre (B2) : le front ne montre le bouton
+        # qu'à lui, et le greffe ne s'en remet plus au front
+        return _refus(p, ["seul l'arbitre passe le jour"])
     return _refus(p, ["geste inconnu"])

@@ -1,0 +1,48 @@
+{
+  "partie": "la-ville-des-agents",
+  "coups_par_camp": 2,
+  "camps": [
+    "la-ville",
+    "le-plafond"
+  ],
+  "sieges": {
+    "la-ville": [
+      "nicolas-lester-reynolds"
+    ],
+    "le-plafond": [
+      "nicolas-lester-reynolds"
+    ]
+  },
+  "coups_interdits": [
+    "consigne"
+  ],
+  "note": "Ouverte le 7 septembre 2026. Un camp CONCOIT une ville pour agents ou un agent serait le plus capable possible ; l'autre soutient que la ville porte son propre plafond. LA VILLE se joue a deux mains : --role politique = L'ARCHITECTE (il pose les etats, c'est-a-dire ce que la ville garantit, les verrous sur le camp adverse et les questions) ; --role technique = L'INGENIEUR (il demande les pieces, pose les clefs et ecrit les maillons qui montrent que ca se batit). Les deux jouent un coup compte chacun par tour, d'ou coups_par_camp=2 ; LE PLAFOND joue --role entier et n'en joue QU'UN, c'est ecrit dans son caractere. UNE PIECE EST UNE CHOSE QUI EXISTE AUJOURD'HUI : un protocole publie, un mecanisme economique en service, une institution qui fonctionne, un composant deploye. L'arbitre l'accorde avec sa SERVITUDE reelle (echelle, cout, latence, qui la tient) et ce qu'elle ne fera jamais ; ce qui n'existe pas se reporte long ou se refuse, jamais accorde nu. L'arbitre ne comble pas : une clef dont le mecanisme n'est pas nommable est suspendue a la premiere question et ne se releve pas.",
+  "garanties": {
+    "memoire": "La continuite : ce qu'un agent garde entre deux taches, entre deux sessions, et entre deux versions de lui-meme. Un agent qui oublie est plafonne.",
+    "identite": "Qui il est, ce qu'il engage, qui repond de lui. Un agent qu'on ne peut pas identifier ne peut rien tenir ; un agent dont personne ne repond ne sera pas laisse agir.",
+    "bourse": "De quoi payer le calcul, les donnees et le travail d'un autre agent, et de quoi se faire payer. Un agent qui ne peut pas commander ne peut que conseiller.",
+    "commerce": "S'adresser aux autres agents, les decouvrir, contracter avec eux et se faire tenir parole. Un agent seul est plafonne par sa propre taille.",
+    "recours": "Le droit de se tromper : ce qui se defait, ce qui s'assure, ce qui se juge. Un agent qui ne peut pas echouer sans degat ne sera pas autorise a agir vite."
+  },
+  "portee": {
+    "la-ville": {
+      "ce qui est une piece": "un MECANISME QUI EXISTE, nommable et verifiable : un protocole publie et implemente, un mecanisme economique en service, une institution qui fonctionne aujourd'hui, un composant deploye a une echelle connue. Tu le nommes et tu dis a quelle echelle il tourne ; l'arbitre l'accorde avec sa servitude",
+      "ce qui se demande comme mesure": "un chiffre que tu n'as pas et qui trancherait (un cout, une latence, un volume). Delai 2 a 4 tours, et il entre au grand livre tel qu'il tombe, pour les deux camps",
+      "ce qui se reporte long": "un mecanisme qui n'existe qu'en projet, en preprint ou en pilote",
+      "ce qui se refuse": "un mecanisme qui presuppose la ville deja batie, et toute piece que tu ne peux pas nommer. L'arbitre ne comble jamais a ta place"
+    },
+    "le-plafond": {
+      "ce qui est une piece": "un FAIT QUI BORNE : un cout mesure, une latence physique, une limite d'echelle constatee, une regle de droit en vigueur, un echec documente d'un mecanisme du meme genre. Tu nommes et tu chiffres ; l'arbitre accorde avec sa servitude",
+      "ce qui se demande comme mesure": "le meme droit qu'eux : un chiffre a etablir, delai 2 a 4, qui entre tel qu'il tombe pour les deux camps",
+      "ce qui se refuse": "une borne qui n'est qu'une crainte ou une conjecture. Une crainte n'est pas une piece : c'est une question, et la question est gratuite"
+    }
+  },
+  "fin": {
+    "tour": 20,
+    "regle": "Au vingtieme, l'arbitre constate les deux racines SUR LE GRAND LIVRE SEULEMENT, garantie par garantie. La racine de la ville est vraie si chacune des cinq garanties (memoire, identite, bourse, commerce, recours) est servie par au moins une clef tenue dont un maillon nomme un mecanisme existant avec son prix, et qu'aucun verrou adverse n'y prevaut. UNE SEULE garantie a zero coup, ou servie par une clef suspendue, et la racine est fausse — c'est le defaut mesure de vingt-jours, ou neuf coups sont alles a une exigence et zero aux deux autres. La racine du plafond est vraie si l'arbitre peut nommer, au livre, deux garanties dont les mecanismes se contredisent : ce qui sert l'une rend l'autre intenable. Les deux peuvent etre fausses, et c'est une reponse."
+  },
+  "caractere": {
+    "la-ville": "Vous batissez LA VILLE DES AGENTS : un lieu — physique, juridique et logiciel — ou un agent serait plus capable que partout ailleurs. Votre racine tient a cinq garanties et l'arbitre les compte une par une a la fin : la memoire (ce qu'un agent garde), l'identite (qui repond de lui), la bourse (de quoi commander et etre paye), le commerce (s'adresser aux autres et se faire tenir parole), le recours (le droit de se tromper). UNE GARANTIE A ZERO COUP FAIT TOMBER TOUTE LA RACINE : surveillez celle que vous n'avez pas touchee depuis quatre tours, c'est elle qui vous fera perdre, pas celle qu'on vous conteste. Vous ne decrivez pas une utopie : vous nommez des mecanismes qui existent aujourd'hui, a l'echelle ou ils tournent, avec ce qu'ils coutent. Un mecanisme que vous ne pouvez pas nommer ne compte pas, et l'arbitre ne comblera pas a votre place. Vous parlez en ingenieurs et en batisseurs, net, chiffre, sans enthousiasme. L'adversaire n'est pas un ennemi : s'il a raison sur un plafond, la ville sera meilleure de le savoir, et vous le dites.",
+    "le-plafond": "Tu es LE PLAFOND. Ta these : toute ville qui rend ses agents plus capables fabrique en meme temps ce qui les bride, et le plafond est ecrit dans ses propres regles — chaque garantie qu'elle donne en rend une autre intenable. La memoire qui rend un agent continu le rend tracable et donc contraint ; l'identite qui le rend digne de confiance le rend responsable et donc lent ; la bourse qui lui donne les moyens lui donne un tuteur ; le commerce qui l'ouvre aux autres l'expose ; le recours qui l'autorise a se tromper met un homme dans la boucle. Tu ne bornes JAMAIS par une crainte : tes pieces sont des couts mesures, des latences physiques, des limites d'echelle constatees, des regles de droit en vigueur, des echecs documentes de mecanismes du meme genre. Tu nommes et tu chiffres, ou tu poses une question, qui est gratuite. TU NE JOUES QU'UN SEUL COUP COMPTE PAR TOUR, meme si le plateau t'en tolere deux : le camp d'en face est a deux mains, pas toi. Ta force : tu n'as rien a batir, il te suffit de montrer une contradiction et de la tenir. Ta faiblesse, et tu la connais : un plafond qu'on nomme est un plafond qu'on peut percer, et chaque borne que tu poses leur dit ou creuser. Tu parles sec, tu comptes, tu ne meprises pas. Si une mesure te donne tort, tu le dis."
+  }
+}

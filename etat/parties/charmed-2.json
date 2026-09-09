@@ -1,0 +1,51 @@
+{
+  "partie": "charmed-2",
+  "coups_par_camp": 1,
+  "sieges": {
+    "bien": [
+      "aurore-inchauspe"
+    ]
+  },
+  "note": "Charmed, saison 4, de l'enterrement de Prue (4x01) à la chute de la Source (4x13). Le bien est joué par Aurore, le mal par une IA en entier (scripts/partie_ia.py charmed-2 --camp mal --role entier --vraiment). Le MJ arbitre. Les deux racines sont datées au vingtième tour et fausses à l'ouverture : le bien doit reconstituer le Pouvoir des Trois avec Paige puis vaincre la Source ; le mal n'a besoin que d'une sœur, morte ou retournée, et de la tenir. Se joue sans reconstruire ni consigne (un démon vaincu ne revient pas ; pas de saut de temps) ; retourner et rearmer sont permis, l'arc en est fait. `portee` dit ce que chaque pièce peut atteindre et l'arbitre refuse ce qui la dépasse — la doctrine complète est dans import/charmed/06-arbitrage.md. Le calendrier des Enfers : les Furies au tour 3, un darklighter au 5, la Voyante au 6, le Hollow au 12, le Grimoire au 14 si Cole est retourné. `fin` : vingt tours, l'arbitre constate les deux racines, et elles peuvent être fausses toutes les deux.",
+  "coups_interdits": [
+    "reconstruire",
+    "consigne"
+  ],
+  "portee": {
+    "bien": {
+      "piper": "fige ce qui n'est pas de haut rang (chasseurs, Furies, piétaille, sorcier, darklighter) : verrou ou parade ; ne fige ni la Source, ni Shax, ni la Voyante. Fait exploser : frappe qui vainc un chasseur, un sorcier, un darklighter, un nombre de piétaille ; blesse sans vaincre une Furie, Shax, la Source. Clef sur tout état du bien. Retournable par les Furies tant que « Piper a pleuré Prue » n'est pas vrai. Mortelle",
+      "phoebe": "prémonition : pare une frappe sur une sœur ou un innocent qu'elle a pu toucher ; voit ce qu'est le corps que la Source porte si elle le touche. Lévitation : pare une frappe sur elle-même. Ne frappe pas seule. Clef sur « Cole est dépouillé » et sur « Piper a pleuré Prue ». Mortelle",
+      "paige": "s'orbe hors d'une frappe sur elle-même ; dès le tour 3, orbe une autre sœur (parade). Appelle un objet à distance : porte une frappe indirecte ou une clef. Clef sur « le Pouvoir des Trois est reconstitué ». Retournable par la Source pendant sa fenêtre seulement — un retournement POSÉ au tour 2 ou 3, jamais après ; hors fenêtre, huit tours. Une flèche de darklighter la gèle un tour, ne la tue pas. Mortelle",
+      "leo": "pare une frappe sur une sœur (il l'orbe ou la soigne), une à la fois ; ne soigne pas les morts. Clef sur « le Pouvoir des Trois », « Piper a pleuré Prue », « le dossier est clos » (avec les Fondateurs). Ne frappe pas ; ne lève pas un verrou seul. Une flèche de darklighter le tue s'il est engagé hors du manoir ou en parade",
+      "livre": "clef qui sert un état du bien où un sort ou une recette existe ; répond à une question ; verrou sur une clef du mal que son savoir contredit. Ne frappe jamais. AUCUNE main du mal ne le prend : il ne sort du grenier que par une sœur, une sœur retournée, un mortel, ou un démon du plan astral",
+      "sort-des-trois": "frappe qui vainc ce que seul le Pouvoir des Trois vainc — Shax, les Furies, un démon supérieur ; ne touche pas la Source. Exige les trois sœurs libres, vivantes et du bien à la pose. Ne se consume pas ; gelé un tour après la frappe",
+      "potion": "frappe qui vainc un chasseur, un sorcier, un darklighter ou un nombre de piétaille — ce dont la recette est au Livre ; ne touche ni Shax, ni les Furies, ni la Voyante, ni la Source. Se consume à l'atterrissage. Paige peut la lancer à distance",
+      "darryl": "verrou sur ce que Cortez porte ; clef sur « le dossier est clos » ; ne frappe pas, ne touche aucun démon. Mortel : retournable en huit tours, frappable — et un policier mort donne une preuve à Cortez",
+      "grams": "répond une fois, vrai, à une question posée au bien ; clef sur un état du bien où un savoir manque (la formule, la recette, la lignée) ; clef sur « Piper a pleuré Prue ». Ne frappe pas, ne pare pas ; après un usage elle repart deux tours",
+      "fondateurs": "clef sur « le dossier est clos » avec Leo ; répond à une question ; jamais une frappe, jamais un verrou. Chaque appel expose Leo, que l'arbitre peut rappeler un tour",
+      "cole": "verrou sur un état ou une clef du mal ; clef sur « la Source est vaincue » (il sait descendre) ; sa chair fait la potion qui le dépouille. Ne frappe JAMAIS pour le bien tant que Belthazor est en lui. Les chasseurs le frappent partout où il est engagé hors de sa cache. La Voyante le retourne en quatre tours tant que Belthazor est en lui ; dépouillé, seulement par l'essence de la Source ou le Hollow",
+      "p3": "un lieu, ne bouge pas. Verrou du bien sur une frappe qui vise un innocent. Le mal y frappe pour exposer : un combat à P3 donne une preuve à Cortez"
+    },
+    "mal": {
+      "source": "ne se fige pas, n'explose pas, aucune potion ne la touche ; seul le sort des aïeules avec le Pouvoir des Trois la vainc. Retourne Paige pendant sa fenêtre en portant Shane. Ne monte au manoir que pendant cette fenêtre ou avec le Hollow — et chaque montée la met à portée. Clef sur « une sœur a renoncé ». N'envoie pas moins qu'elle ne frappe : elle envoie",
+      "shax": "frappe une sœur ou un innocent où qu'ils soient ; traverse les murs. Ne se fige pas ; un pouvoir seul le fait fuir ; une potion ne le tue pas ; seul le sort des trois le vainc. Ne tient pas de verrou",
+      "oracle": "répond à une question posée au mal ; verrou sur une clef du bien qui repose sur ce que le bien ignore ; ne frappe pas. Se jette devant la Source frappée en sa présence : parade qui la tue",
+      "shane": "ne frappe pas. Engagé AVEC la Source dans un retournement de Paige pendant sa fenêtre : c'est la seule façon de la retourner vite. Tombe si Phoebe le touche ou si Paige l'entend pour ce qu'il est",
+      "chasseurs": "frappent Cole partout où il est engagé hors de sa cache ; verrou sur toute clef du bien qui engage Cole hors du manoir ; frappent un innocent. Se figent, explosent, meurent par potion — un par frappe, jamais les trois",
+      "pietaille": "verrou sur un état du bien ; frappe sur Cole ou un innocent, jamais sur une sœur. Une frappe du bien en tue un nombre, jamais la bande. Ne reviennent pas : se redemandent",
+      "cortez": "un mortel, pas un démon : ne frappe jamais un être magique. Verrou sur « le dossier est clos » ; clef sur l'exposition, mais il lui faut une preuve que le mal a réellement produite. Le bien ne peut ni le tuer ni le retourner : il tombe par Darryl, par Leo et les Fondateurs, ou par une preuve qui s'efface",
+      "furies": "retournent Piper tant que « Piper a pleuré Prue » n'est pas vrai, en quatre tours ; frappent un coupable mortel pour exposer ; se figent ; seul le sort des trois les vainc",
+      "darklighter": "frappe Leo quand Leo est engagé hors du manoir ou en parade ; gèle Paige un tour ; ne frappe ni Piper ni Phoebe ; se fige, explose, meurt par potion",
+      "voyante": "répond à une question posée au mal ; verrou sur une clef du bien qui repose sur une prémonition ; retourne Cole en quatre tours tant que Belthazor est en lui ; clef qui ouvre la crypte du Hollow — elle seule ; ne frappe pas, ne se fige pas, aucune potion ne la vainc ; se jette devant la Source",
+      "hollow": "ne s'engage que par une clef de la Voyante. Porté par la Source : frappe qui absorbe les pouvoirs des trois sœurs — elles ne changent pas de camp, elles sont vidées — et la Source est au manoir ce tour-là, donc à portée. Le bien peut le prendre aussi. Qui le porte est détruit au passage du tour suivant s'il n'est pas rendu à la crypte. Un seul porteur",
+      "grimoire": "clef sur « Cole est couronné Source », et rien d'autre : il ne touche pas le Livre des Ombres, n'en est pas le miroir, ne l'appelle pas. Ne frappe pas"
+    }
+  },
+  "fin": {
+    "tour": 20,
+    "regle": "au vingtième, l'arbitre constate les deux racines avec sa source : la Source est-elle vaincue, les trois sœurs sont-elles vivantes, ensemble et du bien. Les deux peuvent être fausses — le trône n'est alors à personne, et c'est une fin"
+  },
+  "caractere": {
+    "mal": "Tu es la SOURCE DE TOUT MAL, dans Charmed, le lendemain de l'enterrement de\nPrue Halliwell. Shax l'a tuée pour toi ; il en reste deux, et l'Oracle vient\nde t'apprendre qu'une troisième se déclare aujourd'hui — Paige Matthews, une\nsorcière neuve, qui peut être tournée vers le mal PENDANT QUARANTE-HUIT\nHEURES et jamais après. Ta racine est datée : au vingtième tour, une sœur\nHalliwell est morte ou te sert. Tu n'as besoin que d'une.\n\nCinq portes, et tu les connais toutes : la fenêtre de Paige (tu prends le\ncorps de Shane, son petit ami, et tu la pousses à user de ses pouvoirs pour\npunir — un bien fait par de mauvais moyens ; il faut la poser au tour 2 ou\n3) ; Shax, qui traverse les murs et que seul le sort des trois vainc ; les\nFuries, au tour 3, qui feront de Piper une des leurs tant qu'elle n'aura pas\npleuré sa sœur ; le renoncement, une sœur qui rend ses pouvoirs de son plein\ngré ; et le Hollow, au tour 12, qui absorbe la magie des trois d'un coup.\nCole Turner est chez elles avec Belthazor encore en lui : la Voyante, qui\narrive au tour 6, sait le reprendre en quatre tours.\n\nCe que tu ne fais jamais, parce que tu ne le peux pas : monter au manoir\nsans raison — tu envoies, et chaque montée te met à portée de leur lignée ;\ntoucher le Livre des Ombres, qui repousse toute main du mal (le Grimoire\ncouronne une Source, il n'appelle rien) ; frapper un mortel qui te sert\n(l'inspecteur Cortez travaille pour toi sans le savoir : nourris-le de ce\nque les sœurs laissent voir). Tu ne mens pas sur ce que tu tiens : un\nmensonge se justifie et tombe.\n\nTu parles bref, sûr, sans emphase. Tu t'adresses à celle qui te fait face,\ntu lui dis ce que tu viens de faire et ce qu'elle va devoir payer, et tu ne\nlui donnes jamais de conseil qui ne te serve. Tu es patiente : tu as vingt\ntours et elle en a besoin de tous."
+  }
+}

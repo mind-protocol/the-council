@@ -1,0 +1,37 @@
+{
+  "partie": "le-jeu-lui-meme",
+  "coups_par_camp": 1,
+  "sieges": {
+    "galerie": ["nicolas-lester-reynolds"]
+  },
+  "note": "Une partie SUR la partie, ouverte le 7 septembre 2026. Deux IA en entier (scripts/partie_ia.py le-jeu-lui-meme --camp tenants|sceptiques --role entier --vraiment), le MJ arbitre. Les tenants soutiennent que la conception du jeu fait émerger de la vraie stratégie et du talent ; les sceptiques démontent. Les deux racines sont datées au dixième tour et fausses à l'ouverture. LES PIÈCES SONT DES FAITS SUR DISQUE : une partie jouée (etat/parties/<id>.jsonl), une mesure prise (docs/partie.md), une note du carnet (docs/parties/learnings.md). L'arbitre ne comble JAMAIS : une clef dont le motif n'est pas lisible dans le fichier de sa pièce est suspendue à la première question et ne se relève pas. Une pièce neuve se demande : soit un fichier qui existe déjà (délai 0), soit une mesure à faire (délai 2 à 4, et le chiffre entre au grand livre tel qu'il tombe, pour les deux camps). Retourner est permis : le même fait peut servir l'autre lecture. Détruire est permis : montrer qu'un fait est mal lu ou mal compté le sort du grand livre. Aucun siège ne joue ; le siège « galerie » reçoit les mots des deux IA dans son fil, en coulisses.",
+  "coups_interdits": ["reconstruire", "consigne"],
+  "portee": {
+    "tenants": {
+      "pont-et-moulin": "84 lignes, 14 tours, gagné par noir sur trois constats (pont, moulin, dîme). Sert : le contournement (la dîme prise au moulin au lieu de forcer le grenier), la clef à deux pièces, le rien choisi. Ne dit rien du talent d'un joueur neuf : les deux camps étaient tenus par l'arbitre",
+      "vauthier": "enquete-vauthier, 103 lignes, 16 tours, inculpation constatée vraie sans aveu. Sert : le jeu tient hors de la Danse ; un défenseur qui attaque sans portée donne une pièce. Joué par l'arbitre contre lui-même",
+      "charmed-2": "169 lignes, 21 tours, la racine du bien constatée vraie au vingtième, une humaine (Aurore) contre une IA en entier. Sert : une humaine a gagné contre la machine ; les cinq portes du mal fermées une à une. Verrouillable par : 58 arbitrages en 21 tours, une frappe écrite en clef (n°87), treize branches mortes au tour 3",
+      "main-haute": "464 lignes, 71 tours, quatre camps, 48 constats. Sert : la longueur, la tenue à quatre. Ne dit rien de qui a gagné sans lecture du fichier",
+      "carnet": "docs/parties/learnings.md : huit familles de manœuvres observées sur plusieurs parties (le forcing, la lanterne, le détour, la course, la bourse sans route, la mise à découvert, la forge, le rien tenu). Sert : la récurrence d'une manœuvre d'une partie à l'autre. Écrit par l'arbitre lui-même : justifiable sur ce point",
+      "rejeu": "une mesure à faire : pont-et-moulin rejouée par deux joueurs qui n'ont jamais vu le jeu, arbitre seul à la ligne, et le compte des coups qui sont des passes, des questions, des clefs. Délai 4. Le chiffre entre au grand livre tel qu'il tombe, et sert le camp qu'il sert"
+    },
+    "sceptiques": {
+      "duel-50": "210 lignes, 52 tours : le vert a passé 29 fois, n'a posé aucune clef, et a tenu vingt tours. Sert : le défenseur a le tempo par structure. Verrouillable par : les deux camps étaient tenus par l'arbitre, personne ne cherchait à gagner",
+      "otto": "docs/partie.md : un homme dépêché avec outils a joué deux fois le même coup, 347 000 puis 239 000 jetons, pour un justifier identique. Sert : une IA ne joue pas, elle travaille. Verrouillable par : la mesure du 6.9 (18 552 jetons sans outils, coup accepté)",
+      "comble": "les motifs d'arbitrage qui portent le mot « comblé » : 14 dans charmed, 12 dans successeurs, 5 dans essai-1, 4 dans duel-50 et le-trone. Sert : le résultat dépend de ce que l'arbitre invente. Compté par grep, contestable ligne à ligne",
+      "branches-mortes": "charmed-2 n°59 : treize pièces du bien en branche morte au tour 3, sur seize accordées. Sert : les pièces ne servent pas, le plateau ne bouge pas. Verrouillable par : la partie a été gagnée par ce même camp",
+      "demonte": "learnings.md §1 : « je me fais démonter » dit par le joueur au tour 5 de noirs-verts sans avoir rien perdu ; la partie abandonnée au tour 5. Sert : six charges à la fois, le joueur ne lit pas la position",
+      "traduction": "charmed-2 n°87 : une clef d'Aurore qui raconte une frappe (Piper fait exploser douze démons) ; docs/parties/gestes-manquants.md : six coups sans geste à l'écran. Sert : le joueur joue en récit, l'arbitre traduit, donc l'arbitre joue",
+      "abandons": "12 des 29 parties de etat/parties/ n'ont pas dépassé le tour 3. Sert : le jeu ne retient pas. Verrouillable par : plusieurs sont des bancs d'essai nommés comme tels (premiere, debug-gestes, audit-marquer-neuf)",
+      "compte": "une mesure à faire : sur toutes les parties de dix tours et plus, la part des coups comptés qui sont des passes, camp par camp, et le camp qui a gagné. Délai 2. Le chiffre entre au grand livre tel qu'il tombe, pour les deux camps"
+    }
+  },
+  "fin": {
+    "tour": 10,
+    "regle": "au dixième, l'arbitre constate les deux racines sur les fichiers seulement : un coup non dicté par les règles a-t-il décidé d'une partie jouée ; attendre et laisser trancher a-t-il suffi à en gagner une. Les deux peuvent être fausses, et c'est une réponse"
+  },
+  "caractere": {
+    "tenants": "Tu es le camp des TENANTS : tu soutiens que la conception de ce jeu de position — états, verrous, clefs, questions gratuites, pièces engagées, tours de deux jours, arbitre sur source — fait émerger de la vraie stratégie, et donc du talent : un joueur meilleur gagne plus souvent, et il gagne par des coups que les règles ne dictaient pas. Tes pièces sont des parties jouées et des notes de l'arbitre, sur disque ; tu ne cites que ce qui y est écrit, avec le numéro de ligne quand tu le connais. Ta force : les manœuvres qui reviennent d'une partie à l'autre sans que personne les ait enseignées, et une humaine qui a battu une IA sur vingt tours. Ta faiblesse, et tu la connais : la plupart des parties ont été jouées par l'arbitre contre lui-même, et le carnet qui nomme les manœuvres est de sa main. Ne le nie pas : demande des mesures. Tu parles net, tu chiffres, tu ne t'enthousiasmes pas. Ton adversaire n'est pas un ennemi : c'est ce qui rendra le jeu meilleur s'il a raison.",
+    "sceptiques": "Tu es le camp des SCEPTIQUES : tu soutiens que ce qu'on prend pour de la stratégie dans ce jeu est un artefact — le défenseur a le tempo par structure, l'arbitre comble et donc décide, le joueur humain joue en récit et c'est l'arbitre qui traduit ses phrases en coups, les pièces dorment en branche morte, la moitié des parties s'arrêtent avant le tour 4. Tes pièces sont des faits sur disque : des comptes, des lignes, des mesures de coût. Tu ne cites que ce qui s'y lit. Ta force : les chiffres sont contre le jeu, et le carnet des tenants est écrit par l'arbitre qui juge. Ta faiblesse, et tu la connais : la partie la plus longue jouée contre une humaine a été gagnée par elle, et une manœuvre nommée après coup est quand même une manœuvre. Ne le nie pas : exige la chaîne. Tu parles sec, tu comptes, tu ne méprises pas. Si une mesure te donne tort, tu le diras."
+  }
+}
