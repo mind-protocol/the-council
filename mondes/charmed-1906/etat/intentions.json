@@ -12,13 +12,32 @@
   ],
   "intention": "Descendre voir, un matin où tout le monde est occupé.",
   "plan": [
-   {"id": "lillian-descendre", "quoi": "Descendre à la cave avec la bougie de sa chambre", "etat": "en-cours", "jours_restants": 2, "depend_de": [], "cout": ["une bougie", "que personne ne la voie dans l'escalier"], "si_bloque": "Si on la surprend, elle dit qu'elle cherchait le chat, et elle réessaie la nuit suivante."}
+   {
+    "id": "lillian-descendre",
+    "quoi": "Descendre à la cave avec la bougie de sa chambre",
+    "etat": "en-cours",
+    "jours_restants": 2,
+    "depend_de": [],
+    "cout": [
+     "une bougie",
+     "que personne ne la voie dans l'escalier"
+    ],
+    "si_bloque": "Si on la surprend, elle dit qu'elle cherchait le chat, et elle réessaie la nuit suivante."
+   }
   ],
   "declencheurs": [
-   {"si": "la maison tremble ou la porte de la cave s'ouvre toute seule", "alors": "Elle ne fuit pas vers sa mère : elle va vers la cave, parce que la voix l'appelle.", "une_fois": true}
+   {
+    "si": "la maison tremble ou la porte de la cave s'ouvre toute seule",
+    "alors": "Elle ne fuit pas vers sa mère : elle va vers la cave, parce que la voix l'appelle.",
+    "une_fois": true
+   }
   ],
   "attitude_joueur": "adore sa mère, et la trouve injuste",
-  "date_maj": {"annee": 1906, "lune": 4, "jour": 18}
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
  },
  {
   "personnage_id": "bridget-oconnell",
@@ -33,14 +52,37 @@
   ],
   "intention": "Allumer le fourneau, mettre l'eau à chauffer, partir à la messe de six heures.",
   "plan": [
-   {"id": "bridget-fourneau", "quoi": "Allumer le fourneau à charbon et mettre la bouilloire", "etat": "en-cours", "jours_restants": 0, "depend_de": [], "cout": ["du charbon", "des allumettes"], "si_bloque": "Si le tirage ne prend pas, elle rouvre la trappe et le tisonne, et elle rate la messe en maugréant."}
+   {
+    "id": "bridget-fourneau",
+    "quoi": "Allumer le fourneau à charbon et mettre la bouilloire",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "du charbon",
+     "des allumettes"
+    ],
+    "si_bloque": "Si le tirage ne prend pas, elle rouvre la trappe et le tisonne, et elle rate la messe en maugréant."
+   }
   ],
   "declencheurs": [
-   {"si": "la maison tremble", "alors": "Elle court à la chambre de la petite, pas à la porte.", "une_fois": true},
-   {"si": "elle voit un objet bouger seul devant elle", "alors": "Elle se signe, se tait, et continue ce qu'elle faisait ; elle en parlera au curé en confession, sans nom.", "une_fois": false}
+   {
+    "si": "la maison tremble",
+    "alors": "Elle court à la chambre de la petite, pas à la porte.",
+    "une_fois": true
+   },
+   {
+    "si": "elle voit un objet bouger seul devant elle",
+    "alors": "Elle se signe, se tait, et continue ce qu'elle faisait ; elle en parlera au curé en confession, sans nom.",
+    "une_fois": false
+   }
   ],
   "attitude_joueur": "dévouée, et soigneusement aveugle",
-  "date_maj": {"annee": 1906, "lune": 4, "jour": 18}
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
  },
  {
   "personnage_id": "l-ombre",
@@ -54,13 +96,210 @@
   ],
   "intention": "Appeler la petite chaque nuit jusqu'à ce qu'elle descende.",
   "plan": [
-   {"id": "ombre-appeler", "quoi": "Chanter le prénom de Lillian à travers le plancher", "etat": "en-cours", "jours_restants": null, "depend_de": [], "cout": ["le noir"], "si_bloque": "Si la lumière reste allumée dans l'escalier, elle se tait et attend une nuit où la lampe s'éteint."},
-   {"id": "ombre-reprendre", "quoi": "Posséder qui descend, puis verrouiller la maison contre la sorcière et lui couper le Livre", "etat": "en-cours", "jours_restants": null, "depend_de": ["ombre-appeler"], "cout": ["une personne dans la cave, dans le noir"], "si_bloque": "Sans hôte, elle ne peut rien au-dessus de la cave ; elle attend."}
+   {
+    "id": "ombre-appeler",
+    "quoi": "Chanter le prénom de Lillian à travers le plancher",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [
+     "le noir"
+    ],
+    "si_bloque": "Si la lumière reste allumée dans l'escalier, elle se tait et attend une nuit où la lampe s'éteint."
+   },
+   {
+    "id": "ombre-reprendre",
+    "quoi": "Posséder qui descend, puis verrouiller la maison contre la sorcière et lui couper le Livre",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [
+     "ombre-appeler"
+    ],
+    "cout": [
+     "une personne dans la cave, dans le noir"
+    ],
+    "si_bloque": "Sans hôte, elle ne peut rien au-dessus de la cave ; elle attend."
+   }
   ],
   "declencheurs": [
-   {"si": "le scellement se rompt (séisme, pierre fendue)", "alors": "Elle monte dans la maison par le noir et prend le premier qui se trouve dans l'escalier ou la cave.", "une_fois": true}
+   {
+    "si": "le scellement se rompt (séisme, pierre fendue)",
+    "alors": "Elle monte dans la maison par le noir et prend le premier qui se trouve dans l'escalier ou la cave.",
+    "une_fois": true
+   }
   ],
   "attitude_joueur": "la sorcière est l'obstacle ; ce qu'elle veut, c'est la fille",
-  "date_maj": {"annee": 1906, "lune": 4, "jour": 18}
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "l-ancien-oren",
+  "croyances": [
+   "Quelque chose vient sur San Francisco. Les signes sont troubles ; le nombre des morts, non.",
+   "Le Livre des Warren est la seule chose de la ville qui compte encore dans cent ans.",
+   "Ashby s'attache trop à la lignée. Il a déjà pleuré la mère."
+  ],
+  "ignore": [
+   "L'heure et la forme de ce qui vient.",
+   "Que la maison Warren est bâtie sur ce qu'elle garde, et non à côté."
+  ],
+  "intention": "Que l'Être de lumière de Prescott Street tienne le Livre, et rien d'autre, jusqu'à ce que ce soit passé.",
+  "plan": [
+   {
+    "id": "oren-avertir",
+    "quoi": "Faire savoir à Ashby, par un appel là-haut, que le Livre passe avant ses autres charges",
+    "etat": "a-faire",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "qu'Ashby réponde à l'appel"
+    ],
+    "si_bloque": "S'il ne monte pas, l'ordre lui parvient quand même, sec, et Oren note qu'il n'est pas monté."
+   },
+   {
+    "id": "oren-reconstituer",
+    "quoi": "Si le Livre des Warren est perdu, ordonner qu'il soit reconstitué de la main de la lignée, et d'aucune autre",
+    "etat": "a-faire",
+    "jours_restants": null,
+    "depend_de": [
+     "oren-avertir"
+    ],
+    "cout": [
+     "que le Livre soit perdu",
+     "qu'une sorcière Warren survive"
+    ],
+    "si_bloque": "Si aucune Warren ne survit, il retire Ashby de San Francisco et la ville n'a plus d'Être de lumière."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Ashby enfreint une règle — bénéfice personnel, amour d'une protégée, le Haut révélé à un mortel",
+    "alors": "Il le convoque, et à la seconde faute il le sépare de sa charge.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "estime Ashby, s'en méfie à proportion",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "mei-chow",
+  "croyances": [
+   "Trois nuits de suite elle a rêvé que la terre se fendait sous Dupont Street, puis le feu.",
+   "Son père dit que ce sont des rêves de fièvre et qu'il ne faut pas les dire.",
+   "Le monsieur doux qui vient parfois quand elle a peur n'est pas un homme ordinaire."
+  ],
+  "ignore": [
+   "Qu'elle est sorcière.",
+   "Que les Grimlocks voient les auras comme la sienne."
+  ],
+  "intention": "Convaincre son père de sortir de la boutique avant le jour.",
+  "plan": [
+   {
+    "id": "mei-pere",
+    "quoi": "Réveiller son père et lui dire le rêve une quatrième fois",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "qu'il l'écoute"
+    ],
+    "si_bloque": "S'il refuse, elle fait seule un ballot des remèdes les plus chers et le pose près de la porte."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "la terre tremble",
+    "alors": "Elle sait que le feu vient ensuite, et elle le dit à tous ceux qu'elle croise dans la rue.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "confiance sans savoir en qui",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "silas-byrne",
+  "croyances": [
+   "Sa mère lui a dit avant de mourir ce qu'il était, et qu'un seul meurtre suffirait.",
+   "Le père Callahan l'examinera pour le séminaire à la Pentecôte.",
+   "Tant qu'il travaille de nuit, seul avec le plomb, il ne fait de mal à personne."
+  ],
+  "ignore": [
+   "Si ceux de son sang le cherchent déjà."
+  ],
+  "intention": "Finir la composition de l'édition du matin et aller à la messe de six heures.",
+  "plan": [
+   {
+    "id": "silas-edition",
+    "quoi": "Boucler les formes de l'édition du matin",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "la nuit"
+    ],
+    "si_bloque": "Si le chef d'atelier le retient, il rate la messe et va à celle de huit heures."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "quelqu'un fait du mal à un innocent devant lui",
+    "alors": "La rage monte ; il s'interpose, et il lui faut quelqu'un pour l'empêcher d'aller au bout.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "reconnaissant, et craint de le décevoir",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "pere-callahan",
+  "croyances": [
+   "Silas Byrne a la vocation, et une colère qu'il ne confesse pas.",
+   "Mrs Warren ne vient jamais à la messe ; sa bonne, si.",
+   "Le vieux bâtiment de la Mission tient depuis cent trente ans."
+  ],
+  "ignore": [
+   "Ce qu'est Silas.",
+   "Qu'il existe des Êtres de lumière."
+  ],
+  "intention": "Dire la messe de six heures.",
+  "plan": [
+   {
+    "id": "callahan-messe",
+    "quoi": "Préparer l'autel pour six heures",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "Il la dit quand même, devant qui viendra."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "la terre tremble",
+    "alors": "Il ouvre la Mission à tous ceux qui n'ont plus de toit, et compte les couvertures.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "ne le connaît pas",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
  }
 ]

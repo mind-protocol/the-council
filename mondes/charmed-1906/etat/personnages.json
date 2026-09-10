@@ -5,14 +5,39 @@
   "maison_id": "maison-warren",
   "titre": "Sorcière de la lignée Warren, veuve, maîtresse de la maison de Prescott Street",
   "naissance": 1871,
-  "traits": ["droite", "colérique", "tenace", "secrète"],
+  "traits": [
+   "droite",
+   "colérique",
+   "tenace",
+   "secrète"
+  ],
   "objectifs": [
-   {"but": "Garder Lillian en vie et ignorante de ce qu'elle est, tant qu'il le faut", "priorite": 1},
-   {"but": "Tenir la maison et ce qu'il y a dessous, comme sa mère avant elle", "priorite": 2},
-   {"but": "Ajouter au Livre ce qu'elle a appris, pour celles qui viendront", "priorite": 3}
+   {
+    "but": "Garder Lillian en vie et ignorante de ce qu'elle est, tant qu'il le faut",
+    "priorite": 1
+   },
+   {
+    "but": "Tenir la maison et ce qu'il y a dessous, comme sa mère avant elle",
+    "priorite": 2
+   },
+   {
+    "but": "Ajouter au Livre ce qu'elle a appris, pour celles qui viendront",
+    "priorite": 3
+   }
   ],
   "maniere": "Peu de mots, jamais inutiles ; la colère lui monte vite et c'est par elle que les objets bougent.",
-  "pouvoirs": [{"nom": "télékinésie", "declencheur": "colère", "canal": "mains", "sans_effet_sur": ["sorcière bonne", "esprit désincarné", "l'Ombre"]}],
+  "pouvoirs": [
+   {
+    "nom": "télékinésie",
+    "declencheur": "colère",
+    "canal": "mains",
+    "sans_effet_sur": [
+     "sorcière bonne",
+     "esprit désincarné",
+     "l'Ombre"
+    ]
+   }
+  ],
   "etat": "actif",
   "lieu_id": "san-francisco",
   "condition": "libre",
@@ -24,10 +49,21 @@
   "maison_id": "maison-warren",
   "titre": "Sa fille, sept ans",
   "naissance": 1899,
-  "traits": ["curieuse", "têtue", "sans peur", "rêveuse"],
+  "traits": [
+   "curieuse",
+   "têtue",
+   "sans peur",
+   "rêveuse"
+  ],
   "objectifs": [
-   {"but": "Savoir ce qu'il y a derrière la porte de la cave", "priorite": 1},
-   {"but": "Qu'on la traite en grande", "priorite": 2}
+   {
+    "but": "Savoir ce qu'il y a derrière la porte de la cave",
+    "priorite": 1
+   },
+   {
+    "but": "Qu'on la traite en grande",
+    "priorite": 2
+   }
   ],
   "maniere": "Pose trois questions à la suite et n'attend la réponse à aucune.",
   "etat": "actif",
@@ -41,10 +77,21 @@
   "maison_id": "maison-warren",
   "titre": "Domestique, née à Cork, dans la maison depuis neuf ans",
   "naissance": 1858,
-  "traits": ["pieuse", "vaillante", "bavarde", "fidèle"],
+  "traits": [
+   "pieuse",
+   "vaillante",
+   "bavarde",
+   "fidèle"
+  ],
   "objectifs": [
-   {"but": "Que la maison tourne comme une horloge, magie ou pas", "priorite": 1},
-   {"but": "Aller à la messe à Mission Dolores le dimanche, quoi qu'il arrive", "priorite": 2}
+   {
+    "but": "Que la maison tourne comme une horloge, magie ou pas",
+    "priorite": 1
+   },
+   {
+    "but": "Aller à la messe à Mission Dolores le dimanche, quoi qu'il arrive",
+    "priorite": 2
+   }
   ],
   "maniere": "Parle en travaillant, invoque les saints à chaque phrase, ne pose jamais la question qu'elle a vraiment en tête.",
   "etat": "actif",
@@ -57,15 +104,215 @@
   "nom": "L'Ombre du sous-sol",
   "maison_id": "le-sous-sol",
   "titre": "Démon d'obscurité lié au Nexus",
-  "traits": ["patiente", "affamée", "rusée", "possessive"],
+  "traits": [
+   "patiente",
+   "affamée",
+   "rusée",
+   "possessive"
+  ],
   "objectifs": [
-   {"but": "Reprendre l'endroit — la maison et ce qu'elle garde", "priorite": 1},
-   {"but": "Posséder qui descend, de préférence une sorcière née dans la maison", "priorite": 2}
+   {
+    "but": "Reprendre l'endroit — la maison et ce qu'elle garde",
+    "priorite": 1
+   },
+   {
+    "but": "Posséder qui descend, de préférence une sorcière née dans la maison",
+    "priorite": 2
+   }
   ],
   "maniere": "Ne parle que par la bouche de ceux qu'elle tient ; une voix douce qui promet.",
   "etat": "actif",
   "lieu_id": "san-francisco",
   "condition": "enfermee",
   "_": "CANON S01E15 : le Woogyman, lié au Nexus, libéré par un séisme, banni (jamais détruit) par la lumière et une comptine-sort. Qu'il soit déjà sous la maison en 1906 est une invention cohérente avec « to reclaim the spot » (C)."
+ },
+ {
+  "id": "thomas-ashby",
+  "nom": "Thomas Ashby",
+  "maison_id": "les-fondateurs",
+  "titre": "Être de lumière, attaché à la lignée Warren",
+  "naissance": 1838,
+  "traits": [
+   "patient",
+   "loyal",
+   "secret",
+   "tendre"
+  ],
+  "objectifs": [
+   {
+    "but": "Que le Livre des Warren traverse ce qui vient, et celle qui le tient avec lui",
+    "priorite": 1
+   },
+   {
+    "but": "Garder ses protégés en vie et du bon côté — Prudence, Mei, Silas",
+    "priorite": 2
+   },
+   {
+    "but": "Ne pas donner aux Fondateurs de raison de le rappeler",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Parle doucement et s'arrête avant la fin de ses phrases ; ne ment jamais, tait beaucoup.",
+  "pouvoirs": [
+   {
+    "nom": "guérison",
+    "declencheur": "amour",
+    "canal": "mains",
+    "portee": "contact",
+    "sans_effet_sur": [
+     "lui-même",
+     "un mort"
+    ]
+   },
+   {
+    "nom": "occultation",
+    "portee": "exceptionnelle",
+    "limites": [
+     "cesse s'il s'affaiblit ou meurt"
+    ]
+   },
+   {
+    "nom": "télépathie avec ses protégés",
+    "portee": "exceptionnelle",
+    "limites": [
+     "échoue parfois"
+    ]
+   }
+  ],
+  "etat": "actif",
+  "lieu_id": "san-francisco",
+  "condition": "occulte",
+  "_": "LE SECOND SIÈGE JOUEUR — aucune entrée dans intentions.json. Pouvoirs, interdits et vulnérabilité : canon d'après Leo (camp-du-bien-s1, S01E14/S01E21). Lui, sa vie et 1906 : INVENTION DÉCLARÉE. Mort en 1871 dans le Grand Incendie de Chicago, retourné trois fois dans un asile en flammes ; il a veillé la mère de Prudence avant elle. Interdits : aimer une protégée, le bénéfice personnel, révéler le Haut à un mortel. Vulnérabilité : la flèche d'un Être des ténèbres."
+ },
+ {
+  "id": "l-ancien-oren",
+  "nom": "L'Ancien Oren",
+  "maison_id": "les-fondateurs",
+  "titre": "Fondateur, qui a la main sur les Êtres de lumière de la côte ouest",
+  "traits": [
+   "froid",
+   "juste",
+   "lointain",
+   "prudent"
+  ],
+  "objectifs": [
+   {
+    "but": "Que la lignée Warren et son Livre survivent, le reste venant après",
+    "priorite": 1
+   },
+   {
+    "but": "Que les règles tiennent, parce qu'elles sont ce qui sépare le bien du caprice",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Ne dit jamais « je » : dit « nous ». Répond à une question par ce qu'il est permis d'en savoir.",
+  "etat": "actif",
+  "lieu_id": "le-haut",
+  "condition": "libre",
+  "_": "La voix unique des Fondateurs, pour qu'on puisse la dépêcher. Autorité : ENVOYER / RAPPELER, SANCTIONNER (canon). Le personnage est une INVENTION DÉCLARÉE."
+ },
+ {
+  "id": "mei-chow",
+  "nom": "Mei Chow",
+  "maison_id": null,
+  "titre": "Fille de l'herboriste de Dupont Street, dix-sept ans",
+  "naissance": 1889,
+  "traits": [
+   "attentive",
+   "obstinée",
+   "effrayée",
+   "généreuse"
+  ],
+  "objectifs": [
+   {
+    "but": "Qu'on la croie",
+    "priorite": 1
+   },
+   {
+    "but": "Garder son père et la boutique",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Répète exactement ce qu'elle a vu, dans le même ordre, chaque fois qu'on l'interrompt.",
+  "pouvoirs": [
+   {
+    "nom": "prémonition",
+    "declencheur": "sommeil, contact",
+    "canal": "rêve",
+    "limites": [
+     "naissant",
+     "ne choisit pas ce qu'elle voit"
+    ]
+   }
+  ],
+  "etat": "actif",
+  "lieu_id": "san-francisco",
+  "condition": "libre",
+  "_": "Sorcière hors lignée, protégée d'Ashby. Son aura bonne attire les Grimlocks (canon pour le type). Le quartier chinois brûle entièrement en 1906 (histoire). Elle : INVENTION DÉCLARÉE."
+ },
+ {
+  "id": "silas-byrne",
+  "nom": "Silas Byrne",
+  "maison_id": null,
+  "titre": "Typographe de nuit au San Francisco Call, vingt-deux ans",
+  "naissance": 1884,
+  "traits": [
+   "colérique",
+   "scrupuleux",
+   "solitaire",
+   "croyant"
+  ],
+  "objectifs": [
+   {
+    "but": "Ne jamais tuer — c'est ce qui le ferait basculer",
+    "priorite": 1
+   },
+   {
+    "but": "Être ordonné, et se mettre ainsi hors d'atteinte de ce qu'il est né",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Poli jusqu'à la raideur ; quand la colère monte, il se tait et serre les poings dans ses poches.",
+  "pouvoirs": [
+   {
+    "nom": "pouvoirs warlock",
+    "declencheur": "rage",
+    "limites": [
+     "s'en servir risque de le faire basculer"
+    ]
+   }
+  ],
+  "etat": "actif",
+  "lieu_id": "san-francisco",
+  "condition": "libre",
+  "_": "Demi-warlock qui a choisi le bien, sur le modèle de Brendan Rowe (S01E18) : « once he's been ordained, he's safe ». Protégé d'Ashby. Le Call Building brûle en 1906 (histoire). Lui : INVENTION DÉCLARÉE."
+ },
+ {
+  "id": "pere-callahan",
+  "nom": "Père Callahan",
+  "maison_id": null,
+  "titre": "Prêtre à Mission Dolores",
+  "naissance": 1851,
+  "traits": [
+   "bon",
+   "têtu",
+   "pratique",
+   "curieux"
+  ],
+  "objectifs": [
+   {
+    "but": "Sa paroisse, les vivants d'abord",
+    "priorite": 1
+   },
+   {
+    "but": "Former Silas Byrne, en qui il voit une vocation et une colère qu'on ne lui confesse pas",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Parle en homme de chantier plus qu'en homme d'autel ; demande « combien » avant « pourquoi ».",
+  "etat": "actif",
+  "lieu_id": "san-francisco",
+  "condition": "libre",
+  "_": "Mortel. Le lieu consacré de l'étage de la ville. Il ne sait rien d'Ashby ni de ce qu'est Silas. Mission Dolores survit à 1906 (histoire). Lui : INVENTION DÉCLARÉE ; Bridget le cite déjà."
  }
 ]
