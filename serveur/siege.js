@@ -182,7 +182,8 @@ function monPersonnage(req, url) {
   return moi;
 }
 
-// QUI VOIT QUEL VOLUME — tous les documents de sa maison, pour le moment.
+// QUI VOIT QUEL VOLUME — les documents de sa maison, moins ceux dont les
+// `lecteurs` ne le nomment pas.
 //
 // PARTAGÉ AVEC L'ÉCHIQUIER, et c'est la raison d'être de cette fonction : le
 // damier lisait `books.json` en entier, sans tri. Un homme de Port-Réal qui
@@ -226,7 +227,11 @@ function volumesVisibles(tous, moi) {
     }
   });
   const maMaison = moi ? (maison[moi] || null) : null;
-  const liste = maMaison ? tous.filter((b) => b.maison_id === maMaison) : [];
+  // `lecteurs` survit au 31.8, seul des trois tris : il ne dit pas une place,
+  // il retire nommément. Jumeau de `documents_maison.ouvert_a` (Python).
+  const liste = maMaison ? tous.filter((b) => b.maison_id === maMaison
+    && !(Array.isArray(b.lecteurs) && b.lecteurs.length
+         && b.lecteurs.indexOf(moi) === -1)) : [];
   return { liste, boites };
 }
 

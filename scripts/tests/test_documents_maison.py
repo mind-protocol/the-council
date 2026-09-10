@@ -45,6 +45,31 @@ class DocumentsMaisonTests(unittest.TestCase):
             self.assertEqual((None, []),
                              documents_maison.documents_pour(etat, "sans"))
 
+    def test_lecteurs_retire_un_volume_aux_membres_qui_n_y_sont_pas_nommes(self):
+        # Le Livre des Ombres des Warren : de la maison, mais la fille de sept
+        # ans ne sait pas qu'elle est sorcière. `lecteurs` ne donne rien, il
+        # retire — la règle de maison tient toujours pour les autres volumes.
+        with tempfile.TemporaryDirectory() as etat:
+            ecrire(os.path.join(etat, "maisons.json"), [{"id": "maison-a"}])
+            ecrire(os.path.join(etat, "personnages.json"), [
+                {"id": "mere", "maison_id": "maison-a"},
+                {"id": "fille", "maison_id": "maison-a"},
+            ])
+            base = documents_maison.dossier_livres(etat, "maison-a")
+            ecrire(os.path.join(base, "_ordre.json"), ["grimoire", "comptes"])
+            ecrire(os.path.join(base, "grimoire.json"),
+                   {"id": "grimoire", "maison_id": "maison-a",
+                    "lecteurs": ["mere"]})
+            ecrire(os.path.join(base, "comptes.json"),
+                   {"id": "comptes", "maison_id": "maison-a"})
+
+            noms = lambda qui: {os.path.basename(p) for p in
+                                documents_maison.documents_pour(etat, qui)[1]}
+            self.assertEqual({"grimoire.json", "comptes.json"}, noms("mere"))
+            self.assertEqual({"comptes.json"}, noms("fille"))
+            self.assertEqual(["comptes"], [l["id"] for l in
+                             documents_maison.livres_pour(etat, "fille")])
+
     def test_un_porteur_sans_lignage_rejoint_la_maison_de_son_document(self):
         with tempfile.TemporaryDirectory() as etat:
             ecrire(os.path.join(etat, "maisons.json"), [{"id": "maison-a"}])

@@ -103,9 +103,21 @@ def maison_de(etat, personnage_id):
     return next(iter(candidates)) if len(candidates) == 1 else None
 
 
+def ouvert_a(livre, personnage_id):
+    """`lecteurs` ne donne rien, il retire : un volume qui nomme ses lecteurs
+    n'est qu'a eux, meme dans sa maison. Jumeau de `volumesVisibles` (serveur)."""
+    lecteurs = livre.get("lecteurs") if isinstance(livre, dict) else None
+    return not lecteurs or personnage_id in lecteurs
+
+
 def documents_pour(etat, personnage_id):
     maison_id = maison_de(etat, personnage_id)
-    return maison_id, chemins(etat, maison_id) if maison_id else []
+    if not maison_id:
+        return maison_id, []
+    livres = dossier_livres(etat, maison_id)
+    return maison_id, [p for p in chemins(etat, maison_id)
+                       if os.path.dirname(p) != livres
+                       or ouvert_a(_lire(p), personnage_id)]
 
 
 def livres_pour(etat, personnage_id):
@@ -116,8 +128,9 @@ def livres_pour(etat, personnage_id):
     manifeste = os.path.join(base, MANIFESTE)
     if not os.path.isfile(manifeste):
         return []
-    return [_lire(os.path.join(base, ident + ".json"))
+    tous = [_lire(os.path.join(base, ident + ".json"))
             for ident in _ordre(manifeste)]
+    return [l for l in tous if ouvert_a(l, personnage_id)]
 
 
 def _domaines(etat):
