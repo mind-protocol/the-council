@@ -20,9 +20,9 @@ import json, os, re, sys, unicodedata
 
 
 from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
-
-racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-etat = os.path.join(racine, "etat")
+import racines  # ou vit l'etat, et de quel monde il est
+racine = racines.racine()  # le MONDE, pas le depot
+etat = racines.etat()
 
 # Fichier -> clef portant la liste (None = le fichier EST la liste).
 # pensees.json y est entre le 31.8 : le monde etait revenu au 129.4.3 et la
