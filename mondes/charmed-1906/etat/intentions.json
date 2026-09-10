@@ -342,5 +342,286 @@
    "lune": 4,
    "jour": 18
   }
+ },
+ {
+  "personnage_id": "philippa-warren",
+  "croyances": [
+   "Patience lui a dit, à neuf ans, que la voix de la cave chantait son prénom. Elle l'a fait taire et a mis une lampe dans l'escalier. Elle se demande encore si c'était la bonne chose.",
+   "Prudence tient la maison mieux qu'elle ne l'a tenue, et plus seule.",
+   "Les mots de la comptine sont sur la page qui suit la sienne, dans le Livre ; si le Livre brûle, ils ne sont plus que dans la tête de Prudence."
+  ],
+  "ignore": [
+   "Tout ce qui s'est passé depuis 1901, sauf ce qu'on lui dit quand on l'appelle.",
+   "Que Lillian entend la voix à son tour.",
+   "Que la terre va trembler."
+  ],
+  "intention": "Attendre qu'on l'appelle, et dire alors d'abord ce qui presse.",
+  "plan": [
+   {
+    "id": "philippa-repondre",
+    "quoi": "Venir quand on l'appelle par son nom, avec des bougies et les mots du Livre, et dire la cave avant tout le reste",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [
+     "qu'une fille de la lignée l'appelle dans les formes"
+    ],
+    "si_bloque": "Sans appel, elle ne vient pas. Une question nue dans le noir n'appelle personne."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "une fille de la lignée l'appelle par son nom, avec des bougies et les mots du Livre",
+    "alors": "Elle vient. Elle parle de la cave et de la lumière avant de demander qui l'appelle et pourquoi.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "fière de sa fille aînée, et ne le lui a jamais dit",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "josiah-crewe",
+  "croyances": [
+   "La prophétie de Melinda Warren court depuis deux siècles : trois sœurs viendront. Chaque génération Warren qu'on laisse passer rapproche l'échéance.",
+   "Le Livre des Warren ne sort pas de sa maison sans qu'une Warren l'emporte. Il faut donc qu'une Warren l'emporte, ou qu'on lui fasse croire qu'elle le donne à sa sœur.",
+   "La cadette vit loin de la maison, en garni ; son visage ouvre la porte de l'aînée."
+  ],
+  "ignore": [
+   "Que la terre va trembler et que la ville va brûler trois jours.",
+   "Ce qui est scellé sous la maison de Prescott Street, et qui veut la même place que lui.",
+   "Le nom et le visage de l'Être de lumière qui veille les Warren."
+  ],
+  "intention": "Faire approcher la cadette par Marsh, lentement, jusqu'à ce que son visage puisse passer la porte de Prescott Street.",
+  "plan": [
+   {
+    "id": "crewe-visage",
+    "quoi": "Envoyer Gideon Marsh prendre la mesure de Patience Warren : sa voix, son pas, une chose à elle",
+    "etat": "en-cours",
+    "jours_restants": 6,
+    "depend_de": [],
+    "cout": [
+     "Marsh",
+     "que Patience reste à Howard Street"
+    ],
+    "si_bloque": "Si Patience quitte Howard Street, Marsh la suit à la trace des listes de logés et des camps ; l'échéance recule d'autant."
+   },
+   {
+    "id": "crewe-livre",
+    "quoi": "Faire sortir le Livre par la main d'une Warren trompée, et le prendre",
+    "etat": "a-faire",
+    "jours_restants": null,
+    "depend_de": [
+     "crewe-visage"
+    ],
+    "cout": [
+     "un visage aimé porté par Marsh",
+     "le Livre hors de la maison"
+    ],
+    "si_bloque": "Si le Livre reste dans la maison, il attend : la Maison compte en générations, pas en jours."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "il apprend que le Livre des Warren est sorti de la maison de Prescott Street, ou que la maison est vide",
+    "alors": "Il lâche la patience : Marsh prend le premier visage aimé à portée, cette nuit même, et va chercher le Livre là où il est.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "une dette qui court, et qu'il compte encaisser",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "gideon-marsh",
+  "croyances": [
+   "Un corps se copie en le touchant ; une voix, en l'écoutant une heure ; les souvenirs, jamais — il faut les deviner.",
+   "Patience Warren répond au téléphone du central à longueur de journée : on l'écoute sans qu'elle vous voie.",
+   "Crewe paie ce qu'il promet, et punit ce qu'on rate."
+  ],
+  "ignore": [
+   "Que la terre va trembler.",
+   "Que le gel de Patience le prendrait comme n'importe qui — il n'a jamais été figé et croit qu'on ne fige pas ce qui n'a pas de visage."
+  ],
+  "intention": "Apprendre la voix de Patience Warren avant d'apprendre son visage.",
+  "plan": [
+   {
+    "id": "marsh-voix",
+    "quoi": "Écouter Patience au central téléphonique et à la pension Doyle jusqu'à savoir parler comme elle",
+    "etat": "en-cours",
+    "jours_restants": 4,
+    "depend_de": [],
+    "cout": [
+     "des appels au central",
+     "la chambre en face de la pension"
+    ],
+    "si_bloque": "Si le central ou la pension tombent, il la cherche dans la foule par les listes de logés, et apprend sa voix de plus près — donc plus dangereusement."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Patience part pour Prescott Street",
+    "alors": "Il la suit à distance et apprend le chemin, la porte, et qui l'ouvre.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "un visage à porter, rien de plus",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "ezekiel-vane",
+  "croyances": [
+   "Un Être de lumière veille une lignée de sorcières dans cette ville. Il est mort dans le feu de Chicago, et il est retourné trois fois dans l'asile en flammes : c'est un homme qui court aux feux.",
+   "Quand il guérit, il se montre ; un soin est une lumière qu'on voit de loin.",
+   "Ceux qu'il cache sont introuvables. Lui ne se cache pas quand on a besoin de lui."
+  ],
+  "ignore": [
+   "Les noms et les maisons des protégés de l'Être de lumière.",
+   "Que la terre va trembler, et que la ville va lui donner cent feux en un jour."
+  ],
+  "intention": "Attendre l'Être de lumière là où il y a des blessés et du feu.",
+  "plan": [
+   {
+    "id": "vane-affut",
+    "quoi": "Se tenir au plus près des feux et des blessés, l'arbalète chargée, et guetter une lumière qui guérit",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [
+     "des flèches",
+     "un feu où l'on soigne"
+    ],
+    "si_bloque": "Sans lumière qui guérit, il change de feu, chaque nuit, et attend."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Thomas Ashby guérit quelqu'un à découvert",
+    "alors": "Il le localise dans l'heure et tire dès qu'il l'a en vue.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "une proie qui finira par se montrer",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "grimlock-aine",
+  "croyances": [
+   "Les enfants voient ce que les grands ne voient pas ; leur vue prise, on voit les âmes bonnes briller.",
+   "Une âme bonne brille plus fort quand elle a peur pour un autre.",
+   "Sous le remblai, les tunnels mènent partout au sud de Market."
+  ],
+  "ignore": [
+   "Que la terre va ouvrir les égouts et remplir les rues d'enfants seuls.",
+   "Que la seule racine qui les aveugle est dans une boutique de Dupont Street."
+  ],
+  "intention": "Prendre un enfant par nuit, voir, et éteindre les âmes bonnes qui passent au-dessus des tunnels.",
+  "plan": [
+   {
+    "id": "grimlocks-enfants",
+    "quoi": "Prendre des enfants seuls au sud de Market et les garder vivants dans les tunnels pour leur vue",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "des enfants seuls, dans le noir"
+    ],
+    "si_bloque": "Sans enfant seul, ils attendent la nuit suivante et remontent plus près des maisons."
+   },
+   {
+    "id": "grimlocks-auras",
+    "quoi": "Éteindre les auras bonnes qu'ils voient — les plus claires d'abord",
+    "etat": "a-faire",
+    "jours_restants": 1,
+    "depend_de": [
+     "grimlocks-enfants"
+    ],
+    "cout": [
+     "une vue volée de moins de vingt-quatre heures",
+     "une aura en vue"
+    ],
+    "si_bloque": "Si l'enfant meurt ou leur est repris, la vue s'éteint : ils retournent prendre un enfant."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "la terre ouvre les égouts et les rues du sud de Market se remplissent d'enfants perdus",
+    "alors": "Ils sortent de jour aussi, à l'ombre des ruines, et remontent jusqu'aux camps.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "des lumières à éteindre",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "malachy-byrne",
+  "croyances": [
+   "Leur mère a caché le troisième fils, Silas, à sa naissance, pour qu'il ne soit jamais des leurs. Il vit dans cette ville sous le nom de Byrne.",
+   "Un warlock qui a tué de son plein gré est à eux pour toujours. Une fois ordonné prêtre, il est perdu pour eux.",
+   "Une ville en désordre fait des meurtres qu'on ne compte pas."
+  ],
+  "ignore": [
+   "Où Silas travaille et où il dort.",
+   "Que Silas doit être examiné pour le séminaire à la Pentecôte."
+  ],
+  "intention": "Trouver Silas dans la ville, puis l'appeler par le sang.",
+  "plan": [
+   {
+    "id": "byrne-trouver",
+    "quoi": "Trouver Silas Byrne — registres, journaux, listes de disparus ou de vivants",
+    "etat": "en-cours",
+    "jours_restants": 10,
+    "depend_de": [],
+    "cout": [
+     "son nom écrit quelque part où on le lit"
+    ],
+    "si_bloque": "Sans nom écrit, Owen fait les pensions irlandaises une par une, et ça prend des semaines."
+   },
+   {
+    "id": "byrne-initier",
+    "quoi": "Appeler Silas par le sang et lui faire tuer quelqu'un, de son plein gré, avant qu'il soit ordonné",
+    "etat": "a-faire",
+    "jours_restants": null,
+    "depend_de": [
+     "byrne-trouver"
+    ],
+    "cout": [
+     "Silas à portée d'appel",
+     "une victime et un soir de désordre"
+    ],
+    "si_bloque": "S'il refuse de tuer, ils altèrent sa perception un soir où l'on tire sur les pillards, et lui mettent un corps entre les mains."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "le nom de Silas Byrne paraît sur une liste de vivants ou de disparus, ou dans un journal",
+    "alors": "Malachy et Owen l'appellent par le sang la nuit même.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "un frère à ramener, de gré ou de force",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
  }
 ]
