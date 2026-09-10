@@ -1,7 +1,7 @@
 {
  "id": "livre-des-ombres",
  "titre": "Le Livre des Ombres",
- "sous_titre": "📖 Tenu depuis Melinda Warren, chaque génération y ajoutant de sa main. Deux siècles de pages que ce registre ne recopie pas toutes : on n'y lit ici que ce que Prudence en connaît par cœur, et ce qui touche la maison.",
+ "sous_titre": "📖 Un gros volume de bois et de cuir brun-vert, le triple nœud repoussé sur le plat, un fermoir de laiton. Onze livres à porter à deux bras. Il dort dans le coffre du grenier. Tenu depuis Melinda Warren, chaque génération y ajoutant de sa main : les cahiers anciens cousus d'abord, puis ceux du siècle, puis les feuillets volants glissés à la fin, que le fil ne tient pas.",
  "type": "registre",
  "embleme": "📖",
  "couleur": "#5b3a29",
@@ -9,22 +9,47 @@
  "office": "La lignée — ce qu'une génération doit à la suivante",
  "lieu_id": "san-francisco",
  "salle_id": "grenier",
+ "lecteurs": ["prudence-warren", "patience-warren", "thomas-ashby"],
  "maison_id": "maison-warren",
  "tables": [
   {
-   "titre": "🕯 Ce qui ouvre le Livre",
-   "colonnes": ["✍️ De quelle main", "📜 Ce qui est écrit"],
+   "titre": "🕯 Les cahiers anciens — vélin et chiffon, la main de Melinda et celles de Nouvelle-Angleterre",
+   "colonnes": ["✍️ De quelle main", "📜 La page", "📝 Ce qui y est écrit"],
    "lignes": [
-    {"cellules": ["**Melinda Warren**", "La prophétie : chaque génération de sorcières Warren sera plus forte que la précédente, jusqu'à trois sœurs, les plus puissantes que le monde ait connues."]},
-    {"cellules": ["**Melinda Warren**", "Matthew Tate, warlock, qui copie tout pouvoir qu'on tourne contre lui. Enfermé par malédiction dans un médaillon. Ne jamais le rouvrir."]}
+    {"cellules": ["**Melinda Warren**", "La prophétie", "Chaque génération de sorcières Warren sera plus forte que la précédente, jusqu'à trois sœurs, les plus puissantes que le monde ait connues."]},
+    {"cellules": ["**Melinda Warren**", "L'invocation des trois", "Les mots qui éveillent les pouvoirs de trois sœurs quand elles les disent ensemble, dans la maison. Écrits serré, en vieil anglais. Sans usage pour une sorcière seule."]},
+    {"cellules": ["**Melinda Warren**", "Matthew Tate", "Un warlock qui copie tout pouvoir qu'on tourne contre lui. Enfermé par malédiction dans un médaillon d'étain. « Ne jamais le rouvrir. »"]},
+    {"cellules": ["**Melinda Warren**", "Rappeler une ancêtre", "On rappelle une ancêtre par le sang : il faut le sang de trois. La page ne dit pas si trois du sang suffisent, ou s'il faut trois sœurs."]},
+    {"cellules": ["une main du XVIIIe", "Le démon qui boit la jeunesse", "Il reste jeune en buvant la jeunesse des autres, une semaine par an. On le chasse à trois, avec un miroir tourné vers lui."]},
+    {"cellules": ["une main du XVIIIe", "Ceux qui prennent un visage", "Ils prennent le visage d'un proche pour qu'une sorcière sorte elle-même le Livre de la maison. Contre eux, le sort d'expulsion : il détruit dans la maison tout ce qui n'est pas de la lignée — et les innocents qui s'y trouvent."]},
+    {"cellules": ["une main du XVIIIe", "Le sort de vérité", "Quiconque est dans la maison dit vrai un jour entier. On ne le reprend pas avant la fin."]},
+    {"cellules": ["une main du XVIIIe", "Rendre ses pouvoirs", "Le renoncement. La page s'efface d'elle-même quand on s'en sert. Personne n'a écrit comment revenir en arrière."]},
+    {"cellules": ["une main du XVIIIe", "Se dédoubler", "Des doubles qui ont la mémoire et les pouvoirs, pas d'âme. Ils se défont quand le besoin cesse, et l'on sent leur mort."]},
+    {"cellules": ["une main du XVIIIe", "La bête des bois du Nord", "Homme le jour ; elle mange les cœurs trois nuits autour de la pleine lune — la veille, la nuit, le lendemain. Le feu la repousse ; le feu qui la touche la tue."]},
+    {"cellules": ["une main du XVIIIe", "Le démon de la Peur", "Un vendredi 13, tous les treize siècles, jusqu'à minuit. Il prend la peur la plus vraie. La peur coupe les pouvoirs : il faut la lâcher, pas la cacher."]}
    ]
   },
   {
-   "titre": "🏚 La maison et ce qu'il y a dessous",
-   "colonnes": ["✍️ De quelle main", "📜 Ce qui est écrit"],
+   "titre": "📜 Les cahiers du siècle — papier ordinaire, encres brunies",
+   "colonnes": ["✍️ De quelle main", "📜 La page", "📝 Ce qui y est écrit"],
    "lignes": [
-    {"cellules": ["**la mère de Prudence**", "La maison est bâtie sur une place que le mal tenait. Une ombre y est scellée sous la pierre de la cave. On n'y descend jamais sans lumière."]},
-    {"cellules": ["**la mère de Prudence**", "Les ombres reculent devant la lumière. Pour la renvoyer, la lumière et les mots — les mots sont sur la page suivante, et ils sont à apprendre par cœur."]}
+    {"cellules": ["une main du XVIIIe", "Remonter à l'origine d'un lien", "Un voyage vers le passé, à l'origine du lien qu'on suit, puis retour à l'instant du départ. Il faut les trois."]},
+    {"cellules": ["une main du XVIIIe", "Pousser le temps", "Faire passer le jour au suivant, et rompre ce qui recommence. Il faut les trois."]},
+    {"cellules": ["**la grand-mère**", "Les esprits et l'autre côté", "Un esprit mauvais ne se vainc que depuis l'autre côté. La potion qui fait mourir quatre minutes, et il faut quelqu'un pour vous ramener. Pendant ce temps, quelque chose guette l'âme. L'eau arrête un esprit qui n'a pas de corps."]},
+    {"cellules": ["**la grand-mère**", "Ceux qui chassent les Êtres de lumière", "Une arbalète, un poison qu'aucun remède ne défait. Dans la marge : « T. A. me l'a dit. »"]},
+    {"cellules": ["**la grand-mère**", "Échanger les pouvoirs", "Tous ceux qui sont là reçoivent le pouvoir d'un autre. Chacun doit trouver l'émotion qui fait marcher le sien."]}
+   ]
+  },
+  {
+   "titre": "🍂 Les feuillets volants — papier de Market Street, glissés à la fin, non cousus",
+   "colonnes": ["✍️ De quelle main", "📜 La page", "📝 Ce qui y est écrit"],
+   "lignes": [
+    {"cellules": ["**la grand-mère**", "La place", "Ce qu'elle a vu du lot en 1851 : l'herbe qui ne pousse pas en rond, les chiens qui ne passent pas, un froid au creux du terrain en plein été. « Le mal tenait cette place, nous la tenons maintenant. »"]},
+    {"cellules": ["**la mère de Prudence**", "La maison et la cave", "La maison est bâtie sur une place que le mal tenait. Une ombre est scellée sous la pierre de la cave. On n'y descend jamais sans lumière."]},
+    {"cellules": ["**la mère de Prudence**", "Renvoyer l'ombre", "Les ombres reculent devant la lumière. Pour la renvoyer, la lumière et les mots. Les mots sont sur la page suivante, et ils sont à apprendre par cœur."]},
+    {"cellules": ["**la mère de Prudence**", "Les mots", "« Petite ombre de la cave, / la lampe est haute et je suis brave ; / ce qui est noir retourne au noir, / la pierre se ferme — bonsoir, bonsoir. » À dire en tenant la lumière droit sur la chose, sans trembler : la peur coupe tout."]},
+    {"cellules": ["**Prudence**", "Les herbes de la Baie", "Ce qui pousse sur les dunes et à Chinatown, et remplace les herbes de l'Est qu'on ne trouve pas ici. « L'herboriste de Dupont Street a ce qu'il faut et ne pose pas de questions. »"]},
+    {"cellules": ["**Prudence**", "Une page barrée", "« Maman disait que ce qui est né dans la maison est plus facile à prendre. Si cela est vrai — » Rien après."]}
    ]
   }
  ]
