@@ -30,9 +30,9 @@ from plan.expose import bibliotheque  # LA PORTE de plan/
 # Rulf : la difference n'etait pas dans les travaux, elle etait dans un octet.
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# Un etage de plus qu'a la racine : scripts/agents/ (voir scripts/CLAUDE.md).
-racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-etat = os.path.join(racine, "etat")
+import racines  # la racine du MONDE, pas celle du depot
+racine = racines.racine()
+etat = racines.etat()
 
 # Ordre d'autorite. Ce qui est en haut gagne sur ce qui est en bas.
 SOURCES = [
