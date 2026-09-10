@@ -1,0 +1,146 @@
+/* CHARMED 1906 — l'habillage de la partie.
+   Repris de charmed-the-game (ecrans/modules/charmed-skin.css, « sélection B ») :
+   la page est un Livre des Ombres relié de cuir vert, cadre et coins dorés
+   compris dans l'image de fond ; chaque colonne est une page de parchemin
+   posée dessus ; l'encre est sépia, l'or est vieil or, les boutons qui
+   engagent sont de cuir vert à filet doré.
+
+   Chargée en DERNIER (voir serveur/routes/habillage.js) : elle surcharge
+   jeu.css et ne retire rien. Elle ne connaît que des sélecteurs de jeu.css ;
+   si l'un d'eux change de nom là-bas, la page retombe sur son dessin ivoire,
+   elle ne casse pas.
+
+   UN SEUL REGARD, jour comme nuit : le parchemin ne passe pas au noir quand le
+   système le demande, et la lumière du jour (modules/lumiere.js) ne teinte
+   plus le papier — c'est pour cela que --fond porte !important, seul moyen de
+   battre le style en ligne que lumiere.js pose sur <html>. */
+
+:root, :root[data-habillage]{
+  --hb-haut:92px;           /* le bandeau : titre, fleuron du fond, logo */
+  --hb-bas:16px;
+  --hb-cote:26px;           /* assez pour laisser voir le filet doré du cadre */
+  --hb-cuir:#071b13;
+  --hb-or:#bfa166;          /* le vieil or des libellés sur cuir */
+  --hb-or-vif:#e9c66f;
+  --hb-filet:#a98544;       /* le filet doré des boutons */
+  --hb-vert:linear-gradient(#254431,#102b1f);
+  --hb-vert-survol:linear-gradient(#2f563e,#153726);
+  --hb-parchemin:#ebd8b5;
+  --hb-lettres:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;
+
+  --ink:#352717; --muted:#6b5535; --paper:rgba(120,85,40,.08);
+  --bord:rgba(150,112,56,.45); --accent:#1e4a33; --braise:#a8853d;
+  --btn:rgba(30,74,51,.07); --btn-hover:rgba(30,74,51,.15);
+  --fond:#ead9b9 !important; --jour-lueur:transparent !important;
+  --fond-lateral:transparent;
+  --pensee:#5b4a7a; --monde:#4f6446; --sang:#8f2a1f; --vert:#24513a;
+  --loge:#2f6670; --or-joueur:#b8902f;
+  --book-registre:#6a4a22; --book-carnet:#5b4a7a; --book-plan:#8a5a1e;
+  --book-memento:#4f6446; --book-dossier:#2f6670; --book-regle:#8f2a1f;
+  --book-oeuvre:#8a6a1f;
+}
+/* le système en sombre ne change rien : le Livre ne se retourne pas */
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#352717; --muted:#6b5535; --paper:rgba(120,85,40,.08);
+    --bord:rgba(150,112,56,.45); --accent:#1e4a33; --braise:#a8853d;
+    --btn:rgba(30,74,51,.07); --btn-hover:rgba(30,74,51,.15);
+    --pensee:#5b4a7a; --monde:#4f6446; --sang:#8f2a1f; --vert:#24513a;
+    --loge:#2f6670; --or-joueur:#b8902f;
+    --book-registre:#6a4a22; --book-carnet:#5b4a7a; --book-plan:#8a5a1e;
+    --book-memento:#4f6446; --book-dossier:#2f6670; --book-regle:#8f2a1f;
+    --book-oeuvre:#8a6a1f;
+  }
+}
+
+/* ------- la reliure : le fond fourni, cadre et fleurons compris -------
+   Étiré à 108 % de haut et calé en haut : la bande de cuir que le fourni
+   porte sous son cadre passe sous le bord de l'écran, et le filet doré du bas
+   tombe juste sous les pages au lieu de courir derrière elles. */
+html{background:var(--hb-cuir);}
+html,body{font-family:Georgia,'Times New Roman',serif;}
+body{box-sizing:border-box;padding:var(--hb-haut) var(--hb-cote) var(--hb-bas);
+  column-gap:9px;
+  background:var(--hb-cuir) url('/habillage/fond-livre.webp') top center/100% 108% no-repeat fixed;}
+::selection{background:#c9a55a66;}
+*{scrollbar-color:#a28143 transparent;}
+
+/* ------- le bandeau : le titre à gauche, le logo doré à droite ------- */
+#habillage-bandeau{position:fixed;top:0;left:0;right:0;height:var(--hb-haut);
+  z-index:4;pointer-events:none;}
+#habillage-bandeau .hb-titre{position:absolute;left:132px;top:calc(var(--hb-haut) / 2 - 14px);
+  font:italic 20px/1.25 Georgia,serif;color:var(--hb-or);white-space:nowrap;
+  text-shadow:0 1px 2px #000a;}
+#habillage-bandeau .hb-logo{position:absolute;right:124px;top:6px;
+  height:calc(var(--hb-haut) - 12px);width:auto;
+  filter:saturate(.66) brightness(.91) sepia(.12) drop-shadow(0 2px 2px #0008);}
+
+/* ------- les pages : chaque colonne est un parchemin posé sur le cuir -------
+   En border-image et non en fond étiré : la page du fourni est haute et
+   étroite, et la chronique est large. Étirée, elle écraserait ses fleurons de
+   coin ; découpée en neuf, les coins restent à leur dessin et seuls les
+   filets s'allongent. */
+#fil, #scene, #lateral:not(.ferme){
+  height:calc(100vh - var(--hb-haut) - var(--hb-bas));
+  background:none;
+  border:0 solid transparent;border-radius:0;
+  border-image:url('/habillage/parchemin.webp') 110 fill / 44px / 0 stretch;
+  filter:drop-shadow(0 2px 4px #000a);}
+/* les fleurons ne tiennent que les coins : le texte peut approcher des bords */
+#fil{padding:24px 30px 18px;}
+#scene{padding:22px 20px 16px;}
+/* les présents : hors des pages, sur le cuir — leurs noms en vieil or */
+#acteurs{height:calc(100vh - var(--hb-haut) - var(--hb-bas));background:none;
+  border-right:0;padding:6px 4px;}
+#acteurs .acteur .qui{color:var(--hb-or);text-shadow:0 1px 2px #000c;}
+#acteurs .acteur.parle .qui{color:var(--hb-or-vif);}
+#acteurs .acteur .medaillon svg{filter:drop-shadow(0 2px 3px #000b);}
+.acteurs-tri{background:var(--hb-vert);color:var(--hb-or);border-color:var(--hb-filet);}
+.acteurs-tri:hover{background:var(--hb-vert-survol);color:var(--hb-or-vif);}
+.acteurs-bas{color:var(--hb-or);background:linear-gradient(to bottom,transparent,var(--hb-cuir) 72%);}
+
+/* les échelles du décor : la page est plus étroite de ses marges, les
+   onglets se serrent pour tenir sur une ligne */
+#vue-bascule{max-width:100%;}
+#vue-bascule button{padding:3px 6px;}
+#vue-bascule button.actif{background:rgba(255,244,222,.5);border-color:var(--braise);}
+
+/* le rail replié : rien que le fermoir, doré sur le cuir */
+#lateral{height:calc(100vh - var(--hb-haut) - var(--hb-bas));border-right:0;background:none;}
+#lateral.ferme{padding:4px 6px;}
+#lateral.ferme #lateral-bascule{color:var(--hb-or);background:var(--hb-vert);
+  border:1px solid var(--hb-filet);box-shadow:0 2px 3px #0006;}
+#lateral:not(.ferme){padding:26px 24px 22px;}
+#lateral:not(.ferme) #lateral-bascule{background:none;border-color:transparent;color:var(--muted);}
+#lateral:not(.ferme) #lateral-bascule:hover{color:var(--accent);border-color:var(--bord);}
+
+/* ------- l'encre ------- */
+.zone-titre{font-family:var(--hb-lettres);font-variant:normal;font-size:.9em;
+  letter-spacing:.02em;color:#4a3219;border-bottom:1px solid #94704450;}
+a{color:var(--accent);}
+
+/* ------- ce qui engage : cuir vert, filet d'or -------
+   Le bouton d'envoi, le mode tenu, et les boutons qui tranchent. Le reste des
+   boutons garde le trait léger de jeu.css, teinté d'encre : un parchemin
+   couvert de cuir vert ne se lirait plus. */
+#btn-libre, #mode-input button.actif{background:var(--hb-vert);color:#f3dba0;
+  border:1px solid var(--hb-filet);box-shadow:0 2px 3px #50341655;}
+#btn-libre:hover, #mode-input button.actif:hover{background:var(--hb-vert-survol);
+  color:#fbe7b8;border-color:#c9a55a;}
+#mode-input button:not(.actif){background:rgba(255,244,222,.35);border-color:#a48b6088;}
+/* la page est plus étroite que l'écran nu (cadre, colonne des présents) : les
+   modes passent à la ligne plutôt que de sortir du parchemin */
+#fil #mode-input{flex-wrap:wrap;gap:4px;}
+#fil #mode-input button{white-space:nowrap;font-size:.68em;padding:3px 9px;}
+
+/* la case d'écriture : un papier plus clair, glissé dans la page */
+/* border-box : jeu.css la pose à 100 % plus son rembourrage, ce qui ne se
+   voyait pas sur une page sans bord et crève ici le filet du parchemin */
+#fil .libre textarea, #champ-libre{box-sizing:border-box;background:#fff4de;color:var(--ink);
+  border:1px solid #a48b60;border-radius:3px;box-shadow:inset 0 1px 3px #7652291f;}
+#fil .libre textarea:focus, #champ-libre:focus{outline:none;border-color:var(--accent);
+  box-shadow:inset 0 1px 3px #7652291f,0 0 0 2px #1e4a3326;}
+
+/* le bas de page : où l'on est, et quand */
+#bandeau{color:var(--muted);font-family:var(--hb-lettres);font-style:italic;}
+#fil #fil-actions{border-top-color:#94704466;}

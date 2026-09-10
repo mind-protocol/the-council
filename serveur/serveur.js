@@ -24,6 +24,7 @@ const { direLaPeremption } = monde.monde3d;
 // qu'en sachant ce qu'on déplace.
 const ROUTES = [
   require("./routes/joueur"),      // /, /moi, /bascule
+  require("./routes/habillage"),   // /habillage.css, /habillage/… — le visage de la partie
   monde.presence,                  // /presence — qui est où, à cette minute
   plan.atelier,                    // pages d'atelier, /admin, /regie
   monde.chemin,                    // /chemin, /monde/…

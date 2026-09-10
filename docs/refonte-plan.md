@@ -102,6 +102,9 @@ mondes/<id>/
   plans/              les plans de salles, la géométrie locale
   blasons/            les armes
   carte/              les cadrages, les bannières, la table peinte
+  habillage/          le visage de la partie : habillage.css (chargée après
+                      jeu.css), habillage.json (onglet, bandeau, logo), images
+                      — facultatif, voir serveur/routes/habillage.js
   manuel.md           ce que le meneur doit savoir de CE monde
   voix.json           les timbres
 ```
