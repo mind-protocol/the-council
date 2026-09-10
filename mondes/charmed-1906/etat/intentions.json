@@ -40,6 +40,47 @@
   }
  },
  {
+  "personnage_id": "patience-warren",
+  "croyances": [
+   "Enfant, elle a entendu la voix de la cave chanter son prénom. Elle l'a dit à sa mère, qui l'a fait taire et a mis une lampe dans l'escalier. Elle ne l'a jamais dit à Prudence.",
+   "Une petite née dans cette maison et à qui l'on ne dit rien, c'est une petite que la cave aura. Se taire n'a pas protégé Lillian : ça la laisse seule avec la voix.",
+   "Elle n'a pas figé une pièce depuis deux ans, et elle ne le fera pas devant Prudence : sa sœur a gardé la maison et le Livre parce qu'elle est l'aînée, et elle croit que ça lui donne raison sur tout."
+  ],
+  "ignore": [
+   "Que la terre va trembler dans douze minutes.",
+   "Que Lillian entend déjà la voix, trois nuits de suite.",
+   "Que le gel ne prend pas sur une sorcière : elle ne s'en est jamais servie devant sa sœur, ni devant la petite."
+  ],
+  "intention": "Monter à Prescott Street dimanche, remettre à Prudence la lettre qu'elle a écrite pour Lillian — et la lire elle-même à la petite si sa sœur refuse. Si elle apprend que Lillian entend la voix de la cave, elle n'attend pas dimanche.",
+  "plan": [
+   {
+    "id": "patience-lettre",
+    "quoi": "Porter à Prescott Street la lettre écrite pour Lillian, la remettre à Prudence en main propre et exiger qu'elle la lise à sa fille",
+    "etat": "a-faire",
+    "jours_restants": 4,
+    "depend_de": [],
+    "cout": [
+     "son dimanche de congé",
+     "que Prudence lui ouvre la porte"
+    ],
+    "si_bloque": "Si Prudence refuse, elle glisse la lettre à Bridget pour la petite, et ne remet plus les pieds dans la maison avant que Lillian ait huit ans."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "la terre tremble",
+    "alors": "Elle fige la pièce sans l'avoir voulu. Dans les vingt secondes qu'elle a, elle sort ceux qu'elle peut ; puis elle part à pied pour Prescott Street, pour Lillian d'abord.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "aime sa sœur, lui en veut, et viendra quand même",
+  "date_maj": {
+   "annee": 1906,
+   "lune": 4,
+   "jour": 18
+  }
+ },
+ {
   "personnage_id": "bridget-oconnell",
   "croyances": [
    "Madame a des façons qu'on ne raconte pas au curé, et c'est très bien comme ça tant que la petite mange et que les comptes tombent.",

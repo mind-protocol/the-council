@@ -14,7 +14,9 @@ la terre tremble ; pendant trois jours, la ville brûle.
 
 La joueuse est **Prudence Warren**, sorcière de la lignée de Melinda Warren,
 veuve, trente-cinq ans, télékinésiste. Elle vit sur Prescott Street avec sa fille
-Lillian, sept ans, et Bridget O'Connell, sa domestique. Sous la maison, dans la
+Lillian, sept ans, et Bridget O'Connell, sa domestique. Sa sœur cadette,
+**Patience**, qui fige le temps, a quitté la maison à la mort de leur mère et
+loue une chambre dans une pension de Howard Street. Sous la maison, dans la
 cave, une Ombre est scellée sur un Nexus. Le Livre des Ombres dort au grenier.
 
 Ce qu'elle bâtira après le feu, c'est la maison que Prue, Piper et Phoebe
@@ -27,7 +29,7 @@ trouveront en 1998. Chaque page qu'elle réécrit est une page qu'elles liront.
   comptine-sort, les règles de la magie. Source : `canon/`.
 - **Histoire** : le séisme à 5 h 12, les trois jours de feu, la dynamite de
   l'armée, l'ordre de tirer sur les pillards, les réfugiés.
-- **Inventé, et déclaré** : Prudence, Lillian, Bridget, leur vie ; que l'Ombre
+- **Inventé, et déclaré** : Prudence, Patience, Lillian, Bridget, leur vie ; que l'Ombre
   soit déjà là en 1906 ; **le feu qui brûle le Livre** — ce qu'elle en sauve se
   décide en jeu, par ce qu'elle fait (`evenements.json`, `le-livre-brule`).
 
@@ -42,7 +44,8 @@ trouveront en 1998. Chaque page qu'elle réécrit est une page qu'elles liront.
 
 ## Les contraintes dures
 
-1. **Elle est seule.** Le Pouvoir des Trois n'existe pas avant la troisième sœur.
+1. **Elle est seule.** Le Pouvoir des Trois n'existe pas avant la troisième sœur —
+   et deux sœurs ne font pas trois : Patience ajoute ses mains, pas un pouvoir commun.
    Une menace de rang 3 s'évite, s'emprisonne ou s'écrit pour plus tard — elle ne
    se vainc pas.
 2. **Sa télékinésie passe par la colère et par les mains**, et elle n'agit ni sur
@@ -57,6 +60,9 @@ trouveront en 1998. Chaque page qu'elle réécrit est une page qu'elles liront.
 
 - **Lillian** entend la voix de la cave. Sa mère ne le sait pas.
 - **Bridget** court à l'enfant d'abord, se signe devant l'impossible, et continue.
+- **Patience** n'habite plus la maison, mais elle y est née : enfant, elle aussi a
+  entendu la voix de la cave, et elle ne l'a jamais dit à sa sœur. Elle veut qu'on
+  dise à Lillian ce qu'elle est. Son gel part quand elle panique, pas quand elle veut.
 - **L'Ombre** ne parle que par la bouche de qui elle possède. Elle veut la petite,
   née dans la maison.
 
