@@ -20,9 +20,9 @@ import hashlib, io, os, sys
 
 
 from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
-
-racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-etat = os.path.join(racine, "etat")
+import racines  # ou vit l'etat, et de quel monde il est
+racine = racines.racine()  # le MONDE, pas le depot
+etat = racines.etat()
 veilles = os.path.join(etat, "veille")
 
 # flux.jsonl est append-only et bouge a chaque item : il sonnerait en continu
