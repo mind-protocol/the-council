@@ -1,0 +1,70 @@
+[
+ {
+  "id": "seisme-1906",
+  "date_prevue": {"annee": 1906, "lune": 4, "jour": 18, "minute": 312},
+  "type": "canon",
+  "importance": 100,
+  "description": "Le grand séisme de San Francisco : une minute environ de secousses. La maison tient debout mais se tord ; la pierre qui scelle la cave se fend.",
+  "lieu_id": "san-francisco",
+  "acteurs": [],
+  "conditions": [],
+  "statut": "a-venir",
+  "effets": [
+   "la pierre de la cave se fend : le déclencheur de l'Ombre tombe",
+   "le fourneau de la cuisine se renverse si Bridget l'a allumé : feu dans la cuisine",
+   "la lampe de la chambre de Prudence tombe",
+   "le télégraphe et les conduites de gaz de la ville se rompent"
+  ],
+  "diffusion": [],
+  "_": "HISTOIRE. L'heure est celle de l'histoire (5 h 12). Les effets sur la maison sont inventés."
+ },
+ {
+  "id": "le-livre-brule",
+  "date_prevue": {"annee": 1906, "lune": 4, "jour": 18, "minute": 330},
+  "type": "programme",
+  "importance": 90,
+  "description": "Le feu de la cuisine gagne l'escalier puis le palier ; la fumée et les flammes montent au grenier où dort le Livre des Ombres.",
+  "lieu_id": "san-francisco",
+  "acteurs": ["prudence-warren"],
+  "conditions": [
+   "si le feu de la cuisine est éteint avant 5 h 20, le Livre ne brûle pas — mais la cave reste ouverte",
+   "si Prudence monte au grenier avant 5 h 30, elle sauve ce que ses bras et sa colère emportent : le reste brûle",
+   "si Prudence choisit sa fille d'abord, le Livre brûle entier sauf ce que le feu épargne au hasard"
+  ],
+  "statut": "a-venir",
+  "effets": [
+   "le Livre des Ombres perd la plupart de ses pages ; le MJ tranche lesquelles d'après ce qu'elle a fait",
+   "la cuisine et l'escalier brûlent ; la maison n'est plus habitable"
+  ],
+  "diffusion": [],
+  "_": "INVENTION DÉCLARÉE (option 3 du 10.9). Ce qui est sauvé se décide en jeu, jamais d'avance."
+ },
+ {
+  "id": "proclamation-du-maire",
+  "date_prevue": {"annee": 1906, "lune": 4, "jour": 18, "minute": 720},
+  "type": "canon",
+  "importance": 40,
+  "description": "Le maire fait placarder l'ordre de tirer sur les pillards ; l'armée patrouille.",
+  "lieu_id": "san-francisco",
+  "acteurs": [],
+  "conditions": [],
+  "statut": "a-venir",
+  "effets": ["les soldats tiennent les rues ; un homme qui porte des biens dans les ruines peut être abattu"],
+  "diffusion": [],
+  "_": "HISTOIRE. L'heure exacte de la proclamation est à vérifier ; le jour est le 18."
+ },
+ {
+  "id": "le-grand-incendie",
+  "date_prevue": {"annee": 1906, "lune": 4, "jour": 18, "minute": 400},
+  "type": "canon",
+  "importance": 80,
+  "description": "Les feux nés du séisme se rejoignent et brûlent la ville trois jours ; l'armée dynamite des maisons pour faire des coupe-feux.",
+  "lieu_id": "san-francisco",
+  "acteurs": [],
+  "conditions": [],
+  "statut": "a-venir",
+  "effets": ["trois jours de feu, jusqu'au 21", "les réfugiés gagnent les parcs et le Presidio"],
+  "diffusion": [],
+  "_": "HISTOIRE. Si le feu atteint Prescott Street est une question à trancher sur la carte le moment venu."
+ }
+]

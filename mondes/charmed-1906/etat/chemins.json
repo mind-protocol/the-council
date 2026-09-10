@@ -1,0 +1,20 @@
+{
+ "_": "LA TOPOLOGIE DE LA MAISON — en minutes, et rien d'autre. Mêmes ids que plans/san-francisco.json. Tout tient dans une composante : la maison entière est le quartier de Prudence.",
+ "alias": {
+  "ma-chambre": "chambre-prudence",
+  "sous-sol": "cave",
+  "seuil": "perron",
+  "rue": "prescott-street"
+ },
+ "aretes": [
+  ["chambre-prudence", "palier", 1],
+  ["chambre-lillian", "palier", 1],
+  ["palier", "grenier", 1],
+  ["palier", "escalier", 1],
+  ["escalier", "salon", 1],
+  ["escalier", "cuisine", 1],
+  ["escalier", "cave", 1],
+  ["escalier", "perron", 1],
+  ["perron", "prescott-street", 1]
+ ]
+}

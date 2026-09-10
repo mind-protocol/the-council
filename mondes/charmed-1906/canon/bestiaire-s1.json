@@ -1,0 +1,588 @@
+{
+  "titre": "Bestiaire de la saison 1 — valeurs pour le moteur de résolution",
+  "genereLe": "2026-09-10",
+  "statut": "proposition, non actée ; tirée des transcriptions S01E01 à S01E22 et du graphe graphe-s1.json",
+  "vocabulaire": {
+    "rang": "rang minimal du moyen qui neutralise durablement : 0 force ordinaire, 1 potion générique ou détonation, 2 moyen nommé ou formule, 3 Pouvoir des Trois ou contexte exceptionnel, null hors échelle (même échelle que SYSTEME_RESOLUTION_PROPOSE.md)",
+    "fentes": "vocabulaire de SYSTEME_RESOLUTION_PROPOSE.md §2.1 (fentes communes et adverses)",
+    "immunites.famille": "fente = cette fente échoue contre lui ; destruction = la destruction ne tient pas ; precondition = une condition doit être remplie avant de pouvoir l'atteindre",
+    "cle.issue": "detruit | banni (peut revenir) | emprisonne (peut être libéré) | repousse | evite (on échappe sans le vaincre)",
+    "statut": "E établi dans le dialogue ; C affirmé par un personnage seulement ; ? effet vu, cause non dite",
+    "portee": "contact | vue | piece | lieu | plan | exceptionnelle"
+  },
+  "avertissement": "Aucune recette exacte. Les valeurs chiffrées sont celles que prononce le dialogue ; aucun chiffre n'est inventé. Un champ null signifie non documenté en saison 1.",
+
+  "entrees": [
+    {
+      "id": "warlock-athame",
+      "nom": "Warlock tueur de sorcières (Jeremy)",
+      "episodes": ["S01E01"],
+      "classe": "Warlock",
+      "rang": 3,
+      "fentes": [
+        {"fente": "deguisement", "portee": "contact", "note": "vit comme un mortel ordinaire"},
+        {"fente": "absorption", "portee": "contact", "note": "meurtre rituel à l'athamé"},
+        {"fente": "force", "portee": "contact"}
+      ],
+      "immunites": [],
+      "loi": {"proie": "sorcières, de préférence isolées", "fenetre": "dès que les pouvoirs sont éveillés", "cycle": null, "condition": "le pouvoir volé exige un meurtre rituel"},
+      "croissance": "chaque meurtre ajoute le pouvoir de la victime",
+      "cle": [
+        {"moyen": "Pouvoir des Trois (formule répétée ensemble)", "rangMoyen": 3, "issue": "detruit", "preconditions": ["trois sœurs réunies"], "statut": "E"},
+        {"moyen": "sort rituel inadapté", "rangMoyen": 2, "issue": "echec", "preconditions": [], "statut": "E", "note": "un sort écrit pour autre chose ne l'atteint pas"}
+      ],
+      "actions": [
+        {"verbe": "TUER RITUELLEMENT", "fente": "absorption", "pre": ["athamé", "sorcière isolée"], "effet": "vole le pouvoir de la victime"},
+        {"verbe": "FORCER", "fente": "force", "pre": ["pouvoirs cumulés"], "effet": "franchit portes et barricades"}
+      ],
+      "valeurs": {"victimesAvantEpisode": 3},
+      "statut": "E",
+      "preuve": "It was the only way to get their powers."
+    },
+    {
+      "id": "javna",
+      "nom": "Javna",
+      "episodes": ["S01E02"],
+      "classe": "Démon",
+      "rang": 3,
+      "fentes": [
+        {"fente": "absorption", "portee": "vue", "note": "regard qui vole la force vitale"},
+        {"fente": "deguisement", "portee": "contact", "note": "identité humaine, reste jeune"}
+      ],
+      "immunites": [],
+      "loi": {"proie": "jeunes", "fenetre": "une semaine par an", "cycle": "annuel", "condition": "attirer la victime sous fausse identité"},
+      "cle": [
+        {"moyen": "incantation du Livre à trois + miroir face au démon", "rangMoyen": 3, "issue": "banni", "preconditions": ["trois sœurs réunies", "miroir"], "statut": "E", "effetsSecondaires": ["victimes rajeunies", "victimes amnésiques"]}
+      ],
+      "actions": [
+        {"verbe": "VOLER LA FORCE VITALE", "fente": "absorption", "pre": ["semaine de nourrissage", "contact visuel"], "effet": "la victime vieillit brutalement"}
+      ],
+      "valeurs": {"joursDeNourrissageParAn": 7},
+      "statut": "E",
+      "preuve": "Javna feeds one week out of every year"
+    },
+    {
+      "id": "metamorphes",
+      "nom": "Métamorphes",
+      "episodes": ["S01E03"],
+      "classe": "Démon",
+      "rang": 2,
+      "fentes": [
+        {"fente": "deguisement", "portee": "contact", "note": "copie le corps, pas les souvenirs"}
+      ],
+      "immunites": [],
+      "loi": {"proie": "le Livre des Ombres", "fenetre": null, "cycle": null, "condition": "doit tromper une sœur pour sortir le Livre de la maison"},
+      "cle": [
+        {"moyen": "sort d'expulsion du Livre", "rangMoyen": 2, "issue": "detruit", "preconditions": ["dans la maison", "récité à trois (?)"], "statut": "E", "note": "frappe tout être non-sœur présent : risque pour les innocents ; un talisman protège"}
+      ],
+      "actions": [
+        {"verbe": "SE MÉTAMORPHOSER", "fente": "deguisement", "pre": [], "effet": "prend l'apparence d'un proche ; trompe la prémonition"},
+        {"verbe": "S'INFILTRER", "fente": "acces", "pre": ["invitation ou porte ouverte"], "effet": "accède à la maison et au Livre"}
+      ],
+      "valeurs": {},
+      "statut": "E"
+    },
+    {
+      "id": "yama",
+      "nom": "Yama, gardien des portes des enfers",
+      "episodes": ["S01E04"],
+      "classe": "Collecteur d'âmes",
+      "rang": null,
+      "fentes": [
+        {"fente": "absorption", "portee": "contact", "note": "capture une âme"},
+        {"fente": "autorite", "portee": "exceptionnelle"}
+      ],
+      "immunites": [
+        {"famille": "destruction", "detail": "aucun moyen de le vaincre n'est montré ; le gel ne l'arrête qu'un instant"}
+      ],
+      "loi": {"proie": "âmes dont le corps n'est pas enterré", "fenetre": "quand les portes des enfers s'ouvrent", "cycle": null, "condition": "indifférent au bien et au mal"},
+      "cle": [
+        {"moyen": "enterrer le corps avant la capture", "rangMoyen": 0, "issue": "evite", "preconditions": ["corps retrouvé"], "statut": "E"}
+      ],
+      "actions": [
+        {"verbe": "CAPTURER UNE ÂME", "fente": "absorption", "pre": ["corps non enterré", "portes ouvertes"], "effet": "l'âme part en enfer pour toujours"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "Yama doesn't care about good or evil."
+    },
+    {
+      "id": "sorcier-des-reves",
+      "nom": "Sorcier des rêves",
+      "episodes": ["S01E05"],
+      "classe": "Mortel augmenté",
+      "rang": 0,
+      "fentes": [
+        {"fente": "possession", "portee": "plan", "note": "entre dans le rêve de la cible et le contrôle"},
+        {"fente": "terreur", "portee": "plan", "note": "lit les pensées, paralyse"}
+      ],
+      "immunites": [
+        {"famille": "precondition", "detail": "ne peut être atteint que dans le rêve ; la sorcière doit dormir"}
+      ],
+      "loi": {"proie": "personnes endormies", "fenetre": "sommeil de la cible", "cycle": null, "condition": "drogue et appareil ; mourir dans le rêve tue réellement"},
+      "cle": [
+        {"moyen": "pouvoir de la sorcière utilisé dans le rêve", "rangMoyen": 0, "issue": "detruit", "preconditions": ["être dans le rêve", "vaincre la paralysie de la peur"], "statut": "E"},
+        {"moyen": "rester éveillée", "rangMoyen": 0, "issue": "evite", "preconditions": [], "statut": "E", "note": "intenable longtemps"}
+      ],
+      "actions": [
+        {"verbe": "SAUTER DANS UN RÊVE", "fente": "possession", "pre": ["cible endormie"], "effet": "blesse ou tue la cible dans la réalité"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "In dreams, I can do anything."
+    },
+    {
+      "id": "hecate",
+      "nom": "Hécate, reine des enfers",
+      "episodes": ["S01E06"],
+      "classe": "Démon",
+      "rang": 2,
+      "fentes": [
+        {"fente": "deguisement", "portee": "contact", "note": "ne vieillit pas"},
+        {"fente": "lien", "portee": "contact", "note": "envoûte un mortel, pacte familial"},
+        {"fente": "autorite", "portee": "lieu", "note": "suivantes démoniaques"}
+      ],
+      "immunites": [
+        {"famille": "precondition", "detail": "l'envoûtement du mortel doit être rompu (déclaration d'amour vrai scellée d'un baiser)"}
+      ],
+      "loi": {"proie": "un mortel à épouser", "fenetre": "retour tous les 200 ans", "cycle": "200 ans", "condition": "pacte antérieur avec la famille + mariage légal et sanctifié pour concevoir l'enfant démon"},
+      "cle": [
+        {"moyen": "poignard rituel + formule de bannissement", "rangMoyen": 2, "issue": "banni", "preconditions": ["envoûtement rompu"], "statut": "?", "note": "un ordre mortel seul a échoué"}
+      ],
+      "actions": [
+        {"verbe": "PACTISER", "fente": "lien", "pre": ["mortel tenté"], "effet": "prospérité contre un proche livré"},
+        {"verbe": "ENVOÛTER", "fente": "lien", "pre": [], "effet": "le mortel l'épouse"}
+      ],
+      "valeurs": {"cycleAnnees": 200, "dureePacteAnnees": 20},
+      "statut": "E",
+      "preuve": "She comes to Earth every 200 years."
+    },
+    {
+      "id": "kali",
+      "nom": "Kali, esprit du miroir",
+      "episodes": ["S01E07"],
+      "classe": "Esprit",
+      "rang": 2,
+      "fentes": [
+        {"fente": "possession", "portee": "hote", "note": "l'hôte touche le miroir"},
+        {"fente": "lien", "portee": "hote", "note": "confère un pouvoir à son hôte"}
+      ],
+      "immunites": [
+        {"famille": "precondition", "detail": "n'existe que dans le reflet tant qu'il n'a pas d'hôte"}
+      ],
+      "loi": {"proie": "une sorcière dont prendre la place", "fenetre": null, "cycle": null, "condition": "conjuré par la formule répétée devant le miroir"},
+      "cle": [
+        {"moyen": "briser son reflet", "rangMoyen": 2, "issue": "detruit", "preconditions": ["esprit devant le miroir", "esprit figé"], "statut": "E", "effetsSecondaires": ["l'hôte est libéré", "le pouvoir conféré disparaît"]}
+      ],
+      "actions": [
+        {"verbe": "POSSÉDER", "fente": "possession", "pre": ["contact avec le miroir"], "effet": "agit par l'hôte"},
+        {"verbe": "CONFÉRER UN POUVOIR", "fente": "lien", "pre": ["hôte obéissant"], "effet": "pouvoir de chaleur ou de feu"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "I conjure thee, Kali."
+    },
+    {
+      "id": "warlock-du-futur",
+      "nom": "Warlock venu du futur",
+      "episodes": ["S01E08"],
+      "classe": "Warlock",
+      "rang": null,
+      "fentes": [
+        {"fente": "energie", "portee": "contact", "note": "marque brûlée au front, mort sans blessure"},
+        {"fente": "temps", "portee": "exceptionnelle", "note": "voyage vers le passé (C)"}
+      ],
+      "immunites": [],
+      "loi": {"proie": "futurs créateurs d'un vaccin", "fenetre": null, "cycle": null, "condition": "ignore où se cache sa cible"},
+      "cle": [
+        {"moyen": "non établi dans le dialogue", "rangMoyen": null, "issue": null, "preconditions": [], "statut": "?"}
+      ],
+      "actions": [
+        {"verbe": "TUER PAR LE TOUCHER", "fente": "energie", "pre": ["contact"], "effet": "mort"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "note": "le Livre ne le décrit pas ; le gel l'arrête brièvement"
+    },
+    {
+      "id": "matthew-tate",
+      "nom": "Matthew Tate, warlock copieur",
+      "episodes": ["S01E09"],
+      "classe": "Warlock",
+      "rang": 2,
+      "fentes": [
+        {"fente": "absorption", "portee": "vue", "note": "copie tout pouvoir utilisé contre lui"},
+        {"fente": "teleportation", "portee": "vue", "note": "clignement"}
+      ],
+      "immunites": [
+        {"famille": "fente", "detail": "immunisé contre tout pouvoir qu'il a copié"},
+        {"famille": "destruction", "detail": "le Pouvoir des Trois ne pourrait pas le détruire (C)"}
+      ],
+      "loi": {"proie": "les pouvoirs de la lignée", "fenetre": null, "cycle": null, "condition": "ne copie que ce qu'on utilise contre lui"},
+      "cle": [
+        {"moyen": "malédiction qui l'enferme dans un médaillon", "rangMoyen": 2, "issue": "emprisonne", "preconditions": ["ingrédients", "incantation", "l'ancêtre présente"], "statut": "E", "note": "une descendante peut le libérer par erreur"},
+        {"moyen": "l'ancêtre reprend ses pouvoirs copiés", "rangMoyen": 2, "issue": "prive", "preconditions": ["ancêtre rappelée par le sang des trois"], "statut": "E"}
+      ],
+      "actions": [
+        {"verbe": "COPIER", "fente": "absorption", "pre": ["être visé par un pouvoir"], "effet": "gagne le pouvoir et l'immunité"},
+        {"verbe": "CLIGNER", "fente": "teleportation", "pre": [], "effet": "déplacement instantané"}
+      ],
+      "valeurs": {"pouvoirsCibles": 3},
+      "statut": "E",
+      "preuve": "I can share your powers, but you can't share mine."
+    },
+    {
+      "id": "rex-et-hannah",
+      "nom": "Rex et Hannah, warlocks",
+      "episodes": ["S01E10"],
+      "classe": "Warlock",
+      "rang": null,
+      "fentes": [
+        {"fente": "invisibilite", "portee": "lieu", "note": "projection astrale"},
+        {"fente": "possession", "portee": "vue", "note": "implante une pensée que la cible croit sienne"},
+        {"fente": "autorite", "portee": "contact", "note": "chantage"}
+      ],
+      "immunites": [],
+      "loi": {"proie": "les pouvoirs des trois sœurs", "fenetre": null, "cycle": null, "condition": "obtenir un renoncement volontaire plutôt qu'un combat"},
+      "cle": [
+        {"moyen": "punition de leur supérieur après l'échec", "rangMoyen": null, "issue": "detruit", "preconditions": ["mission échouée"], "statut": "?"}
+      ],
+      "actions": [
+        {"verbe": "PROJETER SON ESPRIT", "fente": "invisibilite", "pre": [], "effet": "présence invisible"},
+        {"verbe": "IMPLANTER UNE PENSÉE", "fente": "possession", "pre": ["projection active"], "effet": "la cible agit ; falsifie une prémonition"},
+        {"verbe": "FAIRE CHANTER", "fente": "autorite", "pre": ["preuve fabriquée"], "effet": "pousse les sœurs au sort de renoncement"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "It's called astral projection."
+    },
+    {
+      "id": "gardien-de-l-urne",
+      "nom": "Gardien de l'urne",
+      "episodes": ["S01E11"],
+      "classe": "Créature maudite",
+      "rang": null,
+      "fentes": [
+        {"fente": "pistage", "portee": "exceptionnelle", "note": "retrouve chaque voleur où qu'il soit"},
+        {"fente": "force", "portee": "contact", "note": "piqûre venimeuse mortelle"}
+      ],
+      "immunites": [
+        {"famille": "fente", "detail": "les pouvoirs des sorcières n'agissent pas sur lui"}
+      ],
+      "loi": {"proie": "les voleurs de l'urne", "fenetre": "réveillé par un vol", "cycle": "à chaque nouveau vol", "condition": "épargne les non-voleurs"},
+      "cle": [
+        {"moyen": "acte désintéressé du voleur visé", "rangMoyen": null, "issue": "banni", "preconditions": ["le coupable se sacrifie pour autrui"], "statut": "E"}
+      ],
+      "actions": [
+        {"verbe": "PUNIR LE VOLEUR", "fente": "force", "pre": ["objet volé"], "effet": "mort"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "I'm The Guardian of the urn."
+    },
+    {
+      "id": "wendigo",
+      "nom": "Wendigo",
+      "episodes": ["S01E12"],
+      "classe": "Créature maudite",
+      "rang": 1,
+      "fentes": [
+        {"fente": "force", "portee": "contact", "note": "arrache le cœur"},
+        {"fente": "deguisement", "portee": "contact", "note": "humain le jour"},
+        {"fente": "absorption", "portee": "contact", "note": "une griffure contamine et transforme"}
+      ],
+      "immunites": [],
+      "loi": {"proie": "sang AB négatif", "fenetre": "la nuit, veille, nuit et lendemain de la pleine lune", "cycle": "lunaire", "condition": "transforme de nuit"},
+      "cle": [
+        {"moyen": "feu (fusée de détresse)", "rangMoyen": 1, "issue": "detruit", "preconditions": ["créature localisée", "de préférence figée"], "statut": "E", "effetsSecondaires": ["la personne contaminée guérit"]},
+        {"moyen": "feu tenu à distance", "rangMoyen": 0, "issue": "repousse", "preconditions": [], "statut": "E"}
+      ],
+      "actions": [
+        {"verbe": "ATTAQUER", "fente": "force", "pre": ["nuit de pleine lune", "victime AB négatif"], "effet": "mort ; le survivant griffé est contaminé"}
+      ],
+      "valeurs": {"nuitsParCycle": 3},
+      "statut": "E",
+      "preuve": "The night before, the night after and the night of the full moon."
+    },
+    {
+      "id": "barbas",
+      "nom": "Barbas, démon de la Peur",
+      "episodes": ["S01E13"],
+      "classe": "Démon",
+      "rang": 2,
+      "fentes": [
+        {"fente": "terreur", "portee": "contact", "note": "lit et incarne la peur la plus profonde"},
+        {"fente": "perception", "portee": "vue", "note": "voit la vraie peur, pas celle qu'on croit avoir"}
+      ],
+      "immunites": [
+        {"famille": "fente", "detail": "la peur paralyse les pouvoirs de sa cible"},
+        {"famille": "fente", "detail": "une amulette de protection ne l'arrête pas"},
+        {"famille": "destruction", "detail": "repoussé, pas détruit : revient au cycle suivant"}
+      ],
+      "loi": {"proie": "sorcières non mariées", "fenetre": "vendredi 13, jusqu'à minuit", "cycle": "1300 ans", "condition": "s'il réussit ses meurtres, il est libéré des enfers en permanence"},
+      "cle": [
+        {"moyen": "lâcher sa peur, avec l'appui de l'amour", "rangMoyen": 2, "issue": "repousse", "preconditions": ["affronter la peur (la refouler ne suffit pas)"], "statut": "E"},
+        {"moyen": "tenir jusqu'à minuit", "rangMoyen": 0, "issue": "repousse", "preconditions": [], "statut": "C"}
+      ],
+      "actions": [
+        {"verbe": "TERRIFIER", "fente": "terreur", "pre": ["sorcière isolée", "fenêtre ouverte"], "effet": "pouvoirs figés ; mort par arrêt du cœur"}
+      ],
+      "valeurs": {"cycleAnnees": 1300, "nombreDeVictimesRequis": null},
+      "statut": "E",
+      "preuve": "The Demon of Fear appears once every 1,300 years on Friday the 13th.",
+      "note": "le nombre de victimes requis n'apparaît pas dans le dialogue"
+    },
+    {
+      "id": "woogyman",
+      "nom": "Le Woogyman, l'Ombre du sous-sol",
+      "episodes": ["S01E15"],
+      "classe": "Esprit",
+      "rang": 2,
+      "fentes": [
+        {"fente": "possession", "portee": "lieu", "note": "possède qui descend au sous-sol"},
+        {"fente": "lien", "portee": "hote", "note": "donne un pouvoir à la sorcière possédée"},
+        {"fente": "confinement", "portee": "lieu", "note": "verrouille la maison et coupe l'accès au Livre"}
+      ],
+      "immunites": [
+        {"famille": "fente", "detail": "les pouvoirs des sorcières n'agissent pas sur lui"},
+        {"famille": "destruction", "detail": "banni, pas détruit"}
+      ],
+      "loi": {"proie": "occupants de la maison", "fenetre": "libéré par un séisme", "cycle": null, "condition": "lié au Nexus sous la maison"},
+      "cle": [
+        {"moyen": "lumière dirigée + comptine-sort transmise par la grand-mère", "rangMoyen": 2, "issue": "banni", "preconditions": ["connaître la comptine"], "statut": "E", "effetsSecondaires": ["les possédés redeviennent normaux"]}
+      ],
+      "actions": [
+        {"verbe": "POSSÉDER", "fente": "possession", "pre": ["cible au sous-sol"], "effet": "violence contre les proches"},
+        {"verbe": "VERROUILLER LA MAISON", "fente": "confinement", "pre": ["contrôle du Nexus"], "effet": "les sœurs ne peuvent plus entrer"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "Grams told you she got rid of the Woogyman in the basement"
+    },
+    {
+      "id": "seigneur-de-guerre",
+      "nom": "Seigneur de guerre à l'épée de cristal",
+      "episodes": ["S01E16"],
+      "classe": "Warlock",
+      "rang": 2,
+      "fentes": [
+        {"fente": "absorption", "portee": "contact", "note": "l'épée aspire l'âme et la magie"},
+        {"fente": "force", "portee": "contact"},
+        {"fente": "regeneration", "portee": "soi", "note": "se réincarne ailleurs"}
+      ],
+      "immunites": [
+        {"famille": "fente", "detail": "immunisé aux armes des hommes tant qu'il tient son épée"}
+      ],
+      "loi": {"proie": "une sorcière première-née", "fenetre": null, "cycle": "réincarnation", "condition": "code d'honneur : doit voler une capacité"},
+      "cle": [
+        {"moyen": "sa propre épée retournée contre lui (télékinésie)", "rangMoyen": 2, "issue": "detruit", "preconditions": ["il tient l'épée"], "statut": "E"},
+        {"moyen": "le séparer de son épée", "rangMoyen": 0, "issue": "prive", "preconditions": [], "statut": "E", "note": "lève l'immunité et le déshonore"}
+      ],
+      "actions": [
+        {"verbe": "VOLER UNE CAPACITÉ", "fente": "absorption", "pre": ["épée", "cible détentrice"], "effet": "transperce la cible", "note": "échoue sur un double sans âme"},
+        {"verbe": "ENTRAVER LE CANAL", "fente": "force", "pre": ["connaître le canal corporel"], "effet": "bloque le pouvoir"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "they're immune to the weapons of man"
+    },
+    {
+      "id": "nicholas",
+      "nom": "Nicholas, warlock immunisé",
+      "episodes": ["S01E17"],
+      "classe": "Warlock",
+      "rang": 2,
+      "fentes": [
+        {"fente": "energie", "portee": "vue", "note": "fait bouillir le sang"},
+        {"fente": "lien", "portee": "contact", "note": "pacte avec la mère des sœurs"}
+      ],
+      "immunites": [
+        {"famille": "fente", "detail": "anneau béni : immunisé contre les pouvoirs des sœurs"},
+        {"famille": "precondition", "detail": "l'immunité doit être levée par sa bénisseuse d'origine"}
+      ],
+      "loi": {"proie": "les pouvoirs futurs de la lignée", "fenetre": "quand les pouvoirs sont complets", "cycle": null, "condition": "pacte : vie sauve contre pouvoirs futurs"},
+      "cle": [
+        {"moyen": "sort d'annihilation + sachet de composants", "rangMoyen": 2, "issue": "detruit", "preconditions": ["anneau dé-béni"], "statut": "E"}
+      ],
+      "actions": [
+        {"verbe": "BRÛLER DE L'INTÉRIEUR", "fente": "energie", "pre": ["cible à portée"], "effet": "mort"},
+        {"verbe": "PACTISER", "fente": "lien", "pre": ["sorcière menacée"], "effet": "obtient pouvoirs futurs et immunité"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "She blessed this ring, which gave me immunity from your powers."
+    },
+    {
+      "id": "coven-rowe",
+      "nom": "Coven Rowe, trois frères warlocks",
+      "episodes": ["S01E18"],
+      "classe": "Warlock",
+      "rang": null,
+      "fentes": [
+        {"fente": "formule", "portee": "exceptionnelle", "note": "sort d'appel par le sang"},
+        {"fente": "possession", "portee": "vue", "note": "altère la perception de la cible"}
+      ],
+      "immunites": [
+        {"famille": "precondition", "detail": "le Livre n'a pas de sort contre eux"}
+      ],
+      "loi": {"proie": "leur frère demi-warlock", "fenetre": null, "cycle": null, "condition": "le coven exige trois frères ; l'initiation exige un meurtre consenti"},
+      "cle": [
+        {"moyen": "tués par le pouvoir d'un warlock", "rangMoyen": null, "issue": "detruit", "preconditions": [], "statut": "?"},
+        {"moyen": "ordination du frère avant l'initiation", "rangMoyen": null, "issue": "prive", "preconditions": ["aucun meurtre commis"], "statut": "C", "note": "brise le trio"}
+      ],
+      "actions": [
+        {"verbe": "APPELER PAR LE SANG", "fente": "formule", "pre": ["lien de sang"], "effet": "la cible vient", "note": "ne force pas sa volonté"},
+        {"verbe": "ALTÉRER LA PERCEPTION", "fente": "possession", "pre": [], "effet": "la cible ne voit plus qu'un corps à tuer"}
+      ],
+      "valeurs": {"membresRequis": 3},
+      "statut": "E",
+      "preuve": "Three brothers destined to become the most powerful force for evil"
+    },
+    {
+      "id": "grimlocks",
+      "nom": "Grimlocks",
+      "episodes": ["S01E19"],
+      "classe": "Démon",
+      "rang": 2,
+      "fentes": [
+        {"fente": "absorption", "portee": "contact", "note": "volent la vue d'un enfant"},
+        {"fente": "perception", "portee": "vue", "note": "voient les auras du bien grâce à la vue volée"},
+        {"fente": "force", "portee": "vue", "note": "étranglent à distance"}
+      ],
+      "immunites": [],
+      "loi": {"proie": "êtres dont l'aura est bonne", "fenetre": null, "cycle": null, "condition": "la vue volée n'existe que tant que l'enfant vit"},
+      "cle": [
+        {"moyen": "potion aveuglante à la racine de schisandra", "rangMoyen": 2, "issue": "detruit", "preconditions": ["racine cueillie", "temps de préparation"], "statut": "E", "effetsSecondaires": ["la vue revient aux enfants"]}
+      ],
+      "actions": [
+        {"verbe": "VOLER LA VUE", "fente": "absorption", "pre": ["enfant capturé"], "effet": "voit les auras ; l'enfant est aveugle"},
+        {"verbe": "ÉTRANGLER", "fente": "force", "pre": ["voir l'aura de la cible"], "effet": "mort"}
+      ],
+      "valeurs": {"dureeVueVoleeHeures": 24},
+      "statut": "E",
+      "preuve": "The stolen eyesight will last 24 hours, but only if the children are alive."
+    },
+    {
+      "id": "jackson-ward",
+      "nom": "Jackson Ward, esprit maléfique",
+      "episodes": ["S01E20"],
+      "classe": "Esprit",
+      "rang": 2,
+      "fentes": [
+        {"fente": "force", "portee": "contact", "note": "a appris à tuer sur le plan physique"},
+        {"fente": "possession", "portee": "hote", "note": "possède un cadavre pour franchir l'eau"}
+      ],
+      "immunites": [
+        {"famille": "destruction", "detail": "ne peut être vaincu sur le plan physique ; le Pouvoir des Trois ne suffit pas"},
+        {"famille": "precondition", "detail": "l'eau le bloque sans hôte"}
+      ],
+      "loi": {"proie": "ceux qui l'ont fait exécuter", "fenetre": null, "cycle": null, "condition": "lié au lieu de son exécution"},
+      "cle": [
+        {"moyen": "sort de bannissement prononcé depuis le plan astral", "rangMoyen": 2, "issue": "banni", "preconditions": ["mort temporaire par potion", "une sœur pour réanimer"], "statut": "E"},
+        {"moyen": "potion d'appel sur sa tombe", "rangMoyen": 1, "issue": "attire", "preconditions": ["sang d'une victime"], "statut": "E"}
+      ],
+      "actions": [
+        {"verbe": "TUER", "fente": "force", "pre": [], "effet": "mort ; ne laisse qu'une trace ectoplasmique"}
+      ],
+      "valeurs": {"fenetreReanimationMinutes": 4},
+      "statut": "E",
+      "preuve": "an evil spirit can't be vanquished on the physical plane, only the astral plane."
+    },
+    {
+      "id": "collecteur-d-ames",
+      "nom": "Collecteur d'âmes",
+      "episodes": ["S01E20"],
+      "classe": "Collecteur d'âmes",
+      "rang": null,
+      "fentes": [
+        {"fente": "absorption", "portee": "plan", "note": "saisit une âme séparée de son corps"}
+      ],
+      "immunites": [
+        {"famille": "destruction", "detail": "aucun moyen de le vaincre n'est montré"}
+      ],
+      "loi": {"proie": "âmes de sorcières hors de leur corps", "fenetre": "pendant une mort, même temporaire", "cycle": null, "condition": null},
+      "cle": [
+        {"moyen": "réintégrer le corps à temps", "rangMoyen": 0, "issue": "evite", "preconditions": ["réanimation"], "statut": "E"}
+      ],
+      "actions": [
+        {"verbe": "SAISIR UNE ÂME", "fente": "absorption", "pre": ["âme hors du corps"], "effet": "l'âme part en enfer"}
+      ],
+      "valeurs": {},
+      "statut": "E"
+    },
+    {
+      "id": "etre-des-tenebres",
+      "nom": "Être des ténèbres",
+      "episodes": ["S01E21"],
+      "classe": "Être des ténèbres",
+      "rang": 2,
+      "fentes": [
+        {"fente": "pistage", "portee": "exceptionnelle", "note": "localise sa proie par la pensée"},
+        {"fente": "outil", "portee": "vue", "note": "arbalète à flèches empoisonnées"},
+        {"fente": "energie", "portee": "contact", "note": "toucher de mort, déclenché par la haine"}
+      ],
+      "immunites": [
+        {"famille": "precondition", "detail": "une proie occultée par un Être de lumière est introuvable"}
+      ],
+      "loi": {"proie": "Êtres de lumière et futurs Êtres de lumière", "fenetre": null, "cycle": null, "condition": "la victoire exige le consentement de la proie (C)"},
+      "cle": [
+        {"moyen": "son propre toucher de mort retourné, via un sort d'échange de pouvoirs", "rangMoyen": 2, "issue": "detruit", "preconditions": ["échange de pouvoirs", "éprouver la haine"], "statut": "E"}
+      ],
+      "actions": [
+        {"verbe": "TIRER UNE FLÈCHE EMPOISONNÉE", "fente": "outil", "pre": ["cible Être de lumière"], "effet": "mort lente, poison irréversible", "note": "seul un toucher guérisseur sauve"},
+        {"verbe": "TUER PAR LE TOUCHER", "fente": "energie", "pre": ["contact", "haine"], "effet": "mort"},
+        {"verbe": "LOCALISER", "fente": "pistage", "pre": ["proie non occultée"], "effet": "trouve la proie"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "the darklighter's poison can't be reversed."
+    },
+    {
+      "id": "rodriguez",
+      "nom": "Inspecteur Rodriguez",
+      "episodes": ["S01E21", "S01E22"],
+      "classe": "Démon",
+      "rang": 2,
+      "fentes": [
+        {"fente": "deguisement", "portee": "contact", "note": "inspecteur de police"},
+        {"fente": "energie", "portee": "vue", "note": "boule d'énergie mortelle"},
+        {"fente": "autorite", "portee": "contact", "note": "enquête, chantage sur un mortel allié"}
+      ],
+      "immunites": [
+        {"famille": "destruction", "detail": "la boucle de Tempus annule sa mort tant qu'elle n'est pas brisée"}
+      ],
+      "loi": {"proie": "les trois sœurs réunies", "fenetre": "avant minuit", "cycle": null, "condition": "réunir les trois au même endroit"},
+      "cle": [
+        {"moyen": "sa boule d'énergie renvoyée par télékinésie", "rangMoyen": 2, "issue": "detruit", "preconditions": ["boucle temporelle brisée"], "statut": "E"},
+        {"moyen": "Pouvoir des Trois", "rangMoyen": 3, "issue": "detruit", "preconditions": [], "statut": "E", "note": "annulé par la boucle"}
+      ],
+      "actions": [
+        {"verbe": "LANCER UNE BOULE D'ÉNERGIE", "fente": "energie", "pre": ["cible en vue", "ne pas être figé"], "effet": "tue une sorcière"},
+        {"verbe": "RÉUNIR LES TROIS", "fente": "autorite", "pre": ["chantage sur un mortel allié"], "effet": "les trois piégées au même endroit"}
+      ],
+      "valeurs": {},
+      "statut": "E"
+    },
+    {
+      "id": "tempus",
+      "nom": "Tempus",
+      "episodes": ["S01E22"],
+      "classe": "Démon",
+      "rang": 3,
+      "fentes": [
+        {"fente": "temps", "portee": "exceptionnelle", "note": "recommence la journée ; seul le démon protégé se souvient"}
+      ],
+      "immunites": [],
+      "loi": {"proie": null, "fenetre": "au service d'un autre démon", "cycle": "la journée", "condition": "envoyé par la Source"},
+      "cle": [
+        {"moyen": "sort d'accélération du temps récité par les trois", "rangMoyen": 3, "issue": "banni", "preconditions": ["trois sœurs", "sort du Livre"], "statut": "E", "effetsSecondaires": ["la boucle est brisée", "un mortel mort dans la boucle n'est pas sauvé"]}
+      ],
+      "actions": [
+        {"verbe": "RÉINITIALISER LE JOUR", "fente": "temps", "pre": ["échec du démon protégé"], "effet": "la journée recommence"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "I've been sent to you, Rodriguez, as a gift."
+    }
+  ]
+}

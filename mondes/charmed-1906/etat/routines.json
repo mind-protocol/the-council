@@ -1,0 +1,41 @@
+{
+ "_": "Les journées de la maison de Prescott Street. Une bande = {de, a, salle, lieu} en minutes 0-1439 ; les bandes d'un modèle pavent la journée. Une bande est une DESTINATION, pas une position. Fichier technique, hors docs/schema.md.",
+ "peremption_minutes": 240,
+ "modeles": {
+  "enfant": {
+   "nom": "Le jour de Lillian",
+   "dortoir": {"salle": "chambre-lillian", "lieu": "La chambre de Lillian, Prescott Street"},
+   "bandes": [
+    {"de": 0, "a": 420, "salle": "@dortoir"},
+    {"de": 420, "a": 480, "salle": "cuisine", "lieu": "La cuisine, Prescott Street"},
+    {"de": 480, "a": 900, "salle": "salon", "lieu": "Le salon, Prescott Street"},
+    {"de": 900, "a": 1080, "salle": "prescott-street", "lieu": "Prescott Street"},
+    {"de": 1080, "a": 1200, "salle": "cuisine", "lieu": "La cuisine, Prescott Street"},
+    {"de": 1200, "a": 1440, "salle": "@dortoir"}
+   ]
+  },
+  "domestique": {
+   "nom": "Le jour de Bridget",
+   "dortoir": {"salle": "cuisine", "lieu": "La cuisine, Prescott Street"},
+   "bandes": [
+    {"de": 0, "a": 290, "salle": "@dortoir"},
+    {"de": 290, "a": 350, "salle": "cuisine", "lieu": "La cuisine, Prescott Street", "ferme": true, "pourquoi": "le fourneau et la bouilloire"},
+    {"de": 350, "a": 440, "salle": "prescott-street", "lieu": "Prescott Street, vers Mission Dolores", "pourquoi": "la messe de six heures"},
+    {"de": 440, "a": 1260, "salle": "cuisine", "lieu": "La cuisine, Prescott Street"},
+    {"de": 1260, "a": 1440, "salle": "@dortoir"}
+   ]
+  },
+  "ombre": {
+   "nom": "L'Ombre ne quitte pas la cave tant que la pierre tient",
+   "dortoir": {"salle": "cave", "lieu": "La cave, Prescott Street"},
+   "bandes": [
+    {"de": 0, "a": 1440, "salle": "@dortoir"}
+   ]
+  }
+ },
+ "gens": {
+  "lillian-warren": {"modele": "enfant"},
+  "bridget-oconnell": {"modele": "domestique"},
+  "l-ombre": {"modele": "ombre"}
+ }
+}

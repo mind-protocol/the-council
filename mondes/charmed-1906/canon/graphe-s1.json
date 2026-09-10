@@ -1,0 +1,1865 @@
+{
+ "titre": "Graphe causal de la magie — mécanismes généraux, saison 1",
+ "perimetre": "Série originale, S01E01 à S01E22, d'après les transcriptions de dialogue (sources/transcriptions/en). Mécanismes généralisés : aucun personnage ni lieu précis dans les nœuds.",
+ "statuts": {
+  "E": "établi dans au moins un épisode",
+  "C": "affirmé par un personnage, jamais confirmé",
+  "?": "effet observé, cause non expliquée",
+  "N": "nuancé : vrai dans certains cas, contredit dans d'autres (voir note)"
+ },
+ "noeuds": [
+  {
+   "id": "Sorcière",
+   "type": "ACTOR",
+   "def": "Née avec un pouvoir hérité ; bonne tant qu'elle suit la Règle morale."
+  },
+  {
+   "id": "Warlock",
+   "type": "ACTOR",
+   "def": "Sorcier maléfique, souvent issu d'une lignée warlock ; vole des pouvoirs, se déplace en clignant."
+  },
+  {
+   "id": "Démon",
+   "type": "ACTOR",
+   "def": "Être des enfers soumis à une loi propre (cycle, condition, proie) ; souvent sous apparence humaine."
+  },
+  {
+   "id": "Esprit",
+   "type": "ACTOR",
+   "def": "Être désincarné : fantôme d'un mort, esprit maléfique, ombre, esprit lié à un objet."
+  },
+  {
+   "id": "Créature maudite",
+   "type": "ACTOR",
+   "def": "Mal né d'une malédiction ou d'un objet (gardien d'objet, wendigo) ; frappe selon une règle fixe."
+  },
+  {
+   "id": "Supérieur démoniaque",
+   "type": "ACTOR",
+   "def": "Échelon supérieur du mal (jusqu'à la Source) qui commande et punit."
+  },
+  {
+   "id": "Collecteur d'âmes",
+   "type": "ACTOR",
+   "def": "Être qui emporte les âmes non protégées vers les enfers."
+  },
+  {
+   "id": "Être de lumière",
+   "type": "ACTOR",
+   "def": "Ancien mortel bon, envoyé par les Fondateurs pour guider des sorcières ; soigne, occulte, lévite."
+  },
+  {
+   "id": "Fondateurs",
+   "type": "ACTOR",
+   "def": "Autorité du bien qui envoie et rappelle les Êtres de lumière et fixe leurs interdits."
+  },
+  {
+   "id": "Être des ténèbres",
+   "type": "ACTOR",
+   "def": "Chasseur des Êtres de lumière et de leurs futurs protégés."
+  },
+  {
+   "id": "Ancêtre",
+   "type": "ACTOR",
+   "def": "Sorcière morte de la lignée, qui peut guider, écrire dans le Livre ou être rappelée."
+  },
+  {
+   "id": "Gardienne",
+   "type": "ACTOR",
+   "def": "Aînée vivante de la lignée, capable de lier les pouvoirs des enfants."
+  },
+  {
+   "id": "Innocent",
+   "type": "ACTOR",
+   "def": "Mortel sans pouvoir ; cible du mal, protégé de la sorcière, peut pactiser."
+  },
+  {
+   "id": "Maison de la lignée",
+   "type": "SPACE",
+   "def": "Demeure familiale ; retient le Livre ; certains sorts n'agissent qu'entre ses murs."
+  },
+  {
+   "id": "Nexus",
+   "type": "SPACE",
+   "def": "Point de pouvoir sous la maison, neutre, basculable vers le bien ou le mal."
+  },
+  {
+   "id": "Lieu consacré",
+   "type": "SPACE",
+   "def": "Lieu saint censé repousser les démons."
+  },
+  {
+   "id": "Enfers",
+   "type": "SPACE",
+   "def": "Monde souterrain d'où vient le mal et où finissent les âmes capturées."
+  },
+  {
+   "id": "Plan astral",
+   "type": "SPACE",
+   "def": "Plan des esprits ; certains sorts n'y agissent que depuis ce plan."
+  },
+  {
+   "id": "Plan onirique",
+   "type": "SPACE",
+   "def": "Rêve partagé ; ce qui y tue tue aussi dans la réalité."
+  },
+  {
+   "id": "Prison magique",
+   "type": "SPACE",
+   "def": "Reflet, objet ou dimension où un être est enfermé sans être détruit."
+  },
+  {
+   "id": "Passé",
+   "type": "SPACE",
+   "def": "Temps antérieur accessible par sort."
+  },
+  {
+   "id": "Pouvoir individuel",
+   "type": "THING",
+   "def": "Capacité innée d'une sorcière (déplacer, figer, prémonition…)."
+  },
+  {
+   "id": "Prémonition",
+   "type": "THING",
+   "def": "Vision du futur ou du passé déclenchée par contact."
+  },
+  {
+   "id": "Pouvoir des Trois",
+   "type": "THING",
+   "def": "Puissance collective de trois sœurs réunies."
+  },
+  {
+   "id": "Pouvoir conféré",
+   "type": "THING",
+   "def": "Pouvoir prêté par un être ou un objet ; disparaît avec sa source."
+  },
+  {
+   "id": "Livre des Ombres",
+   "type": "THING",
+   "def": "Grimoire de la lignée : identifie les maux, prescrit sorts et potions, s'enrichit."
+  },
+  {
+   "id": "Sort",
+   "type": "THING",
+   "def": "Formule rimée, souvent avec composants ; exécute la lettre de ses mots."
+  },
+  {
+   "id": "Contre-sort",
+   "type": "THING",
+   "def": "Sort inverse qui annule un sort."
+  },
+  {
+   "id": "Potion",
+   "type": "THING",
+   "def": "Préparation d'ingrédients précis ; souvent l'unique moyen contre une espèce."
+  },
+  {
+   "id": "Composants",
+   "type": "THING",
+   "def": "Ingrédients, bougies, sachets, sang de lignée ou de victime."
+  },
+  {
+   "id": "Objet-canal",
+   "type": "THING",
+   "def": "Miroir, planche spirite : fait passer un esprit ou un message."
+  },
+  {
+   "id": "Talisman",
+   "type": "THING",
+   "def": "Amulette ou anneau béni qui protège ou immunise."
+  },
+  {
+   "id": "Arme liée",
+   "type": "THING",
+   "def": "Athamé, épée, poignard : lié à un rituel ou à son porteur."
+  },
+  {
+   "id": "Pacte",
+   "type": "THING",
+   "def": "Accord irrévocable avec le mal ; accorde un gain contre un prix."
+  },
+  {
+   "id": "Prophétie",
+   "type": "THING",
+   "def": "Vœu ou prédiction qui agit sur les générations."
+  },
+  {
+   "id": "Force vitale",
+   "type": "THING",
+   "def": "Jeunesse, âme, vue, cœur : ressource que le mal consomme."
+  },
+  {
+   "id": "Immunité",
+   "type": "THING",
+   "def": "Protection d'un être contre un pouvoir donné."
+  },
+  {
+   "id": "Règle morale",
+   "type": "NARRATIVE",
+   "def": "« Ne nuire à personne » ; ne pas tuer un mortel ni un ennemi impuissant."
+  },
+  {
+   "id": "Bénéfice personnel",
+   "type": "NARRATIVE",
+   "def": "Interdit d'utiliser la magie pour son propre gain."
+  },
+  {
+   "id": "Secret",
+   "type": "NARRATIVE",
+   "def": "La magie doit rester cachée aux mortels."
+  },
+  {
+   "id": "Destin de protectrice",
+   "type": "NARRATIVE",
+   "def": "La sorcière bonne doit protéger les innocents."
+  },
+  {
+   "id": "Destin",
+   "type": "NARRATIVE",
+   "def": "Certains événements sont fixés et résistent au changement."
+  },
+  {
+   "id": "Hérédité",
+   "type": "NARRATIVE",
+   "def": "Le pouvoir passe par la lignée (maternelle pour les sorcières, warlock pour les warlocks) et croît à chaque génération."
+  },
+  {
+   "id": "Littéralité",
+   "type": "NARRATIVE",
+   "def": "Un sort réalise exactement ses mots : portée, durée, cible."
+  },
+  {
+   "id": "Loi du mal",
+   "type": "NARRATIVE",
+   "def": "Chaque mal obéit à des conditions propres (cycle, proie, consentement, rite)."
+  },
+  {
+   "id": "Clé unique",
+   "type": "NARRATIVE",
+   "def": "Chaque mal a un moyen précis de le vaincre ; le Pouvoir des Trois ne suffit pas toujours."
+  },
+  {
+   "id": "Interdit d'amour",
+   "type": "NARRATIVE",
+   "def": "Un Être de lumière ne doit pas aimer une sorcière."
+  },
+  {
+   "id": "Hiérarchie du mal",
+   "type": "NARRATIVE",
+   "def": "Le mal est organisé : un supérieur commande et punit l'échec."
+  },
+  {
+   "id": "Naissance",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Liaison des pouvoirs",
+   "type": "MOMENT",
+   "def": "Sort de la Gardienne qui suspend les pouvoirs des enfants."
+  },
+  {
+   "id": "Mort de la gardienne",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Réunion des trois",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Éveil",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Émotion",
+   "type": "MOMENT",
+   "def": "Chaque pouvoir a son émotion : panique pour figer, colère pour déplacer, amour pour guérir, haine pour tuer."
+  },
+  {
+   "id": "Peur",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Contact",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Pratique",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Attaque",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Moment de puissance",
+   "type": "MOMENT",
+   "def": "Minuit, pleine lune, cycle précis."
+  },
+  {
+   "id": "Meurtre rituel",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Possession",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Pacte conclu",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Mort",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Enterrement",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Mort temporaire",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Fin du sort",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Exposition",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Échec",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Destruction",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Bannissement",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Emprisonnement",
+   "type": "MOMENT"
+  },
+  {
+   "id": "Boucle temporelle",
+   "type": "MOMENT"
+  }
+ ],
+ "liens": [
+  {
+   "s": "Hérédité",
+   "v": "TRANSMET",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E14",
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Prophétie",
+   "v": "AMPLIFIE",
+   "c": "Hérédité",
+   "st": "E",
+   "ep": [
+    "S01E01"
+   ]
+  },
+  {
+   "s": "Prophétie",
+   "v": "ANNONCE",
+   "c": "Pouvoir des Trois",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E18"
+   ]
+  },
+  {
+   "s": "Naissance",
+   "v": "COMPLÈTE",
+   "c": "Pouvoir des Trois",
+   "st": "E",
+   "ep": [
+    "S01E17"
+   ],
+   "note": "le trio n'existe qu'à la naissance de la troisième sœur"
+  },
+  {
+   "s": "Gardienne",
+   "v": "PROVOQUE",
+   "c": "Liaison des pouvoirs",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E17"
+   ],
+   "note": "C en S01E01, confirmé en S01E17"
+  },
+  {
+   "s": "Liaison des pouvoirs",
+   "v": "SUSPEND",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Mort de la gardienne",
+   "v": "DÉFAIT",
+   "c": "Liaison des pouvoirs",
+   "st": "E",
+   "ep": [
+    "S01E03",
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Réunion des trois",
+   "v": "PROVOQUE",
+   "c": "Éveil",
+   "st": "E",
+   "ep": [
+    "S01E01"
+   ]
+  },
+  {
+   "s": "Éveil",
+   "v": "ROMPT la protection de",
+   "c": "Secret",
+   "st": "E",
+   "ep": [
+    "S01E01"
+   ],
+   "note": "tant qu'elles ignorent leurs pouvoirs, le mal ne les voit pas"
+  },
+  {
+   "s": "Émotion",
+   "v": "DÉCLENCHE",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E02",
+    "S01E03",
+    "S01E21"
+   ]
+  },
+  {
+   "s": "Peur",
+   "v": "PARALYSE",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E05",
+    "S01E13"
+   ]
+  },
+  {
+   "s": "Émotion",
+   "v": "LIBÈRE DE",
+   "c": "Peur",
+   "st": "E",
+   "ep": [
+    "S01E13"
+   ],
+   "note": "l'amour libère ; refouler la peur ne suffit pas"
+  },
+  {
+   "s": "Contact",
+   "v": "DÉCLENCHE",
+   "c": "Prémonition",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E03",
+    "S01E04",
+    "S01E11",
+    "S01E12",
+    "S01E19",
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Pratique",
+   "v": "REND VOLONTAIRE",
+   "c": "Prémonition",
+   "st": "E",
+   "ep": [
+    "S01E20"
+   ]
+  },
+  {
+   "s": "Pratique",
+   "v": "FAIT CROÎTRE",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E09",
+    "S01E11",
+    "S01E19"
+   ],
+   "note": "portée, contrôle, nouvelles formes (canal par les mains, visions du passé)"
+  },
+  {
+   "s": "Attaque",
+   "v": "FAIT CROÎTRE",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E09",
+    "S01E19"
+   ]
+  },
+  {
+   "s": "Pouvoir individuel",
+   "v": "COÛTE",
+   "c": "Sorcière",
+   "st": "E",
+   "ep": [
+    "S01E11",
+    "S01E20",
+    "S01E21"
+   ],
+   "note": "fatigue, douleur ressentie de la victime"
+  },
+  {
+   "s": "Pouvoir individuel",
+   "v": "EST BORNÉ PAR",
+   "c": "Maison de la lignée",
+   "st": "E",
+   "ep": [
+    "S01E02",
+    "S01E06",
+    "S01E12",
+    "S01E16"
+   ],
+   "note": "générique : portée d'une pièce, durée brève, masse limitée"
+  },
+  {
+   "s": "Pouvoir individuel",
+   "v": "N'AGIT PAS SUR",
+   "c": "Sorcière",
+   "st": "E",
+   "ep": [
+    "S01E02",
+    "S01E15"
+   ],
+   "note": "le gel ne fige pas une sorcière bonne"
+  },
+  {
+   "s": "Pouvoir individuel",
+   "v": "N'AGIT PAS SUR",
+   "c": "Esprit",
+   "st": "N",
+   "ep": [
+    "S01E07",
+    "S01E15",
+    "S01E20"
+   ],
+   "note": "inopérant sur un esprit désincarné ; agit s'il est incarné dans un hôte"
+  },
+  {
+   "s": "Pouvoir individuel",
+   "v": "N'AGIT PAS SUR",
+   "c": "Créature maudite",
+   "st": "E",
+   "ep": [
+    "S01E11"
+   ]
+  },
+  {
+   "s": "Pouvoir individuel",
+   "v": "EXIGE un canal corporel",
+   "c": "Sorcière",
+   "st": "E",
+   "ep": [
+    "S01E16"
+   ],
+   "note": "entraver les mains bloque le pouvoir"
+  },
+  {
+   "s": "Pouvoir individuel",
+   "v": "TRAHIT",
+   "c": "Secret",
+   "st": "E",
+   "ep": [
+    "S01E09",
+    "S01E19"
+   ]
+  },
+  {
+   "s": "Réunion des trois",
+   "v": "CONDITIONNE",
+   "c": "Pouvoir des Trois",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E02",
+    "S01E09",
+    "S01E17",
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Pouvoir des Trois",
+   "v": "DÉTRUIT",
+   "c": "Warlock",
+   "st": "N",
+   "ep": [
+    "S01E01",
+    "S01E09",
+    "S01E22"
+   ],
+   "note": "efficace contre la plupart ; inefficace contre un warlock copieur"
+  },
+  {
+   "s": "Pouvoir des Trois",
+   "v": "BANNIT",
+   "c": "Démon",
+   "st": "E",
+   "ep": [
+    "S01E02",
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Pouvoir des Trois",
+   "v": "NE SUFFIT PAS CONTRE",
+   "c": "Esprit",
+   "st": "E",
+   "ep": [
+    "S01E20"
+   ]
+  },
+  {
+   "s": "Pouvoir des Trois",
+   "v": "ALIMENTE",
+   "c": "Sort",
+   "st": "E",
+   "ep": [
+    "S01E03",
+    "S01E09",
+    "S01E17",
+    "S01E22"
+   ],
+   "note": "certains sorts exigent les trois : expulsion, appel du sang, voyage temporel, accélération du temps"
+  },
+  {
+   "s": "Pouvoir des Trois",
+   "v": "DISSUADE",
+   "c": "Warlock",
+   "st": "E",
+   "ep": [
+    "S01E10"
+   ]
+  },
+  {
+   "s": "Maison de la lignée",
+   "v": "RENFORCE",
+   "c": "Pouvoir des Trois",
+   "st": "C",
+   "ep": [
+    "S01E16"
+   ]
+  },
+  {
+   "s": "Livre des Ombres",
+   "v": "IDENTIFIE",
+   "c": "Démon",
+   "st": "N",
+   "ep": [
+    "S01E06",
+    "S01E07",
+    "S01E19",
+    "S01E22",
+    "S01E08",
+    "S01E11"
+   ],
+   "note": "décrit beaucoup de maux, pas tous (warlock du futur, gardien d'objet absents)"
+  },
+  {
+   "s": "Livre des Ombres",
+   "v": "PRESCRIT",
+   "c": "Clé unique",
+   "st": "E",
+   "ep": [
+    "S01E07",
+    "S01E12",
+    "S01E19"
+   ]
+  },
+  {
+   "s": "Livre des Ombres",
+   "v": "CONSERVE",
+   "c": "Sort",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E03",
+    "S01E05",
+    "S01E08",
+    "S01E09",
+    "S01E10"
+   ]
+  },
+  {
+   "s": "Livre des Ombres",
+   "v": "ÉNONCE",
+   "c": "Bénéfice personnel",
+   "st": "E",
+   "ep": [
+    "S01E02"
+   ]
+  },
+  {
+   "s": "Sorcière",
+   "v": "ENRICHIT",
+   "c": "Livre des Ombres",
+   "st": "E",
+   "ep": [
+    "S01E09",
+    "S01E15"
+   ]
+  },
+  {
+   "s": "Ancêtre",
+   "v": "ÉCRIT DANS",
+   "c": "Livre des Ombres",
+   "st": "E",
+   "ep": [
+    "S01E13",
+    "S01E17"
+   ],
+   "note": "avertissement cryptique en cas de danger"
+  },
+  {
+   "s": "Maison de la lignée",
+   "v": "RETIENT",
+   "c": "Livre des Ombres",
+   "st": "?",
+   "ep": [
+    "S01E03"
+   ],
+   "note": "le mal ne peut pas l'emporter hors de la maison sans l'aide d'une sœur"
+  },
+  {
+   "s": "Livre des Ombres",
+   "v": "ATTIRE",
+   "c": "Démon",
+   "st": "C",
+   "ep": [
+    "S01E03"
+   ]
+  },
+  {
+   "s": "Littéralité",
+   "v": "GOUVERNE",
+   "c": "Sort",
+   "st": "E",
+   "ep": [
+    "S01E08",
+    "S01E16",
+    "S01E21"
+   ],
+   "note": "remplace « n'agit que sur la cible écrite » (S01E01) : le sort fait ce que disent ses mots, pas ce que veut la lanceuse"
+  },
+  {
+   "s": "Composants",
+   "v": "CONDITIONNENT",
+   "c": "Sort",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E05",
+    "S01E09",
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Composants",
+   "v": "CONDITIONNENT",
+   "c": "Potion",
+   "st": "E",
+   "ep": [
+    "S01E19",
+    "S01E20"
+   ]
+  },
+  {
+   "s": "Sort",
+   "v": "ÉCHOUE SI INADAPTÉ À",
+   "c": "Loi du mal",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E05"
+   ]
+  },
+  {
+   "s": "Sort",
+   "v": "NE CONTRAINT PAS",
+   "c": "Émotion",
+   "st": "C",
+   "ep": [
+    "S01E05",
+    "S01E18"
+   ],
+   "note": "l'amour vrai et la volonté ne se forcent pas"
+  },
+  {
+   "s": "Fin du sort",
+   "v": "EFFACE LA MÉMOIRE DE",
+   "c": "Innocent",
+   "st": "E",
+   "ep": [
+    "S01E02",
+    "S01E05",
+    "S01E08"
+   ],
+   "note": "les sorcières, elles, se souviennent"
+  },
+  {
+   "s": "Contre-sort",
+   "v": "ANNULE",
+   "c": "Sort",
+   "st": "E",
+   "ep": [
+    "S01E05",
+    "S01E09",
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Sort",
+   "v": "EST IRRÉVOCABLE AVANT",
+   "c": "Fin du sort",
+   "st": "E",
+   "ep": [
+    "S01E08"
+   ]
+  },
+  {
+   "s": "Sort",
+   "v": "PEUT RETIRER",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E10"
+   ],
+   "note": "sort de renoncement ; contredit « on ne peut pas renoncer » (C, S01E08)"
+  },
+  {
+   "s": "Bénéfice personnel",
+   "v": "DÉFORME",
+   "c": "Sort",
+   "st": "N",
+   "ep": [
+    "S01E02",
+    "S01E05",
+    "S01E08"
+   ],
+   "note": "gain annulé (E02), effet vicié (E05), souvenir douloureux conservé (E08) ; sanction non uniforme"
+  },
+  {
+   "s": "Règle morale",
+   "v": "DISTINGUE",
+   "c": "Warlock",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E14"
+   ]
+  },
+  {
+   "s": "Règle morale",
+   "v": "INTERDIT DE TUER",
+   "c": "Innocent",
+   "st": "E",
+   "ep": [
+    "S01E19",
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Destin de protectrice",
+   "v": "ASSIGNE",
+   "c": "Sorcière",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E02"
+   ]
+  },
+  {
+   "s": "Secret",
+   "v": "PROTÈGE",
+   "c": "Sorcière",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E14"
+   ]
+  },
+  {
+   "s": "Exposition",
+   "v": "MENACE",
+   "c": "Secret",
+   "st": "E",
+   "ep": [
+    "S01E08",
+    "S01E19",
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Prémonition",
+   "v": "PEUT ÊTRE DÉJOUÉE",
+   "c": "Destin",
+   "st": "N",
+   "ep": [
+    "S01E04",
+    "S01E16",
+    "S01E20",
+    "S01E22"
+   ],
+   "note": "en général on peut empêcher ce qu'on voit ; certaines visions sont un destin fixe"
+  },
+  {
+   "s": "Prémonition",
+   "v": "PEUT ÊTRE FALSIFIÉE PAR",
+   "c": "Warlock",
+   "st": "E",
+   "ep": [
+    "S01E03",
+    "S01E10"
+   ]
+  },
+  {
+   "s": "Destin",
+   "v": "RÉSISTE AU CHANGEMENT DU",
+   "c": "Passé",
+   "st": "C",
+   "ep": [
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Pouvoir des Trois",
+   "v": "OUVRE",
+   "c": "Passé",
+   "st": "E",
+   "ep": [
+    "S01E17"
+   ],
+   "note": "retour à l'instant exact du départ ; pouvoirs suspendus dans le passé (C)"
+  },
+  {
+   "s": "Warlock",
+   "v": "COMMET",
+   "c": "Meurtre rituel",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Meurtre rituel",
+   "v": "TRANSFÈRE",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E21"
+   ]
+  },
+  {
+   "s": "Arme liée",
+   "v": "CONDITIONNE",
+   "c": "Meurtre rituel",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E16"
+   ]
+  },
+  {
+   "s": "Warlock",
+   "v": "COPIE",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E09"
+   ],
+   "note": "autre voie de vol : copie le pouvoir utilisé contre lui et y devient immunisé"
+  },
+  {
+   "s": "Pacte conclu",
+   "v": "CÈDE",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Talisman",
+   "v": "CONFÈRE",
+   "c": "Immunité",
+   "st": "E",
+   "ep": [
+    "S01E03",
+    "S01E17"
+   ]
+  },
+  {
+   "s": "Immunité",
+   "v": "BLOQUE",
+   "c": "Pouvoir individuel",
+   "st": "E",
+   "ep": [
+    "S01E17"
+   ],
+   "note": "annulable par la bénisseuse d'origine"
+  },
+  {
+   "s": "Hérédité",
+   "v": "ENGENDRE",
+   "c": "Warlock",
+   "st": "E",
+   "ep": [
+    "S01E18"
+   ]
+  },
+  {
+   "s": "Meurtre rituel",
+   "v": "INITIE",
+   "c": "Warlock",
+   "st": "E",
+   "ep": [
+    "S01E18"
+   ],
+   "note": "l'initiation exige un consentement : on ne force pas un demi-warlock à tuer"
+  },
+  {
+   "s": "Warlock",
+   "v": "CHERCHE À DIVISER",
+   "c": "Réunion des trois",
+   "st": "C",
+   "ep": [
+    "S01E10",
+    "S01E13"
+   ]
+  },
+  {
+   "s": "Loi du mal",
+   "v": "GOUVERNE",
+   "c": "Démon",
+   "st": "E",
+   "ep": [
+    "S01E02",
+    "S01E06",
+    "S01E12",
+    "S01E13",
+    "S01E19"
+   ]
+  },
+  {
+   "s": "Moment de puissance",
+   "v": "OUVRE",
+   "c": "Loi du mal",
+   "st": "E",
+   "ep": [
+    "S01E06",
+    "S01E12",
+    "S01E13"
+   ],
+   "note": "retour tous les 200 ans, trois nuits de pleine lune, vendredi 13 jusqu'à minuit"
+  },
+  {
+   "s": "Démon",
+   "v": "CONSOMME",
+   "c": "Force vitale",
+   "st": "E",
+   "ep": [
+    "S01E02",
+    "S01E06",
+    "S01E12",
+    "S01E13",
+    "S01E19"
+   ]
+  },
+  {
+   "s": "Démon",
+   "v": "SE DÉGUISE EN",
+   "c": "Innocent",
+   "st": "E",
+   "ep": [
+    "S01E02",
+    "S01E03",
+    "S01E12",
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Démon",
+   "v": "PROPOSE",
+   "c": "Pacte",
+   "st": "E",
+   "ep": [
+    "S01E06"
+   ]
+  },
+  {
+   "s": "Pacte",
+   "v": "COÛTE",
+   "c": "Innocent",
+   "st": "E",
+   "ep": [
+    "S01E06"
+   ],
+   "note": "irrévocable"
+  },
+  {
+   "s": "Hiérarchie du mal",
+   "v": "PUNIT",
+   "c": "Échec",
+   "st": "?",
+   "ep": [
+    "S01E10"
+   ]
+  },
+  {
+   "s": "Supérieur démoniaque",
+   "v": "ENVOIE",
+   "c": "Démon",
+   "st": "E",
+   "ep": [
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Clé unique",
+   "v": "DÉTRUIT",
+   "c": "Démon",
+   "st": "E",
+   "ep": [
+    "S01E07",
+    "S01E11",
+    "S01E12",
+    "S01E16",
+    "S01E19",
+    "S01E21"
+   ],
+   "note": "miroir brisé, feu, potion spécifique, arme retournée, pouvoir du démon retourné, acte désintéressé"
+  },
+  {
+   "s": "Bannissement",
+   "v": "N'EST PAS",
+   "c": "Destruction",
+   "st": "E",
+   "ep": [
+    "S01E15"
+   ],
+   "note": "le banni peut revenir"
+  },
+  {
+   "s": "Emprisonnement",
+   "v": "SUSPEND sans détruire",
+   "c": "Warlock",
+   "st": "E",
+   "ep": [
+    "S01E09"
+   ],
+   "note": "une descendante peut libérer le prisonnier"
+  },
+  {
+   "s": "Lieu consacré",
+   "v": "REPOUSSE",
+   "c": "Démon",
+   "st": "C",
+   "ep": [
+    "S01E02"
+   ]
+  },
+  {
+   "s": "Contact",
+   "v": "OUVRE",
+   "c": "Possession",
+   "st": "E",
+   "ep": [
+    "S01E07"
+   ]
+  },
+  {
+   "s": "Nexus",
+   "v": "CONDITIONNE",
+   "c": "Possession",
+   "st": "E",
+   "ep": [
+    "S01E15"
+   ]
+  },
+  {
+   "s": "Esprit",
+   "v": "POSSÈDE",
+   "c": "Innocent",
+   "st": "E",
+   "ep": [
+    "S01E07",
+    "S01E15",
+    "S01E20"
+   ]
+  },
+  {
+   "s": "Esprit",
+   "v": "CONFÈRE",
+   "c": "Pouvoir conféré",
+   "st": "E",
+   "ep": [
+    "S01E07",
+    "S01E15"
+   ],
+   "note": "disparaît quand l'esprit est vaincu"
+  },
+  {
+   "s": "Nexus",
+   "v": "PEUT BASCULER",
+   "c": "Maison de la lignée",
+   "st": "C",
+   "ep": [
+    "S01E15"
+   ],
+   "note": "le mal qui tient le Nexus verrouille la maison et coupe l'accès au Livre"
+  },
+  {
+   "s": "Mort",
+   "v": "CRÉE",
+   "c": "Esprit",
+   "st": "E",
+   "ep": [
+    "S01E04",
+    "S01E20"
+   ],
+   "note": "meurtre ou exécution"
+  },
+  {
+   "s": "Enterrement",
+   "v": "LIBÈRE",
+   "c": "Esprit",
+   "st": "E",
+   "ep": [
+    "S01E04"
+   ]
+  },
+  {
+   "s": "Collecteur d'âmes",
+   "v": "CAPTURE",
+   "c": "Esprit",
+   "st": "E",
+   "ep": [
+    "S01E04",
+    "S01E20"
+   ],
+   "note": "âme non enterrée ou séparée de son corps"
+  },
+  {
+   "s": "Mort temporaire",
+   "v": "OUVRE",
+   "c": "Plan astral",
+   "st": "E",
+   "ep": [
+    "S01E20"
+   ],
+   "note": "potion, fenêtre de 4 minutes, réanimation nécessaire"
+  },
+  {
+   "s": "Talisman",
+   "v": "BLOQUE",
+   "c": "Esprit",
+   "st": "E",
+   "ep": [
+    "S01E04"
+   ]
+  },
+  {
+   "s": "Ancêtre",
+   "v": "GUIDE",
+   "c": "Sorcière",
+   "st": "E",
+   "ep": [
+    "S01E04",
+    "S01E13",
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Sort",
+   "v": "RAPPELLE",
+   "c": "Ancêtre",
+   "st": "E",
+   "ep": [
+    "S01E09"
+   ],
+   "note": "sang des trois descendantes ; l'ancêtre revient avec ses pouvoirs"
+  },
+  {
+   "s": "Objet-canal",
+   "v": "TRANSMET",
+   "c": "Esprit",
+   "st": "E",
+   "ep": [
+    "S01E01",
+    "S01E07",
+    "S01E14"
+   ]
+  },
+  {
+   "s": "Innocent",
+   "v": "PERÇOIT",
+   "c": "Esprit",
+   "st": "N",
+   "ep": [
+    "S01E04",
+    "S01E19",
+    "S01E20"
+   ],
+   "note": "en général non ; possible dans certains cas"
+  },
+  {
+   "s": "Plan onirique",
+   "v": "REND RÉELLE",
+   "c": "Mort",
+   "st": "E",
+   "ep": [
+    "S01E05"
+   ]
+  },
+  {
+   "s": "Fondateurs",
+   "v": "ENVOIENT",
+   "c": "Être de lumière",
+   "st": "E",
+   "ep": [
+    "S01E14"
+   ]
+  },
+  {
+   "s": "Être de lumière",
+   "v": "GUIDE",
+   "c": "Sorcière",
+   "st": "E",
+   "ep": [
+    "S01E14",
+    "S01E21"
+   ],
+   "note": "laisse la sorcière agir elle-même"
+  },
+  {
+   "s": "Être de lumière",
+   "v": "SOIGNE",
+   "c": "Innocent",
+   "st": "E",
+   "ep": [
+    "S01E21"
+   ],
+   "note": "par l'amour ; jamais sur lui-même"
+  },
+  {
+   "s": "Être de lumière",
+   "v": "OCCULTE",
+   "c": "Innocent",
+   "st": "E",
+   "ep": [
+    "S01E21"
+   ],
+   "note": "cesse s'il s'affaiblit ou meurt"
+  },
+  {
+   "s": "Interdit d'amour",
+   "v": "SÉPARE",
+   "c": "Être de lumière",
+   "st": "E",
+   "ep": [
+    "S01E14",
+    "S01E21"
+   ]
+  },
+  {
+   "s": "Mort",
+   "v": "PEUT CRÉER",
+   "c": "Être de lumière",
+   "st": "E",
+   "ep": [
+    "S01E21"
+   ],
+   "note": "un mortel bon qui meurt"
+  },
+  {
+   "s": "Être des ténèbres",
+   "v": "TUE",
+   "c": "Être de lumière",
+   "st": "E",
+   "ep": [
+    "S01E21"
+   ],
+   "note": "flèche empoisonnée ; seul un toucher guérisseur sauve"
+  },
+  {
+   "s": "Supérieur démoniaque",
+   "v": "CRÉE",
+   "c": "Boucle temporelle",
+   "st": "E",
+   "ep": [
+    "S01E22"
+   ],
+   "note": "via un démon du temps ; seul le démon protégé garde la mémoire"
+  },
+  {
+   "s": "Sort",
+   "v": "BRISE",
+   "c": "Boucle temporelle",
+   "st": "E",
+   "ep": [
+    "S01E22"
+   ]
+  },
+  {
+   "s": "Collecteur d'âmes",
+   "v": "EMPORTE VERS",
+   "c": "Enfers",
+   "st": "E",
+   "ep": [
+    "S01E04",
+    "S01E20"
+   ]
+  },
+  {
+   "s": "Emprisonnement",
+   "v": "ENFERME DANS",
+   "c": "Prison magique",
+   "st": "E",
+   "ep": [
+    "S01E07",
+    "S01E09"
+   ]
+  }
+ ],
+ "actions": {
+  "Sorcière": [
+   {
+    "a": "UTILISER un pouvoir",
+    "pre": [
+     "pouvoir délié",
+     "émotion propre au pouvoir ou contact"
+    ],
+    "eff": "effet du pouvoir",
+    "lim": "portée d'une pièce, durée brève, n'agit pas sur une sorcière ni sur un esprit désincarné ; bloqué par la peur, l'entrave des mains, une immunité",
+    "cout": "fatigue"
+   },
+   {
+    "a": "PROVOQUER une prémonition",
+    "pre": [
+     "contact avec un objet ou une personne liée",
+     "pratique"
+    ],
+    "eff": "vision du futur ou du passé",
+    "lim": "floue, ambiguë, falsifiable",
+    "cout": "ressent la douleur de la victime"
+   },
+   {
+    "a": "DÉJOUER une prémonition",
+    "pre": [
+     "vision",
+     "arriver à temps"
+    ],
+    "eff": "l'événement n'a pas lieu",
+    "lim": "sauf destin fixe"
+   },
+   {
+    "a": "CONSULTER le Livre",
+    "pre": [
+     "accès à la maison"
+    ],
+    "eff": "identifie le mal et sa clé",
+    "lim": "le Livre ignore certains maux"
+   },
+   {
+    "a": "LANCER un sort",
+    "pre": [
+     "formule",
+     "composants",
+     "parfois les trois"
+    ],
+    "eff": "exactement ce que disent les mots",
+    "lim": "irrévocable avant sa fin ; déformé si bénéfice personnel ; ne force pas l'amour ni la volonté"
+   },
+   {
+    "a": "ÉCRIRE un sort",
+    "pre": [
+     "besoin identifié",
+     "rimes"
+    ],
+    "eff": "nouveau sort, ajouté au Livre",
+    "lim": "la puissance peut exiger les trois"
+   },
+   {
+    "a": "ANNULER un sort",
+    "pre": [
+     "contre-sort"
+    ],
+    "eff": "effet défait, mortels amnésiques"
+   },
+   {
+    "a": "PRÉPARER une potion",
+    "pre": [
+     "ingrédients précis (parfois à cueillir, parfois sang de victime)",
+     "recette",
+     "temps"
+    ],
+    "eff": "détruit une espèce, appelle un esprit, provoque une mort temporaire"
+   },
+   {
+    "a": "INVOQUER le Pouvoir des Trois",
+    "pre": [
+     "trois sœurs réunies et unies",
+     "formule"
+    ],
+    "eff": "détruit ou bannit la plupart des démons et warlocks",
+    "lim": "inefficace contre certains (copieur, esprit, créature maudite)"
+   },
+   {
+    "a": "APPLIQUER la clé unique",
+    "pre": [
+     "clé identifiée"
+    ],
+    "eff": "détruit un mal précis (miroir brisé, feu, arme ou pouvoir retourné, acte désintéressé)"
+   },
+   {
+    "a": "RETOURNER une attaque",
+    "pre": [
+     "pouvoir de déplacement"
+    ],
+    "eff": "l'ennemi est détruit par sa propre arme ou son propre pouvoir"
+   },
+   {
+    "a": "BANNIR",
+    "pre": [
+     "sort de bannissement",
+     "parfois lumière, miroir, plan astral"
+    ],
+    "eff": "le mal est renvoyé",
+    "lim": "peut revenir"
+   },
+   {
+    "a": "EMPRISONNER",
+    "pre": [
+     "malédiction",
+     "composants",
+     "objet-prison"
+    ],
+    "eff": "le mal est suspendu",
+    "lim": "une descendante peut le libérer"
+   },
+   {
+    "a": "RAPPELER une ancêtre",
+    "pre": [
+     "sang des trois",
+     "sort"
+    ],
+    "eff": "l'ancêtre revient avec ses pouvoirs",
+    "lim": "doit être renvoyée"
+   },
+   {
+    "a": "LIER des pouvoirs",
+    "pre": [
+     "sort",
+     "être la gardienne"
+    ],
+    "eff": "pouvoirs des enfants suspendus et oubliés",
+    "lim": "défait à sa mort"
+   },
+   {
+    "a": "RENONCER à ses pouvoirs",
+    "pre": [
+     "sort de renoncement lu par chacune"
+    ],
+    "eff": "pouvoirs retirés, sort effacé du Livre",
+    "lim": "retour possible par une cause extérieure"
+   },
+   {
+    "a": "ÉCHANGER des pouvoirs",
+    "pre": [
+     "sort"
+    ],
+    "eff": "chacun reçoit le pouvoir d'un autre présent",
+    "lim": "touche tous les présents ; il faut trouver l'émotion du nouveau pouvoir"
+   },
+   {
+    "a": "VOYAGER dans le passé",
+    "pre": [
+     "sort",
+     "Pouvoir des Trois"
+    ],
+    "eff": "retour à l'origine d'un lien, puis à l'instant exact du départ",
+    "lim": "pouvoirs suspendus là-bas (C) ; le destin résiste"
+   },
+   {
+    "a": "MOURIR temporairement",
+    "pre": [
+     "potion",
+     "une sœur pour réanimer"
+    ],
+    "eff": "accès au plan astral",
+    "lim": "4 minutes",
+    "cout": "risque de mort définitive, exposition au collecteur d'âmes"
+   },
+   {
+    "a": "BÉNIR / DÉ-BÉNIR un talisman",
+    "pre": [
+     "être la bénisseuse"
+    ],
+    "eff": "donne ou retire une immunité"
+   },
+   {
+    "a": "PROTÉGER un innocent",
+    "pre": [
+     "destin de protectrice"
+    ],
+    "eff": "l'innocent échappe au mal",
+    "lim": "ne pas tuer un mortel ni un ennemi impuissant"
+   },
+   {
+    "a": "GARDER le secret",
+    "pre": [],
+    "eff": "pas d'exposition",
+    "lim": "chaque usage public trahit"
+   }
+  ],
+  "Warlock": [
+   {
+    "a": "SE DISSIMULER",
+    "pre": [
+     "apparence humaine"
+    ],
+    "eff": "approche la cible"
+   },
+   {
+    "a": "CLIGNER",
+    "pre": [],
+    "eff": "déplacement instantané"
+   },
+   {
+    "a": "TUER rituellement",
+    "pre": [
+     "arme liée",
+     "sorcière isolée"
+    ],
+    "eff": "vole son pouvoir"
+   },
+   {
+    "a": "COPIER un pouvoir",
+    "pre": [
+     "pouvoir utilisé contre lui"
+    ],
+    "eff": "acquiert le pouvoir et y devient immunisé",
+    "lim": "rien si on ne l'attaque pas"
+   },
+   {
+    "a": "PROJETER son esprit",
+    "pre": [],
+    "eff": "invisible, implante des pensées, falsifie une prémonition"
+   },
+   {
+    "a": "LANCER un sort d'appel",
+    "pre": [
+     "lien de sang avec la cible"
+    ],
+    "eff": "la cible vient",
+    "lim": "ne force pas sa volonté"
+   },
+   {
+    "a": "INITIER un demi-warlock",
+    "pre": [
+     "meurtre consenti"
+    ],
+    "eff": "nouveau warlock",
+    "lim": "une ordination sacrée l'en protège (C)"
+   },
+   {
+    "a": "PACTISER",
+    "pre": [
+     "sorcière en danger"
+    ],
+    "eff": "obtient ses pouvoirs futurs ou une immunité"
+   },
+   {
+    "a": "DIVISER les trois",
+    "pre": [
+     "manipulation, chantage"
+    ],
+    "eff": "empêche le Pouvoir des Trois"
+   }
+  ],
+  "Démon": [
+   {
+    "a": "CONSOMMER une force vitale",
+    "pre": [
+     "moment de puissance",
+     "proie qui correspond à sa loi"
+    ],
+    "eff": "vole jeunesse, cœur, vue, peur"
+   },
+   {
+    "a": "PRENDRE une apparence",
+    "pre": [],
+    "eff": "infiltre, trompe même la prémonition",
+    "lim": "ne copie pas les souvenirs"
+   },
+   {
+    "a": "PROPOSER un pacte",
+    "pre": [
+     "mortel tenté"
+    ],
+    "eff": "gain contre un innocent",
+    "lim": "irrévocable"
+   },
+   {
+    "a": "ENVOÛTER",
+    "pre": [
+     "sort"
+    ],
+    "eff": "contrôle un mortel",
+    "lim": "rompu par un amour vrai déclaré"
+   },
+   {
+    "a": "TERRIFIER",
+    "pre": [
+     "sorcière isolée"
+    ],
+    "eff": "paralyse ses pouvoirs, peut tuer",
+    "lim": "vaincu si la peur est lâchée"
+   },
+   {
+    "a": "LANCER une boule d'énergie",
+    "pre": [
+     "cible en vue"
+    ],
+    "eff": "tue une sorcière",
+    "lim": "arrêté si elle agit la première"
+   },
+   {
+    "a": "CONVOITER le Livre",
+    "pre": [
+     "entrer dans la maison"
+    ],
+    "eff": "accès aux secrets",
+    "lim": "ne peut le sortir sans une sœur"
+   }
+  ],
+  "Esprit": [
+   {
+    "a": "POSSÉDER",
+    "pre": [
+     "contact ou lieu propice"
+    ],
+    "eff": "agit par un hôte"
+   },
+   {
+    "a": "CONFÉRER un pouvoir",
+    "pre": [
+     "hôte"
+    ],
+    "eff": "pouvoir prêté",
+    "lim": "disparaît avec l'esprit"
+   },
+   {
+    "a": "CHERCHER de l'aide",
+    "pre": [
+     "trouver qui peut le voir"
+    ],
+    "eff": "communique"
+   },
+   {
+    "a": "ÉCRIRE dans le Livre",
+    "pre": [
+     "ancêtre",
+     "danger imminent"
+    ],
+    "eff": "avertissement"
+   }
+  ],
+  "Être de lumière": [
+   {
+    "a": "GUIDER",
+    "pre": [
+     "envoyé par les Fondateurs"
+    ],
+    "eff": "message, télépathie"
+   },
+   {
+    "a": "SOIGNER",
+    "pre": [
+     "toucher",
+     "amour"
+    ],
+    "eff": "guérison",
+    "lim": "pas sur lui-même"
+   },
+   {
+    "a": "OCCULTER",
+    "pre": [
+     "protégé désigné"
+    ],
+    "eff": "invisible aux Êtres des ténèbres",
+    "lim": "cesse s'il faiblit"
+   }
+  ],
+  "Être des ténèbres": [
+   {
+    "a": "LOCALISER par la pensée",
+    "pre": [
+     "proie non occultée"
+    ],
+    "eff": "trouve la proie"
+   },
+   {
+    "a": "TIRER une flèche empoisonnée",
+    "pre": [
+     "cible : Être de lumière"
+    ],
+    "eff": "mort lente"
+   },
+   {
+    "a": "TUER par le toucher",
+    "pre": [
+     "contact",
+     "haine"
+    ],
+    "eff": "mort"
+   }
+  ]
+ },
+ "contradictions_resolues": [
+  "« Un sort n'agit que sur sa cible écrite » (S01E01) devient la Littéralité : le sort fait ce que disent ses mots (S01E08, S01E16).",
+  "« L'émotion déclenche le pouvoir » reste vrai, mais chaque pouvoir a son émotion et la peur les paralyse tous (S01E13, S01E21).",
+  "« Le Pouvoir des Trois détruit le mal » n'est pas universel : chaque mal a sa clé (S01E09, S01E11, S01E20).",
+  "« On ne peut pas renoncer à ses pouvoirs » (C, S01E08) est contredit par un sort de renoncement (S01E10).",
+  "Prémonition : déjouable en général (S01E04, S01E16, S01E20), mais certaines relèvent d'un destin fixe (S01E22).",
+  "Voler un pouvoir : il y a plusieurs voies (meurtre rituel, copie, pacte, arme, sort d'échange)."
+ ],
+ "questions_ouvertes": [
+  "Qui anime les objets-canaux et quand ?",
+  "La sanction du bénéfice personnel suit-elle une règle ou dépend-elle du cas ?",
+  "Le gel agit-il sur tous les êtres incarnés ? Exceptions constatées : hôte investi, gardien d'objet.",
+  "La maison renforce-t-elle le Pouvoir des Trois ?",
+  "Qui a restauré les pouvoirs après le renoncement (S01E10) ?"
+ ]
+}

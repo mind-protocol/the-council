@@ -1,0 +1,71 @@
+[
+ {
+  "id": "prudence-warren",
+  "nom": "Prudence Warren",
+  "maison_id": "maison-warren",
+  "titre": "Sorcière de la lignée Warren, veuve, maîtresse de la maison de Prescott Street",
+  "naissance": 1871,
+  "traits": ["droite", "colérique", "tenace", "secrète"],
+  "objectifs": [
+   {"but": "Garder Lillian en vie et ignorante de ce qu'elle est, tant qu'il le faut", "priorite": 1},
+   {"but": "Tenir la maison et ce qu'il y a dessous, comme sa mère avant elle", "priorite": 2},
+   {"but": "Ajouter au Livre ce qu'elle a appris, pour celles qui viendront", "priorite": 3}
+  ],
+  "maniere": "Peu de mots, jamais inutiles ; la colère lui monte vite et c'est par elle que les objets bougent.",
+  "pouvoirs": [{"nom": "télékinésie", "declencheur": "colère", "canal": "mains", "sans_effet_sur": ["sorcière bonne", "esprit désincarné", "l'Ombre"]}],
+  "etat": "actif",
+  "lieu_id": "san-francisco",
+  "condition": "libre",
+  "_": "LE SIÈGE JOUEUR. INVENTION DÉCLARÉE : le corpus ne dit pas qui a bâti la maison. Aucune entrée dans intentions.json."
+ },
+ {
+  "id": "lillian-warren",
+  "nom": "Lillian Warren",
+  "maison_id": "maison-warren",
+  "titre": "Sa fille, sept ans",
+  "naissance": 1899,
+  "traits": ["curieuse", "têtue", "sans peur", "rêveuse"],
+  "objectifs": [
+   {"but": "Savoir ce qu'il y a derrière la porte de la cave", "priorite": 1},
+   {"but": "Qu'on la traite en grande", "priorite": 2}
+  ],
+  "maniere": "Pose trois questions à la suite et n'attend la réponse à aucune.",
+  "etat": "actif",
+  "lieu_id": "san-francisco",
+  "condition": "libre",
+  "_": "Sorcière par le sang, pouvoirs non éveillés — elle n'en sait rien. Invention déclarée."
+ },
+ {
+  "id": "bridget-oconnell",
+  "nom": "Bridget O'Connell",
+  "maison_id": "maison-warren",
+  "titre": "Domestique, née à Cork, dans la maison depuis neuf ans",
+  "naissance": 1858,
+  "traits": ["pieuse", "vaillante", "bavarde", "fidèle"],
+  "objectifs": [
+   {"but": "Que la maison tourne comme une horloge, magie ou pas", "priorite": 1},
+   {"but": "Aller à la messe à Mission Dolores le dimanche, quoi qu'il arrive", "priorite": 2}
+  ],
+  "maniere": "Parle en travaillant, invoque les saints à chaque phrase, ne pose jamais la question qu'elle a vraiment en tête.",
+  "etat": "actif",
+  "lieu_id": "san-francisco",
+  "condition": "libre",
+  "_": "Mortelle. Elle sait qu'il y a quelque chose dans cette famille ; elle ne sait pas quoi, et elle a choisi de ne pas savoir. Invention déclarée."
+ },
+ {
+  "id": "l-ombre",
+  "nom": "L'Ombre du sous-sol",
+  "maison_id": "le-sous-sol",
+  "titre": "Démon d'obscurité lié au Nexus",
+  "traits": ["patiente", "affamée", "rusée", "possessive"],
+  "objectifs": [
+   {"but": "Reprendre l'endroit — la maison et ce qu'elle garde", "priorite": 1},
+   {"but": "Posséder qui descend, de préférence une sorcière née dans la maison", "priorite": 2}
+  ],
+  "maniere": "Ne parle que par la bouche de ceux qu'elle tient ; une voix douce qui promet.",
+  "etat": "actif",
+  "lieu_id": "san-francisco",
+  "condition": "enfermee",
+  "_": "CANON S01E15 : le Woogyman, lié au Nexus, libéré par un séisme, banni (jamais détruit) par la lumière et une comptine-sort. Qu'il soit déjà sous la maison en 1906 est une invention cohérente avec « to reclaim the spot » (C)."
+ }
+]

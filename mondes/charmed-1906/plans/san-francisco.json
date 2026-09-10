@@ -1,0 +1,23 @@
+{
+ "_": "LA MAISON DE PRESCOTT STREET, AVANT LE SÉISME. Une coupe, du grenier à la rue. Les ids sont ceux de etat/chemins.json, sinon le quartier calcule sur des salles que l'écran ne montre pas. Le jour où elle tombe, ce plan se réécrit : c'est le chantier.",
+ "nom": "La maison de Prescott Street",
+ "viewBox": "0 0 420 340",
+ "fonds": [],
+ "mur": [],
+ "guet": [],
+ "decor": [],
+ "etiquettes": [],
+ "rose": null,
+ "salles": [
+  {"id": "grenier", "nom": "Le grenier", "cle": true, "forme": {"d": "M60,20 L360,20 L360,70 L60,70 Z"}, "etiq": [210, 45], "lignes": ["Le grenier"], "quoi": "Sous le toit, le coffre où dort le Livre des Ombres. On y monte par l'échelle du palier.", "alias": [], "motifs": ["le grenier", "les combles"]},
+  {"id": "chambre-prudence", "nom": "La chambre de Prudence", "forme": {"d": "M20,80 L170,80 L170,160 L20,160 Z"}, "etiq": [95, 120], "lignes": ["Votre chambre"], "quoi": "Le lit, la commode, la lampe à pétrole sur la table de nuit.", "alias": ["ma chambre"], "motifs": ["votre chambre", "la chambre de prudence"]},
+  {"id": "palier", "nom": "Le palier", "forme": {"d": "M176,80 L244,80 L244,160 L176,160 Z"}, "etiq": [210, 120], "lignes": ["Palier"], "quoi": "L'échelle du grenier, le haut de l'escalier.", "alias": [], "motifs": ["le palier"]},
+  {"id": "chambre-lillian", "nom": "La chambre de Lillian", "forme": {"d": "M250,80 L400,80 L400,160 L250,160 Z"}, "etiq": [325, 120], "lignes": ["Lillian"], "quoi": "Un lit étroit, une poupée, la fenêtre sur la rue.", "alias": [], "motifs": ["la chambre de lillian", "chez lillian"]},
+  {"id": "salon", "nom": "Le salon", "forme": {"d": "M20,170 L170,170 L170,250 L20,250 Z"}, "etiq": [95, 210], "lignes": ["Le salon"], "quoi": "Le poêle froid, le fauteuil du mari mort, les rideaux tirés.", "alias": [], "motifs": ["le salon"]},
+  {"id": "escalier", "nom": "L'escalier", "forme": {"d": "M176,170 L244,170 L244,250 L176,250 Z"}, "etiq": [210, 210], "lignes": ["Escalier"], "quoi": "Bois qui craque, et sous lui la porte de la cave qu'on ne descend pas sans lumière.", "alias": [], "motifs": ["l'escalier", "le couloir"]},
+  {"id": "cuisine", "nom": "La cuisine", "forme": {"d": "M250,170 L400,170 L400,250 L250,250 Z"}, "etiq": [325, 210], "lignes": ["La cuisine"], "quoi": "Le fourneau à charbon, les étagères des herbes, la réserve des bougies.", "alias": [], "motifs": ["la cuisine"]},
+  {"id": "cave", "nom": "La cave", "cle": true, "forme": {"d": "M120,258 L300,258 L300,296 L120,296 Z"}, "etiq": [210, 277], "lignes": ["La cave"], "quoi": "Terre battue et vieilles pierres. Personne n'y descend.", "alias": ["sous-sol"], "motifs": ["la cave", "le sous-sol"]},
+  {"id": "perron", "nom": "Le perron", "forme": {"d": "M20,304 L110,304 L110,332 L20,332 Z"}, "etiq": [65, 318], "lignes": ["Perron"], "quoi": "Trois marches et la porte d'entrée.", "alias": ["seuil"], "motifs": ["le perron", "le seuil", "la porte"]},
+  {"id": "prescott-street", "nom": "Prescott Street", "forme": {"d": "M116,304 L400,304 L400,332 L116,332 Z"}, "etiq": [258, 318], "lignes": ["Prescott Street"], "quoi": "La rue, les maisons de bois des voisins, les poteaux du télégraphe.", "alias": ["rue"], "motifs": ["la rue", "prescott street"]}
+ ]
+}

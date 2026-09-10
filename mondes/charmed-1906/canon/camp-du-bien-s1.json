@@ -1,0 +1,360 @@
+{
+  "titre": "Camp du bien, saison 1 — valeurs pour le moteur de résolution",
+  "genereLe": "2026-09-10",
+  "statut": "proposition, non actée ; tirée des transcriptions S01E01 à S01E22 et du graphe graphe-s1.json ; pendant de bestiaire-s1.json",
+  "vocabulaire": {
+    "pouvoirs[].fente": "vocabulaire de SYSTEME_RESOLUTION_PROPOSE.md §2.1",
+    "pouvoirs[].rangMoyen": "rang atteint par ce moyen s'il sert à neutraliser (même échelle que le bestiaire : 0 à 3, null = ne neutralise pas)",
+    "pouvoirs[].declencheur": "ce qui active le pouvoir ; tant qu'il n'est pas maîtrisé, il faut le déclencheur",
+    "pouvoirs[].canal": "partie du corps par laquelle passe le pouvoir ; l'entraver bloque le pouvoir",
+    "pouvoirs[].sansEffetSur": "cibles contre lesquelles le pouvoir échoue",
+    "vulnerabilites.famille": "fente = un moyen adverse la neutralise ; etat = un état interne coupe ses pouvoirs ; regle = une règle du bien la contraint",
+    "statut": "E établi dans le dialogue ; C affirmé par un personnage seulement ; ? effet vu, cause non dite"
+  },
+  "avertissement": "Aucun chiffre inventé. Les valeurs sont celles que prononce le dialogue ; null signifie non documenté en saison 1.",
+
+  "reglesCommunes": [
+    {"id": "declencheur-emotionnel", "regle": "chaque pouvoir a son émotion ; tant qu'on ne la trouve pas, le pouvoir ne répond pas", "statut": "E", "ep": ["S01E01", "S01E21"]},
+    {"id": "peur-paralyse", "regle": "la peur coupe tous les pouvoirs ; l'amour en libère, la refouler ne suffit pas", "statut": "E", "ep": ["S01E05", "S01E13"]},
+    {"id": "croissance", "regle": "les pouvoirs grandissent avec la pratique et le danger : portée, contrôle, nouvelles formes", "statut": "E", "ep": ["S01E01", "S01E09", "S01E16", "S01E19", "S01E20"]},
+    {"id": "pas-sur-une-sorciere", "regle": "le gel ne fige pas une sorcière bonne ; les pouvoirs n'agissent pas sur une sorcière bonne", "statut": "E", "ep": ["S01E02", "S01E15"]},
+    {"id": "benefice-personnel", "regle": "la magie utilisée pour son propre gain est déformée ou reprise ; la sanction varie", "statut": "E", "ep": ["S01E02", "S01E05", "S01E08"]},
+    {"id": "ne-pas-tuer-un-mortel", "regle": "ne pas tuer un mortel, même hostile, ni un ennemi impuissant", "statut": "E", "ep": ["S01E19", "S01E22"]},
+    {"id": "secret", "regle": "chaque usage devant un mortel menace le secret ; la fin d'un sort efface la mémoire des mortels, pas celle des sorcières", "statut": "E", "ep": ["S01E08", "S01E19", "S01E22"]},
+    {"id": "protectrice", "regle": "le destin des sorcières est de protéger les innocents", "statut": "E", "ep": ["S01E01", "S01E02"]}
+  ],
+
+  "entrees": [
+    {
+      "id": "prue",
+      "nom": "Prue Halliwell",
+      "classe": "Sorcière",
+      "episodes": ["S01E01-S01E22"],
+      "role": "aînée des trois ; pouvoir offensif",
+      "pouvoirs": [
+        {
+          "nom": "télékinésie",
+          "fente": "telekinesie",
+          "portee": "vue",
+          "rangMoyen": 0,
+          "declencheur": "colère",
+          "canal": "yeux",
+          "sansEffetSur": ["sorcière bonne", "esprit désincarné", "gardien d'objet"],
+          "limites": ["masse limitée : un bloc de marbre résiste", "déplace sans détruire, sauf en renvoyant l'arme ou l'énergie d'un adversaire"],
+          "croissance": "de plus en plus précise et puissante",
+          "statut": "E"
+        }
+      ],
+      "vulnerabilites": [
+        {"famille": "etat", "detail": "la peur paralyse le pouvoir"},
+        {"famille": "fente", "detail": "copié par un warlock copieur si elle l'utilise contre lui"}
+      ],
+      "actions": [
+        {"verbe": "PROJETER", "fente": "telekinesie", "pre": ["cible en vue", "colère ou maîtrise"], "effet": "déplace, repousse, désarme"},
+        {"verbe": "RENVOYER UNE ATTAQUE", "fente": "telekinesie", "pre": ["arme ou boule d'énergie adverse en vue"], "effet": "détruit l'adversaire avec son propre moyen", "rangMoyen": "rang de l'adversaire"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "She channels her power through her eyes, not her hands."
+    },
+    {
+      "id": "piper",
+      "nom": "Piper Halliwell",
+      "classe": "Sorcière",
+      "episodes": ["S01E01-S01E22"],
+      "role": "cadette ; pouvoir de contrôle",
+      "pouvoirs": [
+        {
+          "nom": "gel du temps",
+          "fente": "contrainte",
+          "portee": "piece",
+          "rangMoyen": 0,
+          "declencheur": "panique",
+          "canal": "mains",
+          "sansEffetSur": ["sorcière bonne", "esprit désincarné", "hôte investi par un esprit", "gardien d'objet"],
+          "limites": ["ne franchit pas les parois", "durée brève", "échoue si l'attaque est anticipée trop tard"],
+          "effetsSecondaires": ["les mortels figés ne se souviennent de rien", "une caméra enregistre ce qui se passe pendant le gel"],
+          "croissance": "dégel contrôlé, gel répété",
+          "statut": "E"
+        }
+      ],
+      "vulnerabilites": [
+        {"famille": "etat", "detail": "la peur paralyse le pouvoir"},
+        {"famille": "fente", "detail": "entraver ses mains bloque le pouvoir"}
+      ],
+      "actions": [
+        {"verbe": "GELER", "fente": "contrainte", "pre": ["cible dans la même pièce", "panique ou maîtrise"], "effet": "tout ce qui est dans la pièce s'immobilise"},
+        {"verbe": "PRÉPARER UNE POTION", "fente": "consommable", "pre": ["recette", "ingrédients", "temps"], "effet": "potion prête"}
+      ],
+      "valeurs": {"dureeGelSecondes": 20},
+      "statut": "E",
+      "preuve": "Guys, we have about 20 seconds until they unfreeze."
+    },
+    {
+      "id": "phoebe",
+      "nom": "Phoebe Halliwell",
+      "classe": "Sorcière",
+      "episodes": ["S01E01-S01E22"],
+      "role": "benjamine ; pouvoir d'information",
+      "pouvoirs": [
+        {
+          "nom": "prémonition",
+          "fente": "premonition",
+          "portee": "contact",
+          "rangMoyen": null,
+          "declencheur": "contact avec un objet ou une personne liée",
+          "canal": "toucher",
+          "sansEffetSur": [],
+          "limites": ["involontaire au début", "floue et ambiguë", "falsifiable par un warlock", "le métamorphe la trompe"],
+          "effetsSecondaires": ["ressent la douleur de la victime"],
+          "croissance": "visions du passé, puis prémonition appelée volontairement après entraînement",
+          "statut": "E"
+        }
+      ],
+      "vulnerabilites": [
+        {"famille": "etat", "detail": "la peur paralyse le pouvoir"},
+        {"famille": "regle", "detail": "pouvoir passif : ne neutralise rien seul"}
+      ],
+      "actions": [
+        {"verbe": "PRESSENTIR", "fente": "premonition", "pre": ["contact"], "effet": "vision d'un événement futur ou passé"},
+        {"verbe": "DÉJOUER", "fente": "presence", "pre": ["vision", "arriver à temps"], "effet": "l'événement n'a pas lieu", "limite": "sauf destin fixe"},
+        {"verbe": "ÉCRIRE UN SORT", "fente": "formule", "pre": ["besoin identifié"], "effet": "nouveau sort"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "I've been practicing how to call a premonition, and I did it."
+    },
+    {
+      "id": "pouvoir-des-trois",
+      "nom": "Pouvoir des Trois",
+      "classe": "Collectif",
+      "episodes": ["S01E01", "S01E02", "S01E09", "S01E17", "S01E22"],
+      "role": "puissance collective des trois sœurs",
+      "pouvoirs": [
+        {
+          "nom": "Pouvoir des Trois",
+          "fente": "formule",
+          "portee": "vue",
+          "rangMoyen": 3,
+          "declencheur": "les trois réunies récitent ensemble",
+          "canal": "voix",
+          "sansEffetSur": ["esprit sur le plan physique", "warlock copieur (C)", "créature maudite"],
+          "limites": ["exige les trois, présentes et unies", "n'existe qu'une fois la troisième sœur née"],
+          "statut": "E"
+        }
+      ],
+      "vulnerabilites": [
+        {"famille": "etat", "detail": "division des sœurs : le mal cherche à les séparer"},
+        {"famille": "fente", "detail": "une sorcière isolée perd l'accès au Pouvoir des Trois"}
+      ],
+      "actions": [
+        {"verbe": "DÉTRUIRE / BANNIR", "fente": "formule", "pre": ["trois réunies", "formule"], "effet": "détruit ou bannit la plupart des démons et warlocks"},
+        {"verbe": "ALIMENTER UN SORT", "fente": "formule", "pre": ["trois réunies", "sort du Livre"], "effet": "rend possibles expulsion, appel du sang, voyage temporel, accélération du temps"}
+      ],
+      "valeurs": {"membresRequis": 3},
+      "statut": "E",
+      "preuve": "The power of three will set us free"
+    },
+    {
+      "id": "melinda-warren",
+      "nom": "Melinda Warren",
+      "classe": "Ancêtre",
+      "episodes": ["S01E01", "S01E09"],
+      "role": "fondatrice de la lignée ; prophétie des trois sœurs",
+      "pouvoirs": [
+        {"nom": "télékinésie", "fente": "telekinesie", "portee": "vue", "rangMoyen": 0, "declencheur": null, "canal": "mains", "statut": "E"},
+        {"nom": "prémonition", "fente": "premonition", "portee": "contact", "rangMoyen": null, "declencheur": null, "canal": null, "statut": "E"},
+        {"nom": "gel du temps", "fente": "contrainte", "portee": "piece", "rangMoyen": 0, "declencheur": null, "canal": null, "statut": "E"}
+      ],
+      "vulnerabilites": [
+        {"famille": "regle", "detail": "présente seulement si rappelée par le sang des trois, et doit être renvoyée"}
+      ],
+      "actions": [
+        {"verbe": "REPRENDRE LES POUVOIRS COPIÉS", "fente": "absorption", "pre": ["face à face avec le copieur"], "effet": "le warlock perd ce qu'il lui avait copié"},
+        {"verbe": "MAUDIRE", "fente": "confinement", "pre": ["ingrédients", "incantation"], "effet": "enferme un warlock dans un objet"},
+        {"verbe": "PROPHÉTISER", "fente": "savoir", "pre": [], "effet": "chaque génération plus forte, jusqu'aux trois sœurs"}
+      ],
+      "valeurs": {"pouvoirs": 3},
+      "statut": "E",
+      "preuve": "She could move objects with her mind, see the future, and stop time."
+    },
+    {
+      "id": "penny",
+      "nom": "Penny « Grams » Halliwell",
+      "classe": "Gardienne",
+      "episodes": ["S01E01", "S01E15", "S01E17"],
+      "role": "grand-mère ; gardienne de la lignée avant les sœurs",
+      "pouvoirs": [
+        {"nom": "liaison des pouvoirs", "fente": "formule", "portee": "contact", "rangMoyen": null, "declencheur": "sort", "canal": "voix", "limites": ["défaite automatiquement à sa mort"], "statut": "E"}
+      ],
+      "vulnerabilites": [],
+      "actions": [
+        {"verbe": "LIER LES POUVOIRS", "fente": "formule", "pre": ["enfants sorcières"], "effet": "pouvoirs suspendus et oubliés"},
+        {"verbe": "TRANSMETTRE UNE COMPTINE-SORT", "fente": "vecteur", "pre": [], "effet": "arme contre le Woogyman"},
+        {"verbe": "ÉCRIRE DANS LE LIVRE", "fente": "savoir", "pre": [], "effet": "nouveau sort pour les générations suivantes"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "I died, which, of course, would automatically Unbind your powers."
+    },
+    {
+      "id": "patty",
+      "nom": "Patty Halliwell",
+      "classe": "Ancêtre",
+      "episodes": ["S01E17"],
+      "role": "mère des sœurs, rencontrée dans le passé",
+      "pouvoirs": [
+        {"nom": "bénédiction", "fente": "formule", "portee": "contact", "rangMoyen": null, "declencheur": null, "canal": "mains", "limites": ["seule la bénisseuse peut dé-bénir"], "statut": "E"}
+      ],
+      "vulnerabilites": [
+        {"famille": "regle", "detail": "a pactisé avec un warlock pour sauver ses filles"}
+      ],
+      "actions": [
+        {"verbe": "PACTISER", "fente": "lien", "pre": ["menace mortelle"], "effet": "vie sauve contre les pouvoirs futurs de ses filles"},
+        {"verbe": "BÉNIR / DÉ-BÉNIR", "fente": "formule", "pre": ["tenir l'objet"], "effet": "donne ou retire une immunité"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "I had to give him immunity to your powers in exchange for your lives."
+    },
+    {
+      "id": "leo",
+      "nom": "Leo Wyatt",
+      "classe": "Être de lumière",
+      "episodes": ["S01E14", "S01E21"],
+      "role": "ange gardien des sœurs, envoyé par les Fondateurs",
+      "pouvoirs": [
+        {"nom": "guérison", "fente": "savoir", "portee": "contact", "rangMoyen": null, "declencheur": "amour", "canal": "mains", "sansEffetSur": ["lui-même"], "statut": "E"},
+        {"nom": "occultation", "fente": "invisibilite", "portee": "exceptionnelle", "rangMoyen": null, "declencheur": null, "canal": null, "limites": ["cesse s'il s'affaiblit ou meurt"], "statut": "E"},
+        {"nom": "télépathie avec ses protégées", "fente": "perception", "portee": "exceptionnelle", "rangMoyen": null, "declencheur": null, "canal": null, "limites": ["échoue parfois"], "statut": "E"}
+      ],
+      "vulnerabilites": [
+        {"famille": "fente", "detail": "flèche empoisonnée d'un Être des ténèbres : poison irréversible"},
+        {"famille": "regle", "detail": "interdit d'aimer une sorcière ; rappelé par les Fondateurs"},
+        {"famille": "regle", "detail": "guide mais laisse les sorcières agir"}
+      ],
+      "actions": [
+        {"verbe": "GUIDER", "fente": "vecteur", "pre": ["envoyé par les Fondateurs"], "effet": "message, conseil, localisation"},
+        {"verbe": "SOIGNER", "fente": "savoir", "pre": ["toucher", "amour"], "effet": "guérison immédiate"},
+        {"verbe": "OCCULTER", "fente": "invisibilite", "pre": ["protégé désigné"], "effet": "introuvable pour un Être des ténèbres"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "Think of us as guardian angels for good witches."
+    },
+    {
+      "id": "fondateurs",
+      "nom": "Les Fondateurs",
+      "classe": "Fondateurs",
+      "episodes": ["S01E14"],
+      "role": "autorité du bien, groupe d'anciens Êtres de lumière",
+      "pouvoirs": [
+        {"nom": "autorité sur les Êtres de lumière", "fente": "autorite", "portee": "exceptionnelle", "rangMoyen": null, "statut": "E"}
+      ],
+      "vulnerabilites": [],
+      "actions": [
+        {"verbe": "ENVOYER / RAPPELER", "fente": "autorite", "pre": [], "effet": "affecte ou retire un Être de lumière"},
+        {"verbe": "SANCTIONNER", "fente": "autorite", "pre": ["règle enfreinte"], "effet": "séparation"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "They're a group of elder whitelighters."
+    },
+    {
+      "id": "andy",
+      "nom": "Andy Trudeau",
+      "classe": "Innocent",
+      "episodes": ["S01E01-S01E22"],
+      "role": "inspecteur, mortel allié qui découvre le secret",
+      "pouvoirs": [
+        {"nom": "enquête", "fente": "autorite", "portee": "contact", "rangMoyen": 0, "statut": "E"},
+        {"nom": "force ordinaire", "fente": "force", "portee": "contact", "rangMoyen": 0, "statut": "E"}
+      ],
+      "vulnerabilites": [
+        {"famille": "fente", "detail": "mortel : tué d'une boule d'énergie"},
+        {"famille": "regle", "detail": "son enquête menace le secret"}
+      ],
+      "actions": [
+        {"verbe": "COUVRIR", "fente": "autorite", "pre": ["connaître le secret"], "effet": "détourne une enquête"},
+        {"verbe": "GUIDER EN ESPRIT", "fente": "vecteur", "pre": ["mort récente"], "effet": "conseille la sorcière depuis l'entre-deux"}
+      ],
+      "valeurs": {},
+      "statut": "E"
+    },
+    {
+      "id": "max",
+      "nom": "Max",
+      "classe": "Sorcière",
+      "episodes": ["S01E14"],
+      "role": "jeune sorcier, exploité par des mortels",
+      "pouvoirs": [
+        {"nom": "télékinésie à distance", "fente": "telekinesie", "portee": "lieu", "rangMoyen": 0, "declencheur": null, "canal": null, "limites": ["agit sans voir la cible, jusque sur des machines"], "statut": "E"}
+      ],
+      "vulnerabilites": [
+        {"famille": "regle", "detail": "contraint par la menace sur un proche"}
+      ],
+      "actions": [
+        {"verbe": "APPELER À L'AIDE", "fente": "vecteur", "pre": [], "effet": "message reçu sur la planche spirite d'autres sorcières"},
+        {"verbe": "DÉSACTIVER À DISTANCE", "fente": "telekinesie", "pre": ["savoir où est le système"], "effet": "coupe une alarme"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "Help Max."
+    },
+    {
+      "id": "brendan-rowe",
+      "nom": "Brendan Rowe",
+      "classe": "Demi-warlock",
+      "episodes": ["S01E18"],
+      "role": "né warlock, a choisi le bien",
+      "pouvoirs": [
+        {"nom": "pouvoirs warlock", "fente": "energie", "portee": "vue", "rangMoyen": null, "declencheur": "rage (C)", "canal": null, "limites": ["les utiliser risque de le faire basculer"], "statut": "?"}
+      ],
+      "vulnerabilites": [
+        {"famille": "regle", "detail": "l'initiation warlock exige son consentement à un meurtre"},
+        {"famille": "fente", "detail": "sort d'appel et altération de perception de ses frères"}
+      ],
+      "actions": [
+        {"verbe": "RÉSISTER", "fente": "lien", "pre": ["volonté"], "effet": "ne tue pas malgré le sort"},
+        {"verbe": "SE FAIRE ORDONNER", "fente": "autorite", "pre": ["n'avoir tué personne"], "effet": "à l'abri de l'initiation"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "Once he's been ordained, he's safe."
+    },
+    {
+      "id": "father-trask",
+      "nom": "Père Trask et l'ordre secret",
+      "classe": "Innocent",
+      "episodes": ["S01E06"],
+      "role": "ordre mortel voué à arrêter Hécate",
+      "pouvoirs": [
+        {"nom": "poignard rituel et formule", "fente": "formule", "portee": "contact", "rangMoyen": 2, "limites": ["échoue seul face à Hécate et ses suivantes"], "statut": "E"}
+      ],
+      "vulnerabilites": [
+        {"famille": "fente", "detail": "mortels : tués par les suivantes"}
+      ],
+      "actions": [
+        {"verbe": "BANNIR", "fente": "formule", "pre": ["poignard", "formule"], "effet": "renvoi aux enfers visé"}
+      ],
+      "valeurs": {},
+      "statut": "E",
+      "preuve": "he belonged to a secret order pledged to stop Hecate."
+    }
+  ],
+
+  "ressources": [
+    {"id": "livre-des-ombres", "nom": "Livre des Ombres", "fente": "savoir", "effet": "identifie un mal et prescrit sa clé ; s'enrichit", "limites": ["ignore certains maux", "retenu dans la maison", "un sort peut en effacer des pages"], "statut": "E"},
+    {"id": "sort-expulsion", "nom": "Sort d'expulsion", "fente": "formule", "rangMoyen": 2, "effet": "détruit tout être non-sœur dans la maison", "limites": ["dans la maison seulement", "frappe aussi les innocents présents"], "statut": "E", "ep": ["S01E03"]},
+    {"id": "sort-verite", "nom": "Sort de vérité", "fente": "formule", "effet": "toute personne présente dans la maison dit la vérité", "limites": ["irrévocable avant sa fin"], "valeurs": {"dureeHeures": 24}, "statut": "E", "ep": ["S01E08"]},
+    {"id": "sort-appel-du-sang", "nom": "Appel d'une ancêtre", "fente": "formule", "effet": "l'ancêtre revient avec ses pouvoirs", "pre": ["sang des trois"], "statut": "E", "ep": ["S01E09"]},
+    {"id": "sort-renoncement", "nom": "Sort de renoncement", "fente": "formule", "effet": "retire les pouvoirs et s'efface du Livre", "limites": ["inversion inconnue"], "statut": "E", "ep": ["S01E10"]},
+    {"id": "sort-multiplication", "nom": "Sort de multiplication", "fente": "formule", "effet": "doubles avec pouvoirs et mémoire, sans âme", "limites": ["disparaissent quand le besoin cesse", "la lanceuse ressent leur mort"], "statut": "E", "ep": ["S01E16"]},
+    {"id": "sort-voyage-temporel", "nom": "Voyage dans le passé", "fente": "temps", "rangMoyen": 3, "effet": "retour à l'origine d'un lien, puis à l'instant exact du départ", "pre": ["Pouvoir des Trois"], "statut": "E", "ep": ["S01E17"]},
+    {"id": "sort-annihilation", "nom": "Sort d'annihilation", "fente": "formule", "rangMoyen": 2, "effet": "le warlock cesse d'exister", "pre": ["sachet de composants", "cible sans immunité"], "statut": "E", "ep": ["S01E17"]},
+    {"id": "sort-echange", "nom": "Échange de pouvoirs", "fente": "formule", "effet": "chacun reçoit le pouvoir d'un autre présent", "limites": ["touche tous les présents", "il faut trouver le déclencheur du nouveau pouvoir"], "statut": "E", "ep": ["S01E21"]},
+    {"id": "sort-acceleration", "nom": "Accélération du temps", "fente": "temps", "rangMoyen": 3, "effet": "passe au jour suivant, brise une boucle", "pre": ["les trois"], "statut": "E", "ep": ["S01E22"]},
+    {"id": "potion-mort-temporaire", "nom": "Potion de mort temporaire", "fente": "consommable", "effet": "donne accès au plan astral", "limites": ["réanimer dans les 4 minutes", "exposée au collecteur d'âmes"], "valeurs": {"fenetreMinutes": 4}, "statut": "E", "ep": ["S01E20"]},
+    {"id": "talisman", "nom": "Amulette ou anneau béni", "fente": "confinement", "effet": "protège d'un sort, d'un esprit, ou immunise contre un pouvoir", "limites": ["n'arrête pas le démon de la Peur"], "statut": "E", "ep": ["S01E03", "S01E04", "S01E17"]}
+  ]
+}
