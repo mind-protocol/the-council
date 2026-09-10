@@ -23,11 +23,11 @@
 # rares, visibles, et reparables en une ligne.
 import io, json, os, sys
 
+import racines  # ou vit l'etat, et de quel monde il est
 import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 import chainage_actions  # le contrat optionnel action -> fait accompli
 
-# entree.py vit dans scripts/etat/ : trois dirname pour remonter a la racine du depot.
-racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+racine = racines.racine()  # le MONDE, pas le depot ; test_chainage_actions le detourne
 
 # Table -> la clef qui porte la liste, ou None si le fichier EST la liste.
 TABLES = {
